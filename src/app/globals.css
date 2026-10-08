@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0F2747;
+  --yellow: #FFC83D;
+  --cream: #FFF9EF;
+  --blue: #4F7ECB;
+  --gray: #687280;
+}
+
+@theme {
+  --font-heading: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-poppins: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
+  --font-inter: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+
+  --color-navy: #0F2747;
+  --color-navy-dark: #091A30;
+  --color-yellow: #FFC83D;
+  --color-yellow-hover: #EAB308;
+  --color-cream: #FFF9EF;
+  --color-blue: #4F7ECB;
+  --color-brand-gray: #687280;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 17px;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+}
+
+body {
+  background-color: #FFF9EF;
+  color: #0F2747;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings & Brand Titles: Poppins Geometric Sans */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-poppins {
+  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
+  letter-spacing: -0.02em;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Body Text, UI Elements, Inputs & Buttons: Inter Sans */
+p, span, li, button, input, textarea, select, .font-inter, .font-sans {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+}
+
+/* Minimalist scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF9EF;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2D9C8;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C4B59D;
+}
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInQuick {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-drawer {
+  animation: drawerSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-quick {
+  animation: fadeInQuick 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
