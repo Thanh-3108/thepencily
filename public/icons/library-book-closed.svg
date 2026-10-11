@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 80" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bottom Cover Rim (Viền sách dưới) -->
+  <path d="M 8 57 C 22 53 42 54 66 57 C 76 56 82 52 84 46" />
+
+  <!-- Book Spine (Gáy sách) -->
+  <path d="M 84 46 C 85 41 83 35 78 33" />
+
+  <!-- Top Cover Rim (Viền sách trên) -->
+  <path d="M 78 33 C 58 31 36 34 8 43" />
+
+  <!-- Left opening edge -->
+  <path d="M 8 43 C 6 47 6 53 8 57" />
+
+  <!-- Closed Paper Pages Block (Giấy sách) -->
+  <path d="M 13 46.5 C 31 39.5 49 38.5 72 40" stroke-width="1.8" opacity="0.8" />
+  <path d="M 12 49.5 C 30 43.5 48 43 73 45" stroke-width="1.8" opacity="0.65" />
+  <path d="M 11 53 C 27 48 45 48 74 51" stroke-width="1.8" opacity="0.75" />
+  <path d="M 13 46.5 L 11 53" stroke-width="1.8" opacity="0.8" />
+</svg>

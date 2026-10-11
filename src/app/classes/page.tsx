@@ -1,7 +1,12 @@
 "use client";
 
-import DashboardPage from "@/app/dashboard/page";
+import React, { Suspense } from "react";
+import { DashboardContent } from "@/components/DashboardContent";
 
 export default function ClassesPage() {
-  return <DashboardPage defaultTab="classes" />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FFF9EF]" />}>
+      <DashboardContent defaultTab="classes" />
+    </Suspense>
+  );
 }

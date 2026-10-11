@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="256" height="256" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top handle / layer -->
+  <path d="M 9.5 6.5 V 5.5 C 9.5 4.67 10.17 4 11 4 H 13 C 13.83 4 14.5 4.67 14.5 5.5 V 6.5" />
+
+  <!-- Middle handle / layer -->
+  <path d="M 6.75 10.5 V 9.25 C 6.75 8.28 7.53 7.5 8.5 7.5 H 15.5 C 16.47 7.5 17.25 8.28 17.25 9.25 V 10.5" />
+
+  <!-- Bottom container / tray -->
+  <path d="M 5.5 12.5 H 18.5 C 19.45 12.5 20.15 13.38 19.95 14.3 L 18.5 20.1 C 18.3 20.9 17.6 21.5 16.75 21.5 H 7.25 C 6.4 21.5 5.7 20.9 5.5 20.1 L 4.05 14.3 C 3.85 13.38 4.55 12.5 5.5 12.5 Z" />
+</svg>

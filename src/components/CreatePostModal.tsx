@@ -72,7 +72,7 @@ export function CreatePostModal({
           <div className="flex items-center gap-3 mb-2.5">
             <PencilMascot size="sm" />
             <div>
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-3 py-0.5 rounded-full inline-block">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] inline-block">
                 Cơ Chế Bài Đăng • The Pencily
               </span>
               <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] mt-0.5">
@@ -101,8 +101,8 @@ export function CreatePostModal({
                 }}
                 className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
                   category === "doubt"
-                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                    : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:border-[#0F2747]/40"
+                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
                 }`}
               >
                 ❓ Hỏi bài
@@ -115,8 +115,8 @@ export function CreatePostModal({
                 }}
                 className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
                   category === "docs"
-                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                    : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:border-[#0F2747]/40"
+                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
                 }`}
               >
                 📚 Tài liệu
@@ -129,8 +129,8 @@ export function CreatePostModal({
                 }}
                 className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
                   category === "tips"
-                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                    : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:border-[#0F2747]/40"
+                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
                 }`}
               >
                 💡 Kinh nghiệm
@@ -143,8 +143,8 @@ export function CreatePostModal({
                 }}
                 className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
                   category === "announcement"
-                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                    : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:border-[#0F2747]/40"
+                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
                 }`}
               >
                 📢 Lớp mới

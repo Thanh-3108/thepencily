@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 
+import { Clock } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import { PencilMascot } from "@/components/Logo";
 
 interface ClassDirectoryProps {
   onSelectClassToRegister: (className: string) => void;
@@ -26,8 +28,8 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
             Các lớp học và nhóm học tập peer-to-peer hoàn toàn miễn phí, được tổ chức trực tiếp qua máy chủ Discord.
           </p>
 
-          {/* Minimal Filter Tabs */}
-          <div className="flex gap-2 mt-6">
+          {/* Clean Filter Tabs without background block */}
+          <div className="flex items-center gap-6 border-b border-[#0F2747]/10 mt-6 pb-0.5">
             {[
               { id: "all", label: "Tất cả" },
               { id: "cohort", label: "Cohort Classes" },
@@ -37,10 +39,10 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`pb-2 text-xs font-semibold transition-all cursor-pointer border-b-2 ${
                   activeTab === tab.id
-                    ? "bg-[#0F2747] text-white"
-                    : "bg-[#FFF9EF] text-[#0F2747] hover:bg-[#FFC83D]/25"
+                    ? "text-[#0F2747] font-bold border-[#0F2747]"
+                    : "text-[#64748B] font-medium border-transparent hover:text-[#0F2747]"
                 }`}
               >
                 {tab.label}
@@ -51,10 +53,16 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
 
         {/* Clean Class Grid or Empty State */}
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl p-10 border border-dashed border-[#0F2747]/20 text-center space-y-4">
-            <p className="text-sm text-[#4B5563]">
-              Chưa có lớp học nào đang mở đăng ký. Vui lòng quay lại sau hoặc theo dõi thông báo trên máy chủ Discord!
-            </p>
+          <div className="bg-white rounded-2xl p-10 border border-slate-200/80 text-center space-y-4">
+            <PencilMascot size="lg" className="mx-auto" />
+            <div className="max-w-md mx-auto">
+              <h4 className="font-bold text-base text-[#0F2747]">
+                Cú Pencily chưa thấy lớp học nào trong mục này!
+              </h4>
+              <p className="text-xs sm:text-sm text-[#4B5563] mt-1 leading-relaxed">
+                Các bạn peer tutor sẽ sớm cập nhật lịch lớp mới. Bạn cũng có thể đề xuất chủ đề bạn muốn học nhé!
+              </p>
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -64,12 +72,13 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
                 className="bg-white rounded-2xl p-7 border border-[#0F2747]/10 hover:border-[#0F2747]/30 transition-all hover:shadow-sm flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F7ECB]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F7ECB] shrink-0">
                       {item.categoryLabel}
                     </span>
-                    <span className="text-xs text-[#6B7280]">
-                      {item.schedule}
+                    <span className="text-xs text-[#6B7280] font-medium whitespace-normal flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-[#6B7280] shrink-0" />
+                      <span>{item.schedule}</span>
                     </span>
                   </div>
 

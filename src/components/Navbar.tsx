@@ -20,6 +20,10 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
 
   const navLinks = [
     { name: "Dashboard", href: "/dashboard" },
+    { name: "Chương trình", href: "/#programs" },
+    { name: "Vận hành", href: "/#how-it-works" },
+    { name: "Portfolio Tutor", href: "/#portfolio" },
+    { name: "Câu chuyện", href: "/#stories" },
     { name: "About", href: "/#about" },
   ];
 
@@ -85,7 +89,7 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
           ) : (
             <Link
               href="/signin"
-              className="inline-flex items-center gap-2 px-5 py-2 sm:py-2.5 rounded-full bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2 sm:py-2.5 rounded-full bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer shadow-2xs"
             >
               <span>Đăng nhập</span>
             </Link>
@@ -140,7 +144,7 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
             <Link
               href="/signin"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2.5 px-4 mt-1 rounded-full bg-[#0F2747] text-white text-xs font-bold flex items-center justify-center gap-2"
+              className="py-2 px-4 mt-1 rounded-full bg-white text-[#0F2747] border border-slate-300 font-semibold text-xs flex items-center justify-center gap-2 shadow-2xs"
             >
               <span>Đăng nhập</span>
             </Link>

@@ -24,7 +24,7 @@ export function TutorApplicationModal({ isOpen, onClose }: { isOpen: boolean; on
           <div className="flex items-center gap-3">
             <PencilMascot size="sm" />
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-2.5 py-0.5 rounded-md w-fit">
+              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#4F7ECB] w-fit">
                 <UserCheck className="w-3.5 h-3.5" />
                 Đơn Ứng Tuyển Tutor
               </div>
@@ -38,10 +38,10 @@ export function TutorApplicationModal({ isOpen, onClose }: { isOpen: boolean; on
             href="https://forms.gle/y7143v1g2qCMjPZU8"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs font-bold shadow-xs transition active:scale-95 shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs transition active:scale-95 shrink-0"
           >
             <span>Mở trong tab mới</span>
-            <ExternalLink className="w-3.5 h-3.5 text-[#FFC83D]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#4F7ECB]" />
           </a>
         </div>
 
@@ -215,9 +215,9 @@ export function ContributeResourceModal({ isOpen, onClose }: { isOpen: boolean; 
                 </button>
                 <button
                   type="submit"
-                  className="w-2/3 py-3 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-2"
+                  className="w-2/3 py-3 px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-sm font-bold shadow-2xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >
-                  <BookOpen className="w-4 h-4" />
+                  <BookOpen className="w-4 h-4 text-[#4F7ECB]" />
                   Gửi Tài Liệu
                 </button>
               </div>
@@ -240,7 +240,7 @@ export function ContributeResourceModal({ isOpen, onClose }: { isOpen: boolean; 
                 setIsSubmitted(false);
                 onClose();
               }}
-              className="py-3 px-8 rounded-xl bg-[#0F2747] text-white font-bold text-sm"
+              className="py-3 px-8 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-bold text-sm shadow-2xs cursor-pointer active:scale-95 transition"
             >
               Đóng
             </button>
@@ -288,7 +288,7 @@ export function RequestClassModal({
         <div className="flex items-center gap-3 mb-4">
           <PencilMascot size="sm" />
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-2.5 py-0.5 rounded-md">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB]">
               Cộng đồng học sinh
             </span>
             <h3 className="text-2xl font-extrabold text-[#0F2747] font-poppins mt-0.5">
@@ -349,9 +349,9 @@ export function RequestClassModal({
             </button>
             <button
               type="submit"
-              className="w-2/3 py-3 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-sm font-bold shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+              className="w-2/3 py-3 px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-sm font-bold shadow-2xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-95"
             >
-              <Plus className="w-4 h-4 text-[#FFC83D]" />
+              <Plus className="w-4 h-4 text-[#4F7ECB]" />
               Gửi đề xuất (+5 PP)
             </button>
           </div>
@@ -412,7 +412,7 @@ export function CreateClassModal({
     } else {
       let validUrl = meetUrl.trim();
       if (!validUrl) {
-        validUrl = "https://discord.gg";
+        validUrl = "https://discord.gg/6hpEf4wC4z";
       } else if (!validUrl.startsWith("http://") && !validUrl.startsWith("https://")) {
         validUrl = `https://${validUrl}`;
       }
@@ -457,7 +457,7 @@ export function CreateClassModal({
         </button>
 
         <div className="mb-5">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-2.5 py-0.5 rounded-md">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB]">
             Trực tuyến
           </span>
           <h3 className="text-2xl font-black text-[#0F2747] font-poppins mt-1">
@@ -469,14 +469,14 @@ export function CreateClassModal({
         </div>
 
         {/* Room Type Selector */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-200/60 rounded-xl mb-4">
+        <div className="grid grid-cols-2 gap-2 mb-4 border-b border-slate-200">
           <button
             type="button"
             onClick={() => setRoomType("web")}
-            className={`py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`py-2.5 px-3 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer border-b-2 ${
               roomType === "web"
-                ? "bg-[#0F2747] text-white shadow-xs"
-                : "text-[#4B5563] hover:text-[#0F2747]"
+                ? "border-[#0F2747] text-[#0F2747]"
+                : "border-transparent text-slate-500 hover:text-[#0F2747]"
             }`}
           >
             <span>🎙️ Phòng Web Pencily</span>
@@ -484,10 +484,10 @@ export function CreateClassModal({
           <button
             type="button"
             onClick={() => setRoomType("external")}
-            className={`py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`py-2.5 px-3 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer border-b-2 ${
               roomType === "external"
-                ? "bg-[#0F2747] text-white shadow-xs"
-                : "text-[#4B5563] hover:text-[#0F2747]"
+                ? "border-[#0F2747] text-[#0F2747]"
+                : "border-transparent text-slate-500 hover:text-[#0F2747]"
             }`}
           >
             <span>🔗 Meet / Discord</span>
@@ -544,7 +544,7 @@ export function CreateClassModal({
                 <span className="text-[11px] text-slate-400">•</span>
                 <button
                   type="button"
-                  onClick={() => setMeetUrl("https://discord.gg")}
+                  onClick={() => setMeetUrl("https://discord.gg/6hpEf4wC4z")}
                   className="text-[11px] font-semibold text-[#5865F2] hover:underline cursor-pointer"
                 >
                   Dùng Discord
@@ -590,9 +590,9 @@ export function CreateClassModal({
             </button>
             <button
               type="submit"
-              className="w-2/3 py-3 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-sm font-bold shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+              className="w-2/3 py-3 px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-sm font-bold shadow-2xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
             >
-              <Plus className="w-4 h-4 text-[#FFC83D]" />
+              <Plus className="w-4 h-4 text-[#4F7ECB]" />
               <span>Tạo phòng học ngay</span>
             </button>
           </div>
@@ -642,7 +642,7 @@ export function EditProfileModal({
         <div className="flex items-center gap-3 mb-4">
           <PencilMascot size="sm" />
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-2.5 py-0.5 rounded-md">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB]">
               Tài khoản
             </span>
             <h3 className="text-2xl font-extrabold text-[#0F2747] font-poppins mt-0.5">
@@ -716,9 +716,9 @@ export function EditProfileModal({
             </button>
             <button
               type="submit"
-              className="w-2/3 py-3 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-sm font-bold shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+              className="w-2/3 py-3 px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-sm font-bold shadow-2xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-95"
             >
-              <Edit3 className="w-4 h-4 text-[#FFC83D]" />
+              <Edit3 className="w-4 h-4 text-[#4F7ECB]" />
               Lưu thay đổi
             </button>
           </div>

@@ -42,7 +42,7 @@ export function CommunitySection() {
 
               <div className="flex flex-wrap items-center gap-3">
                 <a
-                  href="https://discord.gg"
+                  href="https://discord.gg/6hpEf4wC4z"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-95"

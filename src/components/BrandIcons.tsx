@@ -130,6 +130,49 @@ export function DiscordLogo({ className = "" }: { className?: string }) {
   );
 }
 
+export {
+  LibraryAnimatedBookIcon,
+  LibraryOpenBookLogo,
+  LibraryClosedBookIcon,
+} from "./LibraryBookLogo";
+
+/** High-DPI Library Deck / Tray icon matching YouTube-style video repository navigation */
+export function LibraryDeckIcon({
+  className = "",
+  size,
+  color,
+  strokeWidth = 2,
+  ...props
+}: React.SVGProps<SVGSVGElement> & {
+  size?: number | string;
+  strokeWidth?: number | string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      stroke={color || "currentColor"}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* Tier 1 handle */}
+      <path d="M 9.5 6.25 V 5.25 C 9.5 4.56 10.06 4 10.75 4 H 13.25 C 13.94 4 14.5 4.56 14.5 5.25 V 6.25" />
+
+      {/* Tier 2 handle */}
+      <path d="M 6.75 10.25 V 9 C 6.75 8.17 7.42 7.5 8.25 7.5 H 15.75 C 16.58 7.5 17.25 8.17 17.25 9 V 10.25" />
+
+      {/* Main bottom tray container */}
+      <path d="M 6.2 12.5 H 17.8 C 18.8 12.5 19.6 13.3 19.4 14.3 L 18.2 19.4 C 18.0 20.3 17.2 21 16.3 21 H 7.7 C 6.8 21 6.0 20.3 5.8 19.4 L 4.6 14.3 C 4.4 13.3 5.2 12.5 6.2 12.5 Z" />
+    </svg>
+  );
+}
+
 export function BrandIcon({
   name,
   className = "",

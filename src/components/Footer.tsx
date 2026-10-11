@@ -17,9 +17,21 @@ export function Footer() {
         </div>
 
         {/* Center: Minimal Links */}
-        <div className="flex items-center gap-8 text-xs font-medium text-[#0F2747]">
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-7 text-xs font-medium text-[#0F2747]">
           <Link href="/dashboard" className="hover:text-[#4F7ECB] transition-colors">
             Dashboard
+          </Link>
+          <Link href="/#programs" className="hover:text-[#4F7ECB] transition-colors">
+            Chương trình
+          </Link>
+          <Link href="/#how-it-works" className="hover:text-[#4F7ECB] transition-colors">
+            Vận hành
+          </Link>
+          <Link href="/#portfolio" className="hover:text-[#4F7ECB] transition-colors">
+            Portfolio Tutor
+          </Link>
+          <Link href="/#stories" className="hover:text-[#4F7ECB] transition-colors">
+            Câu chuyện
           </Link>
           <Link href="/#about" className="hover:text-[#4F7ECB] transition-colors">
             About

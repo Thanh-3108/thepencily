@@ -41,6 +41,7 @@ export const metadata: Metadata = {
 };
 
 import { PencilyProvider } from "@/context/PencilyContext";
+import { PencilyMascotCompanion } from "@/components/PencilyMascotCompanion";
 
 export default function RootLayout({
   children,
@@ -53,7 +54,10 @@ export default function RootLayout({
       className={`${poppins.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#FFF9EF] text-[#0F2747]">
-        <PencilyProvider>{children}</PencilyProvider>
+        <PencilyProvider>
+          {children}
+          <PencilyMascotCompanion />
+        </PencilyProvider>
       </body>
     </html>
   );

@@ -22,29 +22,30 @@ export function PencilMascot({
   className?: string;
   inverted?: boolean;
   monochrome?: boolean;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | number;
   priority?: boolean;
 }) {
-  const sizeClass = size
+  const isNumericSize = typeof size === "number";
+  const sizeClass = !isNumericSize && size
     ? {
-        sm: "h-7 w-auto",
-        md: "h-9 sm:h-10 w-auto",
-        lg: "h-12 sm:h-14 w-auto",
-        xl: "h-16 sm:h-20 w-auto",
+        sm: "h-8 w-auto",
+        md: "h-11 sm:h-12 w-auto",
+        lg: "h-16 sm:h-20 w-auto",
+        xl: "h-24 sm:h-28 w-auto",
+        "2xl": "h-36 sm:h-44 w-auto",
       }[size]
-    : (!className.includes("w-") && !className.includes("h-") ? "h-10 w-auto" : "");
-
-  const src = inverted
-    ? "/brand/pencily-pencil-white.png"
-    : "/brand/pencily-pencil-clean.png";
+    : (!isNumericSize && !className.includes("w-") && !className.includes("h-") ? "h-11 w-auto" : "");
 
   return (
-    <div className={`relative inline-flex items-center justify-center shrink-0 select-none ${className}`}>
+    <div
+      className={`relative inline-flex items-center justify-center shrink-0 select-none ${className}`}
+      style={isNumericSize ? { height: size, width: size } : undefined}
+    >
       <Image
-        src={src}
-        alt="The Pencily Mascot"
-        width={264}
-        height={382}
+        src="/brand/mascot-owl.png"
+        alt="The Pencily Owl Mascot"
+        width={419}
+        height={439}
         className={`${sizeClass} object-contain transition-transform duration-200 hover:scale-105`}
         priority={priority}
       />

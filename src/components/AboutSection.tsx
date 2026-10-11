@@ -12,7 +12,7 @@ export function AboutSection({ onOpenTutorModal }: AboutSectionProps) {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
         <div className="max-w-3xl space-y-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FFC83D] bg-[#0F2747] px-3 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB]">
               About The Pencily
             </span>
             <h2 className="font-poppins font-black text-3xl sm:text-4xl text-[#0F2747] tracking-tight mt-4 mb-3">
@@ -58,7 +58,7 @@ export function AboutSection({ onOpenTutorModal }: AboutSectionProps) {
           <div className="flex items-center gap-4 pt-2">
             <button
               onClick={onOpenTutorModal}
-              className="px-6 py-3 rounded-full bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-95"
+              className="px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-xs sm:text-sm font-semibold shadow-2xs transition-all active:scale-95 cursor-pointer"
             >
               Ứng tuyển trở thành Tutor Gen 1.0 →
             </button>

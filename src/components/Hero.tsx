@@ -12,7 +12,8 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
         {/* Main 2-Column Hero */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Punchy, Minimal Text */}
-          <div className="lg:col-span-6 space-y-5 text-left z-10">
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left z-10">
+
             <h1 className="font-poppins font-black text-4xl sm:text-5xl lg:text-[62px] text-[#0F2747] tracking-tight leading-[1.08]">
               The Pencily.
               <br />
@@ -29,10 +30,10 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white font-semibold text-sm sm:text-base shadow-sm hover:shadow transition-all active:scale-98 cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
               >
                 <span>Dashboard</span>
-                <ArrowRight className="w-4 h-4 text-[#FFC83D]" />
+                <ArrowRight className="w-4 h-4 text-[#4F7ECB]" />
               </Link>
 
               <a

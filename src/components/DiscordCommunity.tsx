@@ -38,10 +38,7 @@ export function DiscordCommunity() {
           {/* Top Discord Title Bar */}
           <div className="bg-[#111214] px-4 py-3 flex items-center justify-between border-b border-[#2B2D31]">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#ED4245]" />
-              <div className="w-3 h-3 rounded-full bg-[#FAA81A]" />
-              <div className="w-3 h-3 rounded-full bg-[#57F287]" />
-              <span className="ml-3 text-xs font-bold text-slate-400">The Pencily • Official Discord Community</span>
+              <span className="text-xs font-bold text-slate-400">The Pencily • Official Discord Community</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#57F287] bg-[#57F287]/10 px-2 py-0.5 rounded">
@@ -153,7 +150,7 @@ export function DiscordCommunity() {
                   Tham gia ngay để nhận vai trò lớp học và học cùng bạn bè!
                 </div>
                 <a
-                  href="https://discord.gg"
+                  href="https://discord.gg/6hpEf4wC4z"
                   target="_blank"
                   rel="noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-xs shadow transition-colors"

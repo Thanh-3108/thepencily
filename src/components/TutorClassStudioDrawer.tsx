@@ -13,6 +13,7 @@ import {
   Users,
   Compass,
   Check,
+  Clock,
 } from "lucide-react";
 import { PencilMascot } from "./Logo";
 
@@ -136,7 +137,7 @@ export function TutorClassStudioDrawer({
       if (!trimmed) {
         trimmed =
           roomType === "discord"
-            ? "https://discord.gg"
+            ? "https://discord.gg/6hpEf4wC4z"
             : "https://meet.google.com";
       } else if (!trimmed.startsWith("http://") && !trimmed.startsWith("https://")) {
         trimmed = `https://${trimmed}`;
@@ -246,13 +247,13 @@ export function TutorClassStudioDrawer({
                           onClick={() => setProgramType(pt.id)}
                           className={`p-3 rounded-2xl border text-left transition-all duration-150 cursor-pointer active:scale-95 flex items-start gap-2.5 ${
                             isSelected
-                              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                              : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:border-[#0F2747]/35"
+                              ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                              : "bg-white text-[#0F2747] border-slate-200 hover:border-slate-300"
                           }`}
                         >
                           <Icon
                             className={`w-4 h-4 shrink-0 mt-0.5 ${
-                              isSelected ? "text-[#FFC83D]" : "text-[#4F7ECB]"
+                              isSelected ? "text-[#0F2747]" : "text-[#4F7ECB]"
                             }`}
                           />
                           <div className="min-w-0 flex-1">
@@ -261,7 +262,7 @@ export function TutorClassStudioDrawer({
                             </div>
                             <div
                               className={`text-[11px] truncate mt-0.5 ${
-                                isSelected ? "text-slate-300" : "text-[#687280]"
+                                isSelected ? "text-[#0F2747]/80 font-medium" : "text-[#687280]"
                               }`}
                             >
                               {pt.subtitle}
@@ -373,8 +374,8 @@ export function TutorClassStudioDrawer({
                         onClick={() => setRoomType(p.id)}
                         className={`py-2 px-3 rounded-xl text-xs font-bold transition-all active:scale-95 cursor-pointer text-center ${
                           roomType === p.id
-                            ? "bg-[#0F2747] text-white shadow-xs"
-                            : "bg-white border border-[#0F2747]/15 text-[#4B5563] hover:text-[#0F2747]"
+                            ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
+                            : "bg-white border border-slate-200 text-slate-600 hover:text-[#0F2747] hover:border-slate-300"
                         }`}
                       >
                         {p.label}
@@ -440,17 +441,18 @@ export function TutorClassStudioDrawer({
 
                 {/* Card xem trước chuyển động mượt mà */}
                 <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-md transition-all duration-200 hover:shadow-lg space-y-4">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold ${currentProgram.badgeColor}`}
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold ${currentProgram.badgeColor} shrink-0`}
                     >
                       <span>
                         {roomType === "web" ? "Web trực tiếp" : currentProgram.badge}
                       </span>
                     </span>
 
-                    <span className="text-xs text-[#687280] font-medium truncate">
-                      {scheduleTime || "Đang mở"}
+                    <span className="text-xs text-[#687280] font-medium whitespace-normal text-right flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#687280] shrink-0" />
+                      <span>{scheduleTime || "Đang mở"}</span>
                     </span>
                   </div>
 
@@ -505,9 +507,9 @@ export function TutorClassStudioDrawer({
             <button
               type="submit"
               form="tutor-drawer-form"
-              className="px-7 py-3 rounded-xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs font-black shadow-md hover:shadow-lg active:scale-95 transition-all duration-150 flex items-center gap-2 cursor-pointer group"
+              className="px-7 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition-all duration-150 flex items-center gap-2 cursor-pointer group"
             >
-              <Sparkles className="w-4 h-4 text-[#FFC83D] group-hover:rotate-12 transition-transform" />
+              <Sparkles className="w-4 h-4 text-[#4F7ECB] group-hover:rotate-12 transition-transform" />
               <span>Hoàn tất & Mở phòng học</span>
             </button>
           </div>

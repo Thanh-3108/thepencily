@@ -133,8 +133,8 @@ export function StudentProfileDrawer({
                     key={cls.id}
                     className="p-4 sm:p-5 bg-white rounded-3xl border border-[#0F2747]/10 shadow-xs relative overflow-hidden"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold text-[#16A34A] bg-[#22C55E]/10 px-2.5 py-0.5 rounded-md">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                      <span className="text-xs font-bold text-[#16A34A] bg-[#22C55E]/10 px-2.5 py-0.5 rounded-md shrink-0">
                         Đã giữ chỗ
                       </span>
                       <span className="text-xs font-mono text-[#5865F2] font-semibold">
@@ -149,19 +149,19 @@ export function StudentProfileDrawer({
                       Tutor: {cls.tutorName} ({cls.tutorSchool})
                     </p>
 
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-[#4F7ECB] mt-1.5">
-                      <Clock className="w-3.5 h-3.5" />
+                    <div className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-[#4F7ECB] mt-1.5 break-words">
+                      <Clock className="w-3.5 h-3.5 shrink-0" />
                       <span>{cls.schedule}</span>
                     </div>
 
-                    <div className="mt-3.5 pt-3 border-t border-[#0F2747]/10 flex items-center justify-between">
+                    <div className="mt-3.5 pt-3 border-t border-[#0F2747]/10 flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs text-[#687280] flex items-center gap-1.5 font-medium">
-                        <Volume2 className="w-3.5 h-3.5 text-[#5865F2]" />
+                        <Volume2 className="w-3.5 h-3.5 text-[#5865F2] shrink-0" />
                         <span>{cls.discordChannel}</span>
                       </span>
 
                       <a
-                        href="https://discord.gg"
+                        href="https://discord.gg/6hpEf4wC4z"
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#5865F2] hover:bg-[#4752C4] px-3.5 py-1.5 rounded-xl shadow-xs transition"

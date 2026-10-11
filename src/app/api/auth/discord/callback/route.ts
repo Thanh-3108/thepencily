@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 6. Create redirect response and set cookie for client-side state hydration
-    const redirectUrl = new URL(`${origin}/dashboard`);
+    const redirectUrl = new URL(`${origin}/onboarding`);
     redirectUrl.searchParams.set("auth", "discord_success");
     if (joinedServer) {
       redirectUrl.searchParams.set("server_joined", "true");

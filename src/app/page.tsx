@@ -6,6 +6,11 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { TutorApplicationModal } from "@/components/Modals";
+import { HomePrograms } from "@/components/HomePrograms";
+import { HomeHowItWorks } from "@/components/HomeHowItWorks";
+import { HomeTutorPortfolio } from "@/components/HomeTutorPortfolio";
+import { HomeStudentStories } from "@/components/HomeStudentStories";
+import { HomeStudySpace } from "@/components/HomeStudySpace";
 
 import { Users, GraduationCap, FileText, Sparkles, ShieldCheck, Heart, Award, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -58,9 +63,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 sm:px-10">
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/60 mb-3.5">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
               Về The Pencily
-            </span>
+            </div>
             <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight max-w-xl mx-auto text-balance">
               Cộng đồng học tập do học sinh, vì học sinh
             </h2>
@@ -120,40 +125,40 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Commitments & Call to Action */}
-            <div className="bg-[#0F2747] text-white rounded-2xl p-6 sm:p-9 shadow-sm">
+            {/* Commitments & Call to Action - Clean Light Style */}
+            <div className="bg-white text-[#0F2747] rounded-2xl p-6 sm:p-9 border border-slate-200/80 shadow-xs">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-8 space-y-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/15">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB]">
                     Cam kết giá trị
-                  </span>
-                  <h3 className="font-poppins font-bold text-xl sm:text-2xl text-white">
+                  </div>
+                  <h3 className="font-poppins font-bold text-xl sm:text-2xl text-[#0F2747]">
                     Môi trường học tập an toàn & hoàn toàn phi lợi nhuận
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                     <div className="flex items-start gap-2.5">
-                      <ShieldCheck className="w-5 h-5 text-[#FFC83D] shrink-0 mt-0.5" />
-                      <div className="text-xs text-slate-300 leading-relaxed">
-                        <strong className="text-white block text-sm mb-0.5">100% Miễn phí</strong>
+                      <ShieldCheck className="w-5 h-5 text-[#4F7ECB] shrink-0 mt-0.5" />
+                      <div className="text-xs text-[#475569] leading-relaxed">
+                        <strong className="text-[#0F2747] block text-sm mb-0.5">100% Miễn phí</strong>
                         Không thu bất kỳ khoản học phí hay phụ phí nào.
                       </div>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <Heart className="w-5 h-5 text-[#FFC83D] shrink-0 mt-0.5" />
-                      <div className="text-xs text-slate-300 leading-relaxed">
-                        <strong className="text-white block text-sm mb-0.5">Tôn trọng & Lắng nghe</strong>
+                      <Heart className="w-5 h-5 text-[#EF4444] shrink-0 mt-0.5" />
+                      <div className="text-xs text-[#475569] leading-relaxed">
+                        <strong className="text-[#0F2747] block text-sm mb-0.5">Tôn trọng & Lắng nghe</strong>
                         Red Line Policy nghiêm ngặt: không kỳ thị hay xúc phạm.
                       </div>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <Award className="w-5 h-5 text-[#FFC83D] shrink-0 mt-0.5" />
-                      <div className="text-xs text-slate-300 leading-relaxed">
-                        <strong className="text-white block text-sm mb-0.5">Duyệt đề cương</strong>
+                      <Award className="w-5 h-5 text-[#D97706] shrink-0 mt-0.5" />
+                      <div className="text-xs text-[#475569] leading-relaxed">
+                        <strong className="text-[#0F2747] block text-sm mb-0.5">Duyệt đề cương</strong>
                         Nội dung buổi học được ban nội dung kiểm tra kỹ trước khi host.
                       </div>
                     </div>
                   </div>
-                  <p className="text-[11px] text-slate-400 pt-2 leading-relaxed border-t border-white/10">
+                  <p className="text-[11px] text-[#64748B] pt-2 leading-relaxed border-t border-slate-200/80">
                     * Lưu ý: Tutor tại The Pencily là các bạn học sinh có tinh thần chia sẻ kiến thức, không thay thế chương trình học chính khóa hay thầy cô giáo trên lớp.
                   </p>
                 </div>
@@ -161,15 +166,15 @@ export default function Home() {
                 <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
                   <Link
                     href="/dashboard"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-[#0F2747] font-bold text-sm shadow-xs transition active:scale-98 text-center"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-sm shadow-2xs transition active:scale-98 text-center"
                   >
                     <span>Xem các lớp đang mở</span>
-                    <ArrowRight className="w-4 h-4 text-[#0F2747]" />
+                    <ArrowRight className="w-4 h-4 text-[#4F7ECB]" />
                   </Link>
                   <button
                     type="button"
                     onClick={() => setIsApplyTutorOpen(true)}
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-sm transition active:scale-98 cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-sm shadow-2xs transition active:scale-98 cursor-pointer"
                   >
                     <span>Trở thành Peer Tutor</span>
                   </button>
@@ -179,10 +184,19 @@ export default function Home() {
           </div>
         </section>
 
-      {/* 3. Footer */}
-      <div className="relative z-10 bg-[#FFF9EF]">
-        <Footer />
-      </div>
+        {/* 3. EXTENDED SECTIONS: Programs, Workflow, Tutor Portfolio, Stories & Study Space */}
+        <div className="relative z-10 bg-[#FAF7F2] pb-12">
+          <HomePrograms />
+          <HomeHowItWorks />
+          <HomeTutorPortfolio onOpenTutorModal={() => setIsApplyTutorOpen(true)} />
+          <HomeStudentStories />
+          <HomeStudySpace />
+        </div>
+
+        {/* 4. Footer */}
+        <div className="relative z-10 bg-[#FFF9EF]">
+          <Footer />
+        </div>
 
       <TutorApplicationModal
         isOpen={isApplyTutorOpen}

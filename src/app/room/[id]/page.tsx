@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilMascot } from "@/components/Logo";
-import CompleteProfileModal from "@/components/CompleteProfileModal";
 
 interface ChatMessage {
   id: string;
@@ -106,23 +105,16 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   const animationFrameRef = useRef<number | null>(null);
   const broadcastRef = useRef<BroadcastChannel | null>(null);
   const chatBottomRef = useRef<HTMLDivElement>(null);
+  const chatTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (chatTextareaRef.current) {
+      chatTextareaRef.current.style.height = "auto";
+      chatTextareaRef.current.style.height = `${Math.min(chatTextareaRef.current.scrollHeight, 112)}px`;
+    }
+  }, [messageInput]);
 
   const localUserId = useRef(`user-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
-
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-
-  // Check if student has completed real-name verification
-  useEffect(() => {
-    const hasRawDiscordHandle =
-      user.name &&
-      (user.name.startsWith("@") ||
-        user.name.includes("#") ||
-        user.name === "Học sinh Pencily" ||
-        user.name.length > 25);
-    if (!user.hasCompletedProfile && (!user.realName || hasRawDiscordHandle)) {
-      setIsProfileModalOpen(true);
-    }
-  }, [user.hasCompletedProfile, user.realName, user.name]);
 
   // 1. Room Timer Stopwatch
   useEffect(() => {
@@ -506,8 +498,8 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   }, [isScreenSharing]);
 
   // 7. Send In-Room Message
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSendMessage = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!messageInput.trim()) return;
 
     const newMsg: ChatMessage = {
@@ -519,6 +511,9 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
     setChatMessages((prev) => [...prev, newMsg]);
     setMessageInput("");
+    if (chatTextareaRef.current) {
+      chatTextareaRef.current.style.height = "auto";
+    }
 
     broadcastRef.current?.postMessage({
       type: "CHAT_MESSAGE",
@@ -592,7 +587,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
             <PencilMascot size="sm" className="hidden sm:inline-flex" />
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h1 className="text-sm sm:text-base font-black text-[#0F2747] truncate max-w-[180px] sm:max-w-md tracking-tight font-poppins">
+                <h1
+                  title={roomTitle}
+                  className="text-sm sm:text-base font-black text-[#0F2747] truncate max-w-xs sm:max-w-xl md:max-w-2xl tracking-tight font-poppins"
+                >
                   {roomTitle}
                 </h1>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFC83D]/30 text-[#0F2747] border border-[#FFC83D] shrink-0">
@@ -761,10 +759,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                     )}
                   </div>
 
-                  <div className={`z-10 ${isScreenSharing ? "mt-1" : "mt-4"}`}>
+                  <div className={`z-10 px-2 text-center ${isScreenSharing ? "mt-1" : "mt-4"}`}>
                     <span
                       title={user.realName || user.name}
-                      className={`font-black text-[#0F2747] block font-poppins truncate max-w-[80px] sm:max-w-[110px] ${isScreenSharing ? "text-[10px] sm:text-xs" : "text-base sm:text-lg"}`}
+                      className={`font-black text-[#0F2747] block font-poppins truncate ${isScreenSharing ? "max-w-[120px] sm:max-w-[150px] text-[10px] sm:text-xs" : "max-w-[180px] sm:max-w-[240px] text-base sm:text-lg"}`}
                     >
                       {getGivenName(user.realName || user.name) || "Bạn"} (Bạn)
                     </span>
@@ -860,7 +858,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
                   <span
                     title={peer.name}
-                    className={`font-black text-[#0F2747] z-10 block truncate max-w-[80px] sm:max-w-[110px] ${isScreenSharing ? "text-[10px] sm:text-xs mt-1" : "text-sm mt-3"}`}
+                    className={`font-black text-[#0F2747] z-10 block truncate px-2 ${isScreenSharing ? "max-w-[120px] sm:max-w-[150px] text-[10px] sm:text-xs mt-1" : "max-w-[180px] sm:max-w-[240px] text-sm mt-3"}`}
                   >
                     {getGivenName(peer.name)}
                   </span>
@@ -942,15 +940,15 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
               <div className="w-[3px] h-10 rounded-xs bg-[#0F2747]/20 group-hover:bg-[#0F2747] transition-colors" />
             </div>
 
-            {/* Tabs Header */}
-            <div className="p-2 border-b border-[#0F2747]/10 grid grid-cols-2 gap-1.5 bg-[#FFFDF9]">
+            {/* Tabs Header - Clean Underline Style, No Background Block */}
+            <div className="px-4 border-b border-[#0F2747]/10 flex items-center gap-6 bg-white">
               <button
                 type="button"
                 onClick={() => setActiveTab("chat")}
-                className={`py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-2 cursor-pointer ${
+                className={`py-3 text-xs font-bold transition flex items-center gap-2 cursor-pointer border-b-2 ${
                   activeTab === "chat"
-                    ? "bg-[#0F2747] text-white shadow-xs"
-                    : "text-[#52637A] hover:text-[#0F2747] hover:bg-black/5"
+                    ? "text-[#0F2747] border-[#0F2747]"
+                    : "text-[#64748B] border-transparent hover:text-[#0F2747]"
                 }`}
               >
                 <MessageSquare className="w-3.5 h-3.5" />
@@ -960,10 +958,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
               <button
                 type="button"
                 onClick={() => setActiveTab("notes")}
-                className={`py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-2 cursor-pointer ${
+                className={`py-3 text-xs font-bold transition flex items-center gap-2 cursor-pointer border-b-2 ${
                   activeTab === "notes"
-                    ? "bg-[#0F2747] text-white shadow-xs"
-                    : "text-[#52637A] hover:text-[#0F2747] hover:bg-black/5"
+                    ? "text-[#0F2747] border-[#0F2747]"
+                    : "text-[#64748B] border-transparent hover:text-[#0F2747]"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5" />
@@ -1016,9 +1014,9 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                           <span className="text-[10px] text-gray-400">{msg.time}</span>
                         </div>
 
-                        {/* Bubble - Compact fit without stretching full width */}
+                        {/* Bubble - Compact fit without stretching full width, multiline preserved */}
                         <div
-                          className={`max-w-[85%] w-fit px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed break-words shadow-xs ${
+                          className={`max-w-[85%] w-fit px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap break-words shadow-xs ${
                             isMe
                               ? "bg-[#0F2747] text-white rounded-tr-xs"
                               : "bg-white text-[#0F2747] border border-[#0F2747]/15 rounded-tl-xs"
@@ -1032,22 +1030,39 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                   <div ref={chatBottomRef} />
                 </div>
 
-                {/* Message Input Box */}
-                <form onSubmit={handleSendMessage} className="p-3 border-t border-[#0F2747]/10 flex gap-2 bg-white">
-                  <input
-                    type="text"
-                    placeholder="Nhập tin nhắn..."
-                    value={messageInput}
-                    onChange={(e) => setMessageInput(e.target.value)}
-                    className="flex-1 bg-[#FFFDF9] border border-[#0F2747]/15 rounded-xl px-3.5 py-2.5 text-xs text-[#0F2747] placeholder-[#94A3B8] focus:outline-none focus:border-[#0F2747]"
-                  />
-                  <button
-                    type="submit"
-                    className="p-2.5 rounded-xl bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] font-bold transition cursor-pointer shrink-0 active:scale-95 shadow-2xs"
-                    title="Gửi tin nhắn"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
+                {/* Message Input Box with Multiline & Shift+Enter Support */}
+                <form
+                  onSubmit={handleSendMessage}
+                  className="p-3 border-t border-[#0F2747]/10 flex flex-col gap-1.5 bg-white"
+                >
+                  <div className="flex items-end gap-2">
+                    <textarea
+                      ref={chatTextareaRef}
+                      rows={1}
+                      placeholder="Nhập tin nhắn..."
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage();
+                        }
+                      }}
+                      className="flex-1 bg-[#FFFDF9] border border-[#0F2747]/15 rounded-xl px-3.5 py-2.5 text-xs text-[#0F2747] placeholder-[#94A3B8] focus:outline-none focus:border-[#0F2747] min-h-[40px] max-h-28 resize-none overflow-y-auto leading-relaxed font-sans"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!messageInput.trim()}
+                      className="p-2.5 rounded-xl bg-[#FFC83D] hover:bg-[#EAB308] disabled:opacity-40 disabled:cursor-not-allowed text-[#0F2747] font-bold transition cursor-pointer shrink-0 active:scale-95 shadow-2xs h-[40px] w-[40px] flex items-center justify-center"
+                      title="Gửi tin nhắn (Enter)"
+                    >
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between px-1 text-[10px] text-gray-400 select-none">
+                    <span>Shift + Enter để xuống dòng</span>
+                    <span>Enter để gửi</span>
+                  </div>
                 </form>
               </div>
             )}
@@ -1208,13 +1223,6 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           </button>
         </div>
       </footer>
-
-      {/* Profile Completion Modal for Real Name verification */}
-      <CompleteProfileModal
-        isOpen={isProfileModalOpen}
-        onClose={() => setIsProfileModalOpen(false)}
-        required={true}
-      />
     </div>
   );
 }

@@ -161,10 +161,10 @@ export default function CompleteProfileModal({
                     onClick={() => {
                       setIsEditingDisplayName(false);
                     }}
-                    className="px-2.5 py-1 rounded-lg bg-[#0F2747] text-white hover:bg-[#1A3E6D] text-xs font-bold transition cursor-pointer flex items-center gap-1"
+                    className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 text-[#0F2747] hover:bg-slate-50 text-xs font-bold transition cursor-pointer flex items-center gap-1 shadow-2xs"
                     title="Lưu tên hiển thị"
                   >
-                    <Check className="w-3.5 h-3.5" />
+                    <Check className="w-3.5 h-3.5 text-[#4F7ECB]" />
                     <span>Lưu</span>
                   </button>
                 </div>
@@ -240,7 +240,7 @@ export default function CompleteProfileModal({
           <div className="pt-3">
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white font-bold text-sm shadow-md transition active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-bold text-sm shadow-2xs transition active:scale-98 cursor-pointer flex items-center justify-center gap-2"
             >
               <span>Xác nhận thông tin & Tiếp tục</span>
             </button>

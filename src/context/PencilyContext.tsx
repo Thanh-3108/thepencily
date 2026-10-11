@@ -437,7 +437,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
 
   const addPoints = (amount: number, reason: string) => {
     setUser((prev) => {
-      const newPoints = prev.points + amount;
+      const newPoints = Math.max(0, prev.points + amount);
       return { ...prev, points: newPoints };
     });
     setActivities((prev) => [
@@ -445,7 +445,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
         id: `act-${Date.now()}`,
         timestamp: "Vừa xong",
         type: "badge_earned",
-        text: `nhận +${amount} PP (${reason})`,
+        text: amount >= 0 ? `nhận +${amount} PP (${reason})` : `đã đổi ${Math.abs(amount)} PP (${reason})`,
         actor: user.name,
       },
       ...prev.slice(0, 10),
@@ -563,7 +563,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
       hasLiked: true,
       commentsCount: 0,
       discordChannel: postData.discordChannel,
-      discordThreadUrl: "https://discord.gg",
+      discordThreadUrl: "https://discord.gg/6hpEf4wC4z",
     };
 
     setPosts((prev) => [newPost, ...prev]);
@@ -602,7 +602,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
       ...newClassData,
       id: `class-${Date.now()}`,
       enrolledCount: 1,
-      meetUrl: newClassData.meetUrl || "https://discord.gg",
+      meetUrl: newClassData.meetUrl || "https://discord.gg/6hpEf4wC4z",
     };
     setClasses((prev) => [newSession, ...prev]);
     setRegisteredClassIds((prev) => [...prev, newSession.id]);

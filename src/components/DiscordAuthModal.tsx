@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { X, ExternalLink, ShieldCheck, Sparkles, Volume2, ChevronDown, ChevronUp, Check, Info } from "lucide-react";
@@ -109,7 +109,7 @@ export function DiscordAuthModal({ isOpen, onClose }: DiscordAuthModalProps) {
               </button>
               <button
                 onClick={onClose}
-                className="w-1/2 py-2.5 px-4 rounded-xl bg-[#0F2747] text-white hover:bg-[#1A3E6D] text-xs font-bold transition cursor-pointer"
+                className="w-1/2 py-2.5 px-4 rounded-xl bg-white text-[#0F2747] border border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-xs font-bold transition cursor-pointer shadow-2xs"
               >
                 Đến Dashboard
               </button>
