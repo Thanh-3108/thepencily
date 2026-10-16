@@ -26,15 +26,8 @@ export function HomeStudentStories() {
       levelVi: "THPT",
       levelEn: "High School",
       school: "Phổ Thông Năng Khiếu, ĐHQG-HCM",
-      descVi:
-        "Đưa ra quyết định cuối cùng về định hướng sản phẩm, tầm nhìn, hệ thống vận hành và chiến lược phát triển của The Pencily qua các thế hệ.",
-      descEn:
-        "Final decision-maker for platform strategy, organization vision, operational framework, and cross-generational growth.",
-      badgeVi: "Tầm Nhìn & Chiến Lược",
-      badgeEn: "Vision & Strategy",
-      peakHour: "03:00 AM (Cú đêm ☕)",
-      doodleNoteVi: "“Dậy sớm lúc 3 giờ sáng để giải đề và xây dựng nền tảng cùng anh em.”",
-      doodleNoteEn: "“Waking up at 3 AM to crack problem sets and build the platform with peers.”",
+      quoteVi: "“Dậy sớm lúc 3 giờ sáng để giải đề và xây dựng nền tảng cùng anh em.”",
+      quoteEn: "“Waking up at 3 AM to crack problem sets and build the platform with peers.”",
       washiTape: "/brand/elements/washi-tape.jpg",
       hasClip: true,
       email: "hhuuyynnhhccoonnggtthhaannhh@gmail.com",
@@ -56,15 +49,8 @@ export function HomeStudentStories() {
       levelVi: "THPT",
       levelEn: "High School",
       school: "Phổ Thông Năng Khiếu, ĐHQG-HCM",
-      descVi:
-        "Quản trị tiến độ thực thi, kỷ luật nhân sự và quy trình tổ chức lớp học; làm chủ hệ thống dữ liệu theo dõi và điều phối buổi học.",
-      descEn:
-        "Directs execution timelines, team discipline, and master session runsheets across all active cohorts.",
-      badgeVi: "Vận Hành & Kỷ Luật",
-      badgeEn: "Operations & Discipline",
-      peakHour: "21:00 PM (Kỷ luật thép ⏱️)",
-      doodleNoteVi: "“Runsheet là danh dự; chuẩn giờ, chuẩn lớp, đúng cam kết là văn hóa.”",
-      doodleNoteEn: "“Runsheets are honor; punctuality, fidelity, and commitments define our culture.”",
+      quoteVi: "[placeholder]",
+      quoteEn: "[placeholder]",
       washiTape: "/brand/elements/washi-tape-blue.jpg",
       hasClip: false,
       email: "hobaongan1707@gmail.com",
@@ -85,15 +71,8 @@ export function HomeStudentStories() {
       levelVi: "Đại học",
       levelEn: "University",
       school: "Dong A University",
-      descVi:
-        "Quản lý và định hướng trải nghiệm cho cộng đồng Tutor và Học sinh; xây dựng văn hóa gắn kết, đa dạng và bảo vệ an toàn tâm lý học đường.",
-      descEn:
-        "Oversees tutor and student experience; nurtures inclusive culture, belonging, and strict psychological safety.",
-      badgeVi: "Cộng Đồng & Văn Hóa",
-      badgeEn: "Community & Culture",
-      peakHour: "19:30 PM (Thấu cảm 🎧)",
-      doodleNoteVi: "“Không có câu hỏi nào là ngốc nghếch, chỉ có câu hỏi chưa dám nói ra.”",
-      doodleNoteEn: "“No question is silly, only the ones students were too hesitant to ask.”",
+      quoteVi: "[placeholder]",
+      quoteEn: "[placeholder]",
       washiTape: "/brand/elements/washi-tape.jpg",
       hasClip: false,
       email: "ngdttram07@gmail.com",
@@ -113,15 +92,8 @@ export function HomeStudentStories() {
       levelVi: "THPT",
       levelEn: "High School",
       school: "Phổ Thông Năng Khiếu, ĐHQG-HCM",
-      descVi:
-        "Tham gia định hình chiến lược phát triển, chuẩn mực chất lượng học thuật và cố vấn các quyết định trọng yếu của tổ chức.",
-      descEn:
-        "Advises on strategic growth, academic quality standards, and high-level organizational decision-making.",
-      badgeVi: "Cố Vấn Chiến Lược",
-      badgeEn: "Senior Advisory",
-      peakHour: "22:00 PM (Quân sư 🧠)",
-      doodleNoteVi: "“Một hệ sinh thái học tập bền vững là khi trao quyền tự chủ cho từng bạn học.”",
-      doodleNoteEn: "“A sustainable peer ecosystem empowers every individual learner to take ownership.”",
+      quoteVi: "“Châm ngôn làm việc không chat, không lộ mặt”",
+      quoteEn: "“Working motto: no chatting, no face reveal”",
       washiTape: "/brand/elements/washi-tape-blue.jpg",
       hasClip: true,
       discord: "god_daren",
@@ -330,26 +302,26 @@ export function HomeStudentStories() {
                     )}
 
                     <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
-                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-xs bg-[#FFC83D]/30 text-[#0F2747] border border-[#FFC83D]">
-                          {isVi ? member.badgeVi : member.badgeEn}
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-[11px] font-bold text-[#4F7ECB] uppercase tracking-wider">
+                          {member.role}
                         </span>
-                        <span className="text-[11px] font-mono font-bold text-slate-400">
-                          ID: #00{idx + 1}
+                        <span className="text-[10px] font-mono font-bold text-slate-400">
+                          #00{idx + 1}
                         </span>
                       </div>
 
                       <h4 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] truncate">
                         {member.name}
                       </h4>
-                      <p className="text-xs font-bold text-[#4F7ECB]">
+                      <p className="text-xs font-semibold text-[#0F2747]/80">
                         {isVi ? member.titleVi : member.titleEn}
                       </p>
                     </div>
                   </div>
 
                   {/* School / Education Badge */}
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xs bg-[#FAF7F2] border border-slate-200 mb-3.5 text-xs text-slate-700">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xs bg-[#FAF7F2] border border-slate-200 mb-4 text-xs text-slate-700">
                     <GraduationCap className="w-4 h-4 text-[#4F7ECB] shrink-0" />
                     <span className="font-bold text-[#0F2747]">
                       {isVi ? member.levelVi : member.levelEn}
@@ -358,24 +330,11 @@ export function HomeStudentStories() {
                     <span className="truncate font-medium">{member.school}</span>
                   </div>
 
-                  {/* Official Role Description */}
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                    {isVi ? member.descVi : member.descEn}
-                  </p>
-
-                  {/* Fun Student Doodle Note / Peak Hour Snippet */}
-                  <div className="p-3 rounded-xs bg-[#FFFDF8] border border-amber-200/90 shadow-2xs mb-4 space-y-1.5">
-                    <div className="flex items-center justify-between text-[11px] font-bold">
-                      <span className="text-amber-900 flex items-center gap-1">
-                        <span>⏰</span>
-                        <span>{isVi ? "Giờ năng suất nhất:" : "Peak productive hour:"}</span>
-                      </span>
-                      <span className="font-mono text-[11px] text-[#0F2747] bg-amber-100/80 px-2 py-0.5 rounded-xs border border-amber-300/60">
-                        {member.peakHour}
-                      </span>
-                    </div>
-                    <p className="font-serif italic text-xs text-[#0F2747] leading-relaxed pt-1 border-t border-amber-100">
-                      {isVi ? member.doodleNoteVi : member.doodleNoteEn}
+                  {/* Prominently Highlighted Quote Box */}
+                  <div className="p-4 rounded-sm bg-[#FAF7F2] border-2 border-slate-200/90 shadow-2xs mb-4 relative overflow-hidden">
+                    <Quote className="w-5 h-5 text-[#FFC83D] shrink-0 mb-1.5 opacity-90" />
+                    <p className={`font-serif italic text-sm text-[#0F2747] leading-relaxed font-medium ${member.quoteVi === "[placeholder]" ? "text-slate-400 font-sans not-italic text-xs" : ""}`}>
+                      {isVi ? member.quoteVi : member.quoteEn}
                     </p>
                   </div>
                 </div>
