@@ -17,6 +17,7 @@ import {
   Settings,
 } from "lucide-react";
 
+import { isReviewer } from "@/lib/platform";
 import { usePencily } from "@/context/PencilyContext";
 import { Logo } from "./Logo";
 import { DiscordLogo } from "./BrandIcons";
@@ -32,7 +33,9 @@ export type DashboardTab =
   | "shop"
   | "profile"
   | "become-tutor"
-  | "settings";
+  | "settings"
+  | "academic"
+  | "assistant";
 
 interface DashboardSidebarProps {
   activeTab: DashboardTab;
@@ -85,13 +88,15 @@ export function DashboardSidebar({
     id: DashboardTab;
     labelVi: string;
     labelEn: string;
-    icon: any;
+    icon: React.ElementType;
     isTab: boolean;
     href?: string;
   }
 
   // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
   const secondaryItems: SecondaryItem[] = [
+    { id:"assistant",labelVi:"Hỏi Cú Pencily",labelEn:"Ask Pencily",icon:MessageSquare,isTab:true },
+    ...(isReviewer(user.platformRole) ? [{ id:"academic" as const,labelVi:"Ban Academic",labelEn:"Academic",icon:GraduationCap,isTab:true }] : []),
     {
       id: "community",
       labelVi: "Diễn đàn học tập",

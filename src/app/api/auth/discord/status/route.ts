@@ -1,12 +1,1 @@
-﻿import { NextResponse } from "next/server";
-
-export async function GET() {
-  const clientId = process.env.DISCORD_CLIENT_ID || process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
-  const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-  const isConfigured = Boolean(clientId && clientSecret);
-
-  return NextResponse.json({
-    configured: isConfigured,
-    clientId: clientId || null,
-  });
-}
+export async function GET() { return Response.json({ configured: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && process.env.NEXT_PUBLIC_DISCORD_ENABLED === "true") }); }

@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { X, BookOpen, Award, Download, CheckCircle2, Lock, ExternalLink, Gift, HelpCircle, FileText, UserCheck, Zap } from "lucide-react";
+import { useEffect } from "react";
+import { api } from "@/lib/api";
 import { usePencily } from "@/context/PencilyContext";
 import { DiscordLogo } from "./BrandIcons";
 
@@ -121,39 +123,33 @@ export function PPExchangeShopModal({
   onClose,
   onGoToVideos,
 }: PPExchangeShopModalProps) {
-  const { user, addPoints, language } = usePencily();
+  const { user, redeemReward, backendAuthenticated, language } = usePencily();
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [redeemedIds, setRedeemedIds] = useState<string[]>([]);
+  const [redemptions, setRedemptions] = useState<{userId:string;ids:string[]}>({userId:"",ids:[]});
+  const redeemedIds = redemptions.userId === user.id ? redemptions.ids : [];
   const [selectedReward, setSelectedReward] = useState<ShopItem | null>(null);
 
-  // Load redeemed items from localStorage
+
+
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("pencily_redeemed_items");
-      if (saved) {
-        setRedeemedIds(JSON.parse(saved));
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
+    if (!backendAuthenticated) return;
+    let active = true;
+    void api<{ids:string[]}>("/api/rewards").then((result) => {if(active)setRedemptions({userId:user.id,ids:result.ids});}).catch(() => {});
+    return () => {active=false;};
+  }, [backendAuthenticated, user.id]);
 
   if (!isOpen) return null;
 
-  const handleRedeem = (item: ShopItem) => {
-    if (user.points < item.cost) return;
+  const handleRedeem = async (item: ShopItem) => {
+    if (user.points < item.cost || redeemedIds.includes(item.id)) return;
 
     // Deduct points
-    addPoints(-item.cost, item.title);
+    if (!(await redeemReward(item.id))) return;
 
     // Save redemption
     const next = Array.from(new Set([...redeemedIds, item.id]));
-    setRedeemedIds(next);
-    try {
-      localStorage.setItem("pencily_redeemed_items", JSON.stringify(next));
-    } catch {
-      // ignore
-    }
+    setRedemptions({userId:user.id,ids:next});
+
 
     // Open success modal
     setSelectedReward(item);
@@ -165,10 +161,10 @@ export function PPExchangeShopModal({
       : SHOP_ITEMS.filter((i) => i.category === activeCategory);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 select-none animate-fadeIn">
+    <div className="pencily-side-panel">
       {/* Backdrop click-away */}
       <div
-        className="fixed inset-0 bg-[#0F2747]/70 backdrop-blur-sm"
+        className="hidden"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -361,7 +357,7 @@ export function PPExchangeShopModal({
                           className="py-1 px-3 rounded-sm bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 border-2 border-slate-300 text-[11px] font-bold transition cursor-pointer flex items-center gap-1"
                           title="Học bài & xem video để nhận thêm PP"
                         >
-                          <span>{language === "vi" ? "Xem video nhận +5 PP →" : "Watch video for +5 PP →"}</span>
+                          <span>{language === "vi" ? "Xem thư viện bài học →" : "Explore the lesson library →"}</span>
                         </button>
                       </div>
                     )}
@@ -397,9 +393,9 @@ export function PPExchangeShopModal({
 
       {/* SUCCESS MODAL OVERLAY */}
       {selectedReward && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
+        <div className="pencily-side-panel">
           <div
-            className="fixed inset-0 bg-[#0F2747]/80 backdrop-blur-sm"
+            className="hidden"
             onClick={() => setSelectedReward(null)}
           />
           <div className="relative w-full max-w-md bg-white rounded-md p-6 border-2 border-[#0F2747] shadow-2xl z-10 space-y-4 animate-fadeIn">

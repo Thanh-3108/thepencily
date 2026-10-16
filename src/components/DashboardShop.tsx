@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Search,
   Check,
@@ -17,6 +17,8 @@ import {
   SlidersHorizontal,
   ChevronDown,
 } from "lucide-react";
+import { useEffect } from "react";
+import { api } from "@/lib/api";
 import { usePencily } from "@/context/PencilyContext";
 import { DiscordLogo } from "@/components/BrandIcons";
 import { DashboardTab } from "@/components/DashboardSidebar";
@@ -164,7 +166,7 @@ interface DashboardShopProps {
 }
 
 export function DashboardShop({ onSelectTab }: DashboardShopProps) {
-  const { user, addPoints, language } = usePencily();
+  const { user, redeemReward, backendAuthenticated, language } = usePencily();
   const isVi = language === "vi";
 
   // Filter & Search states
@@ -175,38 +177,30 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "title">("featured");
 
   // Redeemed items tracking
-  const [redeemedIds, setRedeemedIds] = useState<string[]>([]);
+  const [redemptions, setRedemptions] = useState<{userId:string;ids:string[]}>({userId:"",ids:[]});
+  const redeemedIds = redemptions.userId === user.id ? redemptions.ids : [];
   const [selectedReward, setSelectedReward] = useState<ShopItem | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isHowToEarnOpen, setIsHowToEarnOpen] = useState(false);
   const [isRedeemedHistoryOpen, setIsRedeemedHistoryOpen] = useState(false);
 
-  // Load redeemed from localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("pencily_redeemed_items");
-      if (saved) {
-        setRedeemedIds(JSON.parse(saved));
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
+    if (!backendAuthenticated) return;
+    let active = true;
+    void api<{ids:string[]}>("/api/rewards").then((result) => {if(active)setRedemptions({userId:user.id,ids:result.ids});}).catch(() => {});
+    return () => {active=false;};
+  }, [backendAuthenticated, user.id]);
 
-  const handleRedeem = (item: ShopItem) => {
-    if (user.points < item.cost) return;
+  const handleRedeem = async (item: ShopItem) => {
+    if (user.points < item.cost || redeemedIds.includes(item.id)) return;
 
     // Deduct points
-    addPoints(-item.cost, item.titleVi);
+    if (!(await redeemReward(item.id))) return;
 
     // Save redemption
     const next = Array.from(new Set([...redeemedIds, item.id]));
-    setRedeemedIds(next);
-    try {
-      localStorage.setItem("pencily_redeemed_items", JSON.stringify(next));
-    } catch {
-      // ignore
-    }
+    setRedemptions({userId:user.id,ids:next});
+
 
     // Open success modal
     setSelectedReward(item);
@@ -405,7 +399,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
             <div className="relative">
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                 className="appearance-none pl-3 pr-7 py-2 bg-white border-2 border-slate-300 focus:border-[#0F2747] rounded-sm text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
               >
                 <option value="featured">{isVi ? "Nổi bật" : "Featured"}</option>
@@ -565,7 +559,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
 
       {/* 5. SUCCESS MODAL */}
       {isSuccessModalOpen && selectedReward && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-2xs animate-fadeIn">
+        <div className="pencily-side-panel">
           <div className="bg-white rounded-md border-2 border-[#0F2747] max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
             <button
               type="button"
@@ -637,7 +631,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
 
       {/* 6. HOW TO EARN MODAL */}
       {isHowToEarnOpen && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-2xs animate-fadeIn">
+        <div className="pencily-side-panel">
           <div className="bg-white rounded-md border-2 border-[#0F2747] max-w-xl w-full p-6 sm:p-7 space-y-5 shadow-2xl relative">
             <button
               type="button"
@@ -673,13 +667,13 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                     {isVi ? "Tham gia lớp học" : "Attend Study Pods"}
                   </span>
                   <span className="text-[11px] font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-xs">
-                    +10 PP / buổi
+                    1 PP / 12 phút
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
                   {isVi
-                    ? "Tham gia học tập tối thiểu 20 phút qua Web Room hoặc Voice Discord."
-                    : "Join class pods for at least 20 minutes via Web Room or Discord."}
+                    ? "Thời gian học trong phòng web được server xác nhận qua heartbeat hai phía."
+                    : "Web room attendance is verified by the server through a two-sided heartbeat."}
                 </p>
               </div>
 
@@ -689,7 +683,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                     {isVi ? "Chia sẻ tài liệu hay" : "Share Study Guides"}
                   </span>
                   <span className="text-[11px] font-black text-blue-800 bg-blue-100 px-2 py-0.5 rounded-xs">
-                    +15 PP / bài
+                    Xem thử · 0 PP
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -705,7 +699,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                     {isVi ? "Hỏi đáp & Thảo luận" : "Ask & Discuss"}
                   </span>
                   <span className="text-[11px] font-black text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-xs">
-                    +5 PP / bài
+                    Xem thử · 0 PP
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -721,7 +715,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                     {isVi ? "Host lớp Peer Tutor" : "Host as Peer Tutor"}
                   </span>
                   <span className="text-[11px] font-black text-purple-800 bg-purple-100 px-2 py-0.5 rounded-xs">
-                    +50 PP / buổi
+                    1 PP / 2 phút
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -747,7 +741,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
 
       {/* 7. REDEEMED ITEMS HISTORY MODAL */}
       {isRedeemedHistoryOpen && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-2xs animate-fadeIn">
+        <div className="pencily-side-panel">
           <div className="bg-white rounded-md border-2 border-[#0F2747] max-w-xl w-full p-6 space-y-4 shadow-2xl relative max-h-[85vh] flex flex-col">
             <button
               type="button"

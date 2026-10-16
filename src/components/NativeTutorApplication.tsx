@@ -149,7 +149,7 @@ export function NativeTutorApplication({ onSuccess, className = "" }: NativeTuto
             <button
               key={s.num}
               type="button"
-              onClick={() => setStep(s.num as any)}
+              onClick={() => setStep(s.num as 1 | 2 | 3)}
               className={`px-3 py-1.5 rounded-sm text-xs font-bold border-2 transition cursor-pointer ${
                 step === s.num
                   ? "bg-[#0F2747] text-white border-[#0F2747]"

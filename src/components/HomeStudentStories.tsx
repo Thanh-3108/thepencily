@@ -268,14 +268,14 @@ export function HomeStudentStories() {
               </p>
             </div>
 
-            {/* Official Distressed Rubber Stamp Asset */}
+            {/* Official Pencily Paper Badge Asset */}
             <div className="shrink-0 self-start sm:self-auto -mt-2 sm:mt-0">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 select-none pointer-events-none transform -rotate-12 hover:rotate-0 transition-transform">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 select-none pointer-events-none transform -rotate-6 hover:rotate-0 transition-transform">
                 <Image
-                  src="/brand/elements/roster-stamp.jpg"
-                  alt="Official Roster 2026"
+                  src="/brand/elements/pencily-paper-badge.png"
+                  alt="The Pencily Official Badge"
                   fill
-                  className="object-contain mix-blend-multiply opacity-85 drop-shadow-xs"
+                  className="object-contain drop-shadow-sm"
                 />
               </div>
             </div>

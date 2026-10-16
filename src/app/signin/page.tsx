@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { DiscordLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
+import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
 import { ArrowLeft, CheckCircle2, AlertCircle, Lock, Mail, User, GraduationCap, Building2, Eye, EyeOff } from "lucide-react";
 
 export default function SignInPage() {
@@ -69,14 +70,37 @@ export default function SignInPage() {
     );
   };
 
-  // Handle Database Sign In / Sign Up
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle Discord OAuth with Supabase PKCE flow
+  const handleDiscordAuth = async () => {
+    if (!supabase) {
+      setErrorMessage("Chưa cấu hình Supabase.");
+      return;
+    }
+    setIsSubmitting(true);
+    setErrorMessage(null);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "discord",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          scopes: "identify email",
+        },
+      });
+      if (error) throw error;
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : "Chưa thể kết nối tới Discord.");
+      setIsSubmitting(false);
+    }
+  };
+
+  // Handle Database Sign In / Sign Up with real Supabase Auth
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setInfoMessage(null);
 
     if (!email.trim()) {
-      setErrorMessage("Vui lòng nhập Email hoặc Tên đăng nhập.");
+      setErrorMessage("Vui lòng nhập Email.");
       return;
     }
 
@@ -93,25 +117,56 @@ export default function SignInPage() {
     setIsSubmitting(true);
 
     try {
-      const studentName =
-        authMode === "register"
-          ? fullName.trim()
-          : email.split("@")[0].replace(/[._-]/g, " ");
+      if (!supabase) {
+        // Fallback for preview mode
+        const studentName =
+          authMode === "register"
+            ? fullName.trim()
+            : email.split("@")[0].replace(/[._-]/g, " ");
 
-      loginWithCustomDatabase({
-        email: email.trim(),
-        name: studentName,
-        realName: authMode === "register" ? fullName.trim() : undefined,
-        school: school.trim() || "The Pencily Academy",
-        grade: grade || "Học sinh",
-      });
+        loginWithCustomDatabase({
+          email: email.trim(),
+          name: studentName,
+          realName: authMode === "register" ? fullName.trim() : undefined,
+          school: school.trim() || "The Pencily Academy",
+          grade: grade || "Học sinh",
+        });
 
-      // Smooth redirect
-      setTimeout(() => {
+        setTimeout(() => router.push("/dashboard"), 500);
+        return;
+      }
+
+      if (authMode === "register") {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password: password.trim(),
+          options: {
+            data: {
+              full_name: fullName.trim(),
+              school: school.trim() || "The Pencily Academy",
+              grade: grade || "Lớp 11",
+            },
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
+        });
+        if (error) throw error;
+
+        if (data.session) {
+          router.push("/dashboard");
+        } else {
+          setInfoMessage("Tài khoản đã tạo thành công! Hãy kiểm tra email để kích hoạt hoặc đăng nhập ngay nếu đã tắt confirm email.");
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password: password.trim(),
+        });
+        if (error) throw error;
         router.push("/dashboard");
-      }, 500);
+      }
     } catch (err) {
-      setErrorMessage("Đã có lỗi xảy ra. Vui lòng thử lại!");
+      setErrorMessage(err instanceof Error ? err.message : "Đăng nhập chưa thành công. Vui lòng thử lại!");
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -169,10 +224,12 @@ export default function SignInPage() {
 
           {/* Social Auth Providers */}
           <div className="space-y-3">
-            {/* 1. DISCORD (Active OAuth2) */}
-            <a
-              href="/api/auth/discord"
-              className="w-full flex items-center justify-between px-5 py-3.5 rounded-sm bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-sm shadow-sm hover:shadow transition-all active:scale-98 cursor-pointer group border-2 border-[#5865F2]"
+            {/* 1. DISCORD (Active OAuth2 via Supabase) */}
+            <button
+              type="button"
+              onClick={handleDiscordAuth}
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-between px-5 py-3.5 rounded-sm bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-sm shadow-sm hover:shadow transition-all active:scale-98 cursor-pointer group border-2 border-[#5865F2] disabled:opacity-50"
             >
               <div className="flex items-center gap-3">
                 <div className="w-7 h-7 rounded-xs bg-white/20 flex items-center justify-center">
@@ -183,7 +240,7 @@ export default function SignInPage() {
               <span className="text-[10px] font-semibold bg-white/20 px-2 py-0.5 rounded-xs uppercase tracking-wider">
                 {language === "vi" ? "Khuyên dùng" : "Recommended"}
               </span>
-            </a>
+            </button>
 
             {/* 2. GOOGLE (Placeholder) */}
             <button

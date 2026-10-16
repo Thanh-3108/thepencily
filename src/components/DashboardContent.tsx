@@ -21,6 +21,10 @@ import { DashboardShop } from "@/components/DashboardShop";
 import { PPExchangeShopModal } from "@/components/PPExchangeShopModal";
 import { OnboardingTourModal } from "@/components/OnboardingTourModal";
 import { DashboardSettings } from "@/components/DashboardSettings";
+import { TutorWorkspace } from "./TutorWorkspace";
+import { AcademicWorkspace } from "./AcademicWorkspace";
+import { AssistantWorkspace } from "./AssistantWorkspace";
+import { isSupabaseConfigured } from "@/lib/supabaseClient";
 import {
   ReferFriendModal,
   ReportBugModal,
@@ -43,6 +47,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
   const {
     user,
+    backendAuthenticated,
+    apiNotice,
+    clearNotice,
     updateUser,
     classes,
     addClass,
@@ -209,6 +216,8 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     profile: "Hồ sơ",
     "become-tutor": "Tutor",
     settings: "Cài đặt",
+    academic: "Academic",
+    assistant: "Hỏi Cú Pencily",
   };
 
   const tabTitlesEn: Record<DashboardTab, string> = {
@@ -222,6 +231,8 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     profile: "Profile",
     "become-tutor": "Tutor",
     settings: "Settings",
+    academic: "Academic",
+    assistant: "Ask Pencily",
   };
 
   const currentTabTitle = language === "vi" ? tabTitlesVi[activeTab] : tabTitlesEn[activeTab];
@@ -442,6 +453,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
         {/* Content Container (Pristine grid alignment with header above) */}
         <main className="flex-1 py-6 sm:py-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 space-y-8">
+          {!isSupabaseConfigured && <p role="status" className="border-2 border-amber-300 bg-amber-50 p-4 text-sm">Đang xem giao diện. Backend chưa cấu hình Supabase; chưa thể tạo lớp, duyệt hồ sơ hoặc tính điểm thật. Xem BACKEND_SETUP.md.</p>}
+          {isSupabaseConfigured && !backendAuthenticated && <p className="border-2 border-slate-300 bg-white p-4 text-sm">Hãy <Link href="/signin" className="underline font-bold">đăng nhập</Link> để ghi danh và lưu hoạt động học tập.</p>}
+          {apiNotice && <div role="status" className="bg-blue-50 border-2 border-blue-200 p-4 flex justify-between gap-3"><p>{apiNotice}</p><button aria-label="Đóng thông báo" onClick={clearNotice}><X size={16}/></button></div>}
           {/* Toast notifications */}
           {bookingToast && (
             <div className="p-4 rounded-md bg-[#0F2747] text-white flex items-center justify-between gap-4 animate-slideDown shadow-lg border-2 border-amber-400">
@@ -1498,6 +1512,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
             </div>
           )}
 
+          {activeTab === "academic" && <AcademicWorkspace />}
+          {activeTab === "assistant" && <AssistantWorkspace />}
+
           {/* ============================================================== */}
           {/* TAB: CLASS VIDEOS LIBRARY (Thư viện video lớp học) */}
           {/* ============================================================== */}
@@ -1574,9 +1591,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
         onClose={() => setIsCreateClassOpen(false)}
         tutorName={user.name}
         tutorSchool={user.school}
-        onSubmitCreate={(data) => {
-          addClass(data);
-          setBookingToast(`Đã mở lớp học "${data.title}" thành công! Lớp học đã được xuất bản.`);
+        onSubmitCreate={async (data) => {
+          await addClass(data);
+          setBookingToast(`Đã nộp lớp "${data.title}". Lớp chờ demo và Academic duyệt, chưa công khai.`);
           setTimeout(() => setBookingToast(null), 4000);
         }}
       />
