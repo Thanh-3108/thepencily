@@ -1,26 +1,5 @@
 import React from "react";
 
-// Hand-drawn 4-pointed golden sparkle
-export function StarSparkle({ className = "", size = 28 }: { className?: string; size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <path
-        d="M20 2C21 14 26 19 38 20C26 21 21 26 20 38C19 26 14 21 2 20C14 19 19 14 20 2Z"
-        fill="#FFC83D"
-        stroke="#FFC83D"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
-
 // Yellow hand-drawn scribble stroke
 export function YellowScribble({ className = "" }: { className?: string }) {
   return (
@@ -187,7 +166,7 @@ export function FloatingDoodleParticles({
       {positions.slice(0, count).map((p, i) => (
         <div
           key={i}
-          className="absolute animate-pulse"
+          className="absolute opacity-80"
           style={{
             top: p.top,
             left: p.left,

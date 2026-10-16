@@ -15,7 +15,7 @@ export default function CompleteProfileModal({
   onClose,
   required = false,
 }: CompleteProfileModalProps) {
-  const { user, completeProfile } = usePencily();
+  const { user, completeProfile, language } = usePencily();
 
   const [realName, setRealName] = useState(user.realName || (user.name !== "Học sinh Pencily" && !user.name.includes("#") ? user.name : ""));
   const [age, setAge] = useState(user.age ? String(user.age) : "17");
@@ -43,17 +43,17 @@ export default function CompleteProfileModal({
 
     const trimmed = realName.trim();
     if (!trimmed || trimmed.length < 3) {
-      setError("Vui lòng điền đầy đủ Họ và tên thật của bạn.");
+      setError(language === "vi" ? "Vui lòng điền đầy đủ Họ và tên thật của bạn." : "Please enter your full real name.");
       return;
     }
 
     if (!school.trim()) {
-      setError("Vui lòng nhập trường học bạn đang theo học.");
+      setError(language === "vi" ? "Vui lòng nhập trường học bạn đang theo học." : "Please enter your school name.");
       return;
     }
 
     if (customDisplayName !== null && customDisplayName.trim().length >= 10) {
-      setError("Tên hiển thị phải dưới 10 ký tự.");
+      setError(language === "vi" ? "Tên hiển thị phải dưới 10 ký tự." : "Display name must be under 10 characters.");
       return;
     }
 
@@ -71,30 +71,34 @@ export default function CompleteProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F2747]/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-[#0F2747]/10 shadow-2xl relative animate-scaleUp">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F2747]/70 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white rounded-md max-w-lg w-full p-6 sm:p-8 border-2 border-[#0F2747] shadow-2xl relative">
         {!required && onClose && (
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition cursor-pointer"
-            title="Đóng"
+            className="absolute top-5 right-5 p-1.5 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition cursor-pointer"
+            title={language === "vi" ? "Đóng" : "Close"}
+            aria-label={language === "vi" ? "Đóng" : "Close"}
           >
             <X className="w-5 h-5" />
           </button>
         )}
 
         <div className="text-center mb-6">
-          <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFC83D]/25 text-[#0F2747] flex items-center justify-center mb-3">
+          <div className="w-12 h-12 mx-auto rounded-sm bg-amber-100 border-2 border-amber-300 text-[#0F2747] flex items-center justify-center mb-3">
             <ShieldCheck className="w-6 h-6 text-[#0F2747]" />
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-[#0F2747] font-poppins">
-            Xác nhận thông tin
+            {language === "vi" ? "Xác nhận thông tin học sinh" : "Confirm Learner Profile"}
           </h2>
+          <p className="text-xs text-slate-500 mt-1">
+            {language === "vi" ? "Thông tin giúp lớp học và gia sư kết nối tốt nhất" : "Helps peer tutors and classes connect accurately"}
+          </p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-600 font-semibold">
+          <div className="mb-4 p-3 rounded-sm bg-red-50 border-2 border-red-300 text-xs text-red-700 font-semibold">
             {error}
           </div>
         )}
@@ -103,7 +107,7 @@ export default function CompleteProfileModal({
           {/* Họ tên thật */}
           <div>
             <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1.5">
-              Họ và tên thật *
+              {language === "vi" ? "Họ và tên thật *" : "Real Full Name *"}
             </label>
             <div className="relative">
               <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -112,16 +116,16 @@ export default function CompleteProfileModal({
                 required
                 value={realName}
                 onChange={(e) => setRealName(e.target.value)}
-                placeholder="Ví dụ: Huỳnh Công Thành"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#0F2747]/15 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
+                placeholder={language === "vi" ? "Ví dụ: Huỳnh Công Thành" : "e.g. Alex Nguyen"}
+                className="w-full pl-10 pr-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
               />
             </div>
-            {/* Tên hiển thị với nút cây bút để chỉnh sửa manual (dưới 10 ký tự) */}
+            {/* Tên hiển thị (dưới 10 ký tự) */}
             {!isEditingDisplayName ? (
-              <div className="flex items-center justify-between mt-2 px-3 py-2 rounded-xl bg-[#FFFDF9] border border-[#0F2747]/10">
+              <div className="flex items-center justify-between mt-2 px-3 py-2 rounded-sm bg-[#FFFDF9] border-2 border-slate-200">
                 <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium">
-                  <span>Tên hiển thị:</span>
-                  <span className="font-bold text-[#0F2747]">{effectiveDisplayName || "Chưa nhập"}</span>
+                  <span>{language === "vi" ? "Tên hiển thị:" : "Display Name:"}</span>
+                  <span className="font-bold text-[#0F2747]">{effectiveDisplayName || (language === "vi" ? "Chưa nhập" : "Not set")}</span>
                 </div>
                 <button
                   type="button"
@@ -131,17 +135,17 @@ export default function CompleteProfileModal({
                     }
                     setIsEditingDisplayName(true);
                   }}
-                  className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-[#0F2747] transition cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+                  className="p-1 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-slate-100 text-slate-600 hover:text-[#0F2747] transition cursor-pointer flex items-center gap-1 text-[11px] font-bold"
                   title="Chỉnh sửa tên hiển thị (dưới 10 ký tự)"
                 >
                   <Pencil className="w-3.5 h-3.5 text-[#0F2747]" />
-                  <span>Sửa</span>
+                  <span>{language === "vi" ? "Sửa" : "Edit"}</span>
                 </button>
               </div>
             ) : (
-              <div className="mt-2 p-2.5 rounded-xl bg-[#FFFDF9] border border-[#0F2747]/20 space-y-1.5">
+              <div className="mt-2 p-2.5 rounded-sm bg-[#FFFDF9] border-2 border-slate-300 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-600 font-bold shrink-0">Tên hiển thị:</span>
+                  <span className="text-xs text-slate-600 font-bold shrink-0">{language === "vi" ? "Tên hiển thị:" : "Display Name:"}</span>
                   <input
                     type="text"
                     maxLength={9}
@@ -153,23 +157,23 @@ export default function CompleteProfileModal({
                         setCustomDisplayName(val);
                       }
                     }}
-                    placeholder="Dưới 10 ký tự"
-                    className="flex-1 px-2.5 py-1 text-xs rounded-lg border border-[#0F2747]/20 bg-white text-[#0F2747] font-bold focus:outline-none focus:border-[#0F2747]"
+                    placeholder={language === "vi" ? "Dưới 10 ký tự" : "< 10 chars"}
+                    className="flex-1 px-2.5 py-1 text-xs rounded-sm border-2 border-slate-300 bg-white text-[#0F2747] font-bold focus:outline-none focus:border-[#0F2747]"
                   />
                   <button
                     type="button"
                     onClick={() => {
                       setIsEditingDisplayName(false);
                     }}
-                    className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 text-[#0F2747] hover:bg-slate-50 text-xs font-bold transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                    className="px-2.5 py-1 rounded-sm bg-white border-2 border-slate-300 text-[#0F2747] hover:bg-slate-50 text-xs font-bold transition cursor-pointer flex items-center gap-1 shadow-xs"
                     title="Lưu tên hiển thị"
                   >
                     <Check className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                    <span>Lưu</span>
+                    <span>{language === "vi" ? "Lưu" : "Save"}</span>
                   </button>
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 px-0.5">
-                  <span>Yêu cầu: Dưới 10 ký tự</span>
+                  <span>{language === "vi" ? "Yêu cầu: Dưới 10 ký tự" : "Max: Under 10 characters"}</span>
                   <span>{(customDisplayName ?? defaultDisplayName).length}/9</span>
                 </div>
               </div>
@@ -180,7 +184,7 @@ export default function CompleteProfileModal({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1.5">
-                Tuổi *
+                {language === "vi" ? "Tuổi *" : "Age *"}
               </label>
               <div className="relative">
                 <Calendar className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -192,28 +196,28 @@ export default function CompleteProfileModal({
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="17"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border-2 border-[#0F2747]/15 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1.5">
-                Khối lớp *
+                {language === "vi" ? "Khối lớp *" : "Grade *"}
               </label>
               <div className="relative">
                 <GraduationCap className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 <select
                   value={grade}
                   onChange={(e) => setGrade(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border-2 border-[#0F2747]/15 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9] cursor-pointer"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9] cursor-pointer"
                 >
-                  <option value="Lớp 9">Lớp 9</option>
-                  <option value="Lớp 10">Lớp 10</option>
-                  <option value="Lớp 11">Lớp 11</option>
-                  <option value="Lớp 12">Lớp 12</option>
-                  <option value="Đại học">Đại học / Sinh viên</option>
-                  <option value="Khác">Khác</option>
+                  <option value="Lớp 9">{language === "vi" ? "Lớp 9" : "Grade 9"}</option>
+                  <option value="Lớp 10">{language === "vi" ? "Lớp 10" : "Grade 10"}</option>
+                  <option value="Lớp 11">{language === "vi" ? "Lớp 11" : "Grade 11"}</option>
+                  <option value="Lớp 12">{language === "vi" ? "Lớp 12" : "Grade 12"}</option>
+                  <option value="Đại học">{language === "vi" ? "Đại học / Sinh viên" : "University / College"}</option>
+                  <option value="Khác">{language === "vi" ? "Khác" : "Other"}</option>
                 </select>
               </div>
             </div>
@@ -222,7 +226,7 @@ export default function CompleteProfileModal({
           {/* Trường học */}
           <div>
             <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1.5">
-              Trường đang theo học *
+              {language === "vi" ? "Trường đang theo học *" : "Current School *"}
             </label>
             <div className="relative">
               <Building2 className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -231,8 +235,8 @@ export default function CompleteProfileModal({
                 required
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
-                placeholder="Ví dụ: THPT Gia Định, THPT Chuyên Lê Hồng Phong..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#0F2747]/15 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
+                placeholder={language === "vi" ? "Ví dụ: THPT Gia Định, THPT Chuyên..." : "e.g. Gifted High School..."}
+                className="w-full pl-10 pr-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
               />
             </div>
           </div>
@@ -240,9 +244,9 @@ export default function CompleteProfileModal({
           <div className="pt-3">
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-bold text-sm shadow-2xs transition active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3 px-6 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] border-2 border-[#0F2747] font-bold text-sm shadow-xs transition active:scale-98 cursor-pointer flex items-center justify-center gap-2"
             >
-              <span>Xác nhận thông tin & Tiếp tục</span>
+              <span>{language === "vi" ? "Xác nhận thông tin & Tiếp tục" : "Confirm Profile & Continue"}</span>
             </button>
           </div>
         </form>

@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
       email: discordUser.email || "",
       avatar: avatarUrl,
       verified: true,
-      role: "Học viên Discord • The Pencily Gen 1.0",
+      role: "Học viên Discord • The Pencily",
       isDiscordLinked: true,
     };
 

@@ -29,7 +29,7 @@ export function LearningFormats({ onSelectFormat }: { onSelectFormat?: (format: 
       size: "Lớp tổ chức (15 – 30 bạn)",
       duration: "Kéo dài 3 – 6 tuần (1-2 buổi/tuần)",
       platform: "Discord Voice (Phòng học có phân quyền)",
-      desc: "Lớp học có giáo trình (syllabus) được ban Academic & Quality duyệt nghiêm ngặt. Tutor đồng hành sát sao cùng bài tập thực chiến và đánh giá cuối khoá.",
+      desc: "Lớp học có giáo trình được ban Academic & Quality duyệt nghiêm ngặt. Tutor đồng hành sát sao cùng bài tập thực chiến và đánh giá cuối khoá.",
       highlights: [
         "Giáo trình chuẩn hoá & slide minh họa trực quan",
         "Có điểm danh, theo dõi tiến độ và đánh giá năng lực",
@@ -90,7 +90,7 @@ export function LearningFormats({ onSelectFormat }: { onSelectFormat?: (format: 
               >
                 {item.featured && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#0F2747] text-[#FFC83D] text-xs font-black uppercase tracking-wider shadow">
-                    ★ Trọng Tâm Gen 1.0
+                     Mô Hình Trọng Tâm
                   </div>
                 )}
 

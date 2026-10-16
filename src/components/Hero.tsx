@@ -5,7 +5,11 @@ import Link from "next/link";
 import { InteractiveDoodleHero } from "./InteractiveDoodleHero";
 import { ArrowRight } from "lucide-react";
 
+import { usePencily } from "@/context/PencilyContext";
+
 export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
+  const { language } = usePencily();
+
   return (
     <div className="relative w-full overflow-hidden flex flex-col justify-center py-2 sm:py-4">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full">
@@ -23,14 +27,16 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
             </h1>
 
             <p className="font-inter text-base sm:text-lg text-[#3B4C63] max-w-2xl leading-relaxed">
-              Mang đến cho học sinh Việt Nam những buổi học cố vấn miễn phí và là không gian phát triển bản thân dành cho mọi người.
+              {language === "vi"
+                ? "Mang đến cho học sinh Việt Nam những buổi học kèm peer-tutoring miễn phí và là không gian phát triển bản thân dành cho mọi người."
+                : "Empowering Vietnamese students with free peer-tutoring sessions and an inclusive space for personal growth."}
             </p>
 
             {/* Action Buttons: Simply Dashboard & About */}
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
               >
                 <span>Dashboard</span>
                 <ArrowRight className="w-4 h-4 text-[#4F7ECB]" />
@@ -38,7 +44,7 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
 
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
               >
                 <span>About</span>
               </a>

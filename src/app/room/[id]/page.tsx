@@ -3,28 +3,9 @@
 import React, { useState, useEffect, useRef, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Mic,
-  MicOff,
-  Video,
-  VideoOff,
-  Monitor,
-  MonitorOff,
-  MessageSquare,
-  Users,
-  LogOut,
-  Check,
-  Send,
-  Sparkles,
-  Edit3,
-  FileText,
-  Share2,
-  Maximize2,
-  Minimize2,
-  ChevronLeft,
-} from "lucide-react";
+import { Mic, MicOff, Video, VideoOff, Monitor, MonitorOff, MessageSquare, Users, LogOut, Check, Send, Edit3, FileText, Share2, Maximize2, Minimize2, ChevronLeft } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
-import { PencilMascot } from "@/components/Logo";
+import { PencilyClassroomsIcon } from "@/components/icons/PencilyIcons";
 
 interface ChatMessage {
   id: string;
@@ -49,12 +30,12 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   const resolvedParams = use(params);
   const roomId = resolvedParams.id;
   const router = useRouter();
-  const { user, classes } = usePencily();
+  const { user, classes, language } = usePencily();
 
   // Find class title if exists
   const currentClass = classes.find((c) => c.meetUrl?.includes(roomId) || c.id === roomId);
-  const roomTitle = currentClass?.title || `Phòng Học Nhóm #${roomId.slice(-4)}`;
-  const subjectName = currentClass?.categoryLabel || "Học Trực Tuyến";
+  const roomTitle = currentClass?.title || (language === "vi" ? `Phòng Học Nhóm #${roomId.slice(-4)}` : `Study Room #${roomId.slice(-4)}`);
+  const subjectName = currentClass?.categoryLabel || (language === "vi" ? "Học Trực Tuyến" : "Online Learning");
 
   // Media states
   const [isMicOn, setIsMicOn] = useState(false);
@@ -75,9 +56,9 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Shared Scratchpad state
-  const [sharedNotes, setSharedNotes] = useState(
-    `# BẢNG GHI CHÚ CHUNG • ${roomTitle}\n- Hãy ghi lại công thức, đề bài hoặc thắc mắc tại đây\n- Mọi người trong phòng đều có thể xem và đóng góp!`
-  );
+  const defaultNotesVi = `# BẢNG GHI CHÚ CHUNG: ${roomTitle}\n- Hãy ghi lại công thức, đề bài hoặc thắc mắc tại đây\n- Mọi người trong phòng đều có thể xem và đóng góp!`;
+  const defaultNotesEn = `# SHARED SCRATCHPAD: ${roomTitle}\n- Write down formulas, questions, or notes here\n- Synchronized live with all study room peers!`;
+  const [sharedNotes, setSharedNotes] = useState(language === "vi" ? defaultNotesVi : defaultNotesEn);
   const [copiedNotes, setCopiedNotes] = useState(false);
 
   // Chat & Messages
@@ -85,8 +66,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
     {
       id: "sys-1",
       sender: "The Pencily",
-      text: "Chào mừng bạn đến với phòng học! Hãy bật mic khi thảo luận hoặc chia sẻ bài tập để cùng học nhé.",
-      time: "Vừa xong",
+      text: language === "vi"
+        ? "Chào mừng bạn đến với phòng học! Hãy bật mic khi thảo luận hoặc chia sẻ bài tập để cùng học nhé."
+        : "Welcome to the study room! Turn on your mic to discuss questions or share exercises.",
+      time: language === "vi" ? "Vừa xong" : "Just now",
       isSystem: true,
     },
   ]);
@@ -142,12 +125,12 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
     const channel = new BroadcastChannel(channelName);
     broadcastRef.current = channel;
 
-    // Send Join Announcement with verified given name (chỉ hiện đúng phần tên trong họ và tên)
+    // Send Join Announcement with verified given name
     const rawFullName = user.realName || user.name;
     const studentDisplayName =
       (rawFullName && !rawFullName.startsWith("@") && !rawFullName.includes("#") && rawFullName !== "Học sinh Pencily"
         ? getGivenName(rawFullName)
-        : "Học sinh");
+        : (language === "vi" ? "Học sinh" : "Learner"));
 
     const myProfile: PeerUser = {
       id: localUserId.current,
@@ -190,8 +173,8 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
             ...prev,
             {
               id: `sys-${Date.now()}`,
-              sender: "Hệ thống",
-              text: `${peer.name} đã tham gia phòng học.`,
+              sender: language === "vi" ? "Hệ thống" : "System",
+              text: language === "vi" ? `${peer.name} đã tham gia phòng học.` : `${peer.name} joined the study room.`,
               time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
               isSystem: true,
             },
@@ -246,7 +229,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       });
       channel.close();
     };
-  }, [roomId, user.name]);
+  }, [roomId, user.name, language]);
 
   // Scroll chat to bottom on new message
   useEffect(() => {
@@ -279,7 +262,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
     };
   }, []);
 
-  // 3. Audio Activity Detection & Measure (tiếng to đến đâu mức xanh dâng cao đến đó)
+  // 3. Audio Activity Detection & Measure
   const setupAudioDetection = (stream: MediaStream) => {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -303,7 +286,6 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           sum += dataArray[i];
         }
         const average = sum / dataArray.length;
-        // Normalize: speech volume mapped to 0-100%
         const normalized = Math.min(100, Math.max(0, Math.round((average / 50) * 100)));
         const speakingNow = normalized > 10;
 
@@ -364,7 +346,11 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         });
       } catch (err: any) {
         console.error("Mic access denied:", err);
-        setPermissionError("Không thể truy cập Microphone. Vui lòng cho phép quyền trong trình duyệt.");
+        setPermissionError(
+          language === "vi"
+            ? "Không thể truy cập Microphone. Vui lòng cho phép quyền trong trình duyệt."
+            : "Cannot access Microphone. Please allow permissions in your browser."
+        );
       }
     } else {
       if (localStreamRef.current) {
@@ -418,7 +404,11 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         });
       } catch (err: any) {
         console.error("Camera access denied:", err);
-        setPermissionError("Không thể truy cập Camera. Vui lòng cho phép quyền trong trình duyệt.");
+        setPermissionError(
+          language === "vi"
+            ? "Không thể truy cập Camera. Vui lòng cho phép quyền trong trình duyệt."
+            : "Cannot access Camera. Please allow permissions in your browser."
+        );
       }
     } else {
       if (localStreamRef.current) {
@@ -464,8 +454,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           ...prev,
           {
             id: `sys-${Date.now()}`,
-            sender: "Hệ thống",
-            text: `${user.realName || user.name} đang chia sẻ màn hình giảng bài.`,
+            sender: language === "vi" ? "Hệ thống" : "System",
+            text: language === "vi"
+              ? `${user.realName || user.name} đang chia sẻ màn hình giảng bài.`
+              : `${user.realName || user.name} is sharing their screen.`,
             time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             isSystem: true,
           },
@@ -504,7 +496,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
     const newMsg: ChatMessage = {
       id: `msg-${Date.now()}`,
-      sender: user.realName || user.name || "Tôi",
+      sender: user.realName || user.name || (language === "vi" ? "Tôi" : "Me"),
       text: messageInput.trim(),
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
@@ -568,23 +560,25 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   };
 
   return (
-    <div className="h-screen w-full bg-[#FFF9EF] text-[#0F2747] flex flex-col overflow-hidden font-sans select-none">
-      {/* 1. TOP ROOM HEADER - AUTHENTIC THE PENCILY WARM CREAM & DEEP NAVY */}
-      <header className="h-16 px-4 sm:px-6 bg-[#FFF9EF]/90 backdrop-blur-md border-b border-[#0F2747]/10 flex items-center justify-between shrink-0 z-20">
+    <div className="h-[100dvh] max-h-[100dvh] w-full bg-[#FFF9EF] text-[#0F2747] flex flex-col overflow-hidden font-sans select-none">
+      {/* 1. TOP ROOM HEADER */}
+      <header className="h-16 px-4 sm:px-6 bg-[#FFF9EF] border-b-2 border-slate-300 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-3.5 min-w-0">
           <Link
             href="/dashboard"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-[#0F2747]/15 transition text-xs font-bold shadow-2xs shrink-0 cursor-pointer"
-            title="Quay lại Dashboard"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 transition text-xs font-bold shadow-xs shrink-0 cursor-pointer"
+            title={language === "vi" ? "Quay lại Dashboard" : "Back to Dashboard"}
           >
             <ChevronLeft className="w-4 h-4 text-[#0F2747]" />
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
 
-          <div className="h-5 w-px bg-[#0F2747]/10 hidden sm:block shrink-0" />
+          <div className="h-5 w-px bg-slate-300 hidden sm:block shrink-0" />
 
           <div className="flex items-center gap-2.5 min-w-0">
-            <PencilMascot size="sm" className="hidden sm:inline-flex" />
+            <div className="w-7 h-7 rounded-sm bg-[#0F2747] text-white hidden sm:flex items-center justify-center shrink-0 border border-slate-300">
+              <PencilyClassroomsIcon size={14} />
+            </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h1
@@ -593,12 +587,12 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 >
                   {roomTitle}
                 </h1>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFC83D]/30 text-[#0F2747] border border-[#FFC83D] shrink-0">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-[11px] font-bold bg-[#FFC83D]/30 text-[#0F2747] border-2 border-[#FFC83D] shrink-0">
                   {formatDuration(elapsedSeconds)}
                 </span>
               </div>
               <p className="text-[11px] text-[#52637A] truncate hidden md:block">
-                {subjectName} • Phòng học trực tiếp The Pencily
+                {subjectName} | {language === "vi" ? "Phòng học trực tiếp The Pencily" : "The Pencily Live Study Room"}
               </p>
             </div>
           </div>
@@ -610,34 +604,35 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs font-black transition-all shadow-2xs active:scale-95 cursor-pointer"
-            title="Sao chép link mời bạn cùng vào học"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs font-black transition-all border-2 border-[#0F2747] shadow-xs active:scale-95 cursor-pointer"
+            title={language === "vi" ? "Sao chép link mời bạn cùng vào học" : "Copy link to invite study peers"}
           >
             {copiedLink ? (
               <>
                 <Check className="w-3.5 h-3.5 text-[#0F2747]" />
-                <span>Đã sao chép!</span>
+                <span>{language === "vi" ? "Đã sao chép!" : "Copied!"}</span>
               </>
             ) : (
               <>
                 <Share2 className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Mời bạn học</span>
+                <span className="hidden sm:inline">{language === "vi" ? "Mời bạn học" : "Invite Peers"}</span>
               </>
             )}
           </button>
 
           {/* Members Count Badge */}
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#0F2747]/10 text-xs font-bold text-[#0F2747] shadow-2xs">
+          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white border-2 border-slate-300 text-xs font-bold text-[#0F2747] shadow-xs">
             <Users className="w-3.5 h-3.5 text-[#4F7ECB]" />
-            <span>{peers.length + 1} bạn</span>
+            <span>{peers.length + 1} {language === "vi" ? "bạn" : "peers"}</span>
           </div>
 
           {/* Fullscreen Toggle */}
           <button
             type="button"
             onClick={toggleFullscreen}
-            className="p-2 rounded-xl bg-white hover:bg-slate-50 text-[#0F2747] border border-[#0F2747]/10 transition cursor-pointer hidden md:flex shadow-2xs"
-            title="Toàn màn hình"
+            className="p-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 transition cursor-pointer hidden md:flex shadow-xs"
+            title={language === "vi" ? "Toàn màn hình" : "Fullscreen"}
+            aria-label={language === "vi" ? "Toàn màn hình" : "Fullscreen"}
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
@@ -646,12 +641,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           <button
             type="button"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={`p-2 rounded-xl border transition cursor-pointer shadow-2xs ${
+            className={`p-2 rounded-sm border-2 transition cursor-pointer shadow-xs ${
               isSidebarOpen
                 ? "bg-[#0F2747] text-white border-[#0F2747]"
-                : "bg-white text-[#0F2747] border-[#0F2747]/15 hover:bg-slate-50"
+                : "bg-white text-[#0F2747] border-slate-300 hover:bg-slate-50"
             }`}
-            title="Mở bảng ghi chú & chat"
+            title={language === "vi" ? "Mở bảng ghi chú & chat" : "Toggle notes & chat"}
+            aria-label={language === "vi" ? "Mở bảng ghi chú & chat" : "Toggle notes & chat"}
           >
             <MessageSquare className="w-4 h-4" />
           </button>
@@ -660,7 +656,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
       {/* Permission alert banner if any */}
       {permissionError && (
-        <div className="bg-amber-100 text-amber-900 border-b border-amber-300 px-4 py-2 text-xs text-center flex items-center justify-between z-30">
+        <div className="bg-amber-100 text-amber-900 border-b-2 border-amber-300 px-4 py-2 text-xs text-center flex items-center justify-between z-30">
           <span className="mx-auto font-bold">⚠️ {permissionError}</span>
           <button
             onClick={() => setPermissionError(null)}
@@ -673,11 +669,11 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
       {/* 2. MAIN STAGE & SIDEBAR WORKSPACE */}
       <div className="flex-1 flex min-h-0 relative">
-        {/* Central Stage (Study Desk) */}
+        {/* Central Stage */}
         <div className={`flex-1 p-3 sm:p-5 flex flex-col justify-center items-center relative bg-[#FFF9EF] min-h-0 ${isScreenSharing ? "overflow-hidden" : "overflow-y-auto"}`}>
           {/* SCREEN SHARE STAGE (if active) */}
           {isScreenSharing && (
-            <div className="w-full flex-1 min-h-0 mb-3 bg-slate-900 rounded-3xl overflow-hidden border-2 border-[#0F2747]/20 relative shadow-xl flex items-center justify-center">
+            <div className="w-full flex-1 min-h-0 mb-3 bg-slate-900 rounded-md overflow-hidden border-2 border-[#0F2747] relative shadow-xl flex items-center justify-center">
               <video
                 ref={screenVideoRef}
                 autoPlay
@@ -685,9 +681,9 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 muted
                 className="w-full h-full object-contain"
               />
-              <div className="absolute top-3 left-3 bg-[#0F2747]/85 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs font-bold text-white flex items-center gap-2 border border-white/10 shadow-md">
+              <div className="absolute top-3 left-3 bg-[#0F2747]/90 px-3 py-1.5 rounded-sm text-xs font-bold text-white flex items-center gap-2 border-2 border-white/20 shadow-md">
                 <Monitor className="w-3.5 h-3.5 text-[#FFC83D]" />
-                <span>Màn hình bài học đang được chia sẻ</span>
+                <span>{language === "vi" ? "Màn hình bài học đang được chia sẻ" : "Screen sharing is active"}</span>
               </div>
             </div>
           )}
@@ -708,7 +704,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           >
             {/* TILE 1: LOCAL USER (YOU) */}
             <div
-              className={`relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border-2 transition-all flex flex-col items-center justify-center shadow-md ${
+              className={`relative rounded-md overflow-hidden bg-white border-2 transition-all flex flex-col items-center justify-center shadow-xs ${
                 isScreenSharing
                   ? "w-28 sm:w-36 h-20 sm:h-24 shrink-0"
                   : peers.length === 0
@@ -716,8 +712,8 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                   : "aspect-[4/3] w-full"
               } ${
                 isSpeaking
-                  ? "border-[#FFC83D] shadow-[0_10px_35px_rgba(255,200,61,0.35)] ring-4 ring-[#FFC83D]/30"
-                  : "border-[#0F2747]/15 hover:border-[#0F2747]/30"
+                  ? "border-[#FFC83D] ring-2 ring-[#FFC83D]/40"
+                  : "border-slate-300 hover:border-[#0F2747]"
               }`}
             >
               {/* Camera Stream if ON */}
@@ -736,15 +732,15 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 <div className={`relative flex flex-col items-center justify-center text-center ${isScreenSharing ? "p-1.5" : "p-6"}`}>
                   {/* Profile Avatar */}
                   <div
-                    className={`relative rounded-full flex items-center justify-center font-black text-white shadow-lg border-2 sm:border-3 transition-all z-10 ${
+                    className={`relative rounded-sm flex items-center justify-center font-black text-white shadow-xs border-2 transition-all z-10 ${
                       isScreenSharing
                         ? "w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-sm"
                         : peers.length === 0
-                        ? "w-24 h-24 sm:w-28 sm:h-28 text-3xl sm:text-4xl"
-                        : "w-20 h-20 text-2xl"
+                        ? "w-20 h-20 sm:w-24 sm:h-24 text-3xl sm:text-4xl"
+                        : "w-16 h-16 text-xl"
                     } ${
                       isSpeaking
-                        ? "bg-[#0F2747] border-[#FFC83D] ring-2 sm:ring-4 ring-[#FFC83D]/40"
+                        ? "bg-[#0F2747] border-[#FFC83D] ring-2 ring-[#FFC83D]/40"
                         : "bg-[#0F2747] border-[#FFC83D]"
                     }`}
                   >
@@ -752,7 +748,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                       <img
                         src={user.avatar}
                         alt={user.realName || user.name}
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-sm object-cover"
                       />
                     ) : (
                       user.avatar || (getGivenName(user.realName || user.name)).charAt(0) || "P"
@@ -764,11 +760,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                       title={user.realName || user.name}
                       className={`font-black text-[#0F2747] block font-poppins truncate ${isScreenSharing ? "max-w-[120px] sm:max-w-[150px] text-[10px] sm:text-xs" : "max-w-[180px] sm:max-w-[240px] text-base sm:text-lg"}`}
                     >
-                      {getGivenName(user.realName || user.name) || "Bạn"} (Bạn)
+                      {getGivenName(user.realName || user.name) || (language === "vi" ? "Bạn" : "You")} ({language === "vi" ? "Bạn" : "You"})
                     </span>
                     {!isScreenSharing && (
                       <span className="text-xs text-[#52637A] font-bold mt-0.5 inline-flex items-center gap-1">
-                        {currentClass?.tutorName === (user.realName || user.name) ? "★ Trưởng phòng (Host)" : "Học viên"}
+                        {currentClass?.tutorName === (user.realName || user.name)
+                          ? (language === "vi" ? " Trưởng phòng" : " Host")
+                          : (language === "vi" ? "Học viên" : "Learner")}
                       </span>
                     )}
                   </div>
@@ -776,25 +774,25 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
               )}
 
               {/* Status Tags */}
-              <div className={`absolute flex items-center gap-1 z-10 ${isScreenSharing ? "top-1.5 left-1.5" : "top-4 left-4"}`}>
-                <span className={`rounded-lg font-black bg-[#FFC83D] text-[#0F2747] shadow-xs ${isScreenSharing ? "px-1.5 py-0.5 text-[8px]" : "px-2.5 py-1 text-[10px]"}`}>
-                  BẠN
+              <div className={`absolute flex items-center gap-1 z-10 ${isScreenSharing ? "top-1.5 left-1.5" : "top-3 left-3"}`}>
+                <span className={`rounded-xs font-black bg-[#FFC83D] text-[#0F2747] border border-[#0F2747] shadow-xs ${isScreenSharing ? "px-1.5 py-0.5 text-[8px]" : "px-2 py-0.5 text-[10px]"}`}>
+                  {language === "vi" ? "BẠN" : "YOU"}
                 </span>
               </div>
 
-              {/* Bottom Mic Badge with Audio Level Measure (Tiếng to đến đâu mức xanh dâng cao đến đó) */}
-              <div className={`absolute z-10 ${isScreenSharing ? "bottom-1.5 right-1.5" : "bottom-3 sm:bottom-4 right-3 sm:right-4"}`}>
+              {/* Bottom Mic Badge with Audio Level Measure */}
+              <div className={`absolute z-10 ${isScreenSharing ? "bottom-1.5 right-1.5" : "bottom-3 right-3"}`}>
                 {isMicOn ? (
                   <div
-                    className={`flex items-center gap-1.5 bg-white/95 backdrop-blur-md border border-[#0F2747]/15 shadow-md ${
-                      isScreenSharing ? "px-1.5 py-1 rounded-lg" : "px-2.5 py-1.5 rounded-xl"
+                    className={`flex items-center gap-1.5 bg-white border-2 border-slate-300 shadow-xs ${
+                      isScreenSharing ? "px-1.5 py-1 rounded-xs" : "px-2 py-1 rounded-sm"
                     }`}
-                    title="Micro đang bật (Đo âm lượng giọng nói)"
+                    title={language === "vi" ? "Micro đang bật (Đo âm lượng giọng nói)" : "Mic is on (Voice volume level)"}
                   >
                     <Mic className={`${isScreenSharing ? "w-3 h-3" : "w-4 h-4"} text-emerald-600 shrink-0`} />
                     {/* Vertical Volume Measure Bar */}
                     <div
-                      className={`bg-slate-200/90 rounded-xs overflow-hidden flex flex-col justify-end p-[1px] ${
+                      className={`bg-slate-200 rounded-xs overflow-hidden flex flex-col justify-end p-[1px] ${
                         isScreenSharing ? "w-1.5 h-4" : "w-2.5 h-6"
                       }`}
                     >
@@ -807,12 +805,12 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                   </div>
                 ) : (
                   <div
-                    className={`rounded-xl bg-red-500 text-white flex items-center justify-center shadow-md ${
-                      isScreenSharing ? "w-5 h-5" : "w-8 h-8"
+                    className={`rounded-sm bg-red-600 text-white flex items-center justify-center border-2 border-red-700 shadow-xs ${
+                      isScreenSharing ? "w-5 h-5" : "w-7 h-7"
                     }`}
-                    title="Micro đã tắt"
+                    title={language === "vi" ? "Micro đã tắt" : "Mic is off"}
                   >
-                    <MicOff className={isScreenSharing ? "w-3 h-3" : "w-4 h-4"} />
+                    <MicOff className={isScreenSharing ? "w-3 h-3" : "w-3.5 h-3.5"} />
                   </div>
                 )}
               </div>
@@ -822,26 +820,25 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
             {peers.map((peer) => (
               <div
                 key={peer.id}
-                className={`relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border-2 transition-all flex flex-col items-center justify-center shadow-md ${
+                className={`relative rounded-md overflow-hidden bg-white border-2 transition-all flex flex-col items-center justify-center shadow-xs ${
                   isScreenSharing
                     ? "w-28 sm:w-36 h-20 sm:h-24 shrink-0"
                     : "aspect-[4/3] w-full"
                 } ${
                   peer.isSpeaking
-                    ? "border-[#FFC83D] shadow-[0_10px_35px_rgba(255,200,61,0.35)] ring-4 ring-[#FFC83D]/30"
-                    : "border-[#0F2747]/15 hover:border-[#0F2747]/30"
+                    ? "border-[#FFC83D] ring-2 ring-[#FFC83D]/40"
+                    : "border-slate-300 hover:border-[#0F2747]"
                 }`}
               >
                 <div className={`relative flex flex-col items-center justify-center text-center ${isScreenSharing ? "p-1.5" : "p-4"}`}>
-
                   <div
-                    className={`rounded-full flex items-center justify-center font-bold text-white shadow-md border-2 sm:border-3 transition-all z-10 ${
+                    className={`rounded-sm flex items-center justify-center font-bold text-white shadow-xs border-2 transition-all z-10 ${
                       isScreenSharing
                         ? "w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-sm"
-                        : "w-20 h-20 text-2xl"
+                        : "w-16 h-16 text-xl"
                     } ${
                       peer.isSpeaking
-                        ? "bg-[#0F2747] border-[#FFC83D] ring-2 sm:ring-4 ring-[#FFC83D]/40"
+                        ? "bg-[#0F2747] border-[#FFC83D] ring-2 ring-[#FFC83D]/40"
                         : "bg-[#0F2747] border-[#FFC83D]"
                     }`}
                   >
@@ -849,7 +846,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                       <img
                         src={peer.avatar}
                         alt={peer.name}
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-sm object-cover"
                       />
                     ) : (
                       peer.avatar || (getGivenName(peer.name)).charAt(0) || "S"
@@ -864,24 +861,25 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                   </span>
                   {!isScreenSharing && (
                     <span className="text-[11px] text-[#52637A] font-medium z-10">
-                      {peer.isHost ? "Trưởng phòng" : "Học sinh"}
+                      {peer.isHost
+                        ? (language === "vi" ? "Trưởng phòng" : "Host")
+                        : (language === "vi" ? "Học sinh" : "Learner")}
                     </span>
                   )}
                 </div>
 
                 {/* Peer Mic Badge with Audio Level Measure */}
-                <div className={`absolute z-10 ${isScreenSharing ? "bottom-1.5 right-1.5" : "bottom-3 sm:bottom-4 right-3 sm:right-4"}`}>
+                <div className={`absolute z-10 ${isScreenSharing ? "bottom-1.5 right-1.5" : "bottom-3 right-3"}`}>
                   {peer.isMicOn ? (
                     <div
-                      className={`flex items-center gap-1.5 bg-white/95 backdrop-blur-md border border-[#0F2747]/15 shadow-md ${
-                        isScreenSharing ? "px-1.5 py-1 rounded-lg" : "px-2.5 py-1.5 rounded-xl"
+                      className={`flex items-center gap-1.5 bg-white border-2 border-slate-300 shadow-xs ${
+                        isScreenSharing ? "px-1.5 py-1 rounded-xs" : "px-2 py-1 rounded-sm"
                       }`}
-                      title={`${peer.name} đang bật micro`}
+                      title={`${peer.name} ${language === "vi" ? "đang bật micro" : "has mic turned on"}`}
                     >
                       <Mic className={`${isScreenSharing ? "w-2.5 h-2.5" : "w-3.5 h-3.5"} text-emerald-600 shrink-0`} />
-                      {/* Vertical Volume Measure Bar */}
                       <div
-                        className={`bg-slate-200/90 rounded-xs overflow-hidden flex flex-col justify-end p-[1px] ${
+                        className={`bg-slate-200 rounded-xs overflow-hidden flex flex-col justify-end p-[1px] ${
                           isScreenSharing ? "w-1.5 h-4" : "w-2.5 h-6"
                         }`}
                       >
@@ -893,10 +891,10 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                     </div>
                   ) : (
                     <div
-                      className={`rounded-xl bg-red-500 text-white flex items-center justify-center shadow-md ${
-                        isScreenSharing ? "w-5 h-5" : "w-8 h-8"
+                      className={`rounded-sm bg-red-600 text-white flex items-center justify-center border-2 border-red-700 shadow-xs ${
+                        isScreenSharing ? "w-5 h-5" : "w-7 h-7"
                       }`}
-                      title={`${peer.name} đã tắt micro`}
+                      title={`${peer.name} ${language === "vi" ? "đã tắt micro" : "has mic turned off"}`}
                     >
                       <MicOff className={isScreenSharing ? "w-2.5 h-2.5" : "w-3.5 h-3.5"} />
                     </div>
@@ -908,23 +906,25 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
           {/* Helper Banner when alone in room */}
           {peers.length === 0 && !isScreenSharing && (
-            <div className="mt-6 text-center max-w-md p-4 rounded-2xl bg-white/90 border border-[#0F2747]/10 shadow-xs backdrop-blur-sm">
+            <div className="mt-6 text-center max-w-md p-4 rounded-md bg-white border-2 border-slate-300 shadow-xs">
               <p className="text-xs text-[#4B5563] leading-relaxed">
-                🎉 Bạn đã mở phòng học thành công! Bấm{" "}
+                🎉 {language === "vi" ? "Bạn đã mở phòng học thành công! Bấm" : "Room launched successfully! Click"}{" "}
                 <strong className="text-[#0F2747] underline cursor-pointer font-bold" onClick={handleCopyLink}>
-                  Mời bạn học
+                  {language === "vi" ? "Mời bạn học" : "Invite Peers"}
                 </strong>{" "}
-                để gửi link cho bạn bè cùng vào học bài và giải đề nhé.
+                {language === "vi"
+                  ? "để gửi link cho bạn bè cùng vào học bài và giải đề nhé."
+                  : "to share the study link with peers to practice problems together."}
               </p>
             </div>
           )}
         </div>
 
-        {/* 3. RIGHT SIDEBAR: DUAL TABS (CHAT & SCRATCHPAD) - RESIZABLE */}
+        {/* 3. RIGHT SIDEBAR: DUAL TABS (CHAT & SCRATCHPAD) */}
         {isSidebarOpen && (
           <aside
             style={{ width: `${sidebarWidth}px` }}
-            className="relative bg-white border-l border-[#0F2747]/10 flex flex-col h-full z-10 shrink-0 shadow-lg max-w-[85vw]"
+            className="relative bg-white border-l-2 border-slate-300 flex flex-col h-full z-10 shrink-0 shadow-lg max-w-[85vw]"
           >
             {/* Left Edge Resize Drag Handle */}
             <div
@@ -935,13 +935,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 document.body.style.userSelect = "none";
               }}
               className="absolute top-0 bottom-0 -left-2 w-4 cursor-col-resize z-30 group hover:bg-[#FFC83D]/30 flex items-center justify-center transition-colors select-none"
-              title="Kéo sang trái/phải để chỉnh độ rộng khung trò chuyện & ghi chú"
+              title={language === "vi" ? "Kéo sang trái/phải để chỉnh độ rộng khung" : "Drag left/right to resize sidebar"}
             >
-              <div className="w-[3px] h-10 rounded-xs bg-[#0F2747]/20 group-hover:bg-[#0F2747] transition-colors" />
+              <div className="w-[3px] h-10 rounded-xs bg-[#0F2747]/30 group-hover:bg-[#0F2747] transition-colors" />
             </div>
 
-            {/* Tabs Header - Clean Underline Style, No Background Block */}
-            <div className="px-4 border-b border-[#0F2747]/10 flex items-center gap-6 bg-white">
+            {/* Tabs Header */}
+            <div className="px-4 border-b-2 border-slate-200 flex items-center gap-6 bg-white">
               <button
                 type="button"
                 onClick={() => setActiveTab("chat")}
@@ -952,7 +952,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 }`}
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>Trò chuyện</span>
+                <span>{language === "vi" ? "Trò chuyện" : "Chat"}</span>
               </button>
 
               <button
@@ -965,33 +965,37 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 }`}
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>Bảng ghi chú</span>
+                <span>{language === "vi" ? "Bảng ghi chú" : "Scratchpad"}</span>
               </button>
             </div>
 
             {/* TAB CONTENT 1: CHAT */}
             {activeTab === "chat" && (
               <div className="flex-1 flex flex-col min-h-0 bg-[#FFFDF9]">
-                <div className="p-3 border-b border-[#0F2747]/10 flex items-center justify-between text-xs text-[#52637A] bg-white">
-                  <span className="font-bold text-[#0F2747]">Tin nhắn phòng học</span>
-                  <span className="text-[11px] font-semibold">{peers.length + 1} thành viên</span>
+                <div className="p-3 border-b-2 border-slate-200 flex items-center justify-between text-xs text-[#52637A] bg-white">
+                  <span className="font-bold text-[#0F2747]">
+                    {language === "vi" ? "Tin nhắn phòng học" : "Room Chat"}
+                  </span>
+                  <span className="text-[11px] font-semibold">
+                    {peers.length + 1} {language === "vi" ? "thành viên" : "members"}
+                  </span>
                 </div>
 
-                {/* Messages Stream - 2 distinct sides for self vs others */}
+                {/* Messages Stream */}
                 <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3.5">
                   {chatMessages.map((msg) => {
                     if (msg.isSystem) {
                       return (
                         <div
                           key={msg.id}
-                          className="my-1.5 p-2 rounded-xl bg-amber-50 text-amber-900 italic text-[11px] border border-amber-200/80 text-center leading-relaxed"
+                          className="my-1.5 p-2 rounded-xs bg-amber-50 text-amber-900 italic text-[11px] border-2 border-amber-300 text-center leading-relaxed"
                         >
                           {msg.text}
                         </div>
                       );
                     }
 
-                    const isMe = msg.sender === user.name || msg.sender === "Tôi";
+                    const isMe = msg.sender === user.name || msg.sender === (language === "vi" ? "Tôi" : "Me") || msg.sender === "Tôi";
 
                     return (
                       <div
@@ -1009,17 +1013,17 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                               isMe ? "text-[#0F2747]" : "text-[#52637A]"
                             }`}
                           >
-                            {isMe ? `${msg.sender} (Bạn)` : msg.sender}
+                            {isMe ? `${msg.sender} (${language === "vi" ? "Bạn" : "You"})` : msg.sender}
                           </span>
                           <span className="text-[10px] text-gray-400">{msg.time}</span>
                         </div>
 
-                        {/* Bubble - Compact fit without stretching full width, multiline preserved */}
+                        {/* Bubble */}
                         <div
-                          className={`max-w-[85%] w-fit px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap break-words shadow-xs ${
+                          className={`max-w-[85%] w-fit px-3.5 py-2.5 rounded-sm text-xs leading-relaxed whitespace-pre-wrap break-words border-2 shadow-xs ${
                             isMe
-                              ? "bg-[#0F2747] text-white rounded-tr-xs"
-                              : "bg-white text-[#0F2747] border border-[#0F2747]/15 rounded-tl-xs"
+                              ? "bg-[#0F2747] text-white border-[#0F2747]"
+                              : "bg-white text-[#0F2747] border-slate-300"
                           }`}
                         >
                           {msg.text}
@@ -1030,16 +1034,16 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                   <div ref={chatBottomRef} />
                 </div>
 
-                {/* Message Input Box with Multiline & Shift+Enter Support */}
+                {/* Message Input Box with Multiline Support */}
                 <form
                   onSubmit={handleSendMessage}
-                  className="p-3 border-t border-[#0F2747]/10 flex flex-col gap-1.5 bg-white"
+                  className="p-3 border-t-2 border-slate-200 flex flex-col gap-1.5 bg-white"
                 >
                   <div className="flex items-end gap-2">
                     <textarea
                       ref={chatTextareaRef}
                       rows={1}
-                      placeholder="Nhập tin nhắn..."
+                      placeholder={language === "vi" ? "Nhập tin nhắn..." : "Type a message..."}
                       value={messageInput}
                       onChange={(e) => setMessageInput(e.target.value)}
                       onKeyDown={(e) => {
@@ -1048,67 +1052,74 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                           handleSendMessage();
                         }
                       }}
-                      className="flex-1 bg-[#FFFDF9] border border-[#0F2747]/15 rounded-xl px-3.5 py-2.5 text-xs text-[#0F2747] placeholder-[#94A3B8] focus:outline-none focus:border-[#0F2747] min-h-[40px] max-h-28 resize-none overflow-y-auto leading-relaxed font-sans"
+                      className="flex-1 bg-[#FFFDF9] border-2 border-slate-300 rounded-sm px-3.5 py-2 text-xs text-[#0F2747] placeholder-slate-400 focus:outline-none focus:border-[#0F2747] min-h-[40px] max-h-28 resize-none overflow-y-auto leading-relaxed font-sans"
                     />
                     <button
                       type="submit"
                       disabled={!messageInput.trim()}
-                      className="p-2.5 rounded-xl bg-[#FFC83D] hover:bg-[#EAB308] disabled:opacity-40 disabled:cursor-not-allowed text-[#0F2747] font-bold transition cursor-pointer shrink-0 active:scale-95 shadow-2xs h-[40px] w-[40px] flex items-center justify-center"
-                      title="Gửi tin nhắn (Enter)"
+                      className="p-2.5 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] border-2 border-[#0F2747] disabled:opacity-40 disabled:cursor-not-allowed text-[#0F2747] font-bold transition cursor-pointer shrink-0 active:scale-95 shadow-xs h-[40px] w-[40px] flex items-center justify-center"
+                      title={language === "vi" ? "Gửi tin nhắn" : "Send message"}
+                      aria-label={language === "vi" ? "Gửi tin nhắn" : "Send message"}
                     >
                       <Send className="w-4 h-4" />
                     </button>
                   </div>
                   <div className="flex items-center justify-between px-1 text-[10px] text-gray-400 select-none">
-                    <span>Shift + Enter để xuống dòng</span>
-                    <span>Enter để gửi</span>
+                    <span>{language === "vi" ? "Shift + Enter để xuống dòng" : "Shift + Enter for new line"}</span>
+                    <span>{language === "vi" ? "Enter để gửi" : "Enter to send"}</span>
                   </div>
                 </form>
               </div>
             )}
 
-            {/* TAB CONTENT 2: SHARED SCRATCHPAD (GHI CHÚ) */}
+            {/* TAB CONTENT 2: SHARED SCRATCHPAD */}
             {activeTab === "notes" && (
               <div className="flex-1 flex flex-col min-h-0 p-3 bg-[#FFFDF9]">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-black text-[#0F2747] flex items-center gap-1.5">
                     <Edit3 className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                    Ghi chú bài học đồng bộ
+                    {language === "vi" ? "Ghi chú bài học đồng bộ" : "Live Synchronized Scratchpad"}
                   </span>
                   <button
                     type="button"
                     onClick={handleCopyNotes}
                     className="text-[11px] font-bold text-[#0F2747] hover:underline cursor-pointer"
                   >
-                    {copiedNotes ? "✓ Đã copy!" : "Copy ghi chú"}
+                    {copiedNotes ? (language === "vi" ? "✓ Đã copy!" : "✓ Copied!") : (language === "vi" ? "Copy ghi chú" : "Copy Notes")}
                   </button>
                 </div>
 
                 <p className="text-[11px] text-[#52637A] mb-2 leading-relaxed">
-                  Mọi nội dung bạn gõ ở đây sẽ được đồng bộ trực tiếp tới tất cả bạn học trong phòng.
+                  {language === "vi"
+                    ? "Mọi nội dung bạn gõ ở đây sẽ được đồng bộ trực tiếp tới tất cả bạn học trong phòng."
+                    : "Notes entered here synchronize in real-time across all room participants."}
                 </p>
 
                 <textarea
                   value={sharedNotes}
                   onChange={(e) => handleNotesChange(e.target.value)}
-                  placeholder="Nhập ghi chú, công thức Toán, từ vựng hoặc đề thi cần thảo luận..."
-                  className="flex-1 w-full p-3.5 rounded-xl bg-white border border-[#0F2747]/15 text-xs text-[#0F2747] placeholder-slate-400 focus:outline-none focus:border-[#0F2747] resize-none font-mono leading-relaxed shadow-2xs"
+                  placeholder={
+                    language === "vi"
+                      ? "Nhập ghi chú, công thức Toán, từ vựng hoặc đề thi cần thảo luận..."
+                      : "Type notes, Math formulas, vocabulary, or review problems..."
+                  }
+                  className="flex-1 w-full p-3.5 rounded-sm bg-white border-2 border-slate-300 text-xs text-[#0F2747] placeholder-slate-400 focus:outline-none focus:border-[#0F2747] resize-none font-mono leading-relaxed shadow-xs"
                 />
 
                 <div className="mt-2 flex gap-2">
                   <button
                     type="button"
                     onClick={() => handleNotesChange(sharedNotes + "\n- [ ] ")}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-[#0F2747] font-semibold cursor-pointer border border-[#0F2747]/15 shadow-2xs"
+                    className="text-[11px] px-2.5 py-1 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] font-bold cursor-pointer border-2 border-slate-300 shadow-xs"
                   >
-                    + Việc cần làm
+                    + {language === "vi" ? "Việc cần làm" : "To-do item"}
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleNotesChange(sharedNotes + "\n💡 Công thức: ")}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-[#0F2747] font-semibold cursor-pointer border border-[#0F2747]/15 shadow-2xs"
+                    onClick={() => handleNotesChange(sharedNotes + (language === "vi" ? "\n💡 Công thức: " : "\n💡 Formula: "))}
+                    className="text-[11px] px-2.5 py-1 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] font-bold cursor-pointer border-2 border-slate-300 shadow-xs"
                   >
-                    + Công thức
+                    + {language === "vi" ? "Công thức" : "Formula"}
                   </button>
                 </div>
               </div>
@@ -1117,20 +1128,20 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         )}
       </div>
 
-      {/* 4. BOTTOM FLOATING CONTROLS BAR (THE PENCILY BRANDED CLEAN DOCK - ICON ONLY) */}
-      <footer className="h-16 bg-[#FFF9EF]/95 backdrop-blur-md border-t border-[#0F2747]/10 px-4 flex items-center justify-center shrink-0 z-20">
-        <div className="flex items-center gap-2 sm:gap-2.5 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-[#0F2747]/15 shadow-lg">
+      {/* 4. BOTTOM FLOATING CONTROLS BAR (ICON-ONLY DOCK) */}
+      <footer className="h-16 bg-[#FFF9EF] border-t-2 border-slate-300 px-4 flex items-center justify-center shrink-0 z-20">
+        <div className="flex items-center gap-2 sm:gap-2.5 bg-white p-1.5 rounded-md border-2 border-slate-300 shadow-lg">
           {/* Micro Button */}
           <button
             type="button"
             onClick={toggleMic}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition cursor-pointer active:scale-95 shadow-2xs ${
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition cursor-pointer active:scale-95 shadow-xs border-2 ${
               isMicOn
-                ? "bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300"
-                : "bg-red-50 hover:bg-red-100 text-red-600 border border-red-200"
+                ? "bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-400"
+                : "bg-red-50 hover:bg-red-100 text-red-600 border-red-300"
             }`}
-            title={isMicOn ? "Tắt micro" : "Bật micro"}
-            aria-label={isMicOn ? "Tắt micro" : "Bật micro"}
+            title={isMicOn ? (language === "vi" ? "Tắt micro" : "Mute mic") : (language === "vi" ? "Bật micro" : "Unmute mic")}
+            aria-label={isMicOn ? (language === "vi" ? "Tắt micro" : "Mute mic") : (language === "vi" ? "Bật micro" : "Unmute mic")}
           >
             {isMicOn ? <Mic className="w-5 h-5 text-emerald-600" /> : <MicOff className="w-5 h-5 text-red-500" />}
           </button>
@@ -1139,13 +1150,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           <button
             type="button"
             onClick={toggleCam}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition cursor-pointer active:scale-95 shadow-2xs ${
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition cursor-pointer active:scale-95 shadow-xs border-2 ${
               isCamOn
-                ? "bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                ? "bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-400"
+                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300"
             }`}
-            title={isCamOn ? "Tắt camera" : "Bật camera"}
-            aria-label={isCamOn ? "Tắt camera" : "Bật camera"}
+            title={isCamOn ? (language === "vi" ? "Tắt camera" : "Turn off camera") : (language === "vi" ? "Bật camera" : "Turn on camera")}
+            aria-label={isCamOn ? (language === "vi" ? "Tắt camera" : "Turn off camera") : (language === "vi" ? "Bật camera" : "Turn on camera")}
           >
             {isCamOn ? <Video className="w-5 h-5 text-amber-600" /> : <VideoOff className="w-5 h-5 text-slate-400" />}
           </button>
@@ -1154,13 +1165,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           <button
             type="button"
             onClick={toggleScreenShare}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition cursor-pointer active:scale-95 shadow-2xs ${
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition cursor-pointer active:scale-95 shadow-xs border-2 ${
               isScreenSharing
-                ? "bg-[#0F2747] text-white border border-[#0F2747]"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                ? "bg-[#0F2747] text-white border-[#0F2747]"
+                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300"
             }`}
-            title={isScreenSharing ? "Dừng chia sẻ màn hình" : "Chia sẻ màn hình"}
-            aria-label={isScreenSharing ? "Dừng chia sẻ màn hình" : "Chia sẻ màn hình"}
+            title={isScreenSharing ? (language === "vi" ? "Dừng chia sẻ màn hình" : "Stop screen sharing") : (language === "vi" ? "Chia sẻ màn hình" : "Share screen")}
+            aria-label={isScreenSharing ? (language === "vi" ? "Dừng chia sẻ màn hình" : "Stop screen sharing") : (language === "vi" ? "Chia sẻ màn hình" : "Share screen")}
           >
             {isScreenSharing ? <MonitorOff className="w-5 h-5 text-[#FFC83D]" /> : <Monitor className="w-5 h-5 text-[#0F2747]" />}
           </button>
@@ -1176,13 +1187,13 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 setActiveTab("notes");
               }
             }}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition cursor-pointer shadow-2xs ${
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition cursor-pointer shadow-xs border-2 ${
               isSidebarOpen && activeTab === "notes"
-                ? "bg-[#FFC83D]/30 text-[#0F2747] border border-[#FFC83D]"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                ? "bg-[#FFC83D]/30 text-[#0F2747] border-[#0F2747]"
+                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300"
             }`}
-            title="Bảng ghi chú chung"
-            aria-label="Bảng ghi chú chung"
+            title={language === "vi" ? "Bảng ghi chú chung" : "Shared Scratchpad"}
+            aria-label={language === "vi" ? "Bảng ghi chú chung" : "Shared Scratchpad"}
           >
             <FileText className="w-5 h-5 text-[#0F2747]" />
           </button>
@@ -1198,26 +1209,26 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
                 setActiveTab("chat");
               }
             }}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition cursor-pointer shadow-2xs ${
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition cursor-pointer shadow-xs border-2 ${
               isSidebarOpen && activeTab === "chat"
-                ? "bg-[#FFC83D]/30 text-[#0F2747] border border-[#FFC83D]"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                ? "bg-[#FFC83D]/30 text-[#0F2747] border-[#0F2747]"
+                : "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300"
             }`}
-            title="Trò chuyện"
-            aria-label="Trò chuyện"
+            title={language === "vi" ? "Trò chuyện" : "Chat"}
+            aria-label={language === "vi" ? "Trò chuyện" : "Chat"}
           >
             <MessageSquare className="w-5 h-5 text-[#0F2747]" />
           </button>
 
-          <div className="h-6 w-px bg-slate-200 mx-1" />
+          <div className="h-6 w-px bg-slate-300 mx-1" />
 
-          {/* Single, Dedicated Clean Leave Button */}
+          {/* Single Dedicated Clean Leave Button */}
           <button
             type="button"
             onClick={handleLeaveRoom}
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center bg-red-600 hover:bg-red-700 text-white shadow-2xs transition-all cursor-pointer active:scale-95"
-            title="Rời khỏi phòng học"
-            aria-label="Rời khỏi phòng học"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center bg-red-600 hover:bg-red-700 text-white shadow-xs border-2 border-red-700 transition-all cursor-pointer active:scale-95"
+            title={language === "vi" ? "Rời khỏi phòng học" : "Leave Room"}
+            aria-label={language === "vi" ? "Rời khỏi phòng học" : "Leave Room"}
           >
             <LogOut className="w-5 h-5" />
           </button>

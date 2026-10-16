@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Send, BookOpen, HelpCircle, Bell, Sparkles } from "lucide-react";
-import { PencilMascot } from "./Logo";
-
+import { X, Send, BookOpen, HelpCircle, Bell } from "lucide-react";
+import { PencilyChatBubbleIcon } from "./icons/PencilyIcons";
 import { usePencily } from "@/context/PencilyContext";
 
 interface CreatePostModalProps {
@@ -25,7 +24,7 @@ export function CreatePostModal({
   onClose,
   onSubmitPost,
 }: CreatePostModalProps) {
-  const { user } = usePencily();
+  const { user, language } = usePencily();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState<"docs" | "doubt" | "announcement" | "tips">("doubt");
@@ -57,31 +56,36 @@ export function CreatePostModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-dark/70 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-2xl bg-[#FFFDF9] border-2 border-[#0F2747] rounded-3xl shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F2747]/70 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-2xl bg-[#FFFDF9] border-2 border-[#0F2747] rounded-md shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 text-[#687280] hover:text-[#0F2747] hover:bg-black/5 rounded-full transition-colors cursor-pointer"
+          className="absolute top-6 right-6 p-2 text-[#687280] hover:text-[#0F2747] hover:bg-slate-100 rounded-sm border-2 border-transparent hover:border-slate-300 transition-colors cursor-pointer"
+          aria-label={language === "vi" ? "Đóng" : "Close"}
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2.5">
-            <PencilMascot size="sm" />
+            <div className="w-10 h-10 rounded-sm bg-[#0F2747] text-white flex items-center justify-center shrink-0 border-2 border-slate-300">
+              <PencilyChatBubbleIcon size={20} />
+            </div>
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] inline-block">
-                Cơ Chế Bài Đăng • The Pencily
+                {language === "vi" ? "Cơ Chế Bài Đăng: The Pencily" : "Post Mechanism: The Pencily"}
               </span>
               <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] mt-0.5">
-                Đăng Bài Hoặc Đặt Câu Hỏi
+                {language === "vi" ? "Đăng Bài Hoặc Đặt Câu Hỏi" : "Create Post or Ask Question"}
               </h2>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-[#4B5563] mt-1.5">
-            Chia sẻ tài liệu Cornell hoặc đặt câu hỏi để peer tutors và cộng đồng hỗ trợ trên Discord.
+          <p className="text-sm sm:text-base text-[#4B5563] mt-1.5 leading-relaxed">
+            {language === "vi"
+              ? "Chia sẻ tài liệu Cornell hoặc đặt câu hỏi để peer tutors và cộng đồng hỗ trợ trên Discord."
+              : "Share Cornell notes or ask questions for peer tutors and community support on Discord."}
           </p>
         </div>
 
@@ -90,7 +94,7 @@ export function CreatePostModal({
           {/* Post Type Selector */}
           <div>
             <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-              Loại bài đăng
+              {language === "vi" ? "Loại bài đăng" : "Post Category"}
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-sm">
               <button
@@ -99,13 +103,13 @@ export function CreatePostModal({
                   setCategory("doubt");
                   setDiscordChannel("#doubt-clearing");
                 }}
-                className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
+                className={`p-3 rounded-sm border-2 text-center font-bold transition cursor-pointer ${
                   category === "doubt"
-                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
+                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                    : "bg-white text-slate-700 border-slate-300 hover:border-slate-400"
                 }`}
               >
-                ❓ Hỏi bài
+                ❓ {language === "vi" ? "Hỏi bài" : "Questions"}
               </button>
               <button
                 type="button"
@@ -113,13 +117,13 @@ export function CreatePostModal({
                   setCategory("docs");
                   setDiscordChannel("#tai-lieu-chia-se");
                 }}
-                className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
+                className={`p-3 rounded-sm border-2 text-center font-bold transition cursor-pointer ${
                   category === "docs"
-                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
+                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                    : "bg-white text-slate-700 border-slate-300 hover:border-slate-400"
                 }`}
               >
-                📚 Tài liệu
+                📚 {language === "vi" ? "Tài liệu" : "Materials"}
               </button>
               <button
                 type="button"
@@ -127,13 +131,13 @@ export function CreatePostModal({
                   setCategory("tips");
                   setDiscordChannel("#kinh-nghiem-hoc-tap");
                 }}
-                className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
+                className={`p-3 rounded-sm border-2 text-center font-bold transition cursor-pointer ${
                   category === "tips"
-                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
+                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                    : "bg-white text-slate-700 border-slate-300 hover:border-slate-400"
                 }`}
               >
-                💡 Kinh nghiệm
+                💡 {language === "vi" ? "Kinh nghiệm" : "Tips & Advice"}
               </button>
               <button
                 type="button"
@@ -141,13 +145,13 @@ export function CreatePostModal({
                   setCategory("announcement");
                   setDiscordChannel("#thong-bao-hoc-nhom");
                 }}
-                className={`p-3 rounded-2xl border text-center font-bold transition cursor-pointer ${
+                className={`p-3 rounded-sm border-2 text-center font-bold transition cursor-pointer ${
                   category === "announcement"
-                    ? "bg-white text-[#0F2747] border-2 border-[#0F2747] shadow-2xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-300"
+                    ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                    : "bg-white text-slate-700 border-slate-300 hover:border-slate-400"
                 }`}
               >
-                📢 Lớp mới
+                📢 {language === "vi" ? "Lớp mới" : "Announcements"}
               </button>
             </div>
           </div>
@@ -155,18 +159,18 @@ export function CreatePostModal({
           {/* Subject / Subworld */}
           <div>
             <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-              Môn học / Chuyên đề
+              {language === "vi" ? "Môn học / Chuyên đề" : "Subject / Topic"}
             </label>
             <select
               value={subworld}
               onChange={(e) => setSubworld(e.target.value)}
-              className="w-full bg-white border border-[#0F2747]/20 rounded-2xl px-4 py-3 text-sm text-[#0F2747] font-medium focus:outline-none focus:border-[#0F2747]"
+              className="w-full bg-white border-2 border-slate-300 rounded-sm px-4 py-3 text-sm text-[#0F2747] font-medium focus:outline-none focus:border-[#0F2747]"
             >
-              <option value="Toán học">Toán học (Giải tích, Hình không gian)</option>
-              <option value="Tin học & Lập trình">Tin học & Lập trình thuật toán</option>
-              <option value="Khoa học Tự nhiên">Khoa học Tự nhiên (Vật lý, Hóa học)</option>
-              <option value="Tiếng Anh & IELTS">Tiếng Anh & Luyện thi IELTS</option>
-              <option value="Kỹ năng tự học">Kỹ năng tự học & Quản lý thời gian</option>
+              <option value="Toán học">{language === "vi" ? "Toán học (Giải tích, Hình không gian)" : "Mathematics (Calculus, Geometry)"}</option>
+              <option value="Tin học & Lập trình">{language === "vi" ? "Tin học & Lập trình thuật toán" : "Computer Science & Algorithms"}</option>
+              <option value="Khoa học Tự nhiên">{language === "vi" ? "Khoa học Tự nhiên (Vật lý, Hóa học)" : "Natural Sciences (Physics, Chemistry)"}</option>
+              <option value="Tiếng Anh & IELTS">{language === "vi" ? "Tiếng Anh & Luyện thi IELTS/SAT" : "English, IELTS & SAT Prep"}</option>
+              <option value="Kỹ năng tự học">{language === "vi" ? "Kỹ năng tự học & Quản lý thời gian" : "Self-Study Skills & Productivity"}</option>
             </select>
           </div>
 
@@ -174,26 +178,26 @@ export function CreatePostModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-                Họ & Tên
+                {language === "vi" ? "Họ & Tên" : "Full Name"}
               </label>
               <input
                 type="text"
-                placeholder="VD: Nguyễn Văn A"
+                placeholder={language === "vi" ? "VD: Nguyễn Văn A" : "e.g. Alex Nguyen"}
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                className="w-full bg-white border border-[#0F2747]/20 rounded-2xl px-4 py-2.5 sm:py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
+                className="w-full bg-white border-2 border-slate-300 rounded-sm px-4 py-2.5 sm:py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
               />
             </div>
             <div>
               <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-                Trường THPT
+                {language === "vi" ? "Trường THPT" : "High School"}
               </label>
               <input
                 type="text"
-                placeholder="VD: THPT Chuyên KHTN"
+                placeholder={language === "vi" ? "VD: THPT Chuyên KHTN" : "e.g. Gifted High School"}
                 value={authorSchool}
                 onChange={(e) => setAuthorSchool(e.target.value)}
-                className="w-full bg-white border border-[#0F2747]/20 rounded-2xl px-4 py-2.5 sm:py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
+                className="w-full bg-white border-2 border-slate-300 rounded-sm px-4 py-2.5 sm:py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
               />
             </div>
           </div>
@@ -201,37 +205,46 @@ export function CreatePostModal({
           {/* Post Title */}
           <div>
             <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-              Tiêu đề ngắn gọn
+              {language === "vi" ? "Tiêu đề ngắn gọn" : "Short Title"}
             </label>
             <input
               type="text"
               required
-              placeholder="VD: Cách giải nhanh bài toán cực trị hình Oxyz bằng Casio?"
+              placeholder={
+                language === "vi"
+                  ? "VD: Cách giải nhanh bài toán cực trị hình Oxyz bằng Casio?"
+                  : "e.g. Fast method to solve spatial geometry extrema?"
+              }
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-white border border-[#0F2747]/20 rounded-2xl px-4 py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
+              className="w-full bg-white border-2 border-slate-300 rounded-sm px-4 py-3 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
             />
           </div>
 
           {/* Content / Question snippet */}
           <div>
             <label className="block text-xs sm:text-sm font-bold text-[#0F2747] mb-2 uppercase tracking-wide">
-              Nội dung chi tiết (hoặc link tài liệu)
+              {language === "vi" ? "Nội dung chi tiết (hoặc link tài liệu)" : "Detailed Content or Link"}
             </label>
             <textarea
               required
               rows={3}
-              placeholder="Mô tả câu hỏi, bài toán cần giải đáp, hoặc tóm tắt tài liệu đính kèm..."
+              placeholder={
+                language === "vi"
+                  ? "Mô tả câu hỏi, bài toán cần giải đáp, hoặc tóm tắt tài liệu đính kèm..."
+                  : "Describe the problem, question, or summarize your attached materials..."
+              }
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full bg-white border border-[#0F2747]/20 rounded-2xl p-4 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
+              className="w-full bg-white border-2 border-slate-300 rounded-sm p-4 text-sm text-[#0F2747] focus:outline-none focus:border-[#0F2747]"
             />
           </div>
 
           {/* Discord integration notice */}
-          <div className="bg-[#5865F2]/10 border border-[#5865F2]/20 rounded-2xl p-4 text-xs sm:text-sm text-[#29328a] flex items-center justify-between">
+          <div className="bg-[#5865F2]/10 border-2 border-[#5865F2]/30 rounded-sm p-4 text-xs sm:text-sm text-[#29328a] flex items-center justify-between">
             <div>
-              <span className="font-bold">Đồng bộ Discord:</span> Bài viết sẽ tạo một thread tại kênh{" "}
+              <span className="font-bold">{language === "vi" ? "Đồng bộ Discord:" : "Discord Sync:"}</span>{" "}
+              {language === "vi" ? "Bài viết sẽ tạo một thread tại kênh" : "Post creates a thread in channel"}{" "}
               <span className="font-mono font-bold text-[#0F2747]">{discordChannel}</span>.
             </div>
           </div>
@@ -241,16 +254,16 @@ export function CreatePostModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 text-sm font-bold text-[#687280] hover:text-[#0F2747] cursor-pointer"
+              className="px-5 py-2.5 text-sm font-bold text-[#687280] hover:text-[#0F2747] rounded-sm border-2 border-transparent hover:border-slate-300 cursor-pointer transition"
             >
-              Hủy
+              {language === "vi" ? "Hủy" : "Cancel"}
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-sm font-bold shadow-xs active:scale-95 transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] border-2 border-[#0F2747] text-sm font-bold shadow-xs active:scale-95 transition cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>Đăng Bài Lên Cộng Đồng</span>
+              <span>{language === "vi" ? "Đăng Bài Lên Cộng Đồng" : "Post to Community"}</span>
             </button>
           </div>
         </form>

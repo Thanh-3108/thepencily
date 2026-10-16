@@ -10,7 +10,47 @@ export interface LogoProps {
 }
 
 /**
- * The Pencily Official Brand Mascot (Pencil)
+ * The Pencily Official Character Mascot (Cú Pencily / Pencily Owl)
+ */
+export function OwlMascot({
+  className = "",
+  size = "md",
+  priority = false,
+}: {
+  className?: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | number;
+  priority?: boolean;
+}) {
+  const isNumericSize = typeof size === "number";
+  const sizeClass = !isNumericSize && size
+    ? {
+        xs: "w-6 h-6",
+        sm: "w-8 h-8",
+        md: "w-11 h-11",
+        lg: "w-16 h-16 sm:w-20 sm:h-20",
+        xl: "w-24 h-24 sm:w-28 sm:h-28",
+      }[size]
+    : (!isNumericSize && !className.includes("w-") && !className.includes("h-") ? "w-11 h-11" : "");
+
+  return (
+    <div
+      className={`relative inline-flex items-center justify-center shrink-0 select-none ${sizeClass} ${className}`}
+      style={isNumericSize ? { height: size, width: size } : undefined}
+    >
+      <Image
+        src="/brand/mascot-owl.png"
+        alt="Cú Pencily"
+        width={273}
+        height={273}
+        className="w-full h-full object-contain transition-transform duration-200 hover:scale-105"
+        priority={priority}
+      />
+    </div>
+  );
+}
+
+/**
+ * The Pencily Brand Logo Icon (Pencil brandmark)
  * 100% authentic crop directly from the master brand guidelines sheet
  */
 export function PencilMascot({
@@ -42,8 +82,8 @@ export function PencilMascot({
       style={isNumericSize ? { height: size, width: size } : undefined}
     >
       <Image
-        src="/brand/mascot-owl.png"
-        alt="The Pencily Owl Mascot"
+        src="/brand/pencily-pencil-clean.png"
+        alt="The Pencily Brand Icon"
         width={419}
         height={439}
         className={`${sizeClass} object-contain transition-transform duration-200 hover:scale-105`}
@@ -77,7 +117,7 @@ export function BrandAppIcon({
 
   return (
     <div
-      className={`relative inline-flex items-center justify-center shrink-0 select-none rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow ${sizeClass} ${className}`}
+      className={`relative inline-flex items-center justify-center shrink-0 select-none rounded-sm border-2 border-[#0F2747] overflow-hidden shadow-xs ${sizeClass} ${className}`}
     >
       <Image
         src="/brand/app_icon.png"
@@ -97,7 +137,7 @@ export function BrandAppIcon({
  * - variant="icon": Official App Icon squircle
  * - variant="pencil": Official Pencil Mascot
  * - variant="nav": Horizontal lockup (Pencil Mascot + "The Pencily" + dynamic swoosh)
- * - variant="full": Full lockup with tagline "LEARN • SHARE • GROW"
+ * - variant="full": Full lockup with tagline "LEARN / SHARE / GROW"
  * - variant="white" / "light": White/Gold lockup for dark navy cards & headers
  */
 export function Logo({
@@ -148,7 +188,7 @@ export function Logo({
     >
       <Image
         src={src}
-        alt={isFull ? "The Pencily - Learn • Share • Grow" : "The Pencily"}
+        alt={isFull ? "The Pencily - Learn / Share / Grow" : "The Pencily"}
         width={origWidth}
         height={origHeight}
         className={`${heightStyles} w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]`}

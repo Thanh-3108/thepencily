@@ -8,7 +8,7 @@ export function RedLinePolicy() {
       title: "An Toàn & Bảo Vệ Người Học",
       subtitle: "Safety & Anti-Harassment",
       icon: ShieldCheck,
-      desc: "Nghiêm cấm mọi hành vi xúc phạm danh dự, bắt nạt trực tuyến (cyberbullying), quấy rối, đe dọa hoặc grooming dưới mọi hình thức. Vấn đề an toàn tâm lý của học sinh luôn được ưu tiên xử lý cao hơn mọi hoạt động học thuật.",
+      desc: "Nghiêm cấm mọi hành vi xúc phạm danh dự, bắt nạt trực tuyến, quấy rối, đe dọa dưới mọi hình thức. Vấn đề an toàn tâm lý của học sinh luôn được ưu tiên xử lý cao hơn mọi hoạt động học thuật.",
       accent: "border-red-500/40 text-red-600 bg-red-500/5",
     },
     {
@@ -32,7 +32,7 @@ export function RedLinePolicy() {
       title: "Tôn Trọng Bản Quyền & Tác Giả",
       subtitle: "Intellectual Property & Citations",
       icon: Scale,
-      desc: "Tutor giữ bản quyền đối với bài giảng do mình biên soạn. Khi sử dụng nguồn tài liệu của bên thứ ba, bắt buộc phải trích dẫn nguồn minh bạch và chỉ sử dụng các tài nguyên mở (Open Educational Resources) được phép.",
+      desc: "Tutor giữ bản quyền đối với bài giảng do mình biên soạn. Khi sử dụng nguồn tài liệu của bên thứ ba, bắt buộc phải trích dẫn nguồn minh bạch và chỉ sử dụng các tài nguyên mở được phép.",
       accent: "border-blue-500/40 text-blue-600 bg-blue-500/5",
     },
     {

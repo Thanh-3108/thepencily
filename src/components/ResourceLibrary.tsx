@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { BookOpen, Download, FileText, Share2, UploadCloud, CheckCircle, ExternalLink, Sparkles, Tag } from "lucide-react";
+import { BookOpen, Download, FileText, Share2, UploadCloud, CheckCircle, ExternalLink, Tag } from "lucide-react";
 
 interface ResourceItem {
   id: string;
@@ -107,16 +107,16 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
       : resources.filter((r) => r.subject === selectedSubject);
 
   return (
-    <section id="resources" className="py-16 sm:py-24 bg-white border-b border-[#0F2747]/10">
+    <section id="resources" className="py-16 sm:py-24 bg-white border-b-2 border-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFC83D]/25 text-[#0F2747] text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-[#FFC83D]/25 border-2 border-amber-300 text-[#0F2747] text-xs font-black uppercase tracking-wider mb-3">
               <BookOpen className="w-3.5 h-3.5 text-[#0F2747]" />
               <span>Open Academic Resource</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F2747] font-heading tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F2747] font-heading tracking-tight">
               Thư Viện Tài Liệu Mở
             </h2>
             <p className="mt-2 text-sm sm:text-base text-[#4B5563] max-w-xl">
@@ -126,7 +126,7 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
 
           <button
             onClick={onOpenContributeModal}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-white border-2 border-[#0F2747] text-xs font-bold uppercase tracking-wider shadow-xs transition self-start md:self-auto cursor-pointer"
           >
             <UploadCloud className="w-4 h-4 text-[#FFC83D]" />
             <span>Đóng góp tài liệu mới</span>
@@ -134,7 +134,7 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
         </div>
 
         {/* Subject Filter Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 pb-2 border-b border-[#0F2747]/10">
+        <div className="flex flex-wrap gap-2 mb-8 pb-3 border-b-2 border-slate-200">
           {[
             { id: "all", label: "Tất cả tài nguyên" },
             { id: "Toán học", label: "Toán học" },
@@ -147,10 +147,10 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
             <button
               key={tab.id}
               onClick={() => setSelectedSubject(tab.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition-all border-2 cursor-pointer ${
                 selectedSubject === tab.id
-                  ? "bg-[#FFC83D] text-[#0F2747] shadow-sm"
-                  : "bg-[#FFF9EF] text-[#0F2747] hover:bg-[#FFC83D]/20"
+                  ? "bg-[#FFC83D] text-[#0F2747] border-[#0F2747] shadow-xs"
+                  : "bg-[#FFF9EF] text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
               }`}
             >
               {tab.label}
@@ -163,12 +163,12 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
           {filteredResources.map((item) => (
             <div
               key={item.id}
-              className="bg-[#FFFDF9] rounded-2xl border-2 border-[#0F2747]/15 hover:border-[#0F2747] p-6 transition-all hover:shadow-md flex flex-col justify-between"
+              className="bg-[#FFFDF9] rounded-sm border-2 border-slate-300 hover:border-[#0F2747] p-6 transition-all hover:shadow-xs flex flex-col justify-between"
             >
               <div>
                 {/* Meta header */}
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md bg-[#4F7ECB]/15 text-[#4F7ECB]">
+                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-xs bg-[#4F7ECB]/15 text-[#4F7ECB] border border-[#4F7ECB]/30">
                     {item.type}
                   </span>
                   <span className="text-[11px] font-bold text-[#6B7280]">
@@ -185,7 +185,7 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
                   {item.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-semibold px-2 py-0.5 rounded bg-gray-100 text-[#4B5563]"
+                      className="text-[10px] font-semibold px-2 py-0.5 rounded-xs bg-gray-100 text-[#4B5563] border border-gray-200"
                     >
                       #{tag}
                     </span>
@@ -193,7 +193,7 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
                 </div>
 
                 {/* Author attribution */}
-                <div className="flex items-center justify-between text-xs text-[#6B7280] pt-3 border-t border-[#0F2747]/10 mb-4">
+                <div className="flex items-center justify-between text-xs text-[#6B7280] pt-3 border-t-2 border-slate-100 mb-4">
                   <span>
                     Biên soạn: <b className="text-[#0F2747]">{item.author}</b> ({item.authorRole})
                   </span>
@@ -208,7 +208,7 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
                   e.preventDefault();
                   alert(`Đang mở tài liệu: "${item.title}". Tài liệu này được mở truy cập qua kho lưu trữ The Pencily.`);
                 }}
-                className="w-full py-2.5 px-4 rounded-xl bg-white border-2 border-[#0F2747] hover:bg-[#0F2747] hover:text-white text-[#0F2747] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 group"
+                className="w-full py-2.5 px-4 rounded-sm bg-white border-2 border-[#0F2747] hover:bg-[#0F2747] hover:text-white text-[#0F2747] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Xem & Tải Tài Liệu</span>
                 <Download className="w-4 h-4 text-[#4F7ECB] group-hover:text-[#FFC83D] transition-colors" />

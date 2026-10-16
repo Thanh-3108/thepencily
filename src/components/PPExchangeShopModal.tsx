@@ -1,21 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  X,
-  Sparkles,
-  BookOpen,
-  Award,
-  Download,
-  CheckCircle2,
-  Lock,
-  ExternalLink,
-  Gift,
-  HelpCircle,
-  FileText,
-  UserCheck,
-  Zap,
-} from "lucide-react";
+import { X, BookOpen, Award, Download, CheckCircle2, Lock, ExternalLink, Gift, HelpCircle, FileText, UserCheck, Zap } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 import { DiscordLogo } from "./BrandIcons";
 
@@ -23,122 +9,104 @@ export interface ShopItem {
   id: string;
   category: "materials" | "privilege" | "profile";
   title: string;
+  titleEn: string;
   cost: number;
   description: string;
+  descriptionEn: string;
   badgeText: string;
+  badgeTextEn: string;
   rewardType: "download" | "discord" | "booking" | "badge";
   actionText: string;
+  actionTextEn: string;
   actionUrl?: string;
   previewNote: string;
+  previewNoteEn: string;
 }
 
 export const SHOP_ITEMS: ShopItem[] = [
   {
-    id: "item-mindmap",
-    category: "materials",
-    title: "Trọn bộ Mindmap & Flashcard 12 Môn Thi Tốt Nghiệp",
+    id: "item-placeholder-mentoring",
+    category: "privilege",
+    title: "[Placeholder] <Tên Suất Kèm 1-1 / Tham Vấn Peer Tutor>",
+    titleEn: "[Placeholder] <1-on-1 Tutoring / Mentorship Pass>",
     cost: 50,
-    description: "Hệ thống sơ đồ tư duy cô đọng công thức Toán, Lý, Hóa, Sinh, Anh và mốc Lịch sử do chính Top Tutor biên soạn, tối ưu hóa ôn cấp tốc.",
-    badgeText: "PDF & Anki Deck",
-    rewardType: "download",
-    actionText: "Tải trọn bộ tài liệu",
-    actionUrl: "https://drive.google.com",
-    previewNote: "Định dạng PDF chất lượng cao in ấn + file Anki import điện thoại",
+    description: "<Mô tả chi tiết hình thức kèm 1-1, thời lượng buổi học, môn học hỗ trợ và quy trình đặt lịch với Peer Tutor trên Discord...>",
+    descriptionEn: "<Detailed description of 1-on-1 mentoring format, duration, subject coverage, and Discord booking process...>",
+    badgeText: "CHỜ PROOFCHECK",
+    badgeTextEn: "PENDING PROOFCHECK",
+    rewardType: "booking",
+    actionText: "<Đặt lịch qua Discord>",
+    actionTextEn: "<Book via Discord>",
+    actionUrl: "https://discord.gg/6hpEf4wC4z",
+    previewNote: "<Thời gian phản hồi và xếp lịch theo tuần>",
+    previewNoteEn: "<Weekly response and scheduling turnaround>",
   },
   {
-    id: "item-chuyen-exams",
+    id: "item-placeholder-materials",
     category: "materials",
-    title: "Tuyển Tập Đề Thi Thử & Lời Giải Chi Tiết Từ Các Trường Chuyên",
+    title: "[Placeholder] <Tên Bộ Tài Liệu / Sổ Tay Kiến Thức>",
+    titleEn: "[Placeholder] <Study Guide / Knowledge Handbook>",
+    cost: 30,
+    description: "<Mô tả nội dung tài liệu ôn tập, cấu trúc bài học, công thức cô đọng hoặc ghi chú phương pháp học do ban học thuật phụ trách...>",
+    descriptionEn: "<Description of review material content, lesson structure, condensed formulas, or study notes provided by academic team...>",
+    badgeText: "TÀI LIỆU MẪU",
+    badgeTextEn: "SAMPLE GUIDE",
+    rewardType: "download",
+    actionText: "<Tải file PDF / Drive>",
+    actionTextEn: "<Download PDF / Drive>",
+    actionUrl: "https://drive.google.com",
+    previewNote: "<Định dạng tài liệu và hướng dẫn truy cập file>",
+    previewNoteEn: "<File format and access details>",
+  },
+  {
+    id: "item-placeholder-exams",
+    category: "materials",
+    title: "[Placeholder] <Tên Tuyển Tập Đề Thi & Barem Điểm>",
+    titleEn: "[Placeholder] <Mock Exam Bank & Solution Keys>",
     cost: 40,
-    description: "Bộ đề tuyển chọn từ THPT Chuyên Ams, Lê Hồng Phong, KHTN kèm hướng dẫn giải chi tiết từng bước và chỉ ra các bẫy điểm 9+.",
-    badgeText: "Có đáp án chi tiết",
+    description: "<Mô tả nguồn tuyển chọn đề thi, mức độ phân loại điểm số, barem đáp án và hướng dẫn giải thích từng câu...>",
+    descriptionEn: "<Description of exam sources, score distinction levels, answer rubrics, and detailed step-by-step solutions...>",
+    badgeText: "KHO ĐỀ MẪU",
+    badgeTextEn: "SAMPLE VAULT",
     rewardType: "download",
-    actionText: "Mở kho đề thi",
+    actionText: "<Mở kho đề lưu trữ>",
+    actionTextEn: "<Open Drive Repository>",
     actionUrl: "https://drive.google.com",
-    previewNote: "Gồm hơn 30 đề kèm barem chấm điểm chuẩn Bộ Giáo Dục",
+    previewNote: "<Số lượng đề thi kèm barem chấm chính thức>",
+    previewNoteEn: "<Number of mock exams and official rubrics>",
   },
   {
-    id: "item-ielts-essay",
-    category: "materials",
-    title: "1 Suất Chữa Chi Tiết Writing / Essay IELTS (Tutor 8.0+)",
-    cost: 75,
-    description: "Gửi 1 bài viết Task 1 hoặc Task 2, Tutor IELTS 8.0+ sẽ chữa chi tiết ngữ pháp, nâng cấp từ vựng C1/C2 và nhận xét 4 tiêu chí chấm thi.",
-    badgeText: "Chữa bài 1-1",
-    rewardType: "booking",
-    actionText: "Gửi bài viết để chữa",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Nhận kết quả và lời nhận xét chi tiết trong vòng 24 - 48 giờ",
-  },
-  {
-    id: "item-dgnl-handbook",
-    category: "materials",
-    title: "Sổ Tay Bứt Phá ĐGNL ĐHQG 900+ & Tư Duy Định Lượng",
-    cost: 35,
-    description: "Tổng hợp mẹo xử lý bảng số liệu, suy luận logic, giải nhanh biểu đồ và kinh nghiệm phân bổ thời gian phòng thi từ cựu thí sinh 1000+.",
-    badgeText: "Bí kíp thực chiến",
-    rewardType: "download",
-    actionText: "Tải sổ tay ĐGNL",
-    actionUrl: "https://drive.google.com",
-    previewNote: "Đúc kết từ 3 năm đề thi thực tế ĐHQG Hà Nội & TP.HCM",
-  },
-  {
-    id: "item-tutor-1on1",
+    id: "item-placeholder-discord-role",
     category: "privilege",
-    title: "Vé Ưu Tiên Kèm 1-on-1 với Top Tutor (30 Phút)",
-    cost: 100,
-    description: "Đặt lịch học riêng 1-kèm-1 qua Voice Room hoặc Google Meet với một Peer Tutor giỏi nhất để gỡ rối bài tập khó trước kỳ thi.",
-    badgeText: "Đặt lịch riêng",
-    rewardType: "booking",
-    actionText: "Đặt lịch với Tutor",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Được chọn Tutor môn mong muốn và linh hoạt khung giờ hẹn",
-  },
-  {
-    id: "item-discord-role",
-    category: "privilege",
-    title: "Huy Hiệu & Role VIP Discord @Pencily Scholar",
-    cost: 60,
-    description: "Sở hữu màu tên vàng cam nổi bật trên toàn bộ Server Discord The Pencily, mở khóa phòng chat đặc quyền giao lưu cùng các gia sư.",
-    badgeText: "Role Discord độc quyền",
+    title: "[Placeholder] <Tên Role VIP / Huy Hiệu Discord The Pencily>",
+    titleEn: "[Placeholder] <Discord VIP Role & Badge Name>",
+    cost: 25,
+    description: "<Mô tả vai trò đặc quyền trên server Discord The Pencily, quyền hạn truy cập các phòng chat hoặc kênh trao đổi cùng gia sư...>",
+    descriptionEn: "<Description of Discord server role privileges, badge styling, and access permissions for specialized discussion channels...>",
+    badgeText: "ROLE DISCORD",
+    badgeTextEn: "DISCORD ROLE",
     rewardType: "discord",
-    actionText: "Kích hoạt trên Discord",
+    actionText: "<Tự động đồng bộ Discord>",
+    actionTextEn: "<Auto-sync Discord>",
     actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Tự động đồng bộ vai trò khi tài khoản Discord đã liên kết",
+    previewNote: "<Thời hạn và quyền lợi tương ứng trên máy chủ>",
+    previewNoteEn: "<Duration and associated server permissions>",
   },
   {
-    id: "item-private-room",
-    category: "privilege",
-    title: "Quyền Mở Phòng Học Voice Riêng Tư Cho Nhóm Bạn",
-    cost: 45,
-    description: "Đặc quyền tạo phòng học Voice Room VIP trên Discord không giới hạn thời gian để cùng nhóm bạn thân cày đề và ôn thi đêm.",
-    badgeText: "Voice Room VIP",
-    rewardType: "discord",
-    actionText: "Tạo phòng riêng",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Có quyền quản lý micro và mời bạn bè tham gia",
-  },
-  {
-    id: "item-avatar-frame",
+    id: "item-placeholder-avatar-frame",
     category: "profile",
-    title: "Khung Avatar 'Cú Bác Học' Trên Hồ Sơ The Pencily",
-    cost: 50,
-    description: "Trang trí avatar cá nhân của bạn với khung viền linh vật Cú Pencily vàng cam, khẳng định thành tích học tập chăm chỉ.",
-    badgeText: "Khung Hồ Sơ",
+    title: "[Placeholder] <Tên Khung Avatar Trang Trí Hồ Sơ>",
+    titleEn: "[Placeholder] <Custom Avatar Profile Frame Name>",
+    cost: 20,
+    description: "<Mô tả khung viền avatar cá nhân hiển thị trên hồ sơ học sinh và danh sách lớp học của The Pencily...>",
+    descriptionEn: "<Description of decorative avatar border displayed on student profile and live class attendance lists...>",
+    badgeText: "KHUNG HỒ SƠ",
+    badgeTextEn: "PROFILE FRAME",
     rewardType: "badge",
-    actionText: "Kích hoạt khung avatar",
-    previewNote: "Hiển thị trên hồ sơ cá nhân và danh sách lớp học",
-  },
-  {
-    id: "item-stickers",
-    category: "profile",
-    title: "Bộ Sticker The Pencily & Cú Bác Học Dán Laptop",
-    cost: 120,
-    description: "Bộ 6 sticker hoạt hình The Pencily chống nước, chống trầy xước dành tặng học sinh đổi điểm nhận qua bưu điện hoặc sự kiện offline.",
-    badgeText: "Quà tặng hiện vật",
-    rewardType: "booking",
-    actionText: "Đăng ký nhận quà",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Hỗ trợ gửi bưu điện toàn quốc vào mỗi đợt cuối tháng",
+    actionText: "<Kích hoạt trên hồ sơ web>",
+    actionTextEn: "<Equip on Web Profile>",
+    previewNote: "<Hiển thị trực tiếp trên tài khoản cá nhân>",
+    previewNoteEn: "<Visible on personal account card>",
   },
 ];
 
@@ -153,7 +121,7 @@ export function PPExchangeShopModal({
   onClose,
   onGoToVideos,
 }: PPExchangeShopModalProps) {
-  const { user, addPoints } = usePencily();
+  const { user, addPoints, language } = usePencily();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [redeemedIds, setRedeemedIds] = useState<string[]>([]);
   const [selectedReward, setSelectedReward] = useState<ShopItem | null>(null);
@@ -198,99 +166,111 @@ export function PPExchangeShopModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 select-none animate-fadeIn">
-      {/* Invisible backdrop click-away (no blur) */}
+      {/* Backdrop click-away */}
       <div
-        className="fixed inset-0 bg-slate-900/60"
+        className="fixed inset-0 bg-[#0F2747]/70 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal Dialog */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl border border-slate-200/90 shadow-2xl flex flex-col overflow-hidden z-10">
-        {/* Header (Clean White / Warm Paper Aesthetic, NO blue gradients) */}
-        <div className="p-5 sm:p-6 bg-white border-b border-slate-200/90 flex items-center justify-between gap-4">
+      {/* Modal Dialog (Squarish micro-corners, thick border-2) */}
+      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-md border-2 border-[#0F2747] shadow-2xl flex flex-col overflow-hidden z-10">
+        {/* Header */}
+        <div className="p-5 sm:p-6 bg-white border-b-2 border-slate-300 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F59E0B] to-[#D97706] flex items-center justify-center text-slate-950 font-black text-xl shadow-xs shrink-0">
+            <div className="w-10 h-10 rounded-sm bg-gradient-to-br from-[#F59E0B] to-[#D97706] border-2 border-[#B45309] flex items-center justify-center text-slate-950 font-black text-xl shadow-xs shrink-0">
               P
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747]">
-                  Cửa Hàng Đổi Quà Pencily (PP Exchange)
+                  {language === "vi" ? "Cửa Hàng Đổi Đặc Quyền Pencily" : "Pencily Rewards Exchange"}
                 </h3>
-                <span className="text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300/80 px-2.5 py-0.5 rounded-full">
-                  Dành cho Học Sinh
+                <span className="text-[11px] font-bold bg-amber-100 text-amber-900 border-2 border-amber-300 px-2 py-0.5 rounded-xs">
+                  {language === "vi" ? "Bản Mẫu Proofcheck" : "Proofcheck Draft"}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Dùng số điểm bạn đã tích lũy từ việc học để đổi các tài liệu độc quyền và đặc quyền giá trị.
+                {language === "vi"
+                  ? "Khung đổi đặc quyền mẫu chuẩn bị cho team cập nhật quyền lợi và tài liệu học tập thực tế."
+                  : "Draft reward framework ready for the team to input real study rewards and perks."}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             {/* Live Balance Chip */}
-            <div className="px-4 py-2 rounded-2xl bg-[#FFF9EF] border border-amber-300/80 flex items-center gap-2 shadow-2xs">
-              <span className="text-xs text-amber-700 font-bold">Số dư:</span>
-              <span className="text-base font-black text-[#0F2747]">
-                {user.points.toLocaleString("vi-VN")} PP
+            <div className="px-3.5 py-1.5 rounded-sm bg-[#FFF9EF] border-2 border-amber-400 flex items-center gap-2 shadow-xs">
+              <span className="text-xs text-amber-800 font-bold">{language === "vi" ? "Số dư:" : "Balance:"}</span>
+              <span className="text-sm sm:text-base font-black text-[#0F2747]">
+                {user.points.toLocaleString(language === "vi" ? "vi-VN" : "en-US")} PP
               </span>
             </div>
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-700 transition cursor-pointer"
-              aria-label="Đóng"
+              className="w-9 h-9 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition cursor-pointer"
+              aria-label={language === "vi" ? "Đóng" : "Close"}
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
+        {/* Draft Notice Banner */}
+        <div className="px-5 py-2.5 bg-amber-50 border-b-2 border-amber-300 text-xs text-amber-900 flex items-center justify-between">
+          <span>
+            ⚠️ <b>{language === "vi" ? "Khung Mẫu Chờ Proofcheck:" : "Draft Catalog Template:"}</b>{" "}
+            {language === "vi"
+              ? "Toàn bộ quyền lợi và tài liệu dưới đây hiện là khung mẫu placeholder để ban điều phối hoàn thiện quyền lợi thực tế trước khi chính thức mở đổi."
+              : "The rewards and perks below are placeholder templates for the team to proofcheck and fill in actual offerings."}
+          </span>
+        </div>
+
         {/* Category Filters */}
-        <div className="px-6 py-3.5 bg-slate-50/60 border-b border-slate-200/80 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="px-6 py-3 bg-slate-50 border-b-2 border-slate-300 flex items-center gap-2 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap ${
+            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap border-2 ${
               activeCategory === "all"
-                ? "bg-[#0F2747] text-white shadow-2xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
             }`}
           >
-            Tất cả ({SHOP_ITEMS.length})
+            {language === "vi" ? `Tất cả (${SHOP_ITEMS.length})` : `All Items (${SHOP_ITEMS.length})`}
           </button>
           <button
             onClick={() => setActiveCategory("materials")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
               activeCategory === "materials"
-                ? "bg-[#0F2747] text-white shadow-2xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>Tài liệu & Đề thi chuyên</span>
+            <span>{language === "vi" ? "Tài liệu & Đề thi mẫu" : "Study Guides & Tests"}</span>
           </button>
           <button
             onClick={() => setActiveCategory("privilege")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
               activeCategory === "privilege"
-                ? "bg-[#0F2747] text-white shadow-2xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>Đặc quyền Tutor & Discord</span>
+            <span>{language === "vi" ? "Đặc quyền Kèm 1-1 & Discord" : "1-on-1 Mentoring & Discord"}</span>
           </button>
           <button
             onClick={() => setActiveCategory("profile")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
               activeCategory === "profile"
-                ? "bg-[#0F2747] text-white shadow-2xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
             }`}
           >
-            <Gift className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>Hồ sơ & Quà lưu niệm</span>
+            <Award className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <span>{language === "vi" ? "Khung hồ sơ & Danh hiệu" : "Profile Frames & Badges"}</span>
           </button>
         </div>
 
@@ -301,25 +281,29 @@ export function PPExchangeShopModal({
               const isRedeemed = redeemedIds.includes(item.id);
               const canAfford = user.points >= item.cost;
               const pointsNeeded = item.cost - user.points;
+              const title = language === "vi" ? item.title : item.titleEn;
+              const description = language === "vi" ? item.description : item.descriptionEn;
+              const badgeText = language === "vi" ? item.badgeText : item.badgeTextEn;
+              const previewNote = language === "vi" ? item.previewNote : item.previewNoteEn;
 
               return (
                 <div
                   key={item.id}
-                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col justify-between gap-4 ${
+                  className={`p-4 sm:p-5 rounded-sm border-2 transition-all flex flex-col justify-between gap-4 ${
                     isRedeemed
-                      ? "bg-emerald-50/50 border-emerald-300 shadow-2xs"
+                      ? "bg-emerald-50/50 border-emerald-400 shadow-xs"
                       : canAfford
-                      ? "bg-white border-[#0F2747]/12 hover:border-[#F59E0B]/60 shadow-2xs hover:shadow-sm"
-                      : "bg-slate-50/70 border-slate-200 opacity-90"
+                      ? "bg-white border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-sm"
+                      : "bg-slate-50 border-slate-200 opacity-90"
                   }`}
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-200/60">
-                        {item.badgeText}
+                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-xs bg-amber-100 text-amber-900 border-2 border-amber-300">
+                        {badgeText}
                       </span>
-                      <div className="flex items-center gap-1.5 bg-[#FFF9EF] px-3 py-1 rounded-full border border-amber-300/80 font-black text-xs text-[#0F2747]">
-                        <span className="w-4 h-4 rounded-full bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-white flex items-center justify-center text-[10px]">
+                      <div className="flex items-center gap-1.5 bg-[#FFF9EF] px-2.5 py-0.5 rounded-xs border-2 border-amber-400 font-black text-xs text-[#0F2747]">
+                        <span className="w-3.5 h-3.5 rounded-xs bg-[#F59E0B] text-white flex items-center justify-center text-[9px] font-black">
                           P
                         </span>
                         <span>{item.cost} PP</span>
@@ -327,55 +311,57 @@ export function PPExchangeShopModal({
                     </div>
 
                     <h4 className="font-poppins font-bold text-sm sm:text-base text-[#0F2747] leading-snug">
-                      {item.title}
+                      {title}
                     </h4>
 
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      {item.description}
+                    <p className="text-xs text-slate-600 leading-relaxed font-mono">
+                      {description}
                     </p>
 
                     <div className="text-[11px] text-slate-400 italic">
-                      ℹ️ {item.previewNote}
+                      ℹ️ {previewNote}
                     </div>
                   </div>
 
                   {/* Action Row */}
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                  <div className="pt-2 border-t-2 border-slate-100 flex items-center justify-between gap-2">
                     {isRedeemed ? (
                       <div className="flex items-center justify-between w-full">
                         <span className="text-xs font-bold text-emerald-700 flex items-center gap-1.5">
                           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          <span>Đã mở khóa</span>
+                          <span>{language === "vi" ? "Đã mở khóa mẫu" : "Unlocked (Draft)"}</span>
                         </span>
                         <button
                           onClick={() => setSelectedReward(item)}
-                          className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition cursor-pointer"
+                          className="px-3 py-1.5 rounded-sm bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition border-2 border-emerald-800 cursor-pointer"
                         >
-                          Xem quyền lợi
+                          {language === "vi" ? "Xem quyền lợi" : "View Perks"}
                         </button>
                       </div>
                     ) : canAfford ? (
                       <button
                         onClick={() => handleRedeem(item)}
-                        className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs transition active:scale-95 shadow-2xs cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2 px-4 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] font-black text-xs transition active:scale-95 border-2 border-[#0F2747] shadow-xs cursor-pointer flex items-center justify-center gap-2"
                       >
-                        <Sparkles className="w-3.5 h-3.5 fill-current" />
-                        <span>Đổi ngay bằng {item.cost} PP</span>
+                        <span>
+                          {language === "vi" ? `Thử đổi mẫu (${item.cost} PP)` : `Try Redeem (${item.cost} PP)`}
+                        </span>
                       </button>
                     ) : (
                       <div className="w-full flex items-center justify-between gap-2">
                         <span className="text-[11px] text-slate-500 font-medium">
-                          Thiếu <strong className="text-amber-700 font-bold">{pointsNeeded} PP</strong>
+                          {language === "vi" ? "Thiếu" : "Need"}{" "}
+                          <strong className="text-amber-800 font-bold">{pointsNeeded} PP</strong>
                         </span>
                         <button
                           onClick={() => {
                             onClose();
                             if (onGoToVideos) onGoToVideos();
                           }}
-                          className="py-1.5 px-3 rounded-xl bg-slate-200 hover:bg-amber-100 text-slate-700 hover:text-amber-900 text-[11px] font-bold transition cursor-pointer flex items-center gap-1"
+                          className="py-1 px-3 rounded-sm bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 border-2 border-slate-300 text-[11px] font-bold transition cursor-pointer flex items-center gap-1"
                           title="Học bài & xem video để nhận thêm PP"
                         >
-                          <span>Xem video nhận +5 PP →</span>
+                          <span>{language === "vi" ? "Xem video nhận +5 PP →" : "Watch video for +5 PP →"}</span>
                         </button>
                       </div>
                     )}
@@ -387,11 +373,13 @@ export function PPExchangeShopModal({
         </div>
 
         {/* Footer info note */}
-        <div className="p-4 bg-white border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#0F2747]">
+        <div className="p-4 bg-white border-t-2 border-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#0F2747]">
           <div className="flex items-center gap-2 text-slate-600">
-            <Sparkles className="w-4 h-4 text-[#F59E0B] shrink-0" />
+            <Award className="w-4 h-4 text-[#F59E0B] shrink-0" />
             <span>
-              Tất cả các tài liệu và quyền lợi đều do cộng đồng Peer Tutor The Pencily tự nguyện đóng góp phi lợi nhuận.
+              {language === "vi"
+                ? "Tất cả các tài liệu và quyền lợi đều do cộng đồng Peer Tutor The Pencily tự nguyện đóng góp phi lợi nhuận."
+                : "All resources and perks are voluntarily contributed by The Pencily peer tutors non-profit."}
             </span>
           </div>
 
@@ -402,7 +390,7 @@ export function PPExchangeShopModal({
             className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5865F2] hover:underline shrink-0"
           >
             <DiscordLogo className="w-3.5 h-3.5 fill-current" />
-            <span>Hỗ trợ nhận quà trên Discord</span>
+            <span>{language === "vi" ? "Góp ý phần thưởng trên Discord" : "Suggest Rewards on Discord"}</span>
           </a>
         </div>
       </div>
@@ -411,46 +399,56 @@ export function PPExchangeShopModal({
       {selectedReward && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-slate-950/70"
+            className="fixed inset-0 bg-[#0F2747]/80 backdrop-blur-sm"
             onClick={() => setSelectedReward(null)}
           />
-          <div className="relative w-full max-w-md bg-white rounded-3xl p-6 border-2 border-emerald-400 shadow-2xl z-10 space-y-4 animate-fadeIn">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div className="relative w-full max-w-md bg-white rounded-md p-6 border-2 border-[#0F2747] shadow-2xl z-10 space-y-4 animate-fadeIn">
+            <div className="flex items-center justify-between pb-2 border-b-2 border-slate-100">
               <div className="flex items-center gap-2 text-emerald-700 font-bold text-sm">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                <span>Mở khóa thành công!</span>
+                <span>{language === "vi" ? "Thử nghiệm mở khóa thành công!" : "Trial Unlock Succeeded!"}</span>
               </div>
               <button
                 onClick={() => setSelectedReward(null)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100"
+                className="p-1 text-slate-400 hover:text-slate-600 rounded-sm border-2 border-transparent hover:border-slate-300 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="text-center py-2 space-y-2">
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl font-black shadow-inner">
+              <div className="w-12 h-12 mx-auto rounded-sm bg-amber-100 border-2 border-amber-300 text-amber-800 flex items-center justify-center text-2xl font-black">
                 🎁
               </div>
               <h4 className="font-poppins font-bold text-base text-[#0F2747]">
-                {selectedReward.title}
+                {language === "vi" ? selectedReward.title : selectedReward.titleEn}
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {selectedReward.description}
+              <p className="text-xs text-slate-600 leading-relaxed font-mono">
+                {language === "vi" ? selectedReward.description : selectedReward.descriptionEn}
               </p>
             </div>
 
-            <div className="bg-[#FFF9EF] p-4 rounded-2xl border border-amber-300/80 space-y-2 text-xs">
-              <div className="font-bold text-[#0F2747]">Hướng dẫn sử dụng quyền lợi:</div>
+            <div className="bg-[#FFF9EF] p-4 rounded-sm border-2 border-amber-300 space-y-2 text-xs">
+              <div className="font-bold text-[#0F2747]">
+                {language === "vi" ? "Hướng dẫn sử dụng quyền lợi mẫu:" : "How to access reward sample:"}
+              </div>
               <p className="text-slate-700 leading-relaxed">
                 {selectedReward.rewardType === "download" &&
-                  "Nhấp vào nút bên dưới để mở liên kết tải trực tiếp tài liệu từ Google Drive của The Pencily."}
+                  (language === "vi"
+                    ? "Nhấp vào nút bên dưới để mở liên kết tải trực tiếp tài liệu từ Google Drive của The Pencily."
+                    : "Click the button below to download materials from The Pencily Google Drive.")}
                 {selectedReward.rewardType === "discord" &&
-                  "Truy cập máy chủ Discord của The Pencily để nhận vai trò VIP hoặc mở phòng học Voice nhóm."}
+                  (language === "vi"
+                    ? "Truy cập máy chủ Discord của The Pencily để nhận vai trò VIP hoặc mở phòng học Voice nhóm."
+                    : "Join The Pencily Discord server to claim your VIP role or launch group voice rooms.")}
                 {selectedReward.rewardType === "booking" &&
-                  "Liên hệ ban điều phối hoặc kênh #ho-tro-tutor trên Discord để xếp lịch kèm 1-1 với Peer Tutor."}
+                  (language === "vi"
+                    ? "Liên hệ ban điều phối hoặc kênh #ho-tro-tutor trên Discord để xếp lịch kèm 1-1 với Peer Tutor."
+                    : "Contact support or #tutor-support on Discord to schedule your 1-on-1 session.")}
                 {selectedReward.rewardType === "badge" &&
-                  "Khung avatar đã được kích hoạt thành công trên hồ sơ của bạn!"}
+                  (language === "vi"
+                    ? "Khung avatar mẫu đã được kích hoạt thử nghiệm trên hồ sơ của bạn!"
+                    : "Avatar frame trial has been activated on your profile!")}
               </p>
             </div>
 
@@ -460,17 +458,17 @@ export function PPExchangeShopModal({
                   href={selectedReward.actionUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition text-center flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2.5 px-4 rounded-sm bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition text-center flex items-center justify-center gap-1.5 border-2 border-[#0F2747]"
                 >
-                  <span>{selectedReward.actionText}</span>
+                  <span>{language === "vi" ? selectedReward.actionText : selectedReward.actionTextEn}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               ) : (
                 <button
                   onClick={() => setSelectedReward(null)}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition text-center"
+                  className="flex-1 py-2.5 px-4 rounded-sm bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition text-center border-2 border-[#0F2747] cursor-pointer"
                 >
-                  Hoàn tất
+                  {language === "vi" ? "Hoàn tất" : "Done"}
                 </button>
               )}
             </div>

@@ -119,7 +119,11 @@ export interface AutomationActivity {
   discordChannel?: string;
 }
 
+export type AppLanguage = "vi" | "en";
+
 interface PencilyContextType {
+  language: AppLanguage;
+  setLanguage: (lang: AppLanguage) => void;
   user: StudentUser;
   isLoggedIn: boolean;
   loginWithDiscord: (discordData: Partial<StudentUser>) => void;
@@ -178,7 +182,7 @@ const initialUser: StudentUser = {
   grade: "Học sinh",
   discord: "",
   avatar: "P",
-  role: "Học viên • The Pencily Gen 1.0",
+  role: "Học viên: The Pencily",
   verified: false,
   points: 0,
   learningMinutes: 0,
@@ -202,6 +206,7 @@ const initialActivities: AutomationActivity[] = [];
 const PencilyContext = createContext<PencilyContextType | null>(null);
 
 export function PencilyProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguageState] = useState<AppLanguage>("vi");
   const [user, setUser] = useState<StudentUser>(initialUser);
   const [classes, setClasses] = useState<ClassSession[]>(initialClasses);
   const [classRequests, setClassRequests] = useState<ClassRequest[]>([]);
@@ -210,6 +215,22 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   const [activities, setActivities] = useState<AutomationActivity[]>(initialActivities);
   const [onlineStudentsCount] = useState(0);
   const [activeVoiceRoomsCount] = useState(0);
+
+  useEffect(() => {
+    try {
+      const savedLang = localStorage.getItem("pencily_lang") as AppLanguage;
+      if (savedLang === "vi" || savedLang === "en") {
+        setLanguageState(savedLang);
+      }
+    } catch {}
+  }, []);
+
+  const setLanguage = (lang: AppLanguage) => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem("pencily_lang", lang);
+    } catch {}
+  };
 
   // Initialize from LocalStorage (with version check to clear legacy fake data)
   useEffect(() => {
@@ -376,7 +397,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
         school: data.school || "The Pencily Academy",
         grade: data.grade || "Học sinh",
         avatar: data.avatar || initials,
-        role: "Học viên • The Pencily Gen 1.0",
+        role: "Học viên: The Pencily",
         verified: true,
         hasCompletedProfile: Boolean(data.realName || (data.name && !data.name.includes("#") && !data.name.startsWith("@"))),
       };
@@ -472,7 +493,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
       return {
         ...prev,
         tutorProgress: progress,
-        role: progress.isVerifiedTutor ? "Verified Peer Tutor Gen 1.0" : prev.role,
+        role: progress.isVerifiedTutor ? "Verified Peer Tutor" : prev.role,
       };
     });
 
@@ -690,6 +711,8 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   return (
     <PencilyContext.Provider
       value={{
+        language,
+        setLanguage,
         user,
         isLoggedIn,
         loginWithDiscord,

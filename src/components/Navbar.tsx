@@ -1,53 +1,52 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
-import { LogOut } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import { Languages } from "lucide-react";
 
 interface NavbarProps {
   onOpenJoinModal?: () => void;
   onOpenStudentHub?: () => void;
+  onOpenTutorModal?: () => void;
 }
 
-export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
+export function Navbar({ onOpenJoinModal, onOpenStudentHub, onOpenTutorModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { user, isLoggedIn, logout } = usePencily();
+  const { language, setLanguage, isLoggedIn } = usePencily();
 
   const navLinks = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Chương trình", href: "/#programs" },
-    { name: "Vận hành", href: "/#how-it-works" },
-    { name: "Portfolio Tutor", href: "/#portfolio" },
-    { name: "Câu chuyện", href: "/#stories" },
-    { name: "About", href: "/#about" },
+    { name: language === "vi" ? "Về Pencily" : "About", href: "/#about" },
+    { name: language === "vi" ? "Chương trình" : "Programs", href: "/#programs" },
+    { name: language === "vi" ? "Vận hành" : "How it Works", href: "/#how-it-works" },
+    { name: language === "vi" ? "Portfolio Tutor" : "Tutor Portfolio", href: "/#portfolio" },
+    { name: language === "vi" ? "Lãnh đạo & Chia sẻ" : "Leadership & Stories", href: "/#stories" },
   ];
 
   return (
-    <header className="w-full bg-[#FFF9EF] relative z-40">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-5 sm:py-7 flex items-center justify-between">
-        {/* Left: Brand Logo + Nav Links beside each other */}
-        <div className="flex items-center gap-7 sm:gap-9">
-          <Link href="/" className="flex items-center gap-3 group shrink-0" title="The Pencily">
+    <header className="w-full bg-[#FFF9EF] relative z-40 border-b-2 border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-3.5 sm:py-4 flex items-center justify-between gap-4">
+        {/* Left: Brand Logo */}
+        <div className="flex items-center gap-8 lg:gap-10">
+          <Link href="/" className="flex items-center gap-3 shrink-0" title="The Pencily">
             <Logo variant="nav" size="md" />
           </Link>
 
-          {/* Navigation Links right next to logo */}
-          <nav className="hidden md:flex items-center gap-6 sm:gap-7">
+          {/* Desktop Navigation Links (Spacious, clean, single line, no wrapping) */}
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors ${
+                  className={`text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors duration-150 py-1 ${
                     isActive
-                      ? "text-[#0F2747] font-bold underline underline-offset-4 decoration-[#FFC83D] decoration-2"
-                      : "text-[#0F2747] hover:text-[#4F7ECB]"
+                      ? "text-[#0F2747] font-bold border-b-2 border-[#0F2747]"
+                      : "text-slate-600 hover:text-[#0F2747]"
                   }`}
                 >
                   {link.name}
@@ -57,52 +56,46 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
           </nav>
         </div>
 
-        {/* Right: User Profile or Sign In CTA */}
-        <div className="flex items-center gap-2.5">
-          {isLoggedIn ? (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#0F2747]/15 hover:border-[#0F2747]/30 transition shadow-2xs group"
-                title="Đến Dashboard"
-              >
-                <div className="w-6 h-6 rounded-full overflow-hidden bg-[#5865F2] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                  {user.avatar?.startsWith("http") ? (
-                    <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
-                  ) : (
-                    user.avatar || "P"
-                  )}
-                </div>
-                <span className="text-xs font-bold text-[#0F2747] max-w-[100px] sm:max-w-[140px] truncate group-hover:text-[#4F7ECB]">
-                  {user.name}
-                </span>
-              </Link>
+        {/* Right: Language Switcher (Synced Picture 2 style) + Sign In */}
+        <div className="flex items-center gap-3 shrink-0">
+          {/* Language Switcher Pill (Matching Picture 2 with Languages Icon) */}
+          <button
+            type="button"
+            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-xs font-bold text-[#0F2747] border-2 border-slate-300 cursor-pointer transition shadow-2xs active:scale-95"
+            title="Đổi ngôn ngữ / Change language"
+            aria-label="Change language"
+          >
+            <Languages className="w-3.5 h-3.5 text-[#4F7ECB]" />
+            <span>{language === "vi" ? "EN" : "VI"}</span>
+          </button>
 
-              <button
-                onClick={() => logout()}
-                title="Đăng xuất"
-                className="p-2 text-[#687280] hover:text-red-600 rounded-full hover:bg-black/5 transition cursor-pointer"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
+          {/* If Logged In: Direct Link into Dashboard */}
+          {isLoggedIn ? (
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs sm:text-sm font-bold border-2 border-[#0F2747] transition shadow-xs cursor-pointer active:scale-95 whitespace-nowrap"
+            >
+              <span>{language === "vi" ? "Dashboard →" : "Dashboard →"}</span>
+            </Link>
           ) : (
+            /* If Guest / Public Visitor: Clean Sign-In button */
             <Link
               href="/signin"
-              className="inline-flex items-center gap-2 px-5 py-2 sm:py-2.5 rounded-full bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-slate-400 font-semibold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs sm:text-sm font-bold transition shadow-2xs cursor-pointer active:scale-95 whitespace-nowrap"
             >
-              <span>Đăng nhập</span>
+              <span>{language === "vi" ? "Đăng nhập" : "Sign in"}</span>
             </Link>
           )}
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 text-[#0F2747]"
+            className="md:hidden p-2 rounded-sm border-2 border-slate-300 text-[#0F2747] bg-white cursor-pointer"
             aria-label="Toggle menu"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -111,14 +104,14 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                   d="M6 18L18 6M6 6l12 12"
                 />
               ) : (
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               )}
@@ -127,28 +120,52 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer (Clean, straightforward link list) */}
       {mobileMenuOpen && (
-        <div className="md:hidden px-6 py-4 bg-[#FFF9EF] border-b border-[#0F2747]/10 flex flex-col gap-3 text-center animate-fadeIn">
+        <div className="md:hidden px-6 py-4 bg-[#FFFDF9] border-t-2 border-slate-200 flex flex-col gap-2.5 text-[#0F2747] animate-fadeIn">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-sm font-medium text-[#0F2747]"
+              className="py-2 text-sm font-bold border-b border-slate-100 hover:text-[#4F7ECB]"
             >
               {link.name}
             </Link>
           ))}
-          {!isLoggedIn && (
-            <Link
-              href="/signin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 px-4 mt-1 rounded-full bg-white text-[#0F2747] border border-slate-300 font-semibold text-xs flex items-center justify-center gap-2 shadow-2xs"
-            >
-              <span>Đăng nhập</span>
-            </Link>
-          )}
+
+          <div className="pt-2 flex flex-col gap-2">
+            {!isLoggedIn ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onOpenTutorModal) onOpenTutorModal();
+                    else window.location.href = "/dashboard?tab=become-tutor";
+                  }}
+                  className="w-full py-2.5 rounded-sm bg-[#FFC83D] text-[#0F2747] border-2 border-[#0F2747] font-bold text-xs text-center"
+                >
+                  {language === "vi" ? "Ứng tuyển Peer Tutor" : "Apply as Peer Tutor"}
+                </button>
+                <Link
+                  href="/signin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 rounded-sm bg-[#0F2747] text-white font-bold text-xs text-center border-2 border-[#0F2747]"
+                >
+                  {language === "vi" ? "Đăng nhập / Sign in" : "Sign in"}
+                </Link>
+              </>
+            ) : (
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 rounded-sm bg-[#0F2747] text-white font-bold text-xs text-center border-2 border-[#0F2747]"
+              >
+                {language === "vi" ? "Vào Dashboard Học Tập →" : "Go to Student Dashboard →"}
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </header>

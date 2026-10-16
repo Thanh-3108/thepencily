@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { RotateCcw } from "lucide-react";
-import { StarSparkle } from "./BrandDecorations";
 
 export function InteractiveDoodleHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +32,8 @@ export function InteractiveDoodleHero() {
     isDrawing: false,
     prevDrawX: 185,
     prevDrawY: 230,
+    dashAccumulator: 0,
+    lastMoveTime: 0,
   });
 
   const [renderState, setRenderState] = useState({
@@ -47,7 +48,10 @@ export function InteractiveDoodleHero() {
 
   // Draw authentic signature brand doodle loop
   const drawSignatureDoodle = useCallback((ctx: CanvasRenderingContext2D) => {
-    ctx.clearRect(0, 0, 540, 420);
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.restore();
 
     ctx.strokeStyle = "#0F2747";
     ctx.lineWidth = 4.5;
@@ -70,8 +74,10 @@ export function InteractiveDoodleHero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = 540;
-    canvas.height = 420;
+    const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 3) : 1;
+    canvas.width = 540 * dpr;
+    canvas.height = 420 * dpr;
+    ctx.scale(dpr, dpr);
     drawSignatureDoodle(ctx);
 
     let animationFrameId: number;
@@ -131,24 +137,7 @@ export function InteractiveDoodleHero() {
       // 5. Orbit rotation
       p.rotationAngle = (p.rotationAngle + dt * 4.0) % 360;
 
-      // 6. Smooth Drawing on Canvas
-      if (p.isDrawing && ctx) {
-        ctx.strokeStyle = "#0F2747";
-        ctx.lineWidth = 4;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-
-        ctx.beginPath();
-        ctx.moveTo(p.prevDrawX, p.prevDrawY);
-        const midX = (p.prevDrawX + p.x) / 2;
-        const midY = (p.prevDrawY + p.y) / 2;
-        ctx.quadraticCurveTo(p.prevDrawX, p.prevDrawY, midX, midY);
-        ctx.stroke();
-
-        p.prevDrawX = p.x;
-        p.prevDrawY = p.y;
-      }
-
+      // 6. Visual Pencil Tracking State
       setRenderState({
         pencilX: p.x,
         pencilY: p.y,
@@ -162,27 +151,144 @@ export function InteractiveDoodleHero() {
       animationFrameId = requestAnimationFrame(loop);
     };
 
+    const handleGlobalPointerUp = () => {
+      physicsRef.current.isDrawing = false;
+    };
+    window.addEventListener("pointerup", handleGlobalPointerUp);
+    window.addEventListener("pointercancel", handleGlobalPointerUp);
+
     animationFrameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("pointerup", handleGlobalPointerUp);
+      window.removeEventListener("pointercancel", handleGlobalPointerUp);
+    };
   }, [drawSignatureDoodle]);
 
-  // Pointer event handlers
+  // Helper to draw a crisp contact dot (for quick clicks, taps, or punctuation marks like dots on 'i')
+  const drawDot = useCallback((x: number, y: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.fillStyle = "#0F2747";
+    ctx.beginPath();
+    ctx.arc(x, y, 2.1, 0, Math.PI * 2);
+    ctx.fill();
+  }, []);
+
+  // Helper to draw a continuous smooth stroke segment directly on the canvas
+  const drawSegment = useCallback((fromX: number, fromY: number, toX: number, toY: number, width: number = 4.2) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.strokeStyle = "#0F2747";
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
+  }, []);
+
+  // Pointer event handlers: Instant event-driven drawing completely independent of screen refresh rate
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const scaleX = 540 / rect.width;
     const scaleY = 420 / rect.height;
 
-    const targetX = (e.clientX - rect.left) * scaleX;
-    const targetY = (e.clientY - rect.top) * scaleY;
-
     const p = physicsRef.current;
-    p.targetX = targetX;
-    p.targetY = targetY;
+    const now = performance.now();
+    const dt = Math.max(1, now - (p.lastMoveTime || now));
+    p.lastMoveTime = now;
+
+    // Safety: check if primary button is actually held down right now
+    const isPrimaryDown = e.pointerType === "mouse"
+      ? (e.buttons & 1) === 1
+      : e.buttons === 1 || e.pressure > 0;
+
+    if (!isPrimaryDown) {
+      p.isDrawing = false;
+      p.dashAccumulator = 0;
+    }
+
+    // Capture coalesced events for precision mice and trackpads
+    const rawEvents = (e.nativeEvent && typeof (e.nativeEvent as any).getCoalescedEvents === "function")
+      ? (e.nativeEvent as any).getCoalescedEvents()
+      : [e.nativeEvent || e];
+
+    for (let i = 0; i < rawEvents.length; i++) {
+      const ev = rawEvents[i];
+      const curX = (ev.clientX - rect.left) * scaleX;
+      const curY = (ev.clientY - rect.top) * scaleY;
+
+      const evDown = ev.buttons !== undefined ? (ev.buttons & 1) === 1 : isPrimaryDown;
+
+      if (p.isDrawing && evDown) {
+        const dist = Math.hypot(curX - p.prevDrawX, curY - p.prevDrawY);
+        if (dist >= 1.0) {
+          // Instant velocity in px/ms
+          const speed = dist / Math.max(0.5, dt / rawEvents.length);
+          const isFastFlick = speed >= 1.35; // Threshold for fast flicking / sketching
+
+          if (!isFastFlick) {
+            // Slow / Normal drawing: 100% Solid Continuous Line (NÉT LIỀN)
+            p.dashAccumulator = 0;
+            drawSegment(p.prevDrawX, p.prevDrawY, curX, curY, 4.2);
+          } else {
+            // Fast drawing / flicking: Breaks into clean dashed sketch marks (NÉT ĐỨT RỜI)
+            const cycle = 22; // 12px dash, 10px spacing
+            const dashLength = 12;
+            const stepSize = 3;
+            const steps = Math.max(1, Math.ceil(dist / stepSize));
+
+            let prevSubX = p.prevDrawX;
+            let prevSubY = p.prevDrawY;
+
+            for (let s = 1; s <= steps; s++) {
+              const t = s / steps;
+              const subX = p.prevDrawX + (curX - p.prevDrawX) * t;
+              const subY = p.prevDrawY + (curY - p.prevDrawY) * t;
+              const subDist = Math.hypot(subX - prevSubX, subY - prevSubY);
+
+              p.dashAccumulator += subDist;
+              const inDash = (p.dashAccumulator % cycle) < dashLength;
+
+              if (inDash) {
+                drawSegment(prevSubX, prevSubY, subX, subY, 3.6);
+              }
+
+              prevSubX = subX;
+              prevSubY = subY;
+            }
+          }
+
+          p.prevDrawX = curX;
+          p.prevDrawY = curY;
+        }
+      } else {
+        // When not drawing (hovering between words/letters), keep sync so next press never bridges
+        p.dashAccumulator = 0;
+        p.prevDrawX = curX;
+        p.prevDrawY = curY;
+      }
+
+      p.targetX = curX;
+      p.targetY = curY;
+    }
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Only accept primary button (left click) or touch/pen contact
+    if (e.pointerType === "mouse" && e.button !== 0) return;
     if (!containerRef.current) return;
+
     const rect = containerRef.current.getBoundingClientRect();
     const scaleX = 540 / rect.width;
     const scaleY = 420 / rect.height;
@@ -191,16 +297,25 @@ export function InteractiveDoodleHero() {
 
     const p = physicsRef.current;
     p.isDrawing = true;
+    p.dashAccumulator = 0;
+    p.lastMoveTime = performance.now();
     p.targetX = x;
     p.targetY = y;
+    p.x = x;
+    p.y = y;
     p.prevTargetX = x;
     p.prevTargetY = y;
-    p.prevDrawX = p.x;
-    p.prevDrawY = p.y;
+    p.prevDrawX = x;
+    p.prevDrawY = y;
+
+    // Stamp a clean contact point immediately
+    drawDot(x, y);
   };
 
   const handlePointerUp = () => {
-    physicsRef.current.isDrawing = false;
+    const p = physicsRef.current;
+    p.isDrawing = false;
+    p.dashAccumulator = 0;
   };
 
   const handleResetCanvas = () => {
@@ -220,6 +335,8 @@ export function InteractiveDoodleHero() {
     p.smoothedVy = 0;
     p.prevDrawX = 185;
     p.prevDrawY = 230;
+    p.dashAccumulator = 0;
+    p.lastMoveTime = 0;
     p.isDrawing = false;
   };
 
@@ -229,6 +346,7 @@ export function InteractiveDoodleHero() {
       onPointerMove={handlePointerMove}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       onPointerEnter={() => setIsHovered(true)}
       onPointerLeave={() => {
         setIsHovered(false);
@@ -341,29 +459,6 @@ export function InteractiveDoodleHero() {
         />
       </div>
 
-      {/* 5. MINIMALIST OUTLINE SPARKLES */}
-      <div
-        className="absolute top-[8%] right-[28%] z-20 pointer-events-none transition-transform duration-300"
-        style={{
-          transform: isHovered
-            ? `translate(${renderState.parallaxX * 10}px, ${renderState.parallaxY * 8}px) scale(1.2)`
-            : "scale(1)",
-        }}
-      >
-        <StarSparkle size={20} className="text-[#FFC83D] opacity-90 animate-pulse" />
-      </div>
-
-      <div
-        className="absolute bottom-[22%] right-[8%] z-20 pointer-events-none transition-transform duration-300"
-        style={{
-          transform: isHovered
-            ? `translate(${renderState.parallaxX * -8}px, ${renderState.parallaxY * -6}px) scale(1.15)`
-            : "scale(1)",
-        }}
-      >
-        <StarSparkle size={16} className="text-[#FFC83D] opacity-75" />
-      </div>
-
       {/* 6. MINIMAL ICON-ONLY RESET BUTTON */}
       <div className="absolute bottom-2 left-3 z-30">
         <button
@@ -373,7 +468,7 @@ export function InteractiveDoodleHero() {
             handleResetCanvas();
           }}
           title="Vẽ lại nét chữ ký"
-          className="w-8 h-8 flex items-center justify-center bg-white/90 hover:bg-white text-[#0F2747] rounded-full border border-[#0F2747]/15 shadow-2xs hover:shadow-xs transition active:scale-95 cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center bg-white hover:bg-slate-50 text-[#0F2747] rounded-sm border-2 border-slate-300 hover:border-[#0F2747] shadow-xs transition active:scale-95 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>

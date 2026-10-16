@@ -1,51 +1,52 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { Clock } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
-import { PencilMascot } from "@/components/Logo";
+import { OwlMascot } from "@/components/Logo";
 
 interface ClassDirectoryProps {
   onSelectClassToRegister: (className: string) => void;
 }
 
 export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps) {
-  const { classes } = usePencily();
+  const { classes, language } = usePencily();
   const [activeTab, setActiveTab] = useState<"all" | "cohort" | "group" | "workshop">("all");
 
   const filtered = classes;
 
   return (
-    <section id="classes" className="py-20 sm:py-28 bg-[#FFFDF9] border-t border-[#0F2747]/5">
+    <section id="classes" className="py-20 sm:py-28 bg-[#FFFDF9] border-t-2 border-slate-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
         {/* Simple Section Header */}
         <div className="max-w-xl mb-12">
           <h2 className="font-poppins font-black text-3xl sm:text-4xl text-[#0F2747] tracking-tight mb-3">
-            Explore Classes.
+            {language === "vi" ? "Khám Phá Lớp Học." : "Explore Classes."}
           </h2>
           <p className="font-inter text-sm sm:text-base text-[#4B5563] leading-relaxed">
-            Các lớp học và nhóm học tập peer-to-peer hoàn toàn miễn phí, được tổ chức trực tiếp qua máy chủ Discord.
+            {language === "vi"
+              ? "Các lớp học và nhóm học tập peer-to-peer hoàn toàn miễn phí, được tổ chức trực tiếp qua máy chủ Discord."
+              : "Peer-to-peer study sessions and cohorts completely free of charge, hosted directly on Discord Voice."}
           </p>
 
-          {/* Clean Filter Tabs without background block */}
-          <div className="flex items-center gap-6 border-b border-[#0F2747]/10 mt-6 pb-0.5">
+          {/* Clean Filter Tabs */}
+          <div className="flex items-center gap-6 border-b-2 border-slate-300 mt-6 pb-0.5">
             {[
-              { id: "all", label: "Tất cả" },
-              { id: "cohort", label: "Cohort Classes" },
-              { id: "group", label: "Study Groups" },
-              { id: "workshop", label: "Workshops" },
+              { id: "all", labelVi: "Tất cả", labelEn: "All" },
+              { id: "cohort", labelVi: "Lớp Cohort", labelEn: "Cohort Classes" },
+              { id: "group", labelVi: "Nhóm Học Tập", labelEn: "Study Groups" },
+              { id: "workshop", labelVi: "Workshops", labelEn: "Workshops" },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`pb-2 text-xs font-semibold transition-all cursor-pointer border-b-2 ${
+                className={`pb-2 text-xs font-bold transition-all cursor-pointer border-b-2 -mb-[2px] ${
                   activeTab === tab.id
-                    ? "text-[#0F2747] font-bold border-[#0F2747]"
-                    : "text-[#64748B] font-medium border-transparent hover:text-[#0F2747]"
+                    ? "text-[#0F2747] border-[#0F2747]"
+                    : "text-[#64748B] border-transparent hover:text-[#0F2747]"
                 }`}
               >
-                {tab.label}
+                {language === "vi" ? tab.labelVi : tab.labelEn}
               </button>
             ))}
           </div>
@@ -53,14 +54,16 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
 
         {/* Clean Class Grid or Empty State */}
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl p-10 border border-slate-200/80 text-center space-y-4">
-            <PencilMascot size="lg" className="mx-auto" />
+          <div className="bg-white rounded-md p-10 border-2 border-slate-300 text-center space-y-4">
+            <OwlMascot size="lg" className="mx-auto" />
             <div className="max-w-md mx-auto">
               <h4 className="font-bold text-base text-[#0F2747]">
-                Cú Pencily chưa thấy lớp học nào trong mục này!
+                {language === "vi" ? "Cú Pencily chưa thấy lớp học nào trong mục này!" : "No classes found in this category!"}
               </h4>
               <p className="text-xs sm:text-sm text-[#4B5563] mt-1 leading-relaxed">
-                Các bạn peer tutor sẽ sớm cập nhật lịch lớp mới. Bạn cũng có thể đề xuất chủ đề bạn muốn học nhé!
+                {language === "vi"
+                  ? "Các bạn peer tutor sẽ sớm cập nhật lịch lớp mới. Bạn cũng có thể đề xuất chủ đề bạn muốn học nhé!"
+                  : "Peer tutors will update new sessions soon. You can also suggest topics you wish to study!"}
               </p>
             </div>
           </div>
@@ -69,7 +72,7 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
             {filtered.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-7 border border-[#0F2747]/10 hover:border-[#0F2747]/30 transition-all hover:shadow-sm flex flex-col justify-between"
+                className="bg-white rounded-md p-7 border-2 border-slate-300 hover:border-[#0F2747] transition-all hover:shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -91,19 +94,20 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
                   </p>
 
                   <div className="text-xs text-[#6B7280]">
-                    Tutor hướng dẫn: <b className="text-[#0F2747]">{item.tutorName}</b> ({item.tutorSchool})
+                    {language === "vi" ? "Tutor hướng dẫn: " : "Peer Tutor: "}
+                    <b className="text-[#0F2747]">{item.tutorName}</b> ({item.tutorSchool})
                   </div>
                 </div>
 
-                <div className="pt-5 mt-5 border-t border-gray-100 flex items-center justify-between">
+                <div className="pt-5 mt-5 border-t-2 border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-semibold text-[#16A34A]">
-                    ✓ Học phí 0đ (Miễn phí)
+                    ✓ {language === "vi" ? "Học phí 0đ (Miễn phí)" : "100% Free Tuition"}
                   </span>
                   <button
                     onClick={() => onSelectClassToRegister(item.title)}
-                    className="px-5 py-2 rounded-full bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs font-bold transition-all active:scale-95"
+                    className="px-4 py-2 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs font-bold transition-all active:scale-95 border-2 border-amber-500 cursor-pointer"
                   >
-                    Đăng ký tham gia →
+                    {language === "vi" ? "Đăng ký tham gia →" : "Register →"}
                   </button>
                 </div>
               </div>

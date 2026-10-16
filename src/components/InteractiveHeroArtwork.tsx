@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Sparkles, Code, Calculator, Atom, Compass, Lightbulb } from "lucide-react";
+import { Code, Calculator, Atom, Compass, Lightbulb } from "lucide-react";
 
 interface FormulaParticle {
   id: number;
@@ -141,7 +141,7 @@ export function InteractiveHeroArtwork() {
         ))}
       </div>
 
-      {/* 3. Click-Spawned Interactive Sparkles & Formulas */}
+      {/* 3. Click-Spawned Interactive Formulas */}
       <div className="absolute inset-0 pointer-events-none z-30">
         {clickSparks.map((spark) => (
           <div
@@ -153,7 +153,7 @@ export function InteractiveHeroArtwork() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            ✦ {spark.label}
+            {spark.label}
           </div>
         ))}
       </div>
@@ -343,24 +343,13 @@ export function InteractiveHeroArtwork() {
                 strokeDashoffset: isHovered ? "0" : "15",
               }}
             />
-
-            {/* Little golden star sparkles */}
-            <path
-              d="M 405 170 Q 412 170, 412 163 Q 412 170, 419 170 Q 412 170, 412 177 Q 412 170, 405 170 Z"
-              fill="#FFC83D"
-            />
-            <path
-              d="M 425 240 Q 429 240, 429 236 Q 429 240, 433 240 Q 429 240, 429 244 Q 429 240, 425 240 Z"
-              fill="#FFC83D"
-            />
           </g>
         </svg>
       </div>
 
       {/* 5. Subtle Interactive Hint Pill on Bottom-Left */}
       <div className="absolute bottom-3 left-4 z-20 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#0F2747]/10 text-[11px] font-semibold text-[#0F2747] shadow-xs">
-          <Sparkles className="w-3 h-3 text-[#FFC83D]" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-white/80 border border-[#0F2747]/10 text-[11px] font-semibold text-[#0F2747] shadow-xs">
           <span>Di chuột & nhấp để gieo công thức tri thức</span>
         </span>
       </div>

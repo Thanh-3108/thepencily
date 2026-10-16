@@ -6,23 +6,11 @@ import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { DiscordLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  AlertCircle,
-  Sparkles,
-  Lock,
-  Mail,
-  User,
-  GraduationCap,
-  Building2,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertCircle, Lock, Mail, User, GraduationCap, Building2, Eye, EyeOff } from "lucide-react";
 
 export default function SignInPage() {
   const router = useRouter();
-  const { loginWithCustomDatabase, isLoggedIn } = usePencily();
+  const { loginWithCustomDatabase, isLoggedIn, language, setLanguage } = usePencily();
 
   // Mode: "signin" | "register"
   const [authMode, setAuthMode] = useState<"signin" | "register">("signin");
@@ -44,28 +32,28 @@ export default function SignInPage() {
   if (isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#FFF9EF] flex flex-col items-center justify-center p-6 text-center">
-        <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-[#0F2747]/10 shadow-lg space-y-5 animate-fadeIn">
-          <div className="w-14 h-14 mx-auto rounded-full bg-[#57F287]/20 text-[#1f8b4c] flex items-center justify-center">
+        <div className="max-w-md w-full bg-white rounded-md p-8 border-2 border-[#0F2747] shadow-lg space-y-5 animate-fadeIn">
+          <div className="w-14 h-14 mx-auto rounded-sm bg-[#57F287]/20 border-2 border-emerald-400 text-[#1f8b4c] flex items-center justify-center">
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-black text-[#0F2747]">
-            Bạn đã đăng nhập!
+            {language === "vi" ? "Bạn đã đăng nhập!" : "Already Signed In!"}
           </h2>
           <p className="text-sm text-[#4B5563]">
-            Tài khoản The Pencily của bạn hiện đang hoạt động.
+            {language === "vi" ? "Tài khoản The Pencily của bạn hiện đang hoạt động." : "Your The Pencily account is active."}
           </p>
           <div className="pt-2 flex flex-col gap-3">
             <button
               onClick={() => router.push("/dashboard")}
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white font-bold text-sm shadow-md transition active:scale-98 cursor-pointer"
+              className="w-full py-3.5 px-6 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-sm shadow-md transition active:scale-98 cursor-pointer"
             >
-              Vào Dashboard ngay
+              {language === "vi" ? "Vào Dashboard ngay" : "Go to Dashboard"}
             </button>
             <Link
               href="/"
-              className="w-full py-3 px-6 rounded-2xl border border-slate-200 text-[#0F2747] hover:bg-slate-50 font-bold text-sm transition cursor-pointer"
+              className="w-full py-3 px-6 rounded-sm border-2 border-slate-300 text-[#0F2747] hover:bg-slate-50 font-bold text-sm transition cursor-pointer"
             >
-              Về Trang chủ
+              {language === "vi" ? "Về Trang chủ" : "Back to Home"}
             </Link>
           </div>
         </div>
@@ -146,35 +134,34 @@ export default function SignInPage() {
 
       {/* Main Container */}
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 my-4">
-        <div className="w-full max-w-[480px] bg-white rounded-3xl border border-[#0F2747]/12 shadow-[0_12px_40px_rgba(15,39,71,0.06)] p-6 sm:p-8 space-y-6">
+        <div className="w-full max-w-[480px] bg-white rounded-md border-2 border-slate-300 shadow-sm p-6 sm:p-8 space-y-6">
           {/* Header titles */}
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFC83D]/25 text-[#0F2747] text-xs font-bold mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#0F2747]" />
-              <span>Cổng học tập The Pencily</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xs bg-[#FFC83D]/25 border border-amber-300 text-[#0F2747] text-xs font-bold mb-1">
+              <span>{language === "vi" ? "Cổng học tập The Pencily" : "The Pencily Portal"}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-[#0F2747] tracking-tight">
               {authMode === "signin"
-                ? "Chào mừng trở lại!"
-                : "Tạo tài khoản học sinh"}
+                ? (language === "vi" ? "Chào mừng trở lại!" : "Welcome back!")
+                : (language === "vi" ? "Tạo tài khoản học sinh" : "Create Student Account")}
             </h1>
             <p className="text-xs sm:text-sm text-[#4B5563]">
               {authMode === "signin"
-                ? "Đăng nhập để vào lớp học trực tuyến, xem lịch và thảo luận"
-                : "Tham gia miễn phí cộng đồng học tập do học sinh vì học sinh"}
+                ? (language === "vi" ? "Đăng nhập để vào lớp học trực tuyến, xem lịch và thảo luận" : "Sign in to join live rooms, view schedules, and discuss")
+                : (language === "vi" ? "Tham gia miễn phí cộng đồng học tập do học sinh vì học sinh" : "Join our free student-led learning community")}
             </p>
           </div>
 
           {/* Alert notifications */}
           {infoMessage && (
-            <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5 animate-fadeIn">
+            <div className="p-3.5 rounded-sm bg-amber-50 border-2 border-amber-300 text-amber-900 text-xs flex items-start gap-2.5 animate-fadeIn">
               <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">{infoMessage}</div>
             </div>
           )}
 
           {errorMessage && (
-            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5 animate-fadeIn">
+            <div className="p-3.5 rounded-sm bg-red-50 border-2 border-red-300 text-red-700 text-xs flex items-start gap-2.5 animate-fadeIn">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>{errorMessage}</div>
             </div>
@@ -185,16 +172,16 @@ export default function SignInPage() {
             {/* 1. DISCORD (Active OAuth2) */}
             <a
               href="/api/auth/discord"
-              className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-sm shadow-sm hover:shadow transition-all active:scale-98 cursor-pointer group"
+              className="w-full flex items-center justify-between px-5 py-3.5 rounded-sm bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-sm shadow-sm hover:shadow transition-all active:scale-98 cursor-pointer group border-2 border-[#5865F2]"
             >
               <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-xs bg-white/20 flex items-center justify-center">
                   <DiscordLogo className="w-4 h-4 text-white" />
                 </div>
-                <span>Tiếp tục với Discord</span>
+                <span>{language === "vi" ? "Tiếp tục với Discord" : "Continue with Discord"}</span>
               </div>
-              <span className="text-[10px] font-semibold bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Khuyên dùng
+              <span className="text-[10px] font-semibold bg-white/20 px-2 py-0.5 rounded-xs uppercase tracking-wider">
+                {language === "vi" ? "Khuyên dùng" : "Recommended"}
               </span>
             </a>
 
@@ -202,7 +189,7 @@ export default function SignInPage() {
             <button
               type="button"
               onClick={() => handlePendingProvider("Google")}
-              className="w-full flex items-center justify-between px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-200 font-bold text-sm transition-all active:scale-98 cursor-pointer group"
+              className="w-full flex items-center justify-between px-5 py-3 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-sm transition-all active:scale-98 cursor-pointer group"
             >
               <div className="flex items-center gap-3">
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
@@ -223,10 +210,10 @@ export default function SignInPage() {
                     d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.25 2.69 1.27 6.61l4.01 3.13c.95-2.84 3.6-4.99 6.72-4.99z"
                   />
                 </svg>
-                <span>Tiếp tục với Google</span>
+                <span>{language === "vi" ? "Tiếp tục với Google" : "Continue with Google"}</span>
               </div>
               <span className="text-[10px] text-slate-400 font-normal">
-                Sắp ra mắt
+                {language === "vi" ? "Sắp ra mắt" : "Coming Soon"}
               </span>
             </button>
 
@@ -234,7 +221,7 @@ export default function SignInPage() {
             <button
               type="button"
               onClick={() => handlePendingProvider("Facebook")}
-              className="w-full flex items-center justify-between px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-200 font-bold text-sm transition-all active:scale-98 cursor-pointer group"
+              className="w-full flex items-center justify-between px-5 py-3 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-sm transition-all active:scale-98 cursor-pointer group"
             >
               <div className="flex items-center gap-3">
                 <svg
@@ -244,37 +231,37 @@ export default function SignInPage() {
                 >
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
-                <span>Tiếp tục với Facebook</span>
+                <span>{language === "vi" ? "Tiếp tục với Facebook" : "Continue with Facebook"}</span>
               </div>
               <span className="text-[10px] text-slate-400 font-normal">
-                Sắp ra mắt
+                {language === "vi" ? "Sắp ra mắt" : "Coming Soon"}
               </span>
             </button>
           </div>
 
           {/* Divider */}
           <div className="relative flex items-center justify-center">
-            <div className="border-t border-slate-200 w-full" />
+            <div className="border-t-2 border-slate-200 w-full" />
             <span className="bg-white px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0">
-              Hoặc dùng tài khoản Pencily
+              {language === "vi" ? "Hoặc dùng tài khoản Pencily" : "Or use Pencily Account"}
             </span>
           </div>
 
           {/* Tabs for Sign in vs Register */}
-          <div className="flex p-1 bg-[#FFF9EF] rounded-2xl border border-[#0F2747]/10">
+          <div className="flex p-1 bg-[#FFF9EF] rounded-sm border-2 border-slate-300">
             <button
               type="button"
               onClick={() => {
                 setAuthMode("signin");
                 setErrorMessage(null);
               }}
-              className={`flex-1 py-2 text-xs font-bold rounded-xl transition cursor-pointer ${
+              className={`flex-1 py-2 text-xs font-bold rounded-xs transition cursor-pointer ${
                 authMode === "signin"
-                  ? "bg-[#0F2747] text-white shadow-2xs"
+                  ? "bg-[#0F2747] text-white shadow-2xs font-black"
                   : "text-[#0F2747] hover:bg-black/5"
               }`}
             >
-              Đăng nhập
+              {language === "vi" ? "Đăng nhập" : "Sign In"}
             </button>
             <button
               type="button"
@@ -282,13 +269,13 @@ export default function SignInPage() {
                 setAuthMode("register");
                 setErrorMessage(null);
               }}
-              className={`flex-1 py-2 text-xs font-bold rounded-xl transition cursor-pointer ${
+              className={`flex-1 py-2 text-xs font-bold rounded-xs transition cursor-pointer ${
                 authMode === "register"
-                  ? "bg-[#0F2747] text-white shadow-2xs"
+                  ? "bg-[#0F2747] text-white shadow-2xs font-black"
                   : "text-[#0F2747] hover:bg-black/5"
               }`}
             >
-              Đăng ký mới
+              {language === "vi" ? "Đăng ký mới" : "Register"}
             </button>
           </div>
 
@@ -299,15 +286,15 @@ export default function SignInPage() {
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                    <span>Họ và tên học sinh</span>
+                    <span>{language === "vi" ? "Họ và tên học sinh" : "Student Full Name"}</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="VD: Nguyễn Nhật Nam"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0F2747] focus:ring-1 focus:ring-[#0F2747] text-sm text-[#0F2747] placeholder:text-slate-400 transition"
+                    placeholder={language === "vi" ? "VD: Nguyễn Nhật Nam" : "e.g. John Doe"}
+                    className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] placeholder:text-slate-400 transition"
                   />
                 </div>
 
@@ -315,31 +302,31 @@ export default function SignInPage() {
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
                       <Building2 className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                      <span>Trường học</span>
+                      <span>{language === "vi" ? "Trường học" : "School"}</span>
                     </label>
                     <input
                       type="text"
                       value={school}
                       onChange={(e) => setSchool(e.target.value)}
-                      placeholder="VD: THPT Gia Định"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0F2747] focus:ring-1 focus:ring-[#0F2747] text-sm text-[#0F2747] placeholder:text-slate-400 transition"
+                      placeholder={language === "vi" ? "VD: THPT Gia Định" : "e.g. High School"}
+                      className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] placeholder:text-slate-400 transition"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
                       <GraduationCap className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                      <span>Khối lớp</span>
+                      <span>{language === "vi" ? "Khối lớp" : "Grade"}</span>
                     </label>
                     <select
                       value={grade}
                       onChange={(e) => setGrade(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-[#0F2747] focus:ring-1 focus:ring-[#0F2747] text-sm text-[#0F2747] bg-white transition cursor-pointer"
+                      className="w-full px-3 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] bg-white transition cursor-pointer"
                     >
-                      <option value="Lớp 10">Lớp 10</option>
-                      <option value="Lớp 11">Lớp 11</option>
-                      <option value="Lớp 12">Lớp 12</option>
-                      <option value="Đại học">Đại học / Tự do</option>
+                      <option value="Lớp 10">{language === "vi" ? "Lớp 10" : "Grade 10"}</option>
+                      <option value="Lớp 11">{language === "vi" ? "Lớp 11" : "Grade 11"}</option>
+                      <option value="Lớp 12">{language === "vi" ? "Lớp 12" : "Grade 12"}</option>
+                      <option value="Đại học">{language === "vi" ? "Đại học / Tự do" : "University / Other"}</option>
                     </select>
                   </div>
                 </div>
@@ -349,7 +336,7 @@ export default function SignInPage() {
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                <span>Email hoặc Tên đăng nhập</span>
+                <span>{language === "vi" ? "Email hoặc Tên đăng nhập" : "Email or Username"}</span>
               </label>
               <input
                 type="text"
@@ -357,7 +344,7 @@ export default function SignInPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="VD: student@thepencily.org"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0F2747] focus:ring-1 focus:ring-[#0F2747] text-sm text-[#0F2747] placeholder:text-slate-400 transition"
+                className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] placeholder:text-slate-400 transition"
               />
             </div>
 
@@ -365,19 +352,21 @@ export default function SignInPage() {
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
                   <Lock className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                  <span>Mật khẩu</span>
+                  <span>{language === "vi" ? "Mật khẩu" : "Password"}</span>
                 </label>
                 {authMode === "signin" && (
                   <button
                     type="button"
                     onClick={() =>
                       setInfoMessage(
-                        "Nếu bạn quên mật khẩu, bạn có thể đăng nhập bằng Discord để phục hồi truy cập tài khoản ngay lập tức."
+                        language === "vi"
+                          ? "Nếu bạn quên mật khẩu, bạn có thể đăng nhập bằng Discord để phục hồi truy cập tài khoản ngay lập tức."
+                          : "If you forgot your password, you can sign in with Discord to restore access instantly."
                       )
                     }
                     className="text-[11px] font-semibold text-[#4F7ECB] hover:underline cursor-pointer"
                   >
-                    Quên mật khẩu?
+                    {language === "vi" ? "Quên mật khẩu?" : "Forgot password?"}
                   </button>
                 )}
               </div>
@@ -387,8 +376,8 @@ export default function SignInPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Tối thiểu 6 ký tự"
-                  className="w-full px-4 py-2.5 pr-10 rounded-xl border border-slate-200 focus:border-[#0F2747] focus:ring-1 focus:ring-[#0F2747] text-sm text-[#0F2747] placeholder:text-slate-400 transition"
+                  placeholder={language === "vi" ? "Tối thiểu 6 ký tự" : "At least 6 characters"}
+                  className="w-full px-4 py-2.5 pr-10 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] placeholder:text-slate-400 transition"
                 />
                 <button
                   type="button"
@@ -407,27 +396,28 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#0F2747] hover:bg-[#1A3E6D] text-white font-bold text-sm shadow-md transition active:scale-98 cursor-pointer disabled:opacity-50 mt-2"
+              className="w-full py-3.5 px-6 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-sm shadow-md transition active:scale-98 cursor-pointer disabled:opacity-50 mt-2 border-2 border-[#0F2747]"
             >
               {isSubmitting
-                ? "Đang xử lý..."
+                ? (language === "vi" ? "Đang xử lý..." : "Processing...")
                 : authMode === "signin"
-                ? "Đăng nhập với Database Pencily"
-                : "Hoàn tất đăng ký học sinh"}
+                ? (language === "vi" ? "Đăng nhập với Database Pencily" : "Sign In with Pencily")
+                : (language === "vi" ? "Hoàn tất đăng ký học sinh" : "Complete Registration")}
             </button>
           </form>
 
           {/* Privacy & Terms Note */}
           <p className="text-[11px] text-center text-slate-400 leading-normal">
-            Bằng việc tiếp tục, bạn đồng ý với Quy chuẩn Học tập và Chính sách
-            Bảo mật phi lợi nhuận của The Pencily.
+            {language === "vi"
+              ? "Bằng việc tiếp tục, bạn đồng ý với Quy chuẩn Học tập và Chính sách Bảo mật phi lợi nhuận của The Pencily."
+              : "By continuing, you agree to The Pencily Community Guidelines and Non-Profit Privacy Policy."}
           </p>
         </div>
       </main>
 
       {/* Footer */}
       <footer className="w-full py-6 text-center text-xs text-[#687280]">
-        The Pencily Gen 1.0 • Built by Students, For Students.
+        The Pencily: Built by Students, For Students.
       </footer>
     </div>
   );

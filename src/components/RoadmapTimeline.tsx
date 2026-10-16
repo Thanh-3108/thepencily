@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, CheckCircle2, Clock, Award, Flag, Sparkles } from "lucide-react";
+import { Calendar, CheckCircle2, Clock, Award, Flag } from "lucide-react";
 
 export function RoadmapTimeline() {
   const phases = [
@@ -11,10 +11,10 @@ export function RoadmapTimeline() {
       status: "Đang triển khai",
       statusBadge: "bg-[#22C55E]/15 text-[#16A34A] border-[#22C55E]/30",
       tasks: [
-        "Hoàn thiện Project Brief chuẩn Gen 1.0 và ký cam kết nguyên tắc hoạt động Core Team",
+        "Hoàn thiện Project Brief và ký cam kết nguyên tắc hoạt động Core Team",
         "Thiết lập Website phiên bản 1.0 (Landing page, Sứ mệnh, Danh mục lớp học & Form đăng ký)",
         "Tái cấu trúc máy chủ Discord: thiết lập phân quyền role tự động, bot ghi âm lớp học",
-        "Xây dựng quy chế tuyển chọn và đào tạo phương pháp giảng dạy căn bản (Tutor Onboarding Kit)",
+        "Xây dựng quy chế tuyển chọn và đào tạo phương pháp giảng dạy căn bản cho Tutor",
         "Biên soạn bộ tài liệu chuẩn bị cho các lớp học Flagship đầu tiên",
       ],
     },
@@ -54,9 +54,9 @@ export function RoadmapTimeline() {
       status: "Kế hoạch",
       statusBadge: "bg-gray-100 text-[#6B7280] border-gray-200",
       tasks: [
-        "Cấp chứng nhận hoàn thành giảng dạy (Tutor Certificate) xác nhận bởi Ban Điều Hành",
+        "Cấp chứng nhận hoàn thành giảng dạy chính thức xác nhận bởi Ban Điều Hành",
         "Đánh giá các chỉ số KPIs: số lượng học sinh, mức độ hài lòng, độ ổn định hệ thống",
-        "Tổ chức buổi vinh danh và tổng kết thành tựu mùa Gen 1.0",
+        "Tổ chức buổi vinh danh và tổng kết thành tựu",
         "Lập kế hoạch chuyển giao và mở rộng quy mô cho mùa tiếp theo",
       ],
     },
@@ -71,7 +71,7 @@ export function RoadmapTimeline() {
             <span>Timeline 12 Tuần</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F2747] font-heading tracking-tight">
-            Lộ Trình Triển Khai The Pencily Gen 1.0
+            Lộ Trình Triển Khai The Pencily
           </h2>
           <p className="mt-4 text-base text-[#4B5563]">
             Kế hoạch hành động 12 tuần được chia thành 4 giai đoạn cụ thể, đảm bảo tính kỷ luật, chất lượng học thuật và trải nghiệm tốt nhất cho người học.
