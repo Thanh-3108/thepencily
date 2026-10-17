@@ -3,7 +3,7 @@
 :root {
   --navy: #0F2747;
   --yellow: #FFC83D;
-  --cream: #FFF9EF;
+  --cream: #FAF7EE;
   --blue: #4F7ECB;
   --gray: #687280;
 }
@@ -18,7 +18,7 @@
   --color-navy-dark: #091A30;
   --color-yellow: #FFC83D;
   --color-yellow-hover: #EAB308;
-  --color-cream: #FFF9EF;
+  --color-cream: #FAF7EE;
   --color-blue: #4F7ECB;
   --color-brand-gray: #687280;
 }
@@ -30,7 +30,7 @@ html {
 }
 
 body {
-  background-color: #FFF9EF;
+  background-color: #FAF7EE;
   color: #0F2747;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
   overflow-x: clip;

@@ -52,7 +52,7 @@ export default function RootLayout({
       lang="vi"
       className={`${poppins.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FFF9EF] text-[#0F2747]">
+      <body className="min-h-full flex flex-col bg-[#FAF7EE] text-[#0F2747]">
         <PencilyProvider>
           {children}
         </PencilyProvider>
