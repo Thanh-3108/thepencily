@@ -39,6 +39,17 @@ import {
   PencilyStoreIcon,
   PencilyCommunityIcon,
   PencilyShieldIcon,
+  PencilyListeningIcon,
+  PencilyReadingIcon,
+  PencilyWritingIcon,
+  PencilySpeakingIcon,
+  PencilyIeltsIcon,
+  PencilySatIcon,
+  PencilyTrophyIcon,
+  PencilyMicIcon,
+  PencilyVideoIcon,
+  PencilySearchIcon,
+  PencilySquircleTile,
 } from "@/components/icons/PencilyIcons";
 
 // Brand Artworks
@@ -191,6 +202,32 @@ export default function IconsInventoryPage() {
         case "PencilyStoreIcon": return <PencilyStoreIcon size={size} color={defaultColor} />;
         case "PencilyCommunityIcon": return <PencilyCommunityIcon size={size} color={defaultColor} />;
         case "PencilyShieldIcon": return <PencilyShieldIcon size={size} color={defaultColor} />;
+        case "PencilyListeningIcon": return (
+          <PencilySquircleTile variant="sky" size="sm" border={false}>
+            <PencilyListeningIcon size={size - 4} color="#1E3A5F" />
+          </PencilySquircleTile>
+        );
+        case "PencilyReadingIcon": return (
+          <PencilySquircleTile variant="emerald" size="sm" border={false}>
+            <PencilyReadingIcon size={size - 4} color="#166534" />
+          </PencilySquircleTile>
+        );
+        case "PencilyWritingIcon": return (
+          <PencilySquircleTile variant="amber" size="sm" border={false}>
+            <PencilyWritingIcon size={size - 4} color="#B45309" />
+          </PencilySquircleTile>
+        );
+        case "PencilySpeakingIcon": return (
+          <PencilySquircleTile variant="purple" size="sm" border={false}>
+            <PencilySpeakingIcon size={size - 4} color="#6B2D78" />
+          </PencilySquircleTile>
+        );
+        case "PencilyIeltsIcon": return <PencilyIeltsIcon size={size - 4} />;
+        case "PencilySatIcon": return <PencilySatIcon size={size - 4} />;
+        case "PencilyTrophyIcon": return <PencilyTrophyIcon size={size} color={defaultColor} />;
+        case "PencilyMicIcon": return <PencilyMicIcon size={size} color={defaultColor} />;
+        case "PencilyVideoIcon": return <PencilyVideoIcon size={size} color={defaultColor} />;
+        case "PencilySearchIcon": return <PencilySearchIcon size={size} color={defaultColor} />;
       }
     }
 
