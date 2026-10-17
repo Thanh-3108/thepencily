@@ -195,9 +195,6 @@ export function LeadershipTeam() {
                       <h4 className="font-poppins font-bold text-lg text-[#0F2747] truncate">
                         {member.name}
                       </h4>
-                      <p className="text-xs font-bold text-[#4F7ECB]">
-                        {member.title}
-                      </p>
                     </div>
                   </div>
 

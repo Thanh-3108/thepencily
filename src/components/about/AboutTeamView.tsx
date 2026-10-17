@@ -346,9 +346,6 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
                     <h4 className="font-poppins font-bold text-lg text-[#0F2747] truncate">
                       {member.name}
                     </h4>
-                    <p className="text-xs font-bold text-[#4F7ECB]">
-                      {isVi ? member.titleVi : member.titleEn}
-                    </p>
                   </div>
                 </div>
 

@@ -302,8 +302,8 @@ export function HomeStudentStories() {
                     )}
 
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="text-[11px] font-bold text-[#4F7ECB] uppercase tracking-wider">
+                      <div className="flex items-center justify-between gap-1 mb-1.5">
+                        <span className="text-[11px] font-black text-[#4F7ECB] uppercase tracking-wider bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-xs">
                           {member.role}
                         </span>
                         <span className="text-[10px] font-mono font-bold text-slate-400">
@@ -314,9 +314,6 @@ export function HomeStudentStories() {
                       <h4 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] truncate">
                         {member.name}
                       </h4>
-                      <p className="text-xs font-semibold text-[#0F2747]/80">
-                        {isVi ? member.titleVi : member.titleEn}
-                      </p>
                     </div>
                   </div>
 
