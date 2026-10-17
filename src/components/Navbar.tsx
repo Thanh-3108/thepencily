@@ -27,10 +27,10 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub, onOpenTutorModal }: 
   ];
 
   const exploreLinks = [
-    { name: isVi ? "Vận hành" : "How it Works", href: "/#how-it-works" },
+    { name: isVi ? "Hành trình nền tảng" : "Platform Journey", href: "/#journey" },
     { name: isVi ? "Lãnh đạo & Chia sẻ" : "Leadership & Stories", href: "/#stories" },
-    { name: isVi ? "Lớp học & Thư viện" : "Classrooms & Library", href: "/classes" },
-    { name: isVi ? "Cộng đồng học sinh" : "Student Community", href: "/community" },
+    { name: isVi ? "Lớp học & Thư viện" : "Classrooms & Library", href: "/dashboard?tab=classes" },
+    { name: isVi ? "Hệ sinh thái Dashboard" : "Dashboard Hub", href: "/dashboard" },
   ];
 
   return (

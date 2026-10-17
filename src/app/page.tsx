@@ -7,11 +7,11 @@ import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { TutorApplicationModal } from "@/components/Modals";
 import { HomePrograms } from "@/components/HomePrograms";
-import { HomeHowItWorks } from "@/components/HomeHowItWorks";
+import { HomePlatformJourney } from "@/components/HomePlatformJourney";
 import { HomeTutorPortfolio } from "@/components/HomeTutorPortfolio";
 import { HomeStudentStories } from "@/components/HomeStudentStories";
 
-import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight } from "lucide-react";
+import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight, Compass } from "lucide-react";
 import Link from "next/link";
 import { usePencily } from "@/context/PencilyContext";
 
@@ -161,30 +161,30 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Card 4: Kết nối liên trường -> Đến Trang Cộng đồng */}
-            <Link
-              href="/community"
+            {/* Card 4: Hành trình 5 trụ cột -> Đến #journey */}
+            <a
+              href="#journey"
               className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left"
             >
               <div>
-                <div className="w-11 h-11 rounded-sm border-2 border-indigo-200 bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-colors">
-                  <Users className="w-5 h-5" />
+                <div className="w-11 h-11 rounded-sm border-2 border-indigo-200 bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-[#0F2747] group-hover:text-white group-hover:border-[#0F2747] transition-colors">
+                  <Compass className="w-5 h-5" />
                 </div>
                 <h3 className="font-poppins font-bold text-[#0F2747] text-base mb-2 group-hover:text-indigo-700 transition-colors flex items-center justify-between">
-                  <span>{language === "vi" ? "Kết nối liên trường" : "Inter-school Network"}</span>
+                  <span>{language === "vi" ? "Hành trình nền tảng" : "Platform Journey"}</span>
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-indigo-600" />
                 </h3>
                 <p className="text-sm text-[#475569] leading-relaxed">
                   {language === "vi"
-                    ? "Gặp gỡ những người bạn cùng mục tiêu thi đại học, săn học bổng hoặc đơn giản là cùng nhau học mỗi tối."
-                    : "Meet peers sharing your university entrance or scholarship goals, or simply study together each evening."}
+                    ? "Khám phá 5 trụ cột: phòng WebRTC P2P, gia sư chuyên ban, kho Cornell, điểm thưởng PP và chứng nhận."
+                    : "Discover 5 core pillars: WebRTC study pods, peer mentors, Cornell vault, PP rewards, and verified credentials."}
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-indigo-600 flex items-center gap-1 group-hover:underline">
-                <span>{language === "vi" ? "Tham gia cộng đồng" : "Join community"}</span>
+                <span>{language === "vi" ? "Khám phá ngay" : "Explore pillars"}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </Link>
+            </a>
           </div>
 
           {/* Commitments & Call to Action (Samsung squarish style: rounded-md, border-2) */}
@@ -262,10 +262,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. EXTENDED SECTIONS: Programs, How It Works, Tutor Portfolio, Student Stories / Founder's Words */}
+      {/* 3. EXTENDED SECTIONS: Platform Discovery Journey, Programs, Tutor Portfolio, Student Stories / Founder's Words */}
       <div className="relative z-10 bg-[#FAF7F2] pb-12">
+        <HomePlatformJourney />
         <HomePrograms />
-        <HomeHowItWorks />
         <HomeTutorPortfolio onOpenTutorModal={() => setIsApplyTutorOpen(true)} />
         <HomeStudentStories />
       </div>
