@@ -170,19 +170,34 @@ export function HomePrograms() {
     const highlights = isVi ? prog.highlightsVi : prog.highlightsEn;
     const categoryLabel = isVi ? prog.categoryLabelVi : prog.categoryLabelEn;
 
+    const isIelts = prog.id === "flagship-ielts";
+    const isSat = prog.id === "flagship-sat";
+
+    let cardContainerClasses = "bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs hover:border-[#0F2747] hover:shadow-md transition-all flex flex-col justify-between";
+    let ribbonClasses = "";
+    let badgeClasses = "text-[#0F2747] bg-slate-100 border-slate-300 font-bold";
+    let taglineClasses = "text-[#4F7ECB]";
+    let ctaClasses = "text-[#0F2747] hover:text-[#4F7ECB]";
+
+    if (isIelts) {
+      // IELTS Authentic Red Theme
+      cardContainerClasses = "bg-[#FFF5F5] rounded-md p-6 sm:p-7 border-2 border-red-300 shadow-xs hover:border-red-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden";
+      ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#E01A22] via-red-500 to-rose-600";
+      badgeClasses = "text-red-950 bg-red-100 border-red-300 shadow-2xs font-black";
+      taglineClasses = "text-red-700";
+      ctaClasses = "text-[#0F2747] hover:text-red-700 font-bold";
+    } else if (isSat) {
+      // SAT Authentic Blue Theme
+      cardContainerClasses = "bg-[#F0F7FF] rounded-md p-6 sm:p-7 border-2 border-blue-300 shadow-xs hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden";
+      ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#0077C8] via-blue-500 to-[#002D62]";
+      badgeClasses = "text-blue-950 bg-blue-100 border-blue-300 shadow-2xs font-black";
+      taglineClasses = "text-blue-700";
+      ctaClasses = "text-[#0F2747] hover:text-blue-700 font-bold";
+    }
+
     return (
-      <div
-        key={prog.id}
-        className={`bg-white rounded-md p-6 sm:p-7 border-2 transition-all flex flex-col justify-between ${
-          prog.isFlagship
-            ? "border-amber-400 shadow-xs hover:shadow-lg relative overflow-hidden"
-            : "border-slate-300 shadow-xs hover:border-[#0F2747] hover:shadow-md"
-        }`}
-      >
-        {/* Flagship top ribbon accent */}
-        {prog.isFlagship && (
-          <div className="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-[#F59E0B]" />
-        )}
+      <div key={prog.id} className={cardContainerClasses}>
+        {ribbonClasses && <div className={ribbonClasses} />}
 
         <div>
           {/* Top Lockup */}
@@ -200,22 +215,18 @@ export function HomePrograms() {
                 />
               </div>
             ) : (
-              <div className={`w-12 h-12 rounded-xl ${prog.iconBg} ${prog.iconColor} border-2 ${prog.isFlagship ? "border-amber-300" : "border-slate-200"} flex items-center justify-center shrink-0`}>
+              <div className={`w-12 h-12 rounded-xl ${prog.iconBg} ${prog.iconColor} border-2 border-slate-200 flex items-center justify-center shrink-0`}>
                 <Icon className="w-6 h-6" />
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 border border-slate-300 px-2 py-0.5 rounded-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white/80 border border-slate-300 px-2 py-0.5 rounded-xs">
                 {categoryLabel}
               </span>
-              <span
-                className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${
-                  prog.isFlagship
-                    ? "text-amber-950 bg-amber-50 border-amber-400 shadow-2xs font-black"
-                    : "text-[#0F2747] bg-slate-100 border-slate-300 font-bold"
-                }`}
-              >
-                {prog.isFlagship && <Award className="w-3.5 h-3.5 text-amber-600 shrink-0" />}
+              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses}`}>
+                {(isIelts || isSat) && (
+                  <Award className={`w-3.5 h-3.5 shrink-0 ${isIelts ? "text-red-600" : "text-blue-600"}`} />
+                )}
                 {badge}
               </span>
             </div>
@@ -225,7 +236,7 @@ export function HomePrograms() {
           <h3 className="font-poppins font-bold text-xl text-[#0F2747] mb-1">
             {title}
           </h3>
-          <div className={`text-xs font-semibold mb-3 ${prog.isFlagship ? "text-amber-700" : "text-[#4F7ECB]"}`}>
+          <div className={`text-xs font-semibold mb-3 ${taglineClasses}`}>
             {tagline}
           </div>
 
@@ -235,10 +246,10 @@ export function HomePrograms() {
           </p>
 
           {/* Highlights */}
-          <div className="space-y-2 pt-3 border-t-2 border-slate-100 mb-5">
+          <div className="space-y-2 pt-3 border-t-2 border-slate-200/70 mb-5">
             {highlights.map((h, i) => (
               <div key={i} className="flex items-start gap-2 text-xs text-[#0F2747]/90 leading-relaxed">
-                <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : "text-emerald-600"}`} />
                 <span className={h === "[placeholder]" ? "text-slate-400 italic font-mono tracking-wider" : ""}>
                   {h}
                 </span>
@@ -248,29 +259,26 @@ export function HomePrograms() {
         </div>
 
         {/* Footer Subjects & CTA */}
-        <div className="pt-4 border-t-2 border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <div className="pt-4 border-t-2 border-slate-200/70 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            {subjects.map((sub) => (
-              <span
-                key={sub}
-                className={`text-[11px] px-2 py-0.5 rounded-xs border ${
-                  prog.isFlagship && (sub.includes("Road") || sub.includes("SAT") || sub.includes("IELTS"))
-                    ? "text-amber-950 bg-amber-50 font-bold border-amber-300"
-                    : "text-slate-700 bg-slate-100 font-medium border-slate-200"
-                }`}
-              >
-                {sub}
-              </span>
-            ))}
+            {subjects.map((sub) => {
+              let subClasses = "text-slate-700 bg-slate-100 font-medium border-slate-200";
+              if (isIelts) {
+                subClasses = "text-red-950 bg-white/90 font-bold border-red-200";
+              } else if (isSat) {
+                subClasses = "text-blue-950 bg-white/90 font-bold border-blue-200";
+              }
+              return (
+                <span key={sub} className={`text-[11px] px-2 py-0.5 rounded-xs border ${subClasses}`}>
+                  {sub}
+                </span>
+              );
+            })}
           </div>
 
           <Link
             href="/classes"
-            className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors ${
-              prog.isFlagship
-                ? "text-[#0F2747] hover:text-amber-700"
-                : "text-[#0F2747] hover:text-[#4F7ECB]"
-            }`}
+            className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors ${ctaClasses}`}
           >
             <span>{isVi ? "Xem các phòng" : "Explore Rooms"}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -304,8 +312,8 @@ export function HomePrograms() {
                 : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <Award className={`w-4 h-4 ${activeTab === "english" ? "text-[#FFC83D]" : "text-amber-600"}`} />
-            <span>{language === "vi" ? "Chương trình Tiếng Anh (IELTS & SAT)" : "English Track (IELTS & SAT)"}</span>
+            <Award className={`w-4 h-4 ${activeTab === "english" ? "text-white" : "text-[#4F7ECB]"}`} />
+            <span>{language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}</span>
           </button>
           <button
             type="button"
@@ -316,8 +324,8 @@ export function HomePrograms() {
                 : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-[#4F7ECB]"}`} />
-            <span>{language === "vi" ? "Chương trình Tiếng Việt (THPT & ĐGNL)" : "Vietnamese Track (THPT & Exams)"}</span>
+            <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-emerald-600"}`} />
+            <span>{language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}</span>
           </button>
         </div>
 
@@ -327,12 +335,12 @@ export function HomePrograms() {
           {activeTab === "english" && (
             <div className="animate-fadeIn">
               <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
-                <div className="w-8 h-8 rounded-sm bg-amber-100 text-amber-900 border-2 border-amber-300 flex items-center justify-center font-black text-xs shrink-0">
+                <div className="w-8 h-8 rounded-sm bg-blue-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
                   EN
                 </div>
                 <div>
                   <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                    {language === "vi" ? "Chương trình Tiếng Anh (IELTS & SAT)" : "English Programs (IELTS & SAT)"}
+                    {language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}
                   </h3>
                 </div>
               </div>
@@ -347,12 +355,12 @@ export function HomePrograms() {
           {activeTab === "vietnamese" && (
             <div className="animate-fadeIn">
               <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
-                <div className="w-8 h-8 rounded-sm bg-blue-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
+                <div className="w-8 h-8 rounded-sm bg-emerald-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
                   VN
                 </div>
                 <div>
                   <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                    {language === "vi" ? "Chương trình Tiếng Việt (THPT & ĐGNL)" : "Vietnamese Programs (THPT & Exams)"}
+                    {language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}
                   </h3>
                 </div>
               </div>
