@@ -242,7 +242,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
   const currentTabTitle = language === "vi" ? tabTitlesVi[activeTab] : tabTitlesEn[activeTab];
 
   return (
-    <div className="h-screen flex bg-[#FFF9EF] text-[#0F2747] overflow-hidden">
+    <div className="h-screen flex bg-pencil-pattern text-[#0F2747] overflow-hidden">
       {/* 1. IMMERSIVE LEFT SIDEBAR (The anchor of the whole platform) */}
       <DashboardSidebar
         activeTab={activeTab}
@@ -253,9 +253,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
       />
 
       {/* 2. UNIFIED MAIN WORKSPACE */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-scroll overflow-x-hidden [scrollbar-gutter:stable]">
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-scroll overflow-x-hidden [scrollbar-gutter:stable] bg-pencil-pattern">
         {/* Clean, Logical Workspace Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-md h-14 sm:h-16 border-b-2 bg-[#FFF9EF]/95 border-slate-300 text-[#0F2747] shrink-0">
+        <header className="sticky top-0 z-30 backdrop-blur-md h-14 sm:h-16 border-b-2 bg-[#FAF7EE]/90 border-slate-300 text-[#0F2747] shrink-0">
           <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 h-full flex items-center justify-between gap-4">
             {/* Left: Clean Breadcrumb title (No duplicate Logo since Sidebar already has it) */}
             <div className="flex items-center gap-2">

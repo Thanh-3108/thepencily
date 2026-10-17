@@ -95,3 +95,11 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
 .animate-fade-quick {
   animation: fadeInQuick 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Signature The Pencily brand notebook repeating wallpaper */
+.bg-pencil-pattern {
+  background-color: #FAF7EE;
+  background-image: url('/brand/pencil-pattern.png');
+  background-repeat: repeat;
+  background-size: 196px 132px;
+}

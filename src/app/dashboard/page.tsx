@@ -5,7 +5,7 @@ import { DashboardContent } from "@/components/DashboardContent";
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FFF9EF]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-pencil-pattern" />}>
       <DashboardContent defaultTab="calendar" />
     </Suspense>
   );
