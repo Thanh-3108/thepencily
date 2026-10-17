@@ -18,8 +18,6 @@ interface ProgramItem {
   taglineEn: string;
   descriptionVi: string;
   descriptionEn: string;
-  subjectsVi: string[];
-  subjectsEn: string[];
   highlightsVi: string[];
   highlightsEn: string[];
   icon: React.ElementType;
@@ -43,8 +41,6 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     taglineEn: "Score breakthrough strategy with 7.5 – 8.5+ Peer Tutors",
     descriptionVi: "Lớp học của The Pencily được học sinh giảng dạy để hỗ trợ đạt được band IELTs",
     descriptionEn: "The Pencily peer-led classes designed to help students achieve target IELTS bands",
-    subjectsVi: ["IELTS Writing", "IELTS Speaking", "Reading & Listening", "Road to 6.5/7.0+"],
-    subjectsEn: ["IELTS Writing", "IELTS Speaking", "Reading & Listening", "Road to 6.5/7.0+"],
     highlightsVi: [
       "[placeholder]",
       "[placeholder]",
@@ -74,8 +70,6 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     taglineEn: "Master Digital SAT alongside 1450 – 1560+ Tutors",
     descriptionVi: "Lớp hỗ trợ học sinh có định hướng du học đạt điểm SAT",
     descriptionEn: "Classes supporting study-abroad oriented students to achieve their target SAT scores",
-    subjectsVi: ["Digital SAT", "SAT Math 800", "Reading & Writing", "Road to 1300/1400/1500+"],
-    subjectsEn: ["Digital SAT", "SAT Math 800", "Reading & Writing", "Road to 1300/1400/1500+"],
     highlightsVi: [
       "[placeholder]",
       "[placeholder]",
@@ -108,8 +102,6 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     taglineEn: "[placeholder]",
     descriptionVi: "[placeholder]",
     descriptionEn: "[placeholder]",
-    subjectsVi: ["[placeholder]", "[placeholder]", "[placeholder]"],
-    subjectsEn: ["[placeholder]", "[placeholder]", "[placeholder]"],
     highlightsVi: [
       "[placeholder]",
       "[placeholder]",
@@ -137,8 +129,6 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     taglineEn: "[placeholder]",
     descriptionVi: "[placeholder]",
     descriptionEn: "[placeholder]",
-    subjectsVi: ["[placeholder]", "[placeholder]", "[placeholder]"],
-    subjectsEn: ["[placeholder]", "[placeholder]", "[placeholder]"],
     highlightsVi: [
       "[placeholder]",
       "[placeholder]",
@@ -166,7 +156,6 @@ export function HomePrograms() {
     const badge = isVi ? prog.badgeVi : prog.badgeEn;
     const tagline = isVi ? prog.taglineVi : prog.taglineEn;
     const description = isVi ? prog.descriptionVi : prog.descriptionEn;
-    const subjects = isVi ? prog.subjectsVi : prog.subjectsEn;
     const highlights = isVi ? prog.highlightsVi : prog.highlightsEn;
     const categoryLabel = isVi ? prog.categoryLabelVi : prog.categoryLabelEn;
 
@@ -276,26 +265,8 @@ export function HomePrograms() {
           </div>
         </div>
 
-        {/* Footer Subjects & CTA */}
-        <div className="pt-4 border-t-2 border-slate-200/70 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-1.5">
-            {subjects.map((sub, idx) => {
-              let subClasses = "text-slate-700 bg-slate-100 font-medium border-slate-200";
-              if (isIelts) {
-                subClasses = "text-red-950 bg-white/90 font-bold border-red-200";
-              } else if (isSat) {
-                subClasses = "text-blue-950 bg-white/90 font-bold border-blue-200";
-              } else if (sub === "[placeholder]") {
-                subClasses = "text-slate-400 italic font-mono border-slate-200 bg-slate-50 font-normal";
-              }
-              return (
-                <span key={idx} className={`text-[11px] px-2 py-0.5 rounded-xs border ${subClasses}`}>
-                  {sub}
-                </span>
-              );
-            })}
-          </div>
-
+        {/* Footer CTA */}
+        <div className="pt-4 border-t-2 border-slate-200/70 flex items-center justify-end">
           <Link
             href="/classes"
             className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors ${ctaClasses}`}
