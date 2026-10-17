@@ -390,19 +390,19 @@ function SignInContent() {
                   </div>
                 </div>
 
-                {/* School autocomplete input (Ultra compact, floating suggestion) */}
+                {/* School autocomplete input with 64-province support */}
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-[#0F2747] flex items-center justify-between">
-                    <span>{isVi ? "Trường học *" : "School *"}</span>
+                    <span>{isVi ? "Tỉnh/Thành & Trường học *" : "Province & School *"}</span>
                     <span className="text-[10px] text-slate-400 font-normal">
-                      {isVi ? "Gợi ý tự động hoặc tự gõ" : "Auto suggest or type"}
+                      {isVi ? "Toàn quốc 64 tỉnh/thành" : "Nationwide directory"}
                     </span>
                   </label>
                   <SchoolSelectDropdown
                     value={school}
                     onChange={setSchool}
                     language={language as "vi" | "en"}
-                    placeholder={isVi ? "Gõ tìm trường (VD: Gia Định, Lê Hồng Phong...)" : "e.g. High School Name"}
+                    placeholder={isVi ? "Gõ tìm trường (VD: Năng khiếu, Gia Định, Amsterdam...)" : "Search schools (e.g. Gifted High School...)"}
                   />
                 </div>
 

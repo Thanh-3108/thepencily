@@ -40,7 +40,7 @@ export const VIETNAM_PROVINCES_DATA: ProvinceData[] = [
       "Đại học Công Thương TP.HCM (HUIT)",
     ],
     highSchools: [
-      "THPT Chuyên Năng Khiếu (PTNK, ĐHQG-HCM)",
+      "Trường Phổ thông Năng khiếu (PTNK, ĐHQG-HCM)",
       "THPT Chuyên Lê Hồng Phong",
       "THPT Chuyên Trần Đại Nghĩa",
       "THPT Nguyễn Thượng Hiền",
