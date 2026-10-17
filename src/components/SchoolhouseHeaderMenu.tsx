@@ -41,7 +41,7 @@ export function SchoolhouseHeaderMenu({
   onOpenSupportModal,
   onOpenSettingsTab,
 }: SchoolhouseHeaderMenuProps) {
-  const { user, isLoggedIn, logout, language } = usePencily();
+  const { user, isLoggedIn, logout, language, setUnreadNotifCount } = usePencily();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -114,6 +114,10 @@ export function SchoolhouseHeaderMenu({
   const unreadStandardCount = standardNotifications.filter((n) => !readNotifIds.includes(n.id)).length;
   const importantIncompleteCount = !user.hasCompletedProfile ? 1 : 0;
   const totalNotifCount = importantIncompleteCount + unreadStandardCount;
+
+  useEffect(() => {
+    setUnreadNotifCount(totalNotifCount);
+  }, [totalNotifCount, setUnreadNotifCount]);
 
   // Mock Direct Messages (Facebook Messenger style: Tutors & Peers)
   const directMessages = [

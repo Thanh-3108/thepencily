@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "THE PENCILY | Real People. Real Learning.",
+  title: "The Pencily",
   description:
     "A student-led peer-learning community built by students, for students. Nền tảng học tập đồng đẳng do học sinh khởi xướng.",
   keywords: [
@@ -31,8 +31,10 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/brand/app_icon.png", type: "image/png", sizes: "512x512" },
     ],
     shortcut: "/favicon.ico",

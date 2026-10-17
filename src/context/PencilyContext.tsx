@@ -186,6 +186,9 @@ interface PencilyContextType {
   activities: AutomationActivity[];
   onlineStudentsCount: number;
   activeVoiceRoomsCount: number;
+
+  unreadNotifCount: number;
+  setUnreadNotifCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -216,6 +219,21 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   const [classRequests, setClassRequests] = useState<ClassRequest[]>([]);
   const [activities] = useState<AutomationActivity[]>([]);
   const [ready, setReady] = useState(false);
+  const [unreadNotifCount, setUnreadNotifCount] = useState<number>(0);
+
+  // Dynamic Browser Tab Title:
+  // "The Pencily" by default.
+  // Only shows "The Pencily | ..." when there is an active notification.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (unreadNotifCount > 0) {
+      document.title = language === "vi"
+        ? `The Pencily | (${unreadNotifCount}) Thông báo mới`
+        : `The Pencily | (${unreadNotifCount}) New notifications`;
+    } else {
+      document.title = "The Pencily";
+    }
+  }, [unreadNotifCount, language]);
   const refreshClasses = useCallback(async () => {
     const result = await fetchOnlineClasses();
     setClasses(result.map((item) => ({ categoryLabel: item.category, badge: "OPEN" as const, badgeColor: "bg-blue-50 text-blue-700", ...item })));
@@ -311,6 +329,7 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
     loginWithDiscord, loginWithCustomDatabase, logout, updateUser, completeProfile, addPoints, addLearningMinutes, advanceTutorStep,
     classes, addClass, deleteClass, registeredClassIds, registerClass, cancelClassRegistration, isRegistered: (id) => registeredClassIds.includes(id),
     posts, createPost, toggleLikePost, addCommentToPost, classRequests, requestClass, voteClassRequest, activities,
-    onlineStudentsCount: 0, activeVoiceRoomsCount: 0 }}>{children}</PencilyContext.Provider>;
+    onlineStudentsCount: 0, activeVoiceRoomsCount: 0,
+    unreadNotifCount, setUnreadNotifCount }}>{children}</PencilyContext.Provider>;
 }
 export function usePencily() { const value = useContext(PencilyContext); if (!value) throw new Error("usePencily must be used within PencilyProvider"); return value; }
