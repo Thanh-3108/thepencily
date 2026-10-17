@@ -178,11 +178,7 @@ function SignInContent() {
         });
 
         setTimeout(() => {
-          if (authMode === "register") {
-            router.push(redirectParam || "/onboarding");
-          } else {
-            router.push(redirectParam || "/dashboard");
-          }
+          router.push(redirectParam || "/dashboard");
         }, 400);
         return;
       }
@@ -204,7 +200,7 @@ function SignInContent() {
         if (error) throw error;
 
         if (data.session) {
-          router.push(redirectParam || "/onboarding");
+          router.push(redirectParam || "/dashboard");
         } else {
           setInfoMessage(
             isVi

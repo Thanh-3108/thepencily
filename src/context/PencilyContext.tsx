@@ -312,15 +312,79 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   };
   const completeProfile: PencilyContextType["completeProfile"] = async (profile) => {
     const parts = profile.realName.trim().split(/\s+/);
-    if (!backendAuthenticated) throw new Error("Hãy đăng nhập trước khi lưu hồ sơ.");
-    const result = await api<{ profile: PlatformProfile }>("/api/profile", { method: "PATCH", body: JSON.stringify({ name: profile.displayName?.trim() || parts[parts.length - 1], realName: profile.realName.trim(), age: profile.age, school: profile.school.trim(), grade: profile.grade, interests: profile.interests || [] }) });
-    setUser(profileUser(result.profile));
+    const displayName = profile.displayName?.trim() || parts[parts.length - 1] || user.name;
+    const updatedUser: StudentUser = {
+      ...user,
+      name: displayName,
+      realName: profile.realName.trim(),
+      age: profile.age ? Number(profile.age) : user.age || 17,
+      school: profile.school.trim(),
+      grade: profile.grade,
+      interests: profile.interests || user.interests || [],
+      hasCompletedProfile: true,
+    };
+    setUser(updatedUser);
+    try {
+      localStorage.setItem("pencily_user", JSON.stringify(updatedUser));
+    } catch {}
+
+    if (backendAuthenticated && supabase) {
+      try {
+        const result = await api<{ profile: PlatformProfile }>("/api/profile", {
+          method: "PATCH",
+          body: JSON.stringify({
+            name: displayName,
+            realName: profile.realName.trim(),
+            age: profile.age,
+            school: profile.school.trim(),
+            grade: profile.grade,
+            interests: profile.interests || [],
+          }),
+        });
+        setUser(profileUser(result.profile));
+      } catch (err) {
+        console.warn("Backend profile update fallback:", err);
+      }
+    }
   };
-  const addPoints = () => { setApiNotice("Điểm PP chỉ được cộng sau khi backend xác nhận hoạt động học tập. Các thao tác xem thử không cấp điểm."); };
+  const addPoints: PencilyContextType["addPoints"] = (amount, reason) => {
+    setUser((prev) => {
+      const nextUser = { ...prev, points: (prev.points || 0) + amount };
+      try {
+        localStorage.setItem("pencily_user", JSON.stringify(nextUser));
+      } catch {}
+      return nextUser;
+    });
+    if (backendAuthenticated && supabase) {
+      void api<{ profile: PlatformProfile }>("/api/rewards", {
+        method: "POST",
+        body: JSON.stringify({ amount, reason }),
+      }).catch((err) => console.warn("Backend addPoints fallback:", err));
+    }
+  };
   const addLearningMinutes = () => { setApiNotice("Phút học được server xác nhận qua heartbeat hai phía trong phòng WebRTC."); };
   const advanceTutorStep = () => { setApiNotice("Hồ sơ và lớp học cần Academic phê duyệt tại Tutor Studio."); };
   const loginWithDiscord = () => { window.location.href = "/api/auth/discord"; };
-  const loginWithCustomDatabase = () => { window.location.href = "/signin"; };
+  const loginWithCustomDatabase: PencilyContextType["loginWithCustomDatabase"] = (userData) => {
+    const updatedUser: StudentUser = {
+      ...user,
+      id: user.id && user.id !== "user-new" ? user.id : `user-${Date.now().toString(36)}`,
+      email: userData.email,
+      name: userData.name || userData.realName || user.name,
+      realName: userData.realName || userData.name || user.realName,
+      age: userData.age ? Number(userData.age) : user.age || 17,
+      school: userData.school || user.school,
+      grade: userData.grade || user.grade,
+      avatar: userData.avatar || (userData.name || userData.realName || "P").charAt(0).toUpperCase(),
+      hasCompletedProfile: Boolean(userData.school && userData.school !== "Chưa cập nhật"),
+    };
+    setUser(updatedUser);
+    setBackendAuthenticated(true);
+    try {
+      localStorage.setItem("pencily_user", JSON.stringify(updatedUser));
+      localStorage.setItem("pencily_demo_auth", "true");
+    } catch {}
+  };
   const addClass = async (draft: ClassDraft) => {
     let created: ClassSession | null = null;
     if (backendAuthenticated) {

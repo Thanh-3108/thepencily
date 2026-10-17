@@ -42,6 +42,26 @@ export default function OnboardingPage() {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Sync with user context and skip completed steps
+  React.useEffect(() => {
+    if (user.realName || (user.name !== "Học sinh Pencily" && !user.name.includes("#"))) {
+      setRealName(user.realName || user.name);
+    }
+    if (user.school && user.school !== "Chưa cập nhật") {
+      setSchool(user.school);
+    }
+    if (user.grade && user.grade !== "Học sinh") {
+      setGrade(user.grade);
+    }
+    if (
+      user.school &&
+      user.school !== "Chưa cập nhật" &&
+      (user.realName || (user.name !== "Học sinh Pencily" && !user.name.includes("#")))
+    ) {
+      setStep((prev) => (prev < 3 ? 3 : prev));
+    }
+  }, [user]);
+
   // Derive default given name
   const getGivenName = (fullName: string) => {
     if (!fullName) return "";

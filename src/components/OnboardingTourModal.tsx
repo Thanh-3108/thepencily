@@ -20,9 +20,11 @@ import {
   Award,
   Compass,
   Check,
+  Edit3,
 } from "lucide-react";
 import { OwlMascot } from "./Logo";
 import { usePencily } from "@/context/PencilyContext";
+import SchoolSelectDropdown from "@/components/SchoolSelectDropdown";
 
 interface OnboardingTourModalProps {
   isOpen: boolean;
@@ -190,12 +192,12 @@ export function OnboardingTourModal({
   const [isReady, setIsReady] = useState(false);
   const [enableAnimation, setEnableAnimation] = useState(false);
 
-  // Final Step Form State
-  const [realName, setRealName] = useState(user.realName || user.name || "");
+  // Final Step Form State - Sync with user profile
+  const [realName, setRealName] = useState(
+    user.realName || (user.name !== "Học sinh Pencily" ? user.name : "")
+  );
   const [school, setSchool] = useState(
-    user.school !== "Chưa cập nhật" && user.school !== "The Pencily Academy"
-      ? user.school
-      : ""
+    user.school && user.school !== "Chưa cập nhật" ? user.school : ""
   );
   const [grade, setGrade] = useState(
     user.grade && user.grade !== "Học sinh" ? user.grade : "Lớp 11"
@@ -206,6 +208,28 @@ export function OnboardingTourModal({
   ]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isFinishing, setIsFinishing] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+
+  // Always keep form synchronized with user profile
+  useEffect(() => {
+    if (isOpen) {
+      if (user.realName || (user.name && user.name !== "Học sinh Pencily" && !user.name.includes("#"))) {
+        setRealName(user.realName || user.name);
+      }
+      if (user.school && user.school !== "Chưa cập nhật") {
+        setSchool(user.school);
+      }
+      if (user.grade && user.grade !== "Học sinh") {
+        setGrade(user.grade);
+      }
+    }
+  }, [isOpen, user]);
+
+  const hasExistingProfile = Boolean(
+    (user.realName || (user.name && user.name !== "Học sinh Pencily" && !user.name.includes("#"))) &&
+    user.school &&
+    user.school !== "Chưa cập nhật"
+  );
 
   const step = TOUR_STEPS[currentStepIndex];
   const totalSteps = TOUR_STEPS.length;
@@ -315,12 +339,16 @@ export function OnboardingTourModal({
 
   const handleFinishProfileQuest = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!realName.trim()) {
+    const finalName = realName.trim() || user.realName || user.name || "Học sinh Pencily";
+    const finalSchool = school.trim() || (user.school !== "Chưa cập nhật" ? user.school : "");
+    const finalGrade = grade || user.grade || "Lớp 11";
+
+    if (!finalName.trim()) {
       setErrorMsg(isVi ? "Vui lòng nhập tên của bạn." : "Please enter your name.");
       return;
     }
-    if (!school.trim()) {
-      setErrorMsg(isVi ? "Vui lòng nhập trường THPT của bạn." : "Please enter your high school.");
+    if (!finalSchool.trim()) {
+      setErrorMsg(isVi ? "Vui lòng chọn hoặc nhập trường của bạn." : "Please select or enter your high school.");
       return;
     }
 
@@ -329,9 +357,10 @@ export function OnboardingTourModal({
 
     // Save profile to context
     completeProfile({
-      realName: realName.trim(),
-      school: school.trim(),
-      grade: grade,
+      realName: finalName,
+      school: finalSchool,
+      grade: finalGrade,
+      interests: selectedInterests,
     });
 
     // Award +20 PP
@@ -347,6 +376,7 @@ export function OnboardingTourModal({
       if (onCompleteProfileSuccess) onCompleteProfileSuccess();
       onClose();
       setIsFinishing(false);
+      setIsEditingProfile(false);
     }, 700);
   };
 
@@ -533,7 +563,13 @@ export function OnboardingTourModal({
               <span className="font-mono text-[10px] text-slate-500 font-normal">Mentor</span>
             </div>
             <p className="text-xs sm:text-[13px] text-slate-800 leading-relaxed font-medium">
-              {isVi ? step.dialogueVi : step.dialogueEn}
+              {step.id === 5 && hasExistingProfile
+                ? isVi
+                  ? `Tuyệt vời! Hồ sơ của bạn tại ${user.school} đã sẵn sàng. Hãy chọn các môn bạn muốn ôn luyện để nhận ngay +20 PP tân thủ!`
+                  : `Awesome! Your profile at ${user.school} is ready. Select your target subjects and claim your +20 PP welcome reward!`
+                : isVi
+                ? step.dialogueVi
+                : step.dialogueEn}
             </p>
           </div>
         </div>
@@ -547,50 +583,98 @@ export function OnboardingTourModal({
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
-                  {isVi ? "Họ & Tên bạn *" : "Your Name *"}
-                </label>
-                <input
-                  type="text"
-                  placeholder={isVi ? "Nguyễn Văn A" : "Alex Nguyen"}
-                  value={realName}
-                  onChange={(e) => setRealName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-medium text-[#0F2747]"
-                />
+            {hasExistingProfile && !isEditingProfile ? (
+              /* PRE-SYNCED VERIFIED PROFILE CARD */
+              <div className="bg-[#FAF7EE] p-3.5 sm:p-4 rounded-sm border-2 border-[#0F2747] shadow-2xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#0F2747]">
+                      {isVi ? "Hồ Sơ Đã Đồng Bộ" : "Synced Profile"}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditingProfile(true)}
+                    className="text-[11px] font-bold text-[#4F7ECB] hover:text-[#0F2747] hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <Edit3 className="w-3 h-3" />
+                    <span>{isVi ? "Chỉnh sửa" : "Edit"}</span>
+                  </button>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-sm bg-[#FFC83D] text-[#0F2747] font-black text-sm flex items-center justify-center border-2 border-slate-300 shrink-0">
+                    {(user.realName || user.name || "P").charAt(0).toUpperCase()}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-poppins font-bold text-sm text-[#0F2747] truncate">
+                      {user.realName || user.name}
+                    </div>
+                    <div className="text-xs text-slate-600 truncate">
+                      {user.school} • <span className="font-bold text-[#0F2747]">{user.grade || "Lớp 11"}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+            ) : (
+              /* INPUT FORM (Only when missing info or user explicitly clicked Edit) */
+              <div className="space-y-3">
+                {isEditingProfile && (
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingProfile(false)}
+                      className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 underline cursor-pointer"
+                    >
+                      {isVi ? "Dùng lại thông tin đã đồng bộ" : "Cancel edit"}
+                    </button>
+                  </div>
+                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
+                      {isVi ? "Họ & Tên bạn *" : "Your Name *"}
+                    </label>
+                    <input
+                      type="text"
+                      placeholder={isVi ? "Nguyễn Văn A" : "Alex Nguyen"}
+                      value={realName}
+                      onChange={(e) => setRealName(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-medium text-[#0F2747]"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
-                  {isVi ? "Khối Lớp *" : "Grade Level *"}
-                </label>
-                <select
-                  value={grade}
-                  onChange={(e) => setGrade(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-bold text-[#0F2747]"
-                >
-                  {GRADES.map((g) => (
-                    <option key={g.value} value={g.value}>
-                      {isVi ? g.labelVi : g.labelEn}
-                    </option>
-                  ))}
-                </select>
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
+                      {isVi ? "Khối Lớp *" : "Grade Level *"}
+                    </label>
+                    <select
+                      value={grade}
+                      onChange={(e) => setGrade(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-bold text-[#0F2747]"
+                    >
+                      {GRADES.map((g) => (
+                        <option key={g.value} value={g.value}>
+                          {isVi ? g.labelVi : g.labelEn}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
+                    {isVi ? "Tỉnh/Thành & Trường THPT *" : "Province & School *"}
+                  </label>
+                  <SchoolSelectDropdown
+                    value={school}
+                    onChange={setSchool}
+                    language={isVi ? "vi" : "en"}
+                    placeholder={isVi ? "Gõ tìm trường..." : "Search high school..."}
+                  />
+                </div>
               </div>
-            </div>
-
-            <div>
-              <label className="block text-[11px] font-black uppercase tracking-wider text-[#0F2747] mb-1">
-                {isVi ? "Trường THPT Đang Học *" : "Your High School *"}
-              </label>
-              <input
-                type="text"
-                placeholder={isVi ? "THPT Chuyên Hà Nội - Amsterdam / THPT Lê Quý Đôn..." : "High School Name..."}
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-                className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-medium text-[#0F2747]"
-              />
-            </div>
+            )}
 
             {/* Interest Tags */}
             <div>
@@ -633,8 +717,12 @@ export function OnboardingTourModal({
                       ? "Đang lưu & cộng điểm..."
                       : "Claiming..."
                     : isVi
-                    ? "Nhận +20 PP & Hoàn tất"
-                    : "Claim +20 PP & Finish"}
+                    ? hasExistingProfile && !isEditingProfile
+                      ? "Nhận +20 PP Tân Thủ & Bắt Đầu Học"
+                      : "Lưu Hồ Sơ & Nhận +20 PP"
+                    : hasExistingProfile && !isEditingProfile
+                    ? "Claim +20 PP & Start Learning"
+                    : "Save Profile & Claim +20 PP"}
                 </span>
               </button>
             </div>
