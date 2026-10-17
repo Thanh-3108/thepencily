@@ -99,59 +99,59 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     id: "bootcamps",
     category: "vietnamese",
     categoryLabelVi: "Tiếng Việt",
-    categoryLabelEn: "National",
-    titleVi: "Luyện Đề & Chuyên Đề Trọng Tâm THPT",
-    titleEn: "National High School Exam Bootcamps",
-    badgeVi: "Bootcamp Nhóm Nhỏ",
-    badgeEn: "Small Group Bootcamp",
-    taglineVi: "Ôn thi tốt nghiệp THPT & Đánh giá Năng lực (ĐGNL)",
-    taglineEn: "THPT Graduation & University Competency Assessment Exams",
-    descriptionVi: "Nhóm học nhỏ từ 4–8 bạn cùng làm đề theo thời gian thực. Peer tutor phân tích bẫy đề thi, chia sẻ mẹo bấm máy tính Casio và phương pháp loại trừ đáp án nhanh.",
-    descriptionEn: "Interactive study pods of 4–8 students solving tests in real-time. Peer tutors dissect test pitfalls, Casio calculator shortcuts, and fast elimination strategies.",
-    subjectsVi: ["Toán học", "Vật lý", "Hóa học", "Sinh học", "Ngữ văn"],
-    subjectsEn: ["Math", "Physics", "Chemistry", "Biology", "Literature"],
+    categoryLabelEn: "Vietnamese",
+    titleVi: "[placeholder]",
+    titleEn: "[placeholder]",
+    badgeVi: "[placeholder]",
+    badgeEn: "[placeholder]",
+    taglineVi: "[placeholder]",
+    taglineEn: "[placeholder]",
+    descriptionVi: "[placeholder]",
+    descriptionEn: "[placeholder]",
+    subjectsVi: ["[placeholder]", "[placeholder]", "[placeholder]"],
+    subjectsEn: ["[placeholder]", "[placeholder]", "[placeholder]"],
     highlightsVi: [
-      "Giải đề thi thử từ các trường chuyên toàn quốc",
-      "Thảo luận cách tư duy thay vì học vẹt công thức",
-      "Không khí cởi mở, không áp lực so bì điểm số",
+      "[placeholder]",
+      "[placeholder]",
+      "[placeholder]",
     ],
     highlightsEn: [
-      "Solve mock tests from top specialized high schools across Vietnam",
-      "Foster critical analytical thinking instead of rote formula memorization",
-      "Open, supportive, peer-level atmosphere without comparative pressure",
+      "[placeholder]",
+      "[placeholder]",
+      "[placeholder]",
     ],
     icon: BookOpen,
-    iconBg: "bg-emerald-50",
-    iconColor: "text-emerald-600",
+    iconBg: "bg-slate-100",
+    iconColor: "text-slate-500",
   },
   {
     id: "doubt-mentorship",
     category: "vietnamese",
     categoryLabelVi: "Tiếng Việt",
-    categoryLabelEn: "National",
-    titleVi: "Gỡ Rối Bài Tập 24/7 & Mentorship",
-    titleEn: "24/7 Doubt Clearing & Mentorship",
-    badgeVi: "Hỗ Trợ Không Phán Xét",
-    badgeEn: "Non-Judgmental Support",
-    taglineVi: "Kẹt ở bài toán khó? Luôn có bạn học sẵn sàng giúp",
-    taglineEn: "Stuck on a tricky problem? A peer is always here to help",
-    descriptionVi: "Không còn cảnh loay hoay một mình lúc 23h đêm. Đăng bài lên cộng đồng hoặc ghé phòng voice Discord để được hướng dẫn từng bước; cùng tọa đàm định hướng chọn ngành, săn học bổng từ cựu học sinh.",
-    descriptionEn: "No more struggling alone at midnight. Post on our community boards or join a Discord voice room for step-by-step guidance, alongside weekend panels on college majors and scholarships.",
-    subjectsVi: ["Tất cả phân môn", "Bài tập về nhà", "Hồ sơ du học", "Săn học bổng"],
-    subjectsEn: ["All Subjects", "Homework Help", "Study Abroad", "Scholarships"],
+    categoryLabelEn: "Vietnamese",
+    titleVi: "[placeholder]",
+    titleEn: "[placeholder]",
+    badgeVi: "[placeholder]",
+    badgeEn: "[placeholder]",
+    taglineVi: "[placeholder]",
+    taglineEn: "[placeholder]",
+    descriptionVi: "[placeholder]",
+    descriptionEn: "[placeholder]",
+    subjectsVi: ["[placeholder]", "[placeholder]", "[placeholder]"],
+    subjectsEn: ["[placeholder]", "[placeholder]", "[placeholder]"],
     highlightsVi: [
-      "Không bao giờ bị chê 'câu này dễ sao không biết làm'",
-      "Giải thích từng bước bản chất, không chỉ đưa đáp án",
-      "Tọa đàm định kỳ chia sẻ kinh nghiệm apply học bổng & du học",
+      "[placeholder]",
+      "[placeholder]",
+      "[placeholder]",
     ],
     highlightsEn: [
-      "Never judged with condescending comments, every question is welcomed",
-      "Explains foundational concepts step-by-step, never just dropping an answer",
-      "Regular community webinars sharing scholarship and college admissions insights",
+      "[placeholder]",
+      "[placeholder]",
+      "[placeholder]",
     ],
     icon: HelpCircle,
-    iconBg: "bg-purple-50",
-    iconColor: "text-purple-600",
+    iconBg: "bg-slate-100",
+    iconColor: "text-slate-500",
   },
 ];
 
@@ -223,7 +223,7 @@ export function HomePrograms() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white/80 border border-slate-300 px-2 py-0.5 rounded-xs">
                 {categoryLabel}
               </span>
-              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses}`}>
+              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses} ${badge === "[placeholder]" ? "text-slate-400 italic font-mono lowercase font-normal" : ""}`}>
                 {(isIelts || isSat) && (
                   <Award className={`w-3.5 h-3.5 shrink-0 ${isIelts ? "text-red-600" : "text-blue-600"}`} />
                 )}
@@ -234,22 +234,40 @@ export function HomePrograms() {
 
           {/* Title & Tagline */}
           <h3 className="font-poppins font-bold text-xl text-[#0F2747] mb-1">
-            {title}
+            {title === "[placeholder]" ? (
+              <span className="text-slate-400 italic font-mono tracking-wider font-normal text-lg">
+                [placeholder]
+              </span>
+            ) : (
+              title
+            )}
           </h3>
           <div className={`text-xs font-semibold mb-3 ${taglineClasses}`}>
-            {tagline}
+            {tagline === "[placeholder]" ? (
+              <span className="text-slate-400 italic font-mono tracking-wider font-normal">
+                [placeholder]
+              </span>
+            ) : (
+              tagline
+            )}
           </div>
 
           {/* Description */}
-          <p className="text-sm text-[#475569] leading-relaxed mb-5">
-            {description}
+          <p className="text-sm text-[#475569] leading-relaxed mb-5 min-h-[44px]">
+            {description === "[placeholder]" ? (
+              <span className="text-slate-400 italic font-mono tracking-wider">
+                [placeholder]
+              </span>
+            ) : (
+              description
+            )}
           </p>
 
           {/* Highlights */}
           <div className="space-y-2 pt-3 border-t-2 border-slate-200/70 mb-5">
             {highlights.map((h, i) => (
               <div key={i} className="flex items-start gap-2 text-xs text-[#0F2747]/90 leading-relaxed">
-                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : "text-emerald-600"}`} />
+                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : h === "[placeholder]" ? "text-slate-300" : "text-emerald-600"}`} />
                 <span className={h === "[placeholder]" ? "text-slate-400 italic font-mono tracking-wider" : ""}>
                   {h}
                 </span>
@@ -261,15 +279,17 @@ export function HomePrograms() {
         {/* Footer Subjects & CTA */}
         <div className="pt-4 border-t-2 border-slate-200/70 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            {subjects.map((sub) => {
+            {subjects.map((sub, idx) => {
               let subClasses = "text-slate-700 bg-slate-100 font-medium border-slate-200";
               if (isIelts) {
                 subClasses = "text-red-950 bg-white/90 font-bold border-red-200";
               } else if (isSat) {
                 subClasses = "text-blue-950 bg-white/90 font-bold border-blue-200";
+              } else if (sub === "[placeholder]") {
+                subClasses = "text-slate-400 italic font-mono border-slate-200 bg-slate-50 font-normal";
               }
               return (
-                <span key={sub} className={`text-[11px] px-2 py-0.5 rounded-xs border ${subClasses}`}>
+                <span key={idx} className={`text-[11px] px-2 py-0.5 rounded-xs border ${subClasses}`}>
                   {sub}
                 </span>
               );
