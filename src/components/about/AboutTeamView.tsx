@@ -224,11 +224,8 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
       <div>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6">
           <div>
-            <div className="text-xs font-black uppercase tracking-wider text-[#4F7ECB] mb-1">
-              {isVi ? "Bộ Máy Lãnh Đạo Dự Án" : "Project Leadership"}
-            </div>
             <h3 className="text-xl sm:text-2xl font-poppins font-black text-[#0F2747] tracking-tight">
-              {isVi ? "Ban Giám Đốc (Board of Directors)" : "Board of Directors"}
+              Board of Directors
             </h3>
           </div>
           <span className="text-xs font-bold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-xs self-start sm:self-auto">

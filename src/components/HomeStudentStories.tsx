@@ -156,20 +156,10 @@ export function HomeStudentStories() {
         <div className="mb-16 relative">
           {/* Notebook Header with Official Rubber Stamp */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b-2 border-dashed border-[#0F2747]/20 relative">
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#4F7ECB]">
-                <span>📋 Sổ Bộ Máy Lãnh Đạo</span>
-                <span className="text-slate-300">•</span>
-                <span className="text-slate-500 font-bold">{isVi ? "Nhiệm kỳ 2026" : "2026 Active Cohort"}</span>
-              </div>
+            <div>
               <h3 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-                {isVi ? "Ban Giám Đốc (Board of Directors)" : "Board of Directors"}
+                Board of Directors
               </h3>
-              <p className="text-xs text-slate-600">
-                {isVi
-                  ? "Đội ngũ học sinh & sinh viên điều hành trực tiếp các hoạt động nòng cốt của The Pencily."
-                  : "Student-led executive board steering daily operations and core vision."}
-              </p>
             </div>
 
             {/* Official Pencily Paper Badge Asset */}

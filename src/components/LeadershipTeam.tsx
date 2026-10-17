@@ -152,11 +152,8 @@ export function LeadershipTeam() {
 
         {/* 1. Ban Điều Hành / Board of Directors */}
         <div className="mb-14">
-          <div className="text-xs font-extrabold uppercase tracking-widest text-[#4F7ECB] mb-2 text-center">
-            Bộ Máy Lãnh Đạo Dự Án
-          </div>
           <h3 className="text-2xl font-poppins font-black text-[#0F2747] text-center mb-8">
-            Ban Giám Đốc (Board of Directors)
+            Board of Directors
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {boardOfDirectors.map((member) => (

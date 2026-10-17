@@ -43,7 +43,7 @@ export function Footer() {
               {isVi ? "Tutors" : "Tutors"}
             </Link>
             <Link href="/#stories" className="px-2 py-1 rounded-sm hover:bg-[#0F2747]/5 transition-colors">
-              {isVi ? "Ban Giám Đốc" : "Leadership"}
+              Board of Directors
             </Link>
             <Link href="/dashboard?tab=shop" className="px-2 py-1 rounded-sm hover:bg-[#0F2747]/5 transition-colors text-amber-900 font-black">
               {isVi ? "Cửa Hàng PP" : "PP Shop"}
