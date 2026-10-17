@@ -249,9 +249,9 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
       />
 
       {/* 2. UNIFIED MAIN WORKSPACE */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto overflow-x-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-scroll overflow-x-hidden [scrollbar-gutter:stable]">
         {/* Clean, Logical Workspace Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-md h-14 sm:h-16 border-b-2 bg-[#FFF9EF]/95 border-slate-300 text-[#0F2747]">
+        <header className="sticky top-0 z-30 backdrop-blur-md h-14 sm:h-16 border-b-2 bg-[#FFF9EF]/95 border-slate-300 text-[#0F2747] shrink-0">
           <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 h-full flex items-center justify-between gap-4">
             {/* Left: Clean Breadcrumb title (No duplicate Logo since Sidebar already has it) */}
             <div className="flex items-center gap-2">
@@ -265,12 +265,12 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
             </div>
 
             {/* Right: Unified, logical action group */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               {/* Language Switcher Pill */}
               <button
                 type="button"
                 onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-xs font-bold text-[#0F2747] border-2 border-slate-300 cursor-pointer transition shadow-2xs"
+                className="h-9 flex items-center gap-1.5 px-3 rounded-md bg-white hover:bg-slate-50 text-xs font-bold text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] cursor-pointer transition shadow-2xs shrink-0"
                 title="Đổi ngôn ngữ / Change language"
               >
                 <Languages className="w-3.5 h-3.5 text-[#4F7ECB]" />
@@ -278,11 +278,11 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
               </button>
 
               {/* PP pill & popover */}
-              <div id="tour-points-pill" className="relative">
+              <div id="tour-points-pill" className="relative shrink-0">
                 <button
                   type="button"
                   onClick={() => setIsPointsMenuOpen(!isPointsMenuOpen)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border-2 transition cursor-pointer text-xs font-bold active:scale-95 shadow-2xs ${
+                  className={`h-9 flex items-center gap-2 px-3 rounded-md border-2 transition cursor-pointer text-xs font-bold active:scale-95 shadow-2xs ${
                     isPointsMenuOpen
                       ? "bg-[#FFF9EF] border-[#F59E0B] text-[#0F2747] ring-2 ring-[#F59E0B]/20"
                       : "bg-white border-slate-300 hover:border-amber-400 hover:bg-[#FFF9EF]/50 text-[#0F2747]"
@@ -290,10 +290,10 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                   aria-expanded={isPointsMenuOpen}
                   aria-label="Xem quy chế và số dư Pencily Points"
                 >
-                  <div className="w-4.5 h-4.5 rounded-xs bg-[#F59E0B] text-slate-900 border border-amber-600 flex items-center justify-center text-[10px] font-black">
+                  <div className="w-4.5 h-4.5 rounded-xs bg-[#F59E0B] text-slate-900 border border-amber-600 flex items-center justify-center text-[10px] font-black shrink-0">
                     P
                   </div>
-                  <span>{user.points} PP</span>
+                  <span className="font-mono">{user.points} PP</span>
                   <ChevronDown
                     className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-200 ${
                       isPointsMenuOpen ? "rotate-180 text-[#F59E0B]" : ""
@@ -435,8 +435,11 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                 )}
               </div>
 
+              {/* Dedicated Vertical Divider */}
+              <div className="h-6 w-[2px] bg-slate-300 mx-0.5 shrink-0" aria-hidden="true" />
+
               {/* Schoolhouse Workspace Menu (Chat, Bell, User Profile Dropdown) */}
-              <div id="tour-header-menu" className="pl-1 border-l-2 border-slate-300">
+              <div id="tour-header-menu" className="shrink-0">
                 <SchoolhouseHeaderMenu
                   onOpenTutorModal={() => handleSelectTab("become-tutor")}
                   onOpenSettingsTab={() => handleSelectTab("settings")}
@@ -452,7 +455,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
         {/* Content Container (Pristine grid alignment with header above) */}
         <main className="flex-1 py-6 sm:py-8">
-          <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 space-y-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 space-y-6">
           {!isSupabaseConfigured && <p role="status" className="border-2 border-amber-300 bg-amber-50 p-4 text-sm">Đang xem giao diện. Backend chưa cấu hình Supabase; chưa thể tạo lớp, duyệt hồ sơ hoặc tính điểm thật. Xem BACKEND_SETUP.md.</p>}
           {isSupabaseConfigured && !backendAuthenticated && <p className="border-2 border-slate-300 bg-white p-4 text-sm">Hãy <Link href="/signin" className="underline font-bold">đăng nhập</Link> để ghi danh và lưu hoạt động học tập.</p>}
           {apiNotice && <div role="status" className="bg-blue-50 border-2 border-blue-200 p-4 flex justify-between gap-3"><p>{apiNotice}</p><button aria-label="Đóng thông báo" onClick={clearNotice}><X size={16}/></button></div>}
@@ -497,7 +500,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB 1: CALENDAR (Lịch & Phiên học của tôi - Streamlined) */}
           {/* ============================================================== */}
           {activeTab === "calendar" && (
-            <div className="space-y-8 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fadeIn">
               <SchoolhouseDashboard
                 onOpenApplyTutor={() => setIsApplyTutorOpen(true)}
                 onNavigateClasses={() => handleSelectTab("classes")}
@@ -509,7 +512,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB: PHÒNG HỌC TRỰC TUYẾN (Clean MVP Room Hub) */}
           {/* ============================================================== */}
           {activeTab === "classes" && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fadeIn">
               {/* Header & Main Create Button */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
                 <div>
@@ -641,7 +644,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB 3: COMMUNITY (Cộng đồng & Bảng tin) */}
           {/* ============================================================== */}
           {activeTab === "community" && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fadeIn">
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
                 <div>
@@ -1125,7 +1128,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB 5: PROFILE (Hồ sơ học sinh & Lộ trình Peer Tutor) */}
           {/* ============================================================== */}
           {activeTab === "profile" && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fadeIn">
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
                 <div>

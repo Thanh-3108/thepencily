@@ -170,9 +170,9 @@ export function SchoolhouseHeaderMenu({
       : (user.name || "P").substring(0, 2).toUpperCase();
 
   return (
-    <div className="flex items-center gap-1.5 sm:gap-2.5" ref={containerRef}>
+    <div className="flex items-center gap-2 sm:gap-2.5" ref={containerRef}>
       {/* 1. DIRECT MESSAGE / MESSENGER STYLE POPOVER */}
-      <div className="relative">
+      <div className="relative shrink-0">
         <button
           type="button"
           onClick={() => {
@@ -181,7 +181,7 @@ export function SchoolhouseHeaderMenu({
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
-          className={`relative w-9 h-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer ${
+          className={`relative h-9 w-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer shadow-2xs ${
             chatOpen
               ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
               : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
@@ -264,7 +264,7 @@ export function SchoolhouseHeaderMenu({
       </div>
 
       {/* 2. NOTIFICATIONS BELL WITH INTERACTIVE POPOVER */}
-      <div className="relative">
+      <div className="relative shrink-0">
         <button
           type="button"
           onClick={() => {
@@ -273,7 +273,7 @@ export function SchoolhouseHeaderMenu({
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
-          className={`relative w-9 h-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer ${
+          className={`relative h-9 w-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer shadow-2xs ${
             bellOpen
               ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
               : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
@@ -415,7 +415,7 @@ export function SchoolhouseHeaderMenu({
         {/* Calendar is directly accessible from sidebar Lớp của tôi */}
 
       {/* 4. SCHOOLHOUSE AVATAR / ACCOUNT HUB TRIGGER */}
-      <div className="relative">
+      <div className="relative shrink-0">
         <button
           type="button"
           onClick={() => {
@@ -423,7 +423,7 @@ export function SchoolhouseHeaderMenu({
             setBellOpen(false);
             setCalendarOpen(false);
           }}
-          className={`flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-md border-2 transition-all cursor-pointer ${
+          className={`h-9 flex items-center gap-2 pl-1.5 pr-2.5 rounded-md border-2 transition-all cursor-pointer shadow-2xs ${
             dropdownOpen
               ? "bg-[#0F2747] text-white border-[#0F2747]"
               : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"

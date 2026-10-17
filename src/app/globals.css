@@ -27,6 +27,7 @@ html {
   scroll-behavior: smooth;
   font-size: 17px;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  scrollbar-gutter: stable;
 }
 
 body {

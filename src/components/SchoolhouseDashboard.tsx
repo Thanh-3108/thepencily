@@ -35,9 +35,9 @@ export function SchoolhouseDashboard({
   const mySessions = classes.filter((c) => registeredClassIds.includes(c.id));
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-6">
       {/* 1. CALENDAR HEADER & METRICS BAR */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-4 border-b-2 border-slate-300">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
         <div>
           <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
             {language === "vi" ? "Lịch Học & Buổi Thảo Luận" : "My Study Schedule & Sessions"}

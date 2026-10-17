@@ -48,7 +48,7 @@ export function DashboardLeaderboard({ onGoToClasses, onGoToVideos }: DashboardL
   const top1 = realParticipants[0];
 
   return (
-    <div className="space-y-8 animate-fadeIn w-full select-none">
+    <div className="w-full space-y-6 animate-fadeIn select-none">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
         <div>

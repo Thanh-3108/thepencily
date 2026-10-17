@@ -105,7 +105,7 @@ export function DashboardSettings({
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn w-full pb-12">
+    <div className="w-full space-y-6 animate-fadeIn pb-12">
       {/* Settings Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
         <div>

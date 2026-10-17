@@ -208,9 +208,9 @@ export function ClassVideoLibrary({
   // If no real video lessons are hooked up yet: Show clean authentic empty state
   if (!activeLesson || effectiveLessons.length === 0) {
     return (
-      <div className="space-y-6 animate-fadeIn max-w-5xl mx-auto select-none">
+      <div className="w-full space-y-6 animate-fadeIn select-none">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-sm bg-amber-100/70 border-2 border-amber-300 flex items-center justify-center text-[#0F2747] shadow-2xs shrink-0">
               <BookOpen className="w-5 h-5 text-[#0F2747]" />
@@ -292,7 +292,7 @@ export function ClassVideoLibrary({
   return (
     <div className="space-y-6 animate-fadeIn w-full select-none">
       {/* Title & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b-2 border-slate-300">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-sm bg-amber-100/70 border-2 border-amber-300 flex items-center justify-center text-[#0F2747] shadow-2xs shrink-0">
             <BookOpen className="w-5 h-5 text-[#0F2747]" />
