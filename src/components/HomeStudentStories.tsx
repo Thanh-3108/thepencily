@@ -107,116 +107,48 @@ export function HomeStudentStories() {
     <section id="stories" className="pt-20 sm:pt-28">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
-            {isVi ? "Góc nhìn người trong cuộc" : "Community Voices"}
+            {isVi ? "Sáng lập dự án" : "Founders"}
           </div>
-          <h2 className="font-poppins font-black text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
-            {isVi ? "Tiếng nói thành viên & Lời sáng lập" : "Member Voices & Founder's Words"}
+          <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight text-balance">
+            {isVi ? "Ban Sáng Lập" : "Founding Board"}
           </h2>
         </div>
 
-        {/* 1. FOUNDER & CO-FOUNDER (Samsung squarish style, thick borders) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-          {/* Founder Card */}
-          <div className="bg-white rounded-md p-6 sm:p-8 border-2 border-[#0F2747] shadow-xs relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#FFC83D]" />
-
-            <div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-4">
-                <div className="w-24 h-24 sm:w-26 sm:h-26 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] shrink-0 overflow-hidden relative shadow-2xs">
-                  <Image
-                    src="/founder.png"
-                    alt="Huỳnh Công Thành - Founder & President Gen 1.0"
-                    fill
-                    className="object-cover object-[55%_48%]"
-                    priority
-                    sizes="(max-width: 640px) 96px, 104px"
-                  />
-                </div>
-
-                <div className="flex-1 space-y-1.5">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-xs inline-block mb-1">
-                        {isVi ? "Lời Người Sáng Lập" : "Founder's Words"}
-                      </span>
-                      <h3 className="font-poppins font-bold text-lg sm:text-xl text-[#0F2747]">
-                        Huỳnh Công Thành
-                      </h3>
-                      <p className="text-xs font-semibold text-[#4F7ECB]">
-                        Founder &amp; President Gen 1.0
-                      </p>
-                    </div>
-                    <span className="text-[11px] font-bold text-[#0F2747] bg-[#FFF9EF] border-2 border-[#0F2747] px-2.5 py-1 rounded-xs">
-                      {isVi ? "Người Sáng Lập" : "Founder"}
-                    </span>
-                  </div>
-
-                  <div className="p-3.5 rounded-sm bg-[#FAF7F2] border-2 border-slate-200/90 text-xs sm:text-sm text-[#0F2747] font-medium leading-relaxed italic">
-                    <Quote className="w-4 h-4 text-[#FFC83D] mb-1 shrink-0 inline mr-1" />
-                    &ldquo;Chào buổi sáng mọi người lúc 3 giờ sáng nha&rdquo;
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
-                {isVi
-                  ? "The Pencily khởi đầu từ niềm tin rằng cách học tốt nhất là cùng học và sẻ chia với những người bạn đồng trang lứa. Không có ai hiểu rõ áp lực thi cử bằng chính các bạn học sinh."
-                  : "The Pencily was built on the core belief that peer learning is the most empowering education. No one understands students' challenges better than students themselves."}
-              </p>
+        {/* 1. FOUNDING BOARD: Clean & minimal - Just Avatar & Name */}
+        <div className="flex items-center justify-center gap-12 sm:gap-24 mb-16">
+          {/* Huỳnh Công Thành */}
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
+              <Image
+                src="/founder.png"
+                alt="Huỳnh Công Thành"
+                fill
+                className="object-cover object-[55%_48%]"
+                priority
+                sizes="(max-width: 640px) 96px, 112px"
+              />
             </div>
+            <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
+              Huỳnh Công Thành
+            </h3>
           </div>
 
-          {/* Co-Founder Card */}
-          <div className="bg-white rounded-md p-6 sm:p-8 border-2 border-[#0F2747] shadow-xs relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#4F7ECB]" />
-
-            <div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-4">
-                <div className="w-24 h-24 sm:w-26 sm:h-26 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] shrink-0 overflow-hidden relative shadow-2xs">
-                  <Image
-                    src="/co-founder.png"
-                    alt="Dương Quang Minh Khoa - Co-Founder, Senior Advisor"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 96px, 104px"
-                  />
-                </div>
-
-                <div className="flex-1 space-y-1.5">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-wider text-blue-900 bg-blue-100 border border-blue-300 px-2 py-0.5 rounded-xs inline-block mb-1">
-                        {isVi ? "Cố Vấn Cấp Cao" : "Senior Advisor"}
-                      </span>
-                      <h3 className="font-poppins font-bold text-lg sm:text-xl text-[#0F2747]">
-                        Dương Quang Minh Khoa
-                      </h3>
-                      <p className="text-xs font-semibold text-[#4F7ECB]">
-                        Co-Founder, Senior Advisor
-                      </p>
-                    </div>
-                    <span className="text-[11px] font-bold text-[#0F2747] bg-[#F0F6FF] border-2 border-[#0F2747] px-2.5 py-1 rounded-xs">
-                      {isVi ? "Đồng Sáng Lập" : "Co-Founder"}
-                    </span>
-                  </div>
-
-                  <div className="p-3.5 rounded-sm bg-[#FAF7F2] border-2 border-slate-200/90 text-xs sm:text-sm text-[#0F2747] font-medium leading-relaxed italic">
-                    <Quote className="w-4 h-4 text-[#4F7ECB] mb-1 shrink-0 inline mr-1" />
-                    {isVi
-                      ? "“Kiên định với giá trị đồng đẳng, trao quyền cho từng thành viên phát triển.”"
-                      : "“Steadfast in peer values, empowering every member to thrive.”"}
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
-                {isVi
-                  ? "Đồng hành từ những ngày đầu, định hình chiến lược và kết nối các nguồn lực phát triển cho các thế hệ thành viên The Pencily trên khắp mọi miền."
-                  : "Accompanying The Pencily from inception, steering strategic initiatives and empowering next-generation learner communities nationwide."}
-              </p>
+          {/* Dương Quang Minh Khoa */}
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
+              <Image
+                src="/co-founder.png"
+                alt="Dương Quang Minh Khoa"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 96px, 112px"
+              />
             </div>
+            <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
+              Dương Quang Minh Khoa
+            </h3>
           </div>
         </div>
 
