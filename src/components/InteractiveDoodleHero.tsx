@@ -11,18 +11,18 @@ export function InteractiveDoodleHero() {
 
   // Physics states stored in refs for animation loop (immune to refresh rate variations)
   const physicsRef = useRef({
-    // Pencil tip coordinates on virtual 540x420 canvas
-    x: 185,
-    y: 230,
-    targetX: 185,
-    targetY: 230,
-    prevTargetX: 185,
-    prevTargetY: 230,
+    // Pencil tip coordinates on virtual 540x380 canvas matching the official mockup
+    x: 85,
+    y: 295,
+    targetX: 85,
+    targetY: 295,
+    prevTargetX: 85,
+    prevTargetY: 295,
     // Smoothed mouse velocity in px/sec
     smoothedVx: 0,
     smoothedVy: 0,
-    // Angle: baseline rest angle is -24 deg (natural pencil writing angle)
-    angle: -24,
+    // Angle: baseline rest angle is -14 deg
+    angle: -14,
     // Continuous slow orbit rotation
     rotationAngle: 0,
     // Parallax offsets
@@ -30,16 +30,16 @@ export function InteractiveDoodleHero() {
     parallaxY: 0,
     // Drawing state
     isDrawing: false,
-    prevDrawX: 185,
-    prevDrawY: 230,
+    prevDrawX: 85,
+    prevDrawY: 295,
     dashAccumulator: 0,
     lastMoveTime: 0,
   });
 
   const [renderState, setRenderState] = useState({
-    pencilX: 185,
-    pencilY: 230,
-    pencilAngle: -24,
+    pencilX: 85,
+    pencilY: 295,
+    pencilAngle: -14,
     isDrawing: false,
     parallaxX: 0,
     parallaxY: 0,
@@ -54,16 +54,16 @@ export function InteractiveDoodleHero() {
     ctx.restore();
 
     ctx.strokeStyle = "#0F2747";
-    ctx.lineWidth = 4.5;
+    ctx.lineWidth = 3.6;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
     ctx.beginPath();
-    // Smooth, graceful continuous loop
-    ctx.moveTo(185, 230);
-    ctx.bezierCurveTo(110, 250, 85, 300, 115, 330);
-    ctx.bezierCurveTo(145, 360, 220, 360, 270, 320);
-    ctx.bezierCurveTo(320, 280, 370, 290, 420, 310);
+    // Signature flourish: sweeps from upper-middle, forms smooth left C-loop, and glides under big dreams
+    ctx.moveTo(215, 175);
+    ctx.bezierCurveTo(160, 175, 110, 205, 110, 245);
+    ctx.bezierCurveTo(110, 280, 150, 305, 205, 300);
+    ctx.bezierCurveTo(260, 295, 310, 270, 370, 245);
     ctx.stroke();
   }, []);
 
@@ -76,7 +76,7 @@ export function InteractiveDoodleHero() {
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 3) : 1;
     canvas.width = 540 * dpr;
-    canvas.height = 420 * dpr;
+    canvas.height = 380 * dpr;
     ctx.scale(dpr, dpr);
     drawSignatureDoodle(ctx);
 
@@ -119,8 +119,8 @@ export function InteractiveDoodleHero() {
       // Gentle idle breathing sway (±0.8°) when hovered or standing still
       const idleSway = Math.sin(currentTime * 0.0025) * 0.8;
 
-      // When drawing, tip applies slight deliberate pressure (-26°)
-      const baseAngle = p.isDrawing ? -26 : -24;
+      // When drawing, tip applies slight deliberate pressure (-16°)
+      const baseAngle = p.isDrawing ? -16 : -14;
       const targetAngle = baseAngle + tiltOffset + idleSway;
 
       // Smooth angle transition (tau = 0.065s)
@@ -129,7 +129,7 @@ export function InteractiveDoodleHero() {
 
       // 4. Parallax offsets
       const targetParallaxX = (p.targetX - 270) / 270;
-      const targetParallaxY = (p.targetY - 210) / 210;
+      const targetParallaxY = (p.targetY - 190) / 190;
       const parallaxAlpha = 1 - Math.exp(-dt / 0.12);
       p.parallaxX += (targetParallaxX - p.parallaxX) * parallaxAlpha;
       p.parallaxY += (targetParallaxY - p.parallaxY) * parallaxAlpha;
@@ -327,14 +327,14 @@ export function InteractiveDoodleHero() {
     drawSignatureDoodle(ctx);
 
     const p = physicsRef.current;
-    p.targetX = 185;
-    p.targetY = 230;
-    p.prevTargetX = 185;
-    p.prevTargetY = 230;
+    p.targetX = 85;
+    p.targetY = 295;
+    p.prevTargetX = 85;
+    p.prevTargetY = 295;
     p.smoothedVx = 0;
     p.smoothedVy = 0;
-    p.prevDrawX = 185;
-    p.prevDrawY = 230;
+    p.prevDrawX = 85;
+    p.prevDrawY = 295;
     p.dashAccumulator = 0;
     p.lastMoveTime = 0;
     p.isDrawing = false;
@@ -350,66 +350,68 @@ export function InteractiveDoodleHero() {
       onPointerEnter={() => setIsHovered(true)}
       onPointerLeave={() => {
         setIsHovered(false);
-        physicsRef.current.isDrawing = false;
+        const p = physicsRef.current;
+        p.isDrawing = false;
+        p.targetX = 85;
+        p.targetY = 295;
       }}
-      className="relative w-full max-w-[520px] aspect-[540/420] select-none cursor-crosshair group touch-none mx-auto"
+      className="relative w-full max-w-[540px] aspect-[540/380] select-none cursor-crosshair group touch-none mx-auto"
     >
       {/* 1. FLAWLESS, ELEGANT ARCHITECTURAL OUTLINE SHAPES (No distortion, pure geometry) */}
       <svg
-        viewBox="0 0 540 420"
+        viewBox="0 0 540 380"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute inset-0 w-full h-full pointer-events-none z-0"
       >
-
         {/* Parallax Group for background circles: shifts subtly with mouse */}
         <g
           style={{
-            transform: `translate(${renderState.parallaxX * 8}px, ${renderState.parallaxY * 6}px)`,
+            transform: `translate(${renderState.parallaxX * 6}px, ${renderState.parallaxY * 4}px)`,
             transition: "transform 0.1s ease-out",
           }}
         >
           {/* Main Sun Circle (Clean, perfectly circular dashed outline with steady slow rotation) */}
           <circle
-            cx="240"
-            cy="210"
-            r="165"
-            stroke="#FFC83D"
-            strokeWidth="1.8"
-            strokeDasharray="8 8"
+            cx="285"
+            cy="195"
+            r="125"
+            stroke="#DEB841"
+            strokeWidth="1.5"
+            strokeDasharray="6 6"
             style={{
-              transformOrigin: "240px 210px",
+              transformOrigin: "285px 195px",
               transform: `rotate(${renderState.rotationAngle}deg)`,
-              opacity: isHovered ? 0.95 : 0.8,
+              opacity: isHovered ? 0.95 : 0.85,
             }}
           />
 
           {/* Inner Counter-Rotating Orbit Ring */}
           <circle
-            cx="240"
-            cy="210"
-            r="138"
-            stroke="#0F2747"
-            strokeWidth="1"
-            strokeDasharray="3 9"
-            opacity="0.25"
+            cx="285"
+            cy="195"
+            r="105"
+            stroke="#DEB841"
+            strokeWidth="1.2"
+            strokeDasharray="5 5"
+            opacity="0.65"
             style={{
-              transformOrigin: "240px 210px",
-              transform: `rotate(${-renderState.rotationAngle * 0.6}deg)`,
+              transformOrigin: "285px 195px",
+              transform: `rotate(${-renderState.rotationAngle * 0.7}deg)`,
             }}
           />
         </g>
 
-        {/* Smooth, Elegant Architectural S-Curve Wave on Right (Permanently smooth, no kinks) */}
+        {/* Outer Right Blue Dashed Arc */}
         <path
-          d="M 400 30 C 455 100, 485 180, 465 260 C 445 330, 475 380, 510 415"
+          d="M 365 75 C 420 135, 430 240, 395 320"
           stroke="#4F7ECB"
-          strokeWidth="2.2"
-          strokeDasharray="7 5"
-          opacity={isHovered ? 0.85 : 0.65}
+          strokeWidth="1.8"
+          strokeDasharray="6 6"
+          opacity={isHovered ? 0.9 : 0.75}
           className="transition-opacity duration-300"
           style={{
-            transform: `translate(${renderState.parallaxX * 12}px, ${renderState.parallaxY * 8}px)`,
+            transform: `translate(${renderState.parallaxX * 10}px, ${renderState.parallaxY * 6}px)`,
             transition: "transform 0.15s ease-out",
           }}
         />
@@ -423,18 +425,18 @@ export function InteractiveDoodleHero() {
 
       {/* 3. PENCILY BRAND TYPOGRAPHY: "Small steps. big dreams." */}
       <div
-        className="absolute top-[28%] right-[4%] z-20 pointer-events-none w-[220px] sm:w-[245px] transition-transform duration-200 ease-out"
+        className="absolute top-[20%] right-[10%] z-20 pointer-events-none w-[205px] sm:w-[225px] transition-transform duration-200 ease-out"
         style={{
-          transform: `translate(${-renderState.parallaxX * 6}px, ${-renderState.parallaxY * 4}px)`,
+          transform: `translate(${-renderState.parallaxX * 5}px, ${-renderState.parallaxY * 3}px)`,
         }}
       >
         <Image
           src="/brand/pencily-text-clean.png"
           alt="Small steps. big dreams."
-          width={245}
-          height={200}
+          width={225}
+          height={180}
           priority
-          className="w-full h-auto object-contain drop-shadow-2xs select-none"
+          className="w-full h-auto object-contain select-none"
         />
       </div>
 
@@ -446,20 +448,20 @@ export function InteractiveDoodleHero() {
           top: `${renderState.pencilY}px`,
           transform: `translate(-22%, -100%) rotate(${renderState.pencilAngle}deg) scale(${renderState.isDrawing ? 0.96 : 1})`,
           transformOrigin: "22% 100%",
-          width: "125px",
+          width: "95px",
         }}
       >
         <Image
           src="/brand/pencily-pencil-clean.png"
           alt="The Pencily"
-          width={150}
-          height={215}
+          width={120}
+          height={170}
           priority
-          className="w-full h-auto object-contain drop-shadow-md select-none"
+          className="w-full h-auto object-contain drop-shadow-sm select-none"
         />
       </div>
 
-      {/* 6. MINIMAL ICON-ONLY RESET BUTTON */}
+      {/* 5. MINIMAL ICON-ONLY RESET BUTTON */}
       <div className="absolute bottom-2 left-3 z-30">
         <button
           type="button"
@@ -468,7 +470,7 @@ export function InteractiveDoodleHero() {
             handleResetCanvas();
           }}
           title="Vẽ lại nét chữ ký"
-          className="w-8 h-8 flex items-center justify-center bg-white hover:bg-slate-50 text-[#0F2747] rounded-sm border-2 border-slate-300 hover:border-[#0F2747] shadow-xs transition active:scale-95 cursor-pointer"
+          className="w-7 h-7 flex items-center justify-center bg-white/80 hover:bg-white text-[#0F2747] rounded-sm border border-slate-300 hover:border-[#0F2747] shadow-2xs transition active:scale-95 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>

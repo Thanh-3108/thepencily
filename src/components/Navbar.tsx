@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
 import { usePencily } from "@/context/PencilyContext";
-import { Languages } from "lucide-react";
+import { Languages, ChevronDown } from "lucide-react";
 
 interface NavbarProps {
   onOpenJoinModal?: () => void;
@@ -15,78 +15,103 @@ interface NavbarProps {
 
 export function Navbar({ onOpenJoinModal, onOpenStudentHub, onOpenTutorModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
   const pathname = usePathname();
   const { language, setLanguage, isLoggedIn } = usePencily();
+  const isVi = language === "vi";
 
-  const navLinks = [
-    { name: language === "vi" ? "Về Pencily" : "About", href: "/#about" },
-    { name: language === "vi" ? "Chương trình" : "Programs", href: "/#programs" },
-    { name: language === "vi" ? "Vận hành" : "How it Works", href: "/#how-it-works" },
-    { name: language === "vi" ? "Portfolio Tutor" : "Tutor Portfolio", href: "/#portfolio" },
-    { name: language === "vi" ? "Lãnh đạo & Chia sẻ" : "Leadership & Stories", href: "/#stories" },
+  const mainLinks = [
+    { name: isVi ? "Về Pencily" : "About Pencily", href: "/#about" },
+    { name: isVi ? "Chương trình" : "Programs", href: "/#programs" },
+    { name: isVi ? "Portfolio Tutor" : "Tutor Portfolio", href: "/#portfolio" },
+  ];
+
+  const exploreLinks = [
+    { name: isVi ? "Vận hành" : "How it Works", href: "/#how-it-works" },
+    { name: isVi ? "Lãnh đạo & Chia sẻ" : "Leadership & Stories", href: "/#stories" },
+    { name: isVi ? "Lớp học & Thư viện" : "Classrooms & Library", href: "/classes" },
+    { name: isVi ? "Cộng đồng học sinh" : "Student Community", href: "/community" },
   ];
 
   return (
-    <header className="w-full bg-[#FFF9EF] relative z-40 border-b-2 border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-3.5 sm:py-4 flex items-center justify-between gap-4">
+    <header className="w-full bg-[#FAF7EE] relative z-40 border-b border-[#0F2747]/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-3 sm:py-4 flex items-center justify-between gap-4">
         {/* Left: Brand Logo */}
-        <div className="flex items-center gap-8 lg:gap-10">
+        <div className="flex items-center gap-7 lg:gap-10">
           <Link href="/" className="flex items-center gap-3 shrink-0" title="The Pencily">
             <Logo variant="nav" size="md" />
           </Link>
 
-          {/* Desktop Navigation Links (Spacious, clean, single line, no wrapping) */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-            {navLinks.map((link) => {
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7">
+            {mainLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors duration-150 py-1 ${
+                  className={`text-xs sm:text-sm font-medium whitespace-nowrap transition-colors duration-150 py-1 ${
                     isActive
-                      ? "text-[#0F2747] font-bold border-b-2 border-[#0F2747]"
-                      : "text-slate-600 hover:text-[#0F2747]"
+                      ? "text-[#0F2747] font-semibold"
+                      : "text-[#0F2747]/80 hover:text-[#0F2747]"
                   }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
+
+            {/* Dropdown: Khám phá ⌵ */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setExploreOpen(!exploreOpen)}
+                onBlur={() => setTimeout(() => setExploreOpen(false), 200)}
+                className="flex items-center gap-1 text-xs sm:text-sm font-medium text-[#0F2747]/80 hover:text-[#0F2747] transition-colors py-1 cursor-pointer"
+              >
+                <span>{isVi ? "Khám phá" : "Explore"}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${exploreOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {exploreOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg py-1.5 z-50 animate-fadeIn">
+                  {exploreLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setExploreOpen(false)}
+                      className="block px-3.5 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:text-[#0F2747] hover:bg-[#FAF7EE] transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
         </div>
 
-        {/* Right: Language Switcher (Synced Picture 2 style) + Sign In */}
+        {/* Right: Language Switcher & Dashboard */}
         <div className="flex items-center gap-3 shrink-0">
-          {/* Language Switcher Pill (Matching Picture 2 with Languages Icon) */}
+          {/* Language Switcher Card Button */}
           <button
             type="button"
-            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-xs font-bold text-[#0F2747] border-2 border-slate-300 cursor-pointer transition shadow-2xs active:scale-95"
+            onClick={() => setLanguage(isVi ? "en" : "vi")}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 text-xs font-semibold text-[#0F2747] border border-slate-200/90 cursor-pointer transition shadow-2xs active:scale-95"
             title="Đổi ngôn ngữ / Change language"
             aria-label="Change language"
           >
             <Languages className="w-3.5 h-3.5 text-[#4F7ECB]" />
-            <span>{language === "vi" ? "EN" : "VI"}</span>
+            <span>{isVi ? "EN" : "VI"}</span>
           </button>
 
-          {/* If Logged In: Direct Link into Dashboard */}
-          {isLoggedIn ? (
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs sm:text-sm font-bold border-2 border-[#0F2747] transition shadow-xs cursor-pointer active:scale-95 whitespace-nowrap"
-            >
-              <span>{language === "vi" ? "Dashboard →" : "Dashboard →"}</span>
-            </Link>
-          ) : (
-            /* If Guest / Public Visitor: Clean Sign-In button */
-            <Link
-              href="/signin"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs sm:text-sm font-bold transition shadow-2xs cursor-pointer active:scale-95 whitespace-nowrap"
-            >
-              <span>{language === "vi" ? "Đăng nhập" : "Sign in"}</span>
-            </Link>
-          )}
+          {/* Direct Link into Dashboard */}
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#0F2747] hover:bg-[#1A3A63] text-white text-xs sm:text-sm font-semibold transition shadow-xs cursor-pointer active:scale-95 whitespace-nowrap"
+          >
+            <span>Dashboard →</span>
+          </Link>
 
           {/* Mobile hamburger button */}
           <button
@@ -123,12 +148,12 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub, onOpenTutorModal }: 
       {/* Mobile Drawer (Clean, straightforward link list) */}
       {mobileMenuOpen && (
         <div className="md:hidden px-6 py-4 bg-[#FFFDF9] border-t-2 border-slate-200 flex flex-col gap-2.5 text-[#0F2747] animate-fadeIn">
-          {navLinks.map((link) => (
+          {[...mainLinks, ...exploreLinks].map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-sm font-bold border-b border-slate-100 hover:text-[#4F7ECB]"
+              className="py-2 text-sm font-semibold border-b border-slate-100 hover:text-[#4F7ECB]"
             >
               {link.name}
             </Link>

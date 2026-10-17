@@ -32,21 +32,20 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
                 : "Empowering Vietnamese students with free peer-tutoring sessions and an inclusive space for personal growth."}
             </p>
 
-            {/* Action Buttons: Simply Dashboard & About */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            {/* Action Buttons: Tham gia ngay & Tìm hiểu thêm */}
+            <div className="pt-3 flex flex-wrap items-center gap-3">
               <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
+                href="/signin"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3A63] text-white font-medium text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-xs"
               >
-                <span>Dashboard</span>
-                <ArrowRight className="w-4 h-4 text-[#4F7ECB]" />
+                <span>{language === "vi" ? "Tham gia ngay →" : "Join Now →"}</span>
               </Link>
 
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-semibold text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 hover:border-[#0F2747] font-medium text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-2xs"
               >
-                <span>About</span>
+                <span>{language === "vi" ? "Tìm hiểu thêm" : "Learn More"}</span>
               </a>
             </div>
           </div>

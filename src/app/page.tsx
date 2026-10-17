@@ -21,9 +21,9 @@ export default function Home() {
   const [isApplyTutorOpen, setIsApplyTutorOpen] = useState(false);
 
   return (
-    <div className="relative bg-[#FFF9EF] text-[#0F2747]">
+    <div className="relative bg-[#FAF7EE] text-[#0F2747]">
       {/* 1. STICKY FULL-SCREEN HERO VIEWPORT */}
-      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between z-0 bg-[#FFF9EF] overflow-hidden">
+      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between z-0 bg-[#FAF7EE] overflow-hidden">
         {/* Navbar */}
         <Navbar onOpenTutorModal={() => setIsApplyTutorOpen(true)} />
 
@@ -33,21 +33,22 @@ export default function Home() {
         </main>
 
         {/* Subtle Scroll Hint */}
-        <div className="pb-4 flex justify-center items-center">
+        <div className="pb-6 flex justify-center items-center">
           <a
             href="#about"
-            className="inline-flex flex-col items-center gap-1 text-xs text-[#687280] hover:text-[#0F2747] transition group cursor-pointer"
+            className="inline-flex flex-col items-center gap-1.5 text-xs text-[#0F2747]/70 hover:text-[#0F2747] transition group cursor-pointer"
           >
-            <span className="text-[11px] font-bold tracking-wider uppercase text-[#0F2747]/50 group-hover:text-[#0F2747]">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-[#0F2747]/70 group-hover:text-[#0F2747]">
               {language === "vi" ? "Cuộn để khám phá" : "Scroll to explore"}
             </span>
             <svg
-              className="w-4 h-4 text-[#0F2747]/60 group-hover:text-[#0F2747] animate-bounce"
+              className="w-3.5 h-3.5 text-[#0F2747]/70 group-hover:text-[#0F2747] transition-transform group-hover:translate-y-0.5"
               fill="none"
               stroke="currentColor"
+              strokeWidth="2.5"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
         </div>
