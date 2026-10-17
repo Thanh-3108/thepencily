@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Send, X } from "lucide-react";
+import { X } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 import {
   PencilyProfileIcon,
@@ -16,7 +16,6 @@ import {
   PencilySupportChatIcon,
   PencilySafetyFlagIcon,
   PencilyLogOutIcon,
-  PencilyChatBubbleIcon,
   PencilyBellIcon,
   PencilyCalendarIcon,
   PencilyShieldIcon,
@@ -46,7 +45,6 @@ export function SchoolhouseHeaderMenu({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -120,134 +118,6 @@ export function SchoolhouseHeaderMenu({
     setUnreadNotifCount(totalNotifCount);
   }, [totalNotifCount, setUnreadNotifCount]);
 
-  // Direct Messages & Interactive Conversations
-  interface DmMessage {
-    id: string;
-    sender: "me" | "them";
-    text: string;
-    time: string;
-  }
-
-  const defaultDirectMessages = [
-    {
-      id: "dm-1",
-      name: "Minh Anh",
-      school: "THPT Chuyên Hà Nội - Amsterdam",
-      lastMessage: "Đề cương buổi luyện giải SAT Math tối mai mình đã cập nhật nhé!",
-      time: "10p trước",
-      unread: true,
-      avatar: "MA",
-    },
-    {
-      id: "dm-2",
-      name: "Bảo Trâm",
-      school: "THPT Lê Hồng Phong",
-      lastMessage: "File bài mẫu speaking part 2 bạn xem qua trước khi vào phòng Meet nha.",
-      time: "1h trước",
-      unread: false,
-      avatar: "BT",
-    },
-    {
-      id: "dm-3",
-      name: "Hoàng Long",
-      school: "THPT Chuyên Khoa Học Tự Nhiên",
-      lastMessage: "Tối nay 8h vào phòng voice học chung không bạn ơi?",
-      time: "Hôm qua",
-      unread: false,
-      avatar: "HL",
-    },
-  ];
-
-  const defaultConversationHistory: Record<string, DmMessage[]> = {
-    "dm-1": [
-      { id: "m-1", sender: "them", text: "Chào bạn! Mình là Minh Anh, Peer Tutor SAT Math.", time: "14:10" },
-      { id: "m-2", sender: "them", text: "Đề cương buổi luyện giải SAT Math tối mai mình đã cập nhật nhé!", time: "14:15" },
-    ],
-    "dm-2": [
-      { id: "m-3", sender: "them", text: "File bài mẫu speaking part 2 bạn xem qua trước khi vào phòng Meet nha.", time: "13:00" },
-    ],
-    "dm-3": [
-      { id: "m-4", sender: "them", text: "Tối nay 8h vào phòng voice học chung không bạn ơi?", time: "Hôm qua" },
-    ],
-  };
-
-  const [activeDmId, setActiveDmId] = useState<string | null>(null);
-  const [typedDmText, setTypedDmText] = useState("");
-  const [conversations, setConversations] = useState<Record<string, DmMessage[]>>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem("pencily_dm_conversations");
-        if (saved) return JSON.parse(saved);
-      } catch {}
-    }
-    return defaultConversationHistory;
-  });
-  const dmScrollRef = useRef<HTMLDivElement>(null);
-
-  const activePeer = defaultDirectMessages.find((d) => d.id === activeDmId);
-  const currentDmMessages = activeDmId ? (conversations[activeDmId] || []) : [];
-
-  const handleSendDm = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!typedDmText.trim() || !activeDmId) return;
-
-    const newMsg: DmMessage = {
-      id: `m-${Date.now()}`,
-      sender: "me",
-      text: typedDmText.trim(),
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    };
-
-    const targetId = activeDmId;
-    setConversations((prev) => {
-      const updated = {
-        ...prev,
-        [targetId]: [...(prev[targetId] || []), newMsg],
-      };
-      try {
-        localStorage.setItem("pencily_dm_conversations", JSON.stringify(updated));
-      } catch {}
-      return updated;
-    });
-
-    setTypedDmText("");
-
-    // Friendly auto-reply simulation from peer tutor after 1.5s
-    setTimeout(() => {
-      const replies = [
-        "Mình nhận được tin nhắn của bạn rồi nhé! Hẹn gặp bạn ở buổi học tới nha.",
-        "Cảm ơn bạn! Nếu có câu hỏi nào về bài tập cứ nhắn mình giải đáp thêm nhé.",
-        "Tuyệt vời! Bạn có thể vào phòng học chung để cùng luyện đề bất cứ lúc nào.",
-      ];
-      const randomReply = replies[Math.floor(Math.random() * replies.length)];
-      const botReply: DmMessage = {
-        id: `m-reply-${Date.now()}`,
-        sender: "them",
-        text: randomReply,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      };
-
-      setConversations((prev) => {
-        const updated = {
-          ...prev,
-          [targetId]: [...(prev[targetId] || []), botReply],
-        };
-        try {
-          localStorage.setItem("pencily_dm_conversations", JSON.stringify(updated));
-        } catch {}
-        return updated;
-      });
-    }, 1500);
-  };
-
-  useEffect(() => {
-    if (activeDmId && dmScrollRef.current) {
-      dmScrollRef.current.scrollTop = dmScrollRef.current.scrollHeight;
-    }
-  }, [conversations, activeDmId]);
-
-  const unreadChatCount = defaultDirectMessages.filter((m) => m.unread && !conversations[m.id]?.some((msg) => msg.sender === "me")).length;
-
   // Close menus on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -255,7 +125,6 @@ export function SchoolhouseHeaderMenu({
         setDropdownOpen(false);
         setBellOpen(false);
         setCalendarOpen(false);
-        setChatOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -271,189 +140,12 @@ export function SchoolhouseHeaderMenu({
 
   return (
     <div className="flex items-center gap-2 sm:gap-2.5" ref={containerRef}>
-      {/* 1. DIRECT MESSAGE / MESSENGER STYLE POPOVER */}
-      <div className="relative shrink-0">
-        <button
-          type="button"
-          onClick={() => {
-            setChatOpen(!chatOpen);
-            setBellOpen(false);
-            setDropdownOpen(false);
-            setCalendarOpen(false);
-          }}
-          className={`relative h-9 w-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer shadow-2xs ${
-            chatOpen
-              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-              : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
-          }`}
-          title={language === "vi" ? "Tin nhắn trực tiếp" : "Direct Messages"}
-          aria-expanded={chatOpen}
-        >
-          <PencilyChatBubbleIcon size={19} strokeWidth={2} />
-          {unreadChatCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#EF4444] text-white font-mono text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs pointer-events-none">
-              {unreadChatCount}
-            </span>
-          )}
-        </button>
-
-        {chatOpen && (
-          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-md border-2 border-[#0F2747] shadow-xl z-50 py-3 px-3 animate-fadeIn text-[#0F2747]">
-            {activePeer ? (
-              /* ACTIVE CONVERSATION VIEW */
-              <div className="flex flex-col h-[380px]">
-                {/* Conversation Header */}
-                <div className="flex items-center justify-between pb-2.5 border-b-2 border-slate-100 mb-2 px-1 shrink-0">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <button
-                      type="button"
-                      onClick={() => setActiveDmId(null)}
-                      className="p-1 rounded-sm hover:bg-slate-100 text-slate-700 transition cursor-pointer"
-                      title={language === "vi" ? "Quay lại" : "Back"}
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <div className="w-7 h-7 rounded-sm bg-[#0F2747] text-[#FFC83D] font-extrabold text-xs flex items-center justify-center shrink-0 border border-slate-300">
-                      {activePeer.avatar}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="font-bold text-xs text-[#0F2747] truncate leading-tight">
-                        {activePeer.name}
-                      </div>
-                      <div className="text-[10px] text-slate-500 truncate font-medium">
-                        {activePeer.school}
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setChatOpen(false)}
-                    className="p-1 rounded-sm text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Messages Feed */}
-                <div ref={dmScrollRef} className="flex-1 overflow-y-auto space-y-2 p-1 pr-1.5 text-xs">
-                  {currentDmMessages.map((msg) => {
-                    const isMe = msg.sender === "me";
-                    return (
-                      <div
-                        key={msg.id}
-                        className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
-                      >
-                        <div
-                          className={`max-w-[85%] rounded-md px-3 py-2 text-xs leading-relaxed ${
-                            isMe
-                              ? "bg-[#0F2747] text-white rounded-br-xs shadow-2xs font-medium"
-                              : "bg-[#FFF9EF] text-[#0F2747] border border-slate-300 rounded-bl-xs"
-                          }`}
-                        >
-                          {msg.text}
-                        </div>
-                        <span className="text-[9px] text-slate-400 mt-0.5 px-1 font-mono">
-                          {msg.time}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Message Input Dock */}
-                <form onSubmit={handleSendDm} className="pt-2 border-t border-slate-100 flex items-center gap-1.5 shrink-0">
-                  <input
-                    type="text"
-                    value={typedDmText}
-                    onChange={(e) => setTypedDmText(e.target.value)}
-                    placeholder={language === "vi" ? `Nhắn tin cho ${activePeer.name}...` : `Message ${activePeer.name}...`}
-                    className="flex-1 px-3 py-2 bg-slate-50 border-2 border-slate-200 focus:border-[#0F2747] rounded-sm text-xs outline-none"
-                    autoFocus
-                  />
-                  <button
-                    type="submit"
-                    disabled={!typedDmText.trim()}
-                    className="h-8 w-8 flex items-center justify-center rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-[#FFC83D] transition disabled:opacity-40 cursor-pointer shrink-0"
-                    title={language === "vi" ? "Gửi tin nhắn" : "Send message"}
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                  </button>
-                </form>
-              </div>
-            ) : (
-              /* CONVERSATION LIST VIEW */
-              <>
-                <div className="flex items-center justify-between pb-2 border-b-2 border-slate-100 mb-2 px-1">
-                  <span className="font-poppins font-black text-sm text-[#0F2747]">
-                    {language === "vi" ? "Tin nhắn trực tiếp" : "Direct Messages"}
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                    {defaultDirectMessages.length} {language === "vi" ? "hội thoại" : "chats"}
-                  </span>
-                </div>
-
-                {/* List of Direct Messages */}
-                <div className="space-y-1.5 max-h-[320px] overflow-y-auto">
-                  {defaultDirectMessages.map((msg) => {
-                    const thread = conversations[msg.id] || [];
-                    const lastMsg = thread.length > 0 ? thread[thread.length - 1] : null;
-                    const previewText = lastMsg ? (lastMsg.sender === "me" ? `Bạn: ${lastMsg.text}` : lastMsg.text) : msg.lastMessage;
-                    const previewTime = lastMsg ? lastMsg.time : msg.time;
-
-                    return (
-                      <div
-                        key={msg.id}
-                        onClick={() => setActiveDmId(msg.id)}
-                        className="p-2.5 rounded-sm flex items-start gap-3 transition cursor-pointer border bg-[#FFFDF9] border-slate-200 hover:border-[#0F2747] hover:bg-[#FFF9EF]"
-                      >
-                        {/* Avatar */}
-                        <div className="w-9 h-9 rounded-sm bg-[#0F2747] text-[#FFC83D] font-extrabold text-xs flex items-center justify-center shrink-0 border border-slate-300">
-                          {msg.avatar}
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-xs truncate font-bold text-slate-800">
-                              {msg.name}
-                            </span>
-                            <span className="text-[10px] text-slate-500 font-mono shrink-0">
-                              {previewTime}
-                            </span>
-                          </div>
-                          <div className="text-[11px] text-slate-600 truncate mt-0.5 font-normal">
-                            {previewText}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Bottom: Contact Discord */}
-                <div className="pt-2.5 mt-2 border-t border-slate-100 text-center flex items-center justify-between px-1 text-xs">
-                  <a
-                    href="https://discord.gg/6hpEf4wC4z"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[11px] font-bold text-[#4F7ECB] hover:underline"
-                  >
-                    {language === "vi" ? "Mở phòng chat Discord →" : "Open Discord DMs →"}
-                  </a>
-                  <span className="text-[10px] text-slate-500">P2P Encrypted</span>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* 2. NOTIFICATIONS BELL WITH INTERACTIVE POPOVER */}
+      {/* 1. NOTIFICATIONS BELL WITH INTERACTIVE POPOVER */}
       <div className="relative shrink-0">
         <button
           type="button"
           onClick={() => {
             setBellOpen(!bellOpen);
-            setChatOpen(false);
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
@@ -467,7 +159,7 @@ export function SchoolhouseHeaderMenu({
         >
           <PencilyBellIcon size={19} strokeWidth={2} />
           {totalNotifCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#FFC83D] text-[#0F2747] font-mono text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs pointer-events-none">
+            <span className="absolute -top-1.5 -right-1.5 min-w-[17px] h-[17px] px-1 bg-[#FFC83D] text-[#0F2747] font-mono text-[9px] font-black rounded-xs flex items-center justify-center border border-white shadow-2xs pointer-events-none">
               {totalNotifCount}
             </span>
           )}

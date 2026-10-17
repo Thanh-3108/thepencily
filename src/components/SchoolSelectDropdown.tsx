@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { VIETNAM_PROVINCES_DATA, detectSchoolInfo } from "@/data/vietnamSchools";
-import { Building2, Search, Edit3, ListFilter, RotateCcw } from "lucide-react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import { VIETNAM_PROVINCES_DATA } from "@/data/vietnamSchools";
+import { Building2, Search, X, Check } from "lucide-react";
 
 export interface SchoolSelectDropdownProps {
   value: string;
@@ -24,213 +24,135 @@ export default function SchoolSelectDropdown({
   language = "vi",
 }: SchoolSelectDropdownProps) {
   const isVi = language === "vi";
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initial detection
-  const detected = useMemo(() => detectSchoolInfo(value), [value]);
-
-  const [provinceId, setProvinceId] = useState<string>(() => detected.provinceId || "hcm");
-  const [level, setLevel] = useState<"all" | "highSchool" | "university">(() => detected.level);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isCustomInput, setIsCustomInput] = useState<boolean>(() => {
-    if (!value || !value.trim()) return false;
-    return !detected.found;
-  });
-
-  // Current province data
-  const currentProvince = useMemo(() => {
-    return VIETNAM_PROVINCES_DATA.find((p) => p.id === provinceId) || VIETNAM_PROVINCES_DATA[0];
-  }, [provinceId]);
-
-  // Available schools in selected province based on level
-  const availableSchools = useMemo(() => {
-    let list: { name: string; level: "highSchool" | "university" }[] = [];
-    if (level === "all" || level === "university") {
-      if (currentProvince.universities) {
-        list.push(...currentProvince.universities.map((u) => ({ name: u, level: "university" as const })));
-      }
-    }
-    if (level === "all" || level === "highSchool") {
-      list.push(...currentProvince.highSchools.map((h) => ({ name: h, level: "highSchool" as const })));
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      list = list.filter((s) => s.name.toLowerCase().includes(q));
-    }
+  // Flatten all schools across provinces once
+  const allSchools = useMemo(() => {
+    const list: { name: string; province: string; level: "THPT" | "ĐH" }[] = [];
+    VIETNAM_PROVINCES_DATA.forEach((prov) => {
+      prov.highSchools?.forEach((h) => {
+        list.push({ name: h, province: prov.name, level: "THPT" });
+      });
+      prov.universities?.forEach((u) => {
+        list.push({ name: u, province: prov.name, level: "ĐH" });
+      });
+    });
     return list;
-  }, [currentProvince, level, searchQuery]);
+  }, []);
 
-  // Handle school select dropdown change
-  const handleSelectSchool = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value;
-    if (val === "__custom__") {
-      setIsCustomInput(true);
-      onChange("");
-    } else {
-      onChange(val);
+  // Filter schools based on current input
+  const filteredSchools = useMemo(() => {
+    const q = (value || "").trim().toLowerCase();
+    if (!q) {
+      // Return top 25 popular schools when empty
+      return allSchools.slice(0, 25);
     }
+    return allSchools
+      .filter(
+        (s) =>
+          s.name.toLowerCase().includes(q) ||
+          s.province.toLowerCase().includes(q)
+      )
+      .slice(0, 30);
+  }, [allSchools, value]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (schoolName: string) => {
+    onChange(schoolName);
+    setIsOpen(false);
   };
 
-  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+  const handleClear = () => {
+    onChange("");
+    setIsOpen(true);
   };
 
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div ref={containerRef} className={`relative space-y-1 ${className}`}>
       {label && (
         <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
 
-      {/* Mode 1: Custom Text Input */}
-      {isCustomInput ? (
-        <div className="space-y-1.5 animate-fadeIn">
-          <div className="relative">
-            <Building2 className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#4F7ECB]" />
-            <input
-              type="text"
-              required={required}
-              value={value}
-              onChange={handleCustomChange}
-              placeholder={placeholder || (isVi ? "Nhập tên trường của bạn..." : "Enter your school name...")}
-              className="w-full pl-10 pr-24 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-xs font-semibold text-[#0F2747] bg-white transition"
-            />
-            <button
-              type="button"
-              onClick={() => {
-                setIsCustomInput(false);
-                setSearchQuery("");
-              }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-xs bg-slate-100 hover:bg-slate-200 text-[#0F2747] text-[11px] font-bold border border-slate-300 transition flex items-center gap-1 cursor-pointer"
-              title={isVi ? "Chọn lại từ danh sách tỉnh / trường" : "Pick from list"}
-            >
-              <RotateCcw className="w-3 h-3 text-[#4F7ECB]" />
-              <span>{isVi ? "Danh sách" : "From list"}</span>
-            </button>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            {isVi
-              ? "Đang ở chế độ tự nhập. Nhấp 'Danh sách' để chọn theo Tỉnh / Thành toàn quốc."
-              : "Manual input mode. Click 'From list' to browse nationwide school directory."}
-          </p>
-        </div>
-      ) : (
-        /* Mode 2: Cascading Selectors */
-        <div className="space-y-2 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-sm border-2 border-slate-300">
-          {/* Row 1: Tỉnh / Thành + Cấp học */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                {isVi ? "1. Tỉnh / Thành phố:" : "1. Province / City:"}
-              </label>
-              <select
-                value={provinceId}
-                onChange={(e) => {
-                  setProvinceId(e.target.value);
-                  setSearchQuery("");
-                }}
-                className="w-full px-2.5 py-1.5 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-semibold text-[#0F2747] cursor-pointer"
-              >
-                {VIETNAM_PROVINCES_DATA.map((prov) => (
-                  <option key={prov.id} value={prov.id}>
-                    {prov.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+      <div className="relative">
+        <Building2 className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#4F7ECB] pointer-events-none" />
+        <input
+          type="text"
+          required={required}
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            if (!isOpen) setIsOpen(true);
+          }}
+          onFocus={() => setIsOpen(true)}
+          placeholder={
+            placeholder ||
+            (isVi
+              ? "Gõ tên trường (VD: THPT Gia Định, Chuyên Lê Hồng Phong...)"
+              : "Type school name (e.g. High School)...")
+          }
+          className="w-full pl-9 pr-8 py-2 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-xs font-semibold text-[#0F2747] placeholder:text-slate-400 bg-white transition"
+          autoComplete="off"
+        />
 
-            <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                {isVi ? "2. Cấp học:" : "2. Education Level:"}
-              </label>
-              <div className="grid grid-cols-3 gap-1">
-                {[
-                  { id: "all", labelVi: "Tất cả", labelEn: "All" },
-                  { id: "highSchool", labelVi: "THPT", labelEn: "High School" },
-                  { id: "university", labelVi: "Đại học", labelEn: "University" },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      setLevel(item.id as "all" | "highSchool" | "university");
-                      setSearchQuery("");
-                    }}
-                    className={`py-1 text-[11px] font-bold rounded-xs border transition cursor-pointer text-center ${
-                      level === item.id
-                        ? "bg-[#0F2747] text-white border-[#0F2747]"
-                        : "bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
-                    }`}
-                  >
-                    {isVi ? item.labelVi : item.labelEn}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+        {value && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-0.5 cursor-pointer"
+            aria-label="Xóa"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
 
-          {/* Row 2: Search filter if needed */}
-          <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isVi ? "Tìm nhanh tên trường trong tỉnh..." : "Quick filter school in province..."}
-              className="w-full pl-8 pr-3 py-1 text-xs rounded-xs border border-slate-300 bg-white focus:outline-none focus:border-[#0F2747] placeholder:text-slate-400"
-            />
-          </div>
-
-          {/* Row 3: School Dropdown Selector */}
-          <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1 flex items-center justify-between">
-              <span>{isVi ? "3. Chọn trường học:" : "3. Select School:"}</span>
-              <button
-                type="button"
-                onClick={() => setIsCustomInput(true)}
-                className="text-[11px] font-bold text-[#4F7ECB] hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <Edit3 className="w-3 h-3" />
-                <span>{isVi ? "Không thấy trường? Tự gõ" : "Write in custom"}</span>
-              </button>
-            </label>
-            <select
-              required={required}
-              value={availableSchools.some((s) => s.name === value) ? value : ""}
-              onChange={handleSelectSchool}
-              className="w-full px-3 py-2 rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs font-bold text-[#0F2747] cursor-pointer"
-            >
-              <option value="" disabled>
-                {isVi ? "-- Bấm để chọn trường học --" : "-- Select your school --"}
-              </option>
-              {availableSchools.map((item) => (
-                <option key={item.name} value={item.name}>
-                  {item.level === "university" ? "[ĐH] " : "[THPT] "}
-                  {item.name}
-                </option>
-              ))}
-              <option value="__custom__">
-                {isVi ? "+ Nhập tên trường khác..." : "+ Write in another school..."}
-              </option>
-            </select>
-          </div>
-
-          {/* Active indicator summary */}
-          {value && (
-            <div className="flex items-center justify-between text-[11px] text-slate-600 bg-white/70 px-2 py-1 rounded-xs border border-slate-200">
-              <span className="truncate">
-                <b>{isVi ? "Đã chọn: " : "Selected: "}</b>
-                <span className="text-[#0F2747] font-semibold">{value}</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => onChange("")}
-                className="text-slate-400 hover:text-red-500 font-bold ml-2 shrink-0 cursor-pointer"
-                title={isVi ? "Bỏ chọn" : "Clear"}
-              >
-                ✕
-              </button>
+      {/* Floating Suggestion Popover (Absolute, doesn't push form down) */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-white rounded-sm border-2 border-[#0F2747] shadow-xl z-50 divide-y divide-slate-100 animate-fadeIn">
+          {filteredSchools.length > 0 ? (
+            filteredSchools.map((item, idx) => {
+              const isSelected = item.name.toLowerCase() === (value || "").trim().toLowerCase();
+              return (
+                <button
+                  key={`${item.name}-${idx}`}
+                  type="button"
+                  onClick={() => handleSelect(item.name)}
+                  className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition cursor-pointer ${
+                    isSelected
+                      ? "bg-[#FAF7EE] text-[#0F2747] font-bold"
+                      : "hover:bg-slate-50 text-slate-700"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 truncate pr-2">
+                    <span className="truncate">{item.name}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="text-[10px] font-mono text-slate-400">
+                      [{item.level}] {item.province}
+                    </span>
+                    {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
+                  </div>
+                </button>
+              );
+            })
+          ) : (
+            <div className="p-3 text-center text-xs text-slate-500">
+              {isVi
+                ? "Không thấy trong danh mục mẫu. Bạn vẫn có thể tiếp tục với tên trường đã nhập này!"
+                : "Not found in directory. You can keep this custom school name!"}
             </div>
           )}
         </div>
