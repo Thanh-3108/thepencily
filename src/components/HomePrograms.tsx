@@ -188,11 +188,15 @@ export function HomePrograms() {
           {/* Top Lockup */}
           <div className="flex items-start justify-between gap-4 mb-4">
             {prog.logoUrl ? (
-              <div className="h-12 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 flex items-center justify-center shrink-0 shadow-2xs hover:border-[#0F2747] transition-colors">
+              <div className="flex items-center shrink-0">
                 <img
                   src={prog.logoUrl}
                   alt={prog.titleVi}
-                  className="h-7 w-auto max-w-[90px] object-contain"
+                  className={`object-contain ${
+                    prog.id === "flagship-ielts"
+                      ? "h-10 sm:h-11 w-auto"
+                      : "h-9 sm:h-10 w-auto rounded-xs"
+                  }`}
                 />
               </div>
             ) : (
