@@ -36,12 +36,12 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     categoryLabelEn: "English",
     titleVi: "IELTS: Road to 6.5 / 7.0+",
     titleEn: "IELTS: Road to 6.5 / 7.0+",
-    badgeVi: "Lớp Học Flagship",
-    badgeEn: "Flagship Program",
+    badgeVi: "Lớp Học IELTS",
+    badgeEn: "IELTS Program",
     taglineVi: "Chiến thuật bứt phá band điểm cùng Peer Tutors 7.5 – 8.5+",
     taglineEn: "Score breakthrough strategy with 7.5 – 8.5+ Peer Tutors",
-    descriptionVi: "Chương trình Flagship mũi nhọn tập trung khắc phục điểm yếu Writing & Speaking. Luyện đề thực chiến Cambridge, sửa chi tiết bài luận 1-1 và phòng Voice phản xạ Speaking theo bộ đề Forecast mới nhất.",
-    descriptionEn: "Intensive flagship curriculum targeting Writing & Speaking weaknesses. Cambridge mock exams, detailed 1-on-1 essay critiques, and weekly Voice rooms for real-time Speaking forecast practice.",
+    descriptionVi: "Lớp học của The Pencily được học sinh giảng dạy để hỗ trợ đạt được band IELTs",
+    descriptionEn: "The Pencily peer-led classes designed to help students achieve target IELTS bands",
     subjectsVi: ["IELTS Writing", "IELTS Speaking", "Reading & Listening", "Road to 6.5/7.0+"],
     subjectsEn: ["IELTS Writing", "IELTS Speaking", "Reading & Listening", "Road to 6.5/7.0+"],
     highlightsVi: [
@@ -66,12 +66,12 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     categoryLabelEn: "English",
     titleVi: "SAT: Road to 1300 / 1400 / 1500+",
     titleEn: "SAT: Road to 1300 / 1400 / 1500+",
-    badgeVi: "Lớp Học Flagship",
-    badgeEn: "Flagship Program",
+    badgeVi: "Lớp Học SAT",
+    badgeEn: "SAT Program",
     taglineVi: "Chinh phục Digital SAT cùng Tutors 1450 – 1560+",
     taglineEn: "Master Digital SAT alongside 1450 – 1560+ Tutors",
-    descriptionVi: "Khóa học Flagship trọng tâm trang bị toàn diện kỹ năng thi Digital SAT. Rèn luyện tư duy toán học logic, bí quyết tận dụng Desmos đạt 750-800 Math và chiến lược đọc hiểu Reading & Writing Module 2 khó.",
-    descriptionEn: "Comprehensive flagship curriculum covering Digital SAT essentials. Sharpen mathematical logic, master Desmos graphing for 750-800 Math, and master Module 2 Reading & Writing reasoning.",
+    descriptionVi: "Lớp hỗ trợ học sinh có định hướng du học đạt điểm SAT",
+    descriptionEn: "Classes supporting study-abroad oriented students to achieve their target SAT scores",
     subjectsVi: ["Digital SAT", "SAT Math 800", "Reading & Writing", "Road to 1300/1400/1500+"],
     subjectsEn: ["Digital SAT", "SAT Math 800", "Reading & Writing", "Road to 1300/1400/1500+"],
     highlightsVi: [
@@ -154,7 +154,7 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
 
 export function HomePrograms() {
   const { language } = usePencily();
-  const [activeTab, setActiveTab] = useState<"all" | "english" | "vietnamese">("all");
+  const [activeTab, setActiveTab] = useState<"english" | "vietnamese">("english");
 
   const renderCard = (prog: ProgramItem) => {
     const Icon = prog.icon;
@@ -274,64 +274,48 @@ export function HomePrograms() {
           </h2>
         </div>
 
-        {/* Segmented Filter Tabs: Tất cả / Tiếng Anh / Tiếng Việt */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+        {/* Segmented Filter Tabs: Tiếng Anh / Tiếng Việt */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
           <button
             type="button"
-            onClick={() => setActiveTab("all")}
-            className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer ${
-              activeTab === "all"
+            onClick={() => setActiveTab("english")}
+            className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === "english"
                 ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
                 : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
             }`}
           >
-            {language === "vi" ? "Tất cả chương trình" : "All Programs"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("english")}
-            className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === "english"
-                ? "bg-amber-500 text-white border-amber-500 shadow-xs"
-                : "bg-white text-slate-700 hover:text-amber-700 border-slate-300 hover:bg-amber-50/50"
-            }`}
-          >
-            <Award className="w-3.5 h-3.5" />
-            <span>{language === "vi" ? "Chương trình Tiếng Anh (Flagship IELTS & SAT)" : "English Track (Flagship IELTS & SAT)"}</span>
+            <Award className={`w-4 h-4 ${activeTab === "english" ? "text-[#FFC83D]" : "text-amber-600"}`} />
+            <span>{language === "vi" ? "Chương trình Tiếng Anh (IELTS & SAT)" : "English Track (IELTS & SAT)"}</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("vietnamese")}
-            className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === "vietnamese"
-                ? "bg-[#4F7ECB] text-white border-[#4F7ECB] shadow-xs"
-                : "bg-white text-slate-700 hover:text-[#4F7ECB] border-slate-300 hover:bg-blue-50/50"
+                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5" />
+            <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-[#4F7ECB]"}`} />
             <span>{language === "vi" ? "Chương trình Tiếng Việt (THPT & ĐGNL)" : "Vietnamese Track (THPT & Exams)"}</span>
           </button>
         </div>
 
-        {/* Content Divided into Two Explicit Tracks */}
-        <div className="space-y-12">
-          {/* Track 1: Tiếng Anh (Flagship IELTS & SAT) */}
-          {(activeTab === "all" || activeTab === "english") && (
-            <div>
-              <div className="flex items-center justify-between gap-3 mb-6 pb-2.5 border-b-2 border-amber-200">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-amber-100 text-amber-900 border-2 border-amber-300 flex items-center justify-center font-black text-xs shrink-0">
-                    EN
-                  </div>
-                  <div>
-                    <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                      {language === "vi" ? "Phân Hệ Tiếng Anh: Lớp Học Flagship" : "English Track: Flagship Programs"}
-                    </h3>
-                  </div>
+        {/* Content Divided into Two Tracks */}
+        <div>
+          {/* Track 1: Tiếng Anh (IELTS & SAT) */}
+          {activeTab === "english" && (
+            <div className="animate-fadeIn">
+              <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
+                <div className="w-8 h-8 rounded-sm bg-amber-100 text-amber-900 border-2 border-amber-300 flex items-center justify-center font-black text-xs shrink-0">
+                  EN
                 </div>
-                <span className="hidden sm:inline-flex text-[11px] font-black uppercase text-amber-900 bg-amber-100/90 px-3 py-1 rounded-sm border-2 border-amber-300">
-                  Flagship Track
-                </span>
+                <div>
+                  <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
+                    {language === "vi" ? "Chương trình Tiếng Anh (IELTS & SAT)" : "English Programs (IELTS & SAT)"}
+                  </h3>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -341,22 +325,17 @@ export function HomePrograms() {
           )}
 
           {/* Track 2: Tiếng Việt (THPT & ĐGNL) */}
-          {(activeTab === "all" || activeTab === "vietnamese") && (
-            <div>
-              <div className="flex items-center justify-between gap-3 mb-6 pb-2.5 border-b-2 border-slate-300">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-blue-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
-                    VN
-                  </div>
-                  <div>
-                    <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                      {language === "vi" ? "Phân Hệ Tiếng Việt: Phổ Thông & ĐGNL" : "Vietnamese Track: National Curriculum"}
-                    </h3>
-                  </div>
+          {activeTab === "vietnamese" && (
+            <div className="animate-fadeIn">
+              <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
+                <div className="w-8 h-8 rounded-sm bg-blue-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
+                  VN
                 </div>
-                <span className="hidden sm:inline-flex text-[11px] font-bold uppercase text-[#0F2747] bg-slate-100 px-3 py-1 rounded-sm border-2 border-slate-300">
-                  National Track
-                </span>
+                <div>
+                  <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
+                    {language === "vi" ? "Chương trình Tiếng Việt (THPT & ĐGNL)" : "Vietnamese Programs (THPT & Exams)"}
+                  </h3>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
