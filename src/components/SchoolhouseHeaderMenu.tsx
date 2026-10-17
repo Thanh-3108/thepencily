@@ -146,6 +146,8 @@ export function SchoolhouseHeaderMenu({
     },
   ];
 
+  const unreadChatCount = directMessages.filter((m) => m.unread).length;
+
   // Close menus on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -179,18 +181,20 @@ export function SchoolhouseHeaderMenu({
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
-          className={`relative p-2 rounded-md transition border-2 cursor-pointer ${
+          className={`relative w-9 h-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer ${
             chatOpen
-              ? "bg-[#0F2747] text-white border-[#0F2747]"
-              : "hover:bg-slate-100 text-[#0F2747] border-transparent hover:border-slate-300"
+              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+              : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
           }`}
           title={language === "vi" ? "Tin nhắn trực tiếp" : "Direct Messages"}
           aria-expanded={chatOpen}
         >
-          <PencilyChatBubbleIcon size={18} strokeWidth={2.2} />
-          <span className="absolute -top-1 -right-1 bg-emerald-600 text-white font-mono text-[10px] font-black px-1.5 py-0.2 rounded-xs border border-white shadow-2xs">
-            1
-          </span>
+          <PencilyChatBubbleIcon size={19} strokeWidth={2} />
+          {unreadChatCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#EF4444] text-white font-mono text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs pointer-events-none">
+              {unreadChatCount}
+            </span>
+          )}
         </button>
 
         {chatOpen && (
@@ -269,17 +273,17 @@ export function SchoolhouseHeaderMenu({
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
-          className={`relative p-2 rounded-md transition border-2 cursor-pointer ${
+          className={`relative w-9 h-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer ${
             bellOpen
-              ? "bg-[#0F2747] text-white border-[#0F2747]"
-              : "hover:bg-slate-100 text-[#0F2747] border-transparent hover:border-slate-300"
+              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+              : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
           }`}
           title={language === "vi" ? "Thông báo hệ thống" : "Notifications"}
           aria-expanded={bellOpen}
         >
-          <PencilyBellIcon size={18} strokeWidth={2.2} />
+          <PencilyBellIcon size={19} strokeWidth={2} />
           {totalNotifCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-950 font-mono text-[10px] font-black px-1.5 py-0.2 rounded-xs border border-white shadow-2xs">
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#FFC83D] text-[#0F2747] font-mono text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs pointer-events-none">
               {totalNotifCount}
             </span>
           )}

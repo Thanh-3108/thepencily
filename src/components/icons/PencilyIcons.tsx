@@ -288,7 +288,7 @@ export function PencilySafetyFlagIcon({
   );
 }
 
-/** 10. Header Notification Bell (Architectural desk bell) */
+/** 10. Header Notification Bell (Architectural curved bell) */
 export function PencilyBellIcon({
   size = 20,
   color = "currentColor",
@@ -309,9 +309,8 @@ export function PencilyBellIcon({
       className={className}
       {...props}
     >
-      <path d="M6 9a6 6 0 0 1 12 0v5l2 3H4l2-3V9z" />
-      <path d="M10 19a2 2 0 0 0 4 0" />
-      <path d="M12 2v2" />
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
     </svg>
   );
 }
@@ -369,9 +368,10 @@ export function PencilyChatBubbleIcon({
       className={className}
       {...props}
     >
-      {/* 45-degree angled conversation balloon */}
-      <path d="M20 14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12l4-3h12a1 1 0 0 0 1-1z" />
-      <line x1="7" y1="8" x2="17" y2="8" />
+      {/* Elegant speech bubble with rounded corners and message lines */}
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <line x1="8" y1="9" x2="16" y2="9" />
+      <line x1="8" y1="13" x2="13" y2="13" />
     </svg>
   );
 }
