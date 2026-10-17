@@ -68,6 +68,7 @@ export function LeadershipTeam() {
         label: "Thủy Trâm",
         url: "https://www.facebook.com/share/18F3kZ2Vv7/?mibextid=wwXIfr",
       },
+      image: "/thuy-tram.png",
       initials: "TT",
     },
     {

@@ -71,7 +71,7 @@ export function AboutStoriesView() {
                   src="/founder.png"
                   alt="Huỳnh Công Thành - Founder & President Gen 1.0"
                   fill
-                  className="object-cover object-[55%_48%]"
+                  className="object-cover object-center"
                   priority
                   sizes="(max-width: 640px) 96px, 104px"
                 />

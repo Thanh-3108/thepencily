@@ -82,6 +82,7 @@ export function HomeStudentStories() {
         label: "Thủy Trâm",
         url: "https://www.facebook.com/share/18F3kZ2Vv7/?mibextid=wwXIfr",
       },
+      image: "/thuy-tram.png",
       initials: "TT",
       rotation: "sm:-rotate-[0.5deg]",
     },
@@ -126,7 +127,7 @@ export function HomeStudentStories() {
                 src="/founder.png"
                 alt="Huỳnh Công Thành"
                 fill
-                className="object-cover object-[55%_48%]"
+                className="object-cover object-center"
                 priority
                 sizes="(max-width: 640px) 96px, 112px"
               />
