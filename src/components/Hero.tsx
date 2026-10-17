@@ -35,7 +35,7 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
             {/* Action Buttons: Tham gia ngay & Tìm hiểu thêm */}
             <div className="pt-3 flex flex-wrap items-center gap-3">
               <Link
-                href="/signin"
+                href="/signin?mode=register"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3A63] text-white font-medium text-sm sm:text-base transition-all active:scale-98 cursor-pointer shadow-xs"
               >
                 <span>{language === "vi" ? "Tham gia ngay →" : "Join Now →"}</span>

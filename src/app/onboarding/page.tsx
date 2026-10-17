@@ -24,7 +24,7 @@ const SUBJECT_OPTIONS = [
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user, completeProfile, updateUser, language, setLanguage } = usePencily();
+  const { user, completeProfile, updateUser, language, setLanguage, backendAuthenticated } = usePencily();
 
   // Current onboarding step: 1 (Name & Display) -> 2 (School & Grade) -> 3 (Subjects & Goal) -> 4 (Finished)
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -146,6 +146,23 @@ export default function OnboardingPage() {
       {/* Main Container */}
       <main className="max-w-2xl w-full mx-auto px-6 py-4 flex-1 flex flex-col justify-center">
         <div className="bg-white rounded-md p-7 sm:p-10 border-2 border-slate-300 shadow-sm relative">
+          {/* Guest prompt if not authenticated */}
+          {!backendAuthenticated && (
+            <div className="mb-6 p-3 bg-amber-50 rounded-sm border-2 border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <span className="text-amber-900 font-medium">
+                {language === "vi"
+                  ? "Bạn đang điền hồ sơ ở chế độ Khách. Hãy tạo tài khoản học sinh để lưu trữ vĩnh viễn và nhận chứng nhận!"
+                  : "You are setting up a guest profile. Create a student account to save permanently and receive credentials!"}
+              </span>
+              <Link
+                href="/signin?mode=register"
+                className="px-3 py-1.5 rounded-xs bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-[11px] whitespace-nowrap self-start sm:self-auto transition cursor-pointer"
+              >
+                {language === "vi" ? "Tạo tài khoản học sinh →" : "Create account →"}
+              </Link>
+            </div>
+          )}
+
           {/* Owl Mascot Lockup at top */}
           <div className="flex items-center gap-4 mb-6 pb-6 border-b-2 border-slate-100">
             <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0">

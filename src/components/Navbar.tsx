@@ -173,13 +173,22 @@ export function Navbar({ onOpenJoinModal, onOpenStudentHub, onOpenTutorModal }: 
                 >
                   {language === "vi" ? "Ứng tuyển Peer Tutor" : "Apply as Peer Tutor"}
                 </button>
-                <Link
-                  href="/signin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-sm bg-[#0F2747] text-white font-bold text-xs text-center border-2 border-[#0F2747]"
-                >
-                  {language === "vi" ? "Đăng nhập / Sign in" : "Sign in"}
-                </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/signin?mode=signin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] font-bold text-xs text-center border-2 border-slate-300"
+                  >
+                    {language === "vi" ? "Đăng nhập" : "Sign in"}
+                  </Link>
+                  <Link
+                    href="/signin?mode=register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2.5 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs text-center border-2 border-[#0F2747]"
+                  >
+                    {language === "vi" ? "Tạo tài khoản" : "Register"}
+                  </Link>
+                </div>
               </>
             ) : (
               <Link

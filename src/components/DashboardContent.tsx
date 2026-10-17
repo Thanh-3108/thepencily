@@ -907,12 +907,20 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                         : "You are exploring in Guest Preview mode. Sign in or register to claim your personal student profile, earn PP points, and receive verified certificates."}
                     </p>
                   </div>
-                  <Link
-                    href="/signin"
-                    className="px-4 py-2 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition shrink-0"
-                  >
-                    {language === "vi" ? "Đăng Nhập / Tạo Tài Khoản" : "Sign In / Register"}
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <Link
+                      href="/signin?mode=signin"
+                      className="px-3.5 py-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition"
+                    >
+                      {language === "vi" ? "Đăng Nhập" : "Sign In"}
+                    </Link>
+                    <Link
+                      href="/signin?mode=register"
+                      className="px-4 py-2 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition"
+                    >
+                      {language === "vi" ? "Tạo Tài Khoản Học Sinh" : "Create Account"}
+                    </Link>
+                  </div>
                 </div>
               )}
 

@@ -849,16 +849,16 @@ export function SchoolhouseHeaderMenu({
                   </p>
                   <div className="mt-2.5 flex flex-col gap-1.5">
                     <Link
-                      href="/signin"
+                      href="/signin?mode=signin"
                       onClick={() => setDropdownOpen(false)}
-                      className="w-full text-center px-3 py-1.5 rounded-sm bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition shadow-xs"
+                      className="w-full text-center px-3 py-1.5 rounded-sm bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition shadow-xs cursor-pointer"
                     >
                       {language === "vi" ? "Đăng Nhập Ngay" : "Sign In Now"}
                     </Link>
                     <Link
-                      href="/onboarding"
+                      href="/signin?mode=register"
                       onClick={() => setDropdownOpen(false)}
-                      className="w-full text-center px-3 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border border-slate-300 text-xs font-bold transition"
+                      className="w-full text-center px-3 py-1.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs font-bold transition cursor-pointer"
                     >
                       {language === "vi" ? "Tạo Tài Khoản Học Sinh" : "Create Student Account"}
                     </Link>
