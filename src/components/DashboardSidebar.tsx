@@ -28,7 +28,6 @@ export type DashboardTab =
   | "classes"
   | "videos"
   | "leaderboard"
-  | "community"
   | "discord"
   | "shop"
   | "profile"
@@ -92,16 +91,9 @@ export function DashboardSidebar({
     href?: string;
   }
 
-  // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
+  // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
   const secondaryItems: SecondaryItem[] = [
     ...(isReviewer(user.platformRole) ? [{ id:"academic" as const,labelVi:"Ban Academic",labelEn:"Academic",icon:GraduationCap,isTab:true }] : []),
-    {
-      id: "community",
-      labelVi: "Diễn đàn học tập",
-      labelEn: "Community Forum",
-      icon: MessageSquare,
-      isTab: true,
-    },
     {
       id: "become-tutor" as const,
       labelVi: "Trở thành Peer Tutor",

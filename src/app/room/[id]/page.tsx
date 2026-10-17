@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Mic, MicOff, Video, VideoOff, Monitor, MonitorOff, MessageSquare, Users, LogOut, Check, Send, Edit3, FileText, Share2, Maximize2, Minimize2, ChevronLeft } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilyClassroomsIcon } from "@/components/icons/PencilyIcons";
+import { supabase } from "@/lib/supabaseClient";
 
 interface ChatMessage {
   id: string;
@@ -222,12 +223,69 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       }
     };
 
+    // 2b. Cross-device Realtime WebSocket Broadcast (Syncs messages across different devices with 0 database tables)
+    let realtimeChannel: any = null;
+    if (supabase) {
+      try {
+        realtimeChannel = supabase.channel(`pencily-room-${roomId}`, {
+          config: { broadcast: { self: false } },
+        });
+
+        realtimeChannel
+          .on("broadcast", { event: "CHAT_MESSAGE" }, (event: any) => {
+            if (event.payload) {
+              setChatMessages((prev) => {
+                if (prev.some((m) => m.id === event.payload.id)) return prev;
+                return [...prev, event.payload];
+              });
+            }
+          })
+          .on("broadcast", { event: "SCRATCHPAD_UPDATE" }, (event: any) => {
+            if (event.payload?.notesContent !== undefined) {
+              setSharedNotes(event.payload.notesContent);
+            }
+          })
+          .on("broadcast", { event: "PEER_JOIN" }, (event: any) => {
+            const peer = event.payload?.peer;
+            if (peer && peer.id !== localUserId.current) {
+              setPeers((prev) => (prev.some((p) => p.id === peer.id) ? prev : [...prev, peer]));
+            }
+          })
+          .on("broadcast", { event: "PEER_LEAVE" }, (event: any) => {
+            const peerId = event.payload?.peerId;
+            if (peerId) {
+              setPeers((prev) => prev.filter((p) => p.id !== peerId));
+            }
+          })
+          .subscribe();
+
+        realtimeChannel.send({
+          type: "broadcast",
+          event: "PEER_JOIN",
+          payload: { peer: myProfile },
+        }).catch(() => {});
+      } catch (err) {
+        console.warn("Supabase realtime setup skipped/failed:", err);
+      }
+    }
+
     return () => {
       channel.postMessage({
         type: "PEER_LEAVE",
         peerId: localUserId.current,
       });
       channel.close();
+
+      if (supabase && realtimeChannel) {
+        try {
+          realtimeChannel.send({
+            type: "broadcast",
+            event: "PEER_LEAVE",
+            payload: { peerId: localUserId.current },
+          }).catch(() => {});
+          supabase.removeChannel(realtimeChannel);
+        } catch {}
+      }
     };
   }, [roomId, user.name, language]);
 
@@ -511,6 +569,16 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       type: "CHAT_MESSAGE",
       message: newMsg,
     });
+
+    if (supabase) {
+      try {
+        supabase.channel(`pencily-room-${roomId}`).send({
+          type: "broadcast",
+          event: "CHAT_MESSAGE",
+          payload: newMsg,
+        }).catch(() => {});
+      } catch {}
+    }
   };
 
   // 8. Update Shared Scratchpad
@@ -520,6 +588,16 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       type: "SCRATCHPAD_UPDATE",
       notesContent: value,
     });
+
+    if (supabase) {
+      try {
+        supabase.channel(`pencily-room-${roomId}`).send({
+          type: "broadcast",
+          event: "SCRATCHPAD_UPDATE",
+          payload: { notesContent: value },
+        }).catch(() => {});
+      } catch {}
+    }
   };
 
   const handleCopyNotes = () => {

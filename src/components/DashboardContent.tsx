@@ -218,7 +218,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     classes: "Tìm lớp",
     videos: "Thư viện",
     leaderboard: "Xếp hạng",
-    community: "Cộng đồng",
     discord: "Discord",
     shop: "Cửa hàng PP",
     profile: "Hồ sơ",
@@ -232,7 +231,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     classes: "Classes",
     videos: "Library",
     leaderboard: "Leaderboard",
-    community: "Community",
     discord: "Discord",
     shop: "PP Shop",
     profile: "Profile",
@@ -652,278 +650,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
             </div>
           )}
 
-          {/* ============================================================== */}
-          {/* TAB 3: COMMUNITY (Cộng đồng & Bảng tin) */}
-          {/* ============================================================== */}
-          {activeTab === "community" && (
-            <div className="w-full space-y-6 animate-fadeIn">
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
-                <div>
-                  <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-                    {language === "vi" ? "Cộng Đồng & Bảng Tin" : "Community & Bulletin Board"}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#475569] mt-1 font-medium">
-                    {language === "vi"
-                      ? "Diễn đàn trao đổi học thuật, chia sẻ tài liệu và hỏi đáp đồng trang lứa"
-                      : "Academic peer discussions, notes exchange, and community Q&A"}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => setIsCreatePostOpen(true)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer self-start sm:self-auto shrink-0"
-                >
-                  <Plus className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                  <span>{language === "vi" ? "Đăng bài / Hỏi đáp (+5 PP)" : "Post / Q&A (+5 PP)"}</span>
-                </button>
-              </div>
-
-              {/* Filter Tabs */}
-              <div className="flex items-center gap-4 overflow-x-auto border-b-2 border-slate-300 no-scrollbar pb-0.5">
-                {[
-                  { id: "all", labelVi: "Tất cả bài viết", labelEn: "All Posts" },
-                  { id: "docs", labelVi: "Tài liệu Cornell", labelEn: "Cornell Notes" },
-                  { id: "doubt", labelVi: "Hỏi bài Doubt-Clearing", labelEn: "Doubt-Clearing" },
-                  { id: "announcement", labelVi: "Thông báo lớp mới", labelEn: "Class Alerts" },
-                  { id: "tips", labelVi: "Kinh nghiệm học tập", labelEn: "Study Tips" },
-                ].map((cat) => {
-                  const label = language === "vi" ? cat.labelVi : cat.labelEn;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => setCommunityCategory(cat.id)}
-                      className={`pb-2.5 text-xs font-bold whitespace-nowrap transition-all cursor-pointer border-b-2 -mb-[2px] ${
-                        communityCategory === cat.id
-                          ? "text-[#0F2747] border-[#0F2747]"
-                          : "text-[#64748B] border-transparent hover:text-[#0F2747]"
-                      }`}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Posts Feed Grid or Clean Empty State */}
-              {filteredPosts.length === 0 ? (
-                <div className="bg-white rounded-md p-10 sm:p-14 border-2 border-slate-300 text-center space-y-5 shadow-2xs">
-                  <OwlMascot size="lg" className="mx-auto" />
-                  <div className="max-w-lg mx-auto space-y-2">
-                    <h3 className="font-poppins font-black text-xl text-[#0F2747]">
-                      {language === "vi" ? "Cú Pencily chưa thấy bài thảo luận nào" : "No discussions yet"}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed">
-                      {language === "vi"
-                        ? "Hãy là người đầu tiên đặt câu hỏi về bài tập khó, chia sẻ tài liệu Cornell hoặc kinh nghiệm tự học của bạn cùng các bạn học sinh!"
-                        : "Be the first to ask questions, share Cornell notes, or post study experiences!"}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                    <button
-                      onClick={() => setIsCreatePostOpen(true)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer"
-                    >
-                      <Plus className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                      <span>{language === "vi" ? "Đăng bài thảo luận đầu tiên (+5 PP)" : "Create First Post (+5 PP)"}</span>
-                    </button>
-                    <a
-                      href="https://discord.gg/6hpEf4wC4z"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition"
-                    >
-                      <span>{language === "vi" ? "Thảo luận trên Discord" : "Discuss on Discord"}</span>
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredPosts.map((post) => {
-                    const isLiked = !!post.hasLiked;
-                    return (
-                      <div
-                        key={post.id}
-                        className="bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-                      >
-                        <div>
-                          {/* Author info */}
-                          <div className="flex items-start justify-between gap-3 mb-4">
-                            <div className="flex items-center gap-3.5">
-                              <div className="w-10 h-10 rounded-sm bg-[#0F2747] text-[#FFC83D] font-extrabold text-sm flex items-center justify-center border-2 border-slate-300 shadow-2xs">
-                                {post.author.avatar}
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <span className="font-bold text-sm text-[#0F2747]">
-                                    {post.author.name}
-                                  </span>
-                                  {post.author.verified && (
-                                    <span className="text-xs font-bold bg-[#22C55E]/15 text-[#16A34A] px-2 py-0.5 rounded-sm border border-emerald-300 flex items-center gap-1">
-                                      <CheckCircle2 className="w-3 h-3" />
-                                      Tutor
-                                    </span>
-                                  )}
-                                </div>
-                                <p className="text-xs text-[#687280] mt-0.5">
-                                  {post.author.school} • {post.timeAgo}
-                                </p>
-                              </div>
-                            </div>
-
-                            <span
-                              className={`text-xs font-bold px-2.5 py-0.5 rounded-sm uppercase tracking-wider border-2 border-slate-200 ${post.categoryBadge}`}
-                            >
-                              {post.categoryLabel}
-                            </span>
-                          </div>
-
-                          {/* Title */}
-                          <h3 className="font-poppins font-bold text-base sm:text-lg text-[#0F2747] leading-snug mb-2.5">
-                            {post.title}
-                          </h3>
-
-                          {/* Content text */}
-                          <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed mb-5 whitespace-pre-line">
-                            {post.content}
-                          </p>
-
-                          {/* Attached Material (if any) */}
-                          {post.attachment && (
-                            <div className="p-3 bg-[#FFF9EF] rounded-sm border-2 border-slate-300 flex items-center justify-between mb-5">
-                              <div className="flex items-center gap-3 text-xs text-[#0F2747]">
-                                <BookOpen className="w-4 h-4 text-[#4F7ECB]" />
-                                <div>
-                                  <div className="font-bold">{post.attachment.name}</div>
-                                  <div className="text-[11px] text-[#687280]">
-                                    {post.attachment.size} • {language === "vi" ? "Đã kiểm duyệt" : "Verified"}
-                                  </div>
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => alert(`Đã tải tài liệu: ${post.attachment?.name}`)}
-                                className="p-2 rounded-sm bg-white border-2 border-slate-300 hover:border-[#0F2747] text-[#0F2747] transition cursor-pointer"
-                                title={language === "vi" ? "Tải tài liệu" : "Download"}
-                              >
-                                <Download className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Footer Actions */}
-                        <div className="pt-3 border-t-2 border-slate-100 flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <button
-                              onClick={() => toggleLikePost(post.id)}
-                              className={`flex items-center gap-1.5 text-xs font-bold transition cursor-pointer ${
-                                isLiked ? "text-[#EF4444]" : "text-[#687280] hover:text-[#0F2747]"
-                              }`}
-                            >
-                              <Heart
-                                className={`w-4 h-4 ${isLiked ? "fill-[#EF4444]" : ""}`}
-                              />
-                              <span>{post.likes}</span>
-                            </button>
-
-                            <button
-                              onClick={() =>
-                                setActiveCommentPostId(
-                                  activeCommentPostId === post.id ? null : post.id
-                                )
-                              }
-                              className="flex items-center gap-1.5 text-xs font-bold text-[#687280] hover:text-[#0F2747] transition cursor-pointer"
-                            >
-                              <MessageSquare className="w-4 h-4" />
-                              <span>{post.commentsCount} {language === "vi" ? "trả lời" : "replies"}</span>
-                            </button>
-                          </div>
-
-                          <a
-                            href={post.discordThreadUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5865F2] hover:text-[#4752C4] bg-[#5865F2]/10 border-2 border-[#5865F2]/30 px-2.5 py-1.5 rounded-sm transition"
-                          >
-                            <Volume2 className="w-3.5 h-3.5" />
-                            <span>{post.discordChannel}</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        </div>
-
-                        {/* Interactive Comments Drawer */}
-                        {activeCommentPostId === post.id && (
-                          <div className="pt-3 border-t-2 border-slate-100 space-y-3 mt-3 animate-fadeIn">
-                            {/* Existing comments list */}
-                            {post.comments && post.comments.length > 0 ? (
-                              <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                                {post.comments.map((comment) => (
-                                  <div
-                                    key={comment.id}
-                                    className="p-2.5 bg-[#FFF9EF] rounded-sm border-2 border-slate-200 text-xs text-[#0F2747]"
-                                  >
-                                    <div className="flex items-center justify-between font-bold mb-1">
-                                      <span>{comment.authorName}</span>
-                                      <span className="text-[10px] text-[#687280] font-normal">
-                                        {comment.createdAt}
-                                      </span>
-                                    </div>
-                                    <p className="text-[#4B5563] whitespace-pre-line leading-relaxed text-xs">
-                                      {comment.text}
-                                    </p>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : (
-                              <p className="text-xs text-[#687280] italic">
-                                {language === "vi"
-                                  ? "Chưa có câu trả lời nào. Hãy là người đầu tiên giải đáp!"
-                                  : "No replies yet. Be the first to answer!"}
-                              </p>
-                            )}
-
-                            {/* Inline reply form */}
-                            <div className="flex items-center gap-2 pt-1">
-                              <input
-                                type="text"
-                                placeholder={
-                                  language === "vi"
-                                    ? "Viết câu trả lời hoặc trao đổi thêm..."
-                                    : "Write a helpful reply..."
-                                }
-                                value={commentInputs[post.id] || ""}
-                                onChange={(e) =>
-                                  setCommentInputs({ ...commentInputs, [post.id]: e.target.value })
-                                }
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" && commentInputs[post.id]?.trim()) {
-                                    addCommentToPost(post.id, commentInputs[post.id]);
-                                    setCommentInputs({ ...commentInputs, [post.id]: "" });
-                                  }
-                                }}
-                                className="flex-1 px-3 py-2 bg-white rounded-sm border-2 border-slate-300 text-xs focus:outline-none focus:border-[#0F2747]"
-                              />
-                              <button
-                                onClick={() => {
-                                  if (commentInputs[post.id]?.trim()) {
-                                    addCommentToPost(post.id, commentInputs[post.id]);
-                                    setCommentInputs({ ...commentInputs, [post.id]: "" });
-                                  }
-                                }}
-                                className="px-3.5 py-2 bg-[#0F2747] hover:bg-[#1A3E6D] text-white rounded-sm text-xs font-bold transition shadow-2xs cursor-pointer border-2 border-slate-700"
-                              >
-                                {language === "vi" ? "Gửi (+2 PP)" : "Reply (+2 PP)"}
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          )}
 
           {/* ============================================================== */}
           {/* TAB 4: DISCORD SERVER (Giới thiệu máy chủ Discord) */}
@@ -1634,7 +1360,11 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
         tutorSchool={user.school}
         onSubmitCreate={async (data) => {
           await addClass(data);
-          setBookingToast(`Đã nộp lớp "${data.title}". Lớp chờ demo và Academic duyệt, chưa công khai.`);
+          setBookingToast(
+            language === "vi"
+              ? `Đã tạo lớp "${data.title}" thành công! Lớp đã sẵn sàng trên hệ thống.`
+              : `Class "${data.title}" created successfully! Ready to join.`
+          );
           setTimeout(() => setBookingToast(null), 4000);
         }}
       />

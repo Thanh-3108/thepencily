@@ -277,7 +277,25 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   }, []);
   useEffect(() => {
     if (!ready) return;
-    void fetchOnlineClasses().then((result) => setClasses(result.map((item) => ({ categoryLabel: item.category, badge: "OPEN" as const, badgeColor: "bg-blue-50 text-blue-700", ...item })))).catch((error) => setApiNotice(error.message));
+    try {
+      const savedClasses = JSON.parse(localStorage.getItem("pencily_local_classes") || "[]");
+      if (Array.isArray(savedClasses) && savedClasses.length > 0) {
+        setClasses(savedClasses);
+      }
+    } catch {}
+
+    void fetchOnlineClasses()
+      .then((result) => {
+        const remote = result.map((item) => ({ categoryLabel: item.category, badge: "OPEN" as const, badgeColor: "bg-blue-50 text-blue-700", ...item }));
+        setClasses((prev) => {
+          if (remote.length === 0) return prev;
+          const remoteIds = new Set(remote.map((r) => r.id));
+          const localOnly = prev.filter((p) => !remoteIds.has(p.id));
+          return [...remote, ...localOnly];
+        });
+      })
+      .catch((error) => console.warn("Remote classes fetch:", error.message));
+
     if (backendAuthenticated) void fetchStudentEnrollmentIds().then(setRegisteredClassIds).catch((error) => setApiNotice(error.message));
   }, [ready, backendAuthenticated, refreshClasses]);
   useEffect(() => { if (ready) { try { localStorage.setItem("pencily_user", JSON.stringify(user)); } catch {} } }, [user, ready]);
@@ -303,7 +321,64 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   const advanceTutorStep = () => { setApiNotice("Hồ sơ và lớp học cần Academic phê duyệt tại Tutor Studio."); };
   const loginWithDiscord = () => { window.location.href = "/api/auth/discord"; };
   const loginWithCustomDatabase = () => { window.location.href = "/signin"; };
-  const addClass = async (draft: ClassDraft) => { await createOnlineClass(draft); await refreshClasses(); };
+  const addClass = async (draft: ClassDraft) => {
+    let created: ClassSession | null = null;
+    if (backendAuthenticated) {
+      try {
+        const onlineClass = await createOnlineClass(draft);
+        created = {
+          categoryLabel: onlineClass.category,
+          badge: "OPEN",
+          badgeColor: "bg-blue-50 text-blue-700",
+          ...onlineClass,
+        };
+      } catch (err) {
+        console.warn("Backend class creation skipped or failed, activating local session class:", err);
+      }
+    }
+
+    if (!created) {
+      const id = `room-${Date.now().toString(36)}`;
+      const categoryLabels: Record<string, string> = {
+        toan: "Toán",
+        tin: "Tin học",
+        ielts: "Tiếng Anh / IELTS",
+        ly: "Vật lý",
+        sat: "SAT",
+        khac: "Khác",
+      };
+      created = {
+        id,
+        title: draft.title || "Phòng học mở",
+        category: draft.category || "khac",
+        categoryLabel: categoryLabels[draft.category] || "Chuyên đề",
+        badge: "OPEN",
+        badgeColor: "bg-[#22C55E]/15 text-[#16A34A]",
+        tutorName: user.realName || user.name || "Peer Tutor",
+        tutorSchool: user.school || "The Pencily",
+        tutorRole: "Host phòng học",
+        schedule: new Date(draft.scheduledTime).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }),
+        timeSlot: "Trực tuyến",
+        dayLabel: "Hôm nay",
+        discordChannel: "#voice-phong-hoc",
+        discordRoom: "#voice-phong-hoc",
+        meetUrl: draft.platform === "web" ? `/room/${id}` : (draft.meetUrl || `/room/${id}`),
+        maxSeats: draft.maxSeats || 6,
+        enrolledCount: 1,
+        description: draft.objectives || "Phòng học trực tiếp trên The Pencily.",
+        status: "approved",
+        programType: draft.programType,
+      };
+    }
+
+    setClasses((previous) => {
+      const updated = [created!, ...previous.filter((c) => c.id !== created!.id)];
+      try {
+        localStorage.setItem("pencily_local_classes", JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+  };
   const deleteClass = async (id: string) => { try { await deleteOnlineClass(id); await refreshClasses(); } catch (error) { setApiNotice(error instanceof Error ? error.message : "Không thể hủy lớp."); } };
   const registerClass = async (id: string) => {
     try { await enrollOnlineClass(id); setRegisteredClassIds(await fetchStudentEnrollmentIds()); await refreshClasses(); return true; }

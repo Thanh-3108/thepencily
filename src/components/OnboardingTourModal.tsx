@@ -54,8 +54,8 @@ const TOUR_STEPS: TourStepConfig[] = [
     cardTitleEn: "Navigation Hub",
     badgeVi: "Menu",
     badgeEn: "Menu",
-    dialogueVi: "Truy cập nhanh lớp học, thư viện tài liệu, bảng xếp hạng và diễn đàn.",
-    dialogueEn: "Quick access to classrooms, resource library, leaderboard, and community.",
+    dialogueVi: "Truy cập nhanh lớp học, thư viện tài liệu và bảng xếp hạng.",
+    dialogueEn: "Quick access to classrooms, resource library, and leaderboard.",
     preferredPlacement: "right",
   },
   {
