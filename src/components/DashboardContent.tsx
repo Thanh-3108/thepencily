@@ -23,7 +23,6 @@ import { OnboardingTourModal } from "@/components/OnboardingTourModal";
 import { DashboardSettings } from "@/components/DashboardSettings";
 import { TutorWorkspace } from "./TutorWorkspace";
 import { AcademicWorkspace } from "./AcademicWorkspace";
-import { AssistantWorkspace } from "./AssistantWorkspace";
 import { isSupabaseConfigured } from "@/lib/supabaseClient";
 import {
   ReferFriendModal,
@@ -88,17 +87,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
 
-  // Auto-launch onboarding tour for first-time or incomplete profile users
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hasSeen = localStorage.getItem("pencily_has_seen_tour");
-      if (!hasSeen && !user.hasCompletedProfile) {
-        const timer = setTimeout(() => setIsTourOpen(true), 500);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [user.hasCompletedProfile]);
-
   const handleSelectTab = (tab: DashboardTab) => {
     setActiveTab(tab);
     if (typeof window !== "undefined") {
@@ -159,6 +147,16 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
 
   const handleBooking = (classId: string, classTitle: string) => {
+    if (!backendAuthenticated) {
+      setBookingToast(language === "vi"
+        ? "Vui lòng đăng nhập hoặc tạo tài khoản để ghi danh lớp học và tích lũy điểm PP!"
+        : "Please sign in or create an account to enroll and earn PP!");
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
+      return;
+    }
+
     if (isRegistered(classId)) {
       cancelClassRegistration(classId);
       setBookingToast(`Đã hủy đăng ký: ${classTitle}`);
@@ -181,6 +179,16 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     authorName: string;
     authorSchool: string;
   }) => {
+    if (!backendAuthenticated) {
+      setPostToast(language === "vi"
+        ? "Vui lòng đăng nhập hoặc tạo tài khoản để đăng bài thảo luận lên cộng đồng!"
+        : "Please sign in or create an account to post discussions!");
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
+      return;
+    }
+
     createPost(data);
     setPostToast("Bài đăng đã được xuất bản (+5 PP) và thông báo lên Discord!");
     setTimeout(() => {
@@ -217,7 +225,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     "become-tutor": "Tutor",
     settings: "Cài đặt",
     academic: "Academic",
-    assistant: "Hỏi Cú Pencily",
   };
 
   const tabTitlesEn: Record<DashboardTab, string> = {
@@ -232,7 +239,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     "become-tutor": "Tutor",
     settings: "Settings",
     academic: "Academic",
-    assistant: "Ask Pencily",
   };
 
   const currentTabTitle = language === "vi" ? tabTitlesVi[activeTab] : tabTitlesEn[activeTab];
@@ -613,7 +619,13 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                       <div className="space-y-2 pt-2 border-t-2 border-slate-100">
                         <a
                           href={item.meetUrl || "https://discord.gg/6hpEf4wC4z"}
-                          target="_blank"
+                          target={item.meetUrl?.startsWith("/room/") ? "_self" : "_blank"}
+                          onClick={(e) => {
+                            if (item.meetUrl?.startsWith("/room/") && !backendAuthenticated) {
+                              e.preventDefault();
+                              window.location.href = `/signin?redirect=${encodeURIComponent(item.meetUrl)}`;
+                            }
+                          }}
                           rel="noreferrer"
                           className="w-full py-2.5 px-4 rounded-sm text-xs font-bold text-[#0F2747] bg-white hover:bg-slate-50 border-2 border-slate-300 hover:border-slate-400 flex items-center justify-center gap-2 shadow-2xs transition active:scale-98 cursor-pointer group"
                         >
@@ -1143,13 +1155,40 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                 </div>
                 <button
                   type="button"
-                  onClick={() => setIsEditProfileOpen(true)}
+                  onClick={() => {
+                    if (!backendAuthenticated) {
+                      window.location.href = "/signin";
+                      return;
+                    }
+                    setIsEditProfileOpen(true);
+                  }}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer shrink-0 self-start sm:self-auto"
                 >
                   <Edit3 className="w-3.5 h-3.5 text-[#4F7ECB]" />
                   <span>{language === "vi" ? "Chỉnh sửa hồ sơ" : "Edit Profile"}</span>
                 </button>
               </div>
+
+              {!backendAuthenticated && (
+                <div className="bg-amber-50/90 border-2 border-amber-300 rounded-md p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="text-xs font-bold uppercase tracking-wider text-amber-800">
+                      {language === "vi" ? "Chế độ Khách (Guest Preview)" : "Guest Preview Mode"}
+                    </div>
+                    <p className="text-xs sm:text-sm text-[#0F2747] font-medium leading-relaxed">
+                      {language === "vi"
+                        ? "Bạn đang khám phá The Pencily ở chế độ Khách. Hãy tạo tài khoản hoặc đăng nhập để sở hữu Hồ sơ cá nhân, nhận điểm PP và cấp chứng nhận hoạt động."
+                        : "You are exploring in Guest Preview mode. Sign in or register to claim your personal student profile, earn PP points, and receive verified certificates."}
+                    </p>
+                  </div>
+                  <Link
+                    href="/signin"
+                    className="px-4 py-2 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition shrink-0"
+                  >
+                    {language === "vi" ? "Đăng Nhập / Tạo Tài Khoản" : "Sign In / Register"}
+                  </Link>
+                </div>
+              )}
 
               {/* 1. OFFICIAL CERTIFICATION PORTFOLIO BANNER (Schoolhouse.world Style) */}
               <div className="bg-gradient-to-r from-emerald-50/80 via-teal-50/40 to-white rounded-md border-2 border-emerald-600/50 p-6 sm:p-8 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative overflow-hidden">
@@ -1516,7 +1555,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           )}
 
           {activeTab === "academic" && <AcademicWorkspace />}
-          {activeTab === "assistant" && <AssistantWorkspace />}
 
           {/* ============================================================== */}
           {/* TAB: CLASS VIDEOS LIBRARY (Thư viện video lớp học) */}

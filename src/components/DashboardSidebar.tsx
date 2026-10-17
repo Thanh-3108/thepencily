@@ -34,8 +34,7 @@ export type DashboardTab =
   | "profile"
   | "become-tutor"
   | "settings"
-  | "academic"
-  | "assistant";
+  | "academic";
 
 interface DashboardSidebarProps {
   activeTab: DashboardTab;
@@ -95,7 +94,6 @@ export function DashboardSidebar({
 
   // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
   const secondaryItems: SecondaryItem[] = [
-    { id:"assistant",labelVi:"Hỏi Cú Pencily",labelEn:"Ask Pencily",icon:MessageSquare,isTab:true },
     ...(isReviewer(user.platformRole) ? [{ id:"academic" as const,labelVi:"Ban Academic",labelEn:"Academic",icon:GraduationCap,isTab:true }] : []),
     {
       id: "community",
@@ -242,7 +240,7 @@ export function DashboardSidebar({
                   <button
                     key={item.id}
                     onClick={() => onSelectTab(item.id)}
-                    className={`w-full h-8 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2 gap-2 overflow-hidden ${
+                    className={`w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 ${
                       isActive
                         ? "bg-[#FFC83D]/30 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
                         : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
@@ -255,7 +253,7 @@ export function DashboardSidebar({
                         }`}
                       />
                     </div>
-                    <span className="text-xs whitespace-nowrap truncate leading-none">
+                    <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
                       {label}
                     </span>
                   </button>
@@ -326,12 +324,12 @@ export function DashboardSidebar({
                     <Link
                       key={item.id}
                       href={item.href}
-                      className="w-full h-8 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2 gap-2 overflow-hidden text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
+                      className="w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
                     >
                       <div className="w-4.5 h-4.5 flex items-center justify-center shrink-0">
                         <Icon className="w-4 h-4 text-[#0F2747]/60" />
                       </div>
-                      <span className="text-xs whitespace-nowrap truncate leading-none">
+                      <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
                         {label}
                       </span>
                     </Link>
@@ -344,7 +342,7 @@ export function DashboardSidebar({
                     onClick={() => {
                       if (item.isTab) onSelectTab(item.id as DashboardTab);
                     }}
-                    className={`w-full h-8 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2 gap-2 overflow-hidden ${
+                    className={`w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 ${
                       isActive
                         ? "bg-[#FFC83D]/30 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
                         : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
@@ -357,7 +355,7 @@ export function DashboardSidebar({
                         }`}
                       />
                     </div>
-                    <span className="text-xs whitespace-nowrap truncate leading-none">
+                    <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
                       {label}
                     </span>
                   </button>
@@ -379,12 +377,12 @@ export function DashboardSidebar({
             className={`rounded-sm flex items-center transition cursor-pointer ${
               isCollapsed
                 ? "w-9 h-9 justify-center p-0 bg-white hover:bg-slate-50 border-2 border-slate-300 text-[#0F2747] shadow-2xs"
-                : "w-full h-8 px-2.5 gap-2 bg-amber-50 hover:bg-amber-100/80 border-2 border-amber-300 text-amber-950 font-bold text-xs shadow-2xs"
+                : "w-full min-h-[36px] py-1 px-2.5 gap-2 bg-amber-50 hover:bg-amber-100/80 border-2 border-amber-300 text-amber-950 font-bold text-xs shadow-2xs"
             }`}
           >
             <Compass className="w-4 h-4 text-amber-700 shrink-0" />
             {!isCollapsed && (
-              <span className="truncate">
+              <span className="truncate leading-normal py-0.5">
                 {language === "vi" ? "Hướng Dẫn Nhập Môn" : "Academy Tour"}
               </span>
             )}
