@@ -75,6 +75,7 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
         url: "https://www.facebook.com/bao.ngan.981769/",
       },
       discord: "selene_1711",
+      image: "/bao-ngan.jpg",
       initials: "BN",
     },
     {

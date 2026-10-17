@@ -60,6 +60,7 @@ export function HomeStudentStories() {
         url: "https://www.facebook.com/bao.ngan.981769/",
       },
       discord: "selene_1711",
+      image: "/bao-ngan.jpg",
       initials: "BN",
       rotation: "sm:rotate-[0.75deg]",
     },
