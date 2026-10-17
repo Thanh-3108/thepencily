@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { X, CheckCircle2, Send, BookOpen, UserCheck, UploadCloud, MessageSquare, Plus, Edit3, ExternalLink } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import SchoolSelectDropdown from "./SchoolSelectDropdown";
 import { PencilyProfileIcon, PencilyHelpDeskIcon, PencilySettingsIcon } from "./icons/PencilyIcons";
 
 export { DiscordAuthModal } from "./DiscordAuthModal";
@@ -681,18 +682,13 @@ export function EditProfileModal({
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1">
-              {language === "vi" ? "Trường học" : "School"}
-            </label>
-            <input
-              type="text"
-              placeholder={language === "vi" ? "Ví dụ: THPT Chuyên Lê Hồng Phong" : "e.g. Le Hong Phong High School"}
-              value={school}
-              onChange={(e) => setSchool(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs"
-            />
-          </div>
+          <SchoolSelectDropdown
+            value={school}
+            onChange={setSchool}
+            label={language === "vi" ? "Trường học" : "School"}
+            language={language as "vi" | "en"}
+            placeholder={language === "vi" ? "Ví dụ: THPT Chuyên Lê Hồng Phong" : "e.g. Le Hong Phong High School"}
+          />
 
           <div className="grid grid-cols-2 gap-4">
             <div>

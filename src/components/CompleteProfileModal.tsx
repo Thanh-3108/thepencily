@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { usePencily } from "@/context/PencilyContext";
+import SchoolSelectDropdown from "@/components/SchoolSelectDropdown";
 import { User, GraduationCap, Building2, Calendar, ShieldCheck, X, Pencil, Check } from "lucide-react";
 
 interface CompleteProfileModalProps {
@@ -224,22 +225,14 @@ export default function CompleteProfileModal({
           </div>
 
           {/* Trường học */}
-          <div>
-            <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1.5">
-              {language === "vi" ? "Trường đang theo học *" : "Current School *"}
-            </label>
-            <div className="relative">
-              <Building2 className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                required
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-                placeholder={language === "vi" ? "Ví dụ: THPT Gia Định, THPT Chuyên..." : "e.g. Gifted High School..."}
-                className="w-full pl-10 pr-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-slate-800 bg-[#FFFDF9]"
-              />
-            </div>
-          </div>
+          <SchoolSelectDropdown
+            value={school}
+            onChange={setSchool}
+            required
+            label={language === "vi" ? "Trường đang theo học" : "Current School"}
+            language={language as "vi" | "en"}
+            placeholder={language === "vi" ? "Ví dụ: THPT Gia Định, THPT Chuyên..." : "e.g. Gifted High School..."}
+          />
 
           <div className="pt-3">
             <button

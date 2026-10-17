@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo";
 import { DiscordLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
 import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
+import SchoolSelectDropdown from "@/components/SchoolSelectDropdown";
 import { ArrowLeft, CheckCircle2, AlertCircle, Lock, Mail, User, GraduationCap, Building2, Eye, EyeOff } from "lucide-react";
 
 export default function SignInPage() {
@@ -355,37 +356,34 @@ export default function SignInPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
-                      <Building2 className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                      <span>{language === "vi" ? "Trường học" : "School"}</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={school}
-                      onChange={(e) => setSchool(e.target.value)}
-                      placeholder={language === "vi" ? "VD: THPT Gia Định" : "e.g. High School"}
-                      className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] placeholder:text-slate-400 transition"
-                    />
-                  </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-[#4F7ECB]" />
+                    <span>{language === "vi" ? "Trường học" : "School"}</span>
+                  </label>
+                  <SchoolSelectDropdown
+                    value={school}
+                    onChange={setSchool}
+                    language={language as "vi" | "en"}
+                    placeholder={language === "vi" ? "VD: THPT Gia Định" : "e.g. High School"}
+                  />
+                </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
-                      <GraduationCap className="w-3.5 h-3.5 text-[#4F7ECB]" />
-                      <span>{language === "vi" ? "Khối lớp" : "Grade"}</span>
-                    </label>
-                    <select
-                      value={grade}
-                      onChange={(e) => setGrade(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] bg-white transition cursor-pointer"
-                    >
-                      <option value="Lớp 10">{language === "vi" ? "Lớp 10" : "Grade 10"}</option>
-                      <option value="Lớp 11">{language === "vi" ? "Lớp 11" : "Grade 11"}</option>
-                      <option value="Lớp 12">{language === "vi" ? "Lớp 12" : "Grade 12"}</option>
-                      <option value="Đại học">{language === "vi" ? "Đại học / Tự do" : "University / Other"}</option>
-                    </select>
-                  </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-[#0F2747] flex items-center gap-1.5">
+                    <GraduationCap className="w-3.5 h-3.5 text-[#4F7ECB]" />
+                    <span>{language === "vi" ? "Khối lớp" : "Grade"}</span>
+                  </label>
+                  <select
+                    value={grade}
+                    onChange={(e) => setGrade(e.target.value)}
+                    className="w-full px-3 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none text-sm text-[#0F2747] bg-white transition cursor-pointer"
+                  >
+                    <option value="Lớp 10">{language === "vi" ? "Lớp 10" : "Grade 10"}</option>
+                    <option value="Lớp 11">{language === "vi" ? "Lớp 11" : "Grade 11"}</option>
+                    <option value="Lớp 12">{language === "vi" ? "Lớp 12" : "Grade 12"}</option>
+                    <option value="Đại học">{language === "vi" ? "Đại học / Tự do" : "University / Other"}</option>
+                  </select>
                 </div>
               </>
             )}

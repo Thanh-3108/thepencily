@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { CheckCircle2, Send, ArrowRight, ExternalLink, Sparkles, BookOpen, Clock, ShieldCheck, Heart } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import SchoolSelectDropdown from "./SchoolSelectDropdown";
 import { PencilyProfileIcon, PencilyPortfolioIcon, PencilyClassroomsIcon } from "./icons/PencilyIcons";
 
 interface NativeTutorApplicationProps {
@@ -229,20 +230,15 @@ export function NativeTutorApplication({ onSuccess, className = "" }: NativeTuto
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5">
-                  {isVi ? "Trường học hiện tại *" : "Current School *"}
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.school}
-                  onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                  placeholder={isVi ? "THPT Chuyên Lê Hồng Phong, VNU, ..." : "High School or University"}
-                  className="w-full px-3.5 py-2.5 rounded-sm bg-slate-50 border-2 border-slate-300 focus:border-[#0F2747] text-xs font-semibold focus:outline-none transition"
-                />
-              </div>
+            <div className="space-y-4">
+              <SchoolSelectDropdown
+                value={formData.school}
+                onChange={(val) => setFormData({ ...formData, school: val })}
+                required
+                label={isVi ? "Trường học hiện tại" : "Current School"}
+                language={isVi ? "vi" : "en"}
+                placeholder={isVi ? "Ví dụ: THPT Chuyên Lê Hồng Phong, ĐH Bách Khoa..." : "High School or University"}
+              />
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider mb-1.5">
