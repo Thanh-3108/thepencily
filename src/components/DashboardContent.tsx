@@ -459,8 +459,8 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
         </header>
 
         {/* Content Container (Pristine grid alignment with header above) */}
-        <main className="flex-1 py-6 sm:py-8">
-          <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 space-y-6">
+        <main className={`flex-1 ${activeTab === "calendar" ? "py-3 sm:py-4" : "py-6 sm:py-8"}`}>
+          <div className={`max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 ${activeTab === "calendar" ? "space-y-3" : "space-y-6"}`}>
           {!isSupabaseConfigured && <p role="status" className="border-2 border-amber-300 bg-amber-50 p-4 text-sm">Đang xem giao diện. Backend chưa cấu hình Supabase; chưa thể tạo lớp, duyệt hồ sơ hoặc tính điểm thật. Xem BACKEND_SETUP.md.</p>}
           {isSupabaseConfigured && !backendAuthenticated && <p className="border-2 border-slate-300 bg-white p-4 text-sm">Hãy <Link href="/signin" className="underline font-bold">đăng nhập</Link> để ghi danh và lưu hoạt động học tập.</p>}
           {apiNotice && <div role="status" className="bg-blue-50 border-2 border-blue-200 p-4 flex justify-between gap-3"><p>{apiNotice}</p><button aria-label="Đóng thông báo" onClick={clearNotice}><X size={16}/></button></div>}
@@ -505,10 +505,11 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB 1: CALENDAR (Lịch & Phiên học của tôi - Streamlined) */}
           {/* ============================================================== */}
           {activeTab === "calendar" && (
-            <div className="w-full space-y-6 animate-fadeIn">
+            <div className="w-full animate-fadeIn">
               <SchoolhouseDashboard
                 onOpenApplyTutor={() => setIsApplyTutorOpen(true)}
                 onNavigateClasses={() => handleSelectTab("classes")}
+                onOpenCreateClass={() => setIsCreateClassOpen(true)}
               />
             </div>
           )}
