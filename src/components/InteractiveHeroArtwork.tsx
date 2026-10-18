@@ -330,19 +330,6 @@ export function InteractiveHeroArtwork() {
             >
               big dreams.
             </text>
-
-            {/* Dynamic Hand-Drawn Underline under "big dreams." */}
-            <path
-              d="M 270 292 Q 330 286, 395 272"
-              stroke="#0F2747"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-              className="transition-all duration-300"
-              style={{
-                strokeDasharray: "150",
-                strokeDashoffset: isHovered ? "0" : "15",
-              }}
-            />
           </g>
         </svg>
       </div>
