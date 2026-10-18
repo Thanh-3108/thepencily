@@ -18,6 +18,9 @@ interface ChatMessage {
 
 interface PeerUser {
   id: string;
+  userId?: string;
+  userEmail?: string;
+  userHandle?: string;
   name: string;
   avatar: string;
   isHost?: boolean;
@@ -88,8 +91,12 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const broadcastRef = useRef<BroadcastChannel | null>(null);
+  const realtimeChannelRef = useRef<any>(null);
   const chatBottomRef = useRef<HTMLDivElement>(null);
   const chatTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [isEvicted, setIsEvicted] = useState(false);
+  const [sessionIteration, setSessionIteration] = useState(0);
 
   useEffect(() => {
     if (chatTextareaRef.current) {
@@ -120,13 +127,161 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
     return parts.length > 0 ? parts[parts.length - 1] : fullName;
   };
 
-  // 2. Realtime Multi-user Room Signaling (BroadcastChannel for multi-tab/P2P on same domain)
+  // Stop all local media tracks and speech detectors
+  const stopLocalMedia = () => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach((track) => track.stop());
+      localStreamRef.current = null;
+    }
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current = null;
+    }
+    if (audioContextRef.current && audioContextRef.current.state !== "closed") {
+      audioContextRef.current.close().catch(() => {});
+    }
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    setIsMicOn(false);
+    setIsCamOn(false);
+    setIsScreenSharing(false);
+    setIsSpeaking(false);
+    setLocalAudioLevel(0);
+  };
+
+  // Helper to determine if an incoming peer payload represents THIS user account on another device
+  const isMatchingMyAccount = (peer: {
+    id?: string;
+    userId?: string;
+    userEmail?: string;
+    userHandle?: string;
+    name?: string;
+  }) => {
+    if (!peer) return false;
+    if (peer.id && peer.id === localUserId.current) return false;
+
+    // 1. Same user ID
+    if (
+      user.id &&
+      user.id !== "user-new" &&
+      peer.userId &&
+      peer.userId !== "user-new" &&
+      user.id === peer.userId
+    ) {
+      return true;
+    }
+
+    // 2. Same email
+    if (
+      user.email &&
+      peer.userEmail &&
+      user.email.trim().toLowerCase() === peer.userEmail.trim().toLowerCase() &&
+      user.email.trim() !== ""
+    ) {
+      return true;
+    }
+
+    // 3. Same handle
+    if (
+      user.handle &&
+      peer.userHandle &&
+      user.handle !== "@pencily_student" &&
+      user.handle === peer.userHandle
+    ) {
+      return true;
+    }
+
+    // 4. Same distinct display name / real name
+    const myName = (user.realName || user.name || "").trim().toLowerCase();
+    const peerName = (peer.name || "").trim().toLowerCase();
+    if (
+      myName &&
+      peerName &&
+      myName === peerName &&
+      myName !== "học sinh pencily" &&
+      myName !== "học sinh" &&
+      myName !== "learner"
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  // Deduplicate and upsert peer in participants list (ensures NO duplicate cards like 2 "sinh"!)
+  const upsertPeer = (prevPeers: PeerUser[], newPeer: PeerUser): PeerUser[] => {
+    if (newPeer.id === localUserId.current || isMatchingMyAccount(newPeer)) {
+      return prevPeers;
+    }
+
+    const filtered = prevPeers.filter((p) => {
+      if (p.id === newPeer.id) return false;
+      if (p.userId && newPeer.userId && p.userId !== "user-new" && p.userId === newPeer.userId) return false;
+      if (p.userEmail && newPeer.userEmail && p.userEmail.toLowerCase().trim() === newPeer.userEmail.toLowerCase().trim() && p.userEmail.trim() !== "") return false;
+      if (
+        p.name &&
+        newPeer.name &&
+        p.name.toLowerCase().trim() === newPeer.name.toLowerCase().trim() &&
+        p.name !== "Học sinh" &&
+        p.name !== "Learner"
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    return [...filtered, newPeer];
+  };
+
+  // Unified broadcast function sending to both local BroadcastChannel and cross-device Supabase Realtime
+  const sendRoomBroadcast = (type: string, payload: Record<string, unknown>) => {
+    try {
+      broadcastRef.current?.postMessage({ type, ...payload });
+    } catch {}
+
+    try {
+      realtimeChannelRef.current?.send({
+        type: "broadcast",
+        event: type,
+        payload,
+      }).catch(() => {});
+    } catch {}
+  };
+
+  // Handle eviction when user logs in and joins room from another machine
+  const handleEvictionByOtherDevice = () => {
+    stopLocalMedia();
+    setIsEvicted(true);
+    setChatMessages((prev) => [
+      ...prev,
+      {
+        id: `sys-${Date.now()}`,
+        sender: language === "vi" ? "Hệ thống" : "System",
+        text:
+          language === "vi"
+            ? "Tài khoản của bạn đã tham gia phòng học từ thiết bị khác. Phiên trên máy này đã dừng."
+            : "Your account joined from another device. This session has ended.",
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        isSystem: true,
+      },
+    ]);
+  };
+
+  // Rejoin room on this device (evicting the other device)
+  const handleRejoinHere = () => {
+    localUserId.current = `user-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    setIsEvicted(false);
+    setSessionIteration((prev) => prev + 1);
+  };
+
+  // 2. Realtime Multi-user Room Signaling (BroadcastChannel for multi-tab + Supabase Realtime for cross-machine)
   useEffect(() => {
     const channelName = `pencily_room_${roomId}`;
     const channel = new BroadcastChannel(channelName);
     broadcastRef.current = channel;
 
-    // Send Join Announcement with verified given name
+    // Send Join Announcement with verified given name & account credentials
     const rawFullName = user.realName || user.name;
     const studentDisplayName =
       (rawFullName && !rawFullName.startsWith("@") && !rawFullName.includes("#") && rawFullName !== "Học sinh Pencily"
@@ -135,6 +290,9 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
     const myProfile: PeerUser = {
       id: localUserId.current,
+      userId: user.id || "user-new",
+      userEmail: user.email || "",
+      userHandle: user.handle || "",
       name: studentDisplayName,
       avatar: user.avatar || "P",
       isHost: Boolean(currentClass?.tutorName === user.name || user.role?.includes("Tutor")),
@@ -143,61 +301,82 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       isSpeaking: false,
     };
 
+    // Kick any other device running the same account in this room
+    channel.postMessage({
+      type: "KICK_DUPLICATE_SESSION",
+      peer: myProfile,
+    });
+
     channel.postMessage({
       type: "PEER_JOIN",
       peer: myProfile,
     });
 
-    channel.onmessage = (event) => {
-      const { type, peer, peerId, message, speaking, micOn, camOn, notesContent, audioLevel } = event.data;
+    const handleIncomingEvent = (type: string, data: any) => {
+      const { peer, peerId, peerUserId, message, speaking, micOn, camOn, notesContent, audioLevel } = data;
 
-      if (type === "PEER_JOIN") {
-        if (peer.id !== localUserId.current) {
-          setPeers((prev) => {
-            const exists = prev.some((p) => p.id === peer.id);
-            if (exists) return prev;
-            return [...prev, peer];
-          });
+      if (type === "KICK_DUPLICATE_SESSION") {
+        if (peer && isMatchingMyAccount(peer)) {
+          handleEvictionByOtherDevice();
+        }
+      } else if (type === "PEER_JOIN") {
+        if (peer) {
+          if (isMatchingMyAccount(peer)) {
+            // Another device with the exact same account just joined! Out this machine!
+            handleEvictionByOtherDevice();
+            return;
+          }
 
-          // Respond with presence so new user knows we are here
-          channel.postMessage({
-            type: "PEER_PRESENCE",
-            peer: {
-              ...myProfile,
-              isMicOn,
-              isCamOn,
-            },
-            notesContent: sharedNotes,
-          });
+          if (peer.id !== localUserId.current) {
+            setPeers((prev) => upsertPeer(prev, peer));
 
-          setChatMessages((prev) => [
-            ...prev,
-            {
-              id: `sys-${Date.now()}`,
-              sender: language === "vi" ? "Hệ thống" : "System",
-              text: language === "vi" ? `${peer.name} đã tham gia phòng học.` : `${peer.name} joined the study room.`,
-              time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-              isSystem: true,
-            },
-          ]);
+            // Respond with presence so new peer gets our profile and notes
+            sendRoomBroadcast("PEER_PRESENCE", {
+              peer: {
+                ...myProfile,
+                isMicOn,
+                isCamOn,
+              },
+              notesContent: sharedNotes,
+            });
+
+            setChatMessages((prev) => [
+              ...prev,
+              {
+                id: `sys-${Date.now()}`,
+                sender: language === "vi" ? "Hệ thống" : "System",
+                text: language === "vi" ? `${peer.name} đã tham gia phòng học.` : `${peer.name} joined the study room.`,
+                time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+                isSystem: true,
+              },
+            ]);
+          }
         }
       } else if (type === "PEER_PRESENCE") {
-        if (peer.id !== localUserId.current) {
-          setPeers((prev) => {
-            const exists = prev.some((p) => p.id === peer.id);
-            if (exists) {
-              return prev.map((p) => (p.id === peer.id ? { ...p, ...peer } : p));
+        if (peer) {
+          if (isMatchingMyAccount(peer)) {
+            handleEvictionByOtherDevice();
+            return;
+          }
+
+          if (peer.id !== localUserId.current) {
+            setPeers((prev) => upsertPeer(prev, peer));
+            if (notesContent && notesContent !== sharedNotes) {
+              setSharedNotes(notesContent);
             }
-            return [...prev, peer];
-          });
-          if (notesContent && notesContent !== sharedNotes) {
-            setSharedNotes(notesContent);
           }
         }
       } else if (type === "PEER_LEAVE") {
-        setPeers((prev) => prev.filter((p) => p.id !== peerId));
+        setPeers((prev) =>
+          prev.filter((p) => p.id !== peerId && (!peerUserId || p.userId !== peerUserId))
+        );
       } else if (type === "CHAT_MESSAGE") {
-        setChatMessages((prev) => [...prev, message]);
+        if (message) {
+          setChatMessages((prev) => {
+            if (prev.some((m) => m.id === message.id)) return prev;
+            return [...prev, message];
+          });
+        }
       } else if (type === "SPEAKING_STATE") {
         setPeers((prev) =>
           prev.map((p) =>
@@ -219,75 +398,90 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           )
         );
       } else if (type === "SCRATCHPAD_UPDATE") {
-        setSharedNotes(notesContent);
+        if (notesContent !== undefined) {
+          setSharedNotes(notesContent);
+        }
       }
     };
 
-    // 2b. Cross-device Realtime WebSocket Broadcast (Syncs messages across different devices with 0 database tables)
+    channel.onmessage = (event) => {
+      handleIncomingEvent(event.data.type, event.data);
+    };
+
+    // 2b. Cross-device Realtime WebSocket Broadcast
     let realtimeChannel: any = null;
     if (supabase) {
       try {
         realtimeChannel = supabase.channel(`pencily-room-${roomId}`, {
           config: { broadcast: { self: false } },
         });
+        realtimeChannelRef.current = realtimeChannel;
 
         realtimeChannel
-          .on("broadcast", { event: "CHAT_MESSAGE" }, (event: any) => {
-            if (event.payload) {
-              setChatMessages((prev) => {
-                if (prev.some((m) => m.id === event.payload.id)) return prev;
-                return [...prev, event.payload];
-              });
-            }
-          })
-          .on("broadcast", { event: "SCRATCHPAD_UPDATE" }, (event: any) => {
-            if (event.payload?.notesContent !== undefined) {
-              setSharedNotes(event.payload.notesContent);
-            }
+          .on("broadcast", { event: "KICK_DUPLICATE_SESSION" }, (event: any) => {
+            handleIncomingEvent("KICK_DUPLICATE_SESSION", event.payload || {});
           })
           .on("broadcast", { event: "PEER_JOIN" }, (event: any) => {
-            const peer = event.payload?.peer;
-            if (peer && peer.id !== localUserId.current) {
-              setPeers((prev) => (prev.some((p) => p.id === peer.id) ? prev : [...prev, peer]));
-            }
+            handleIncomingEvent("PEER_JOIN", event.payload || {});
+          })
+          .on("broadcast", { event: "PEER_PRESENCE" }, (event: any) => {
+            handleIncomingEvent("PEER_PRESENCE", event.payload || {});
           })
           .on("broadcast", { event: "PEER_LEAVE" }, (event: any) => {
-            const peerId = event.payload?.peerId;
-            if (peerId) {
-              setPeers((prev) => prev.filter((p) => p.id !== peerId));
-            }
+            handleIncomingEvent("PEER_LEAVE", event.payload || {});
           })
-          .subscribe();
+          .on("broadcast", { event: "MEDIA_TOGGLE" }, (event: any) => {
+            handleIncomingEvent("MEDIA_TOGGLE", event.payload || {});
+          })
+          .on("broadcast", { event: "SPEAKING_STATE" }, (event: any) => {
+            handleIncomingEvent("SPEAKING_STATE", event.payload || {});
+          })
+          .on("broadcast", { event: "CHAT_MESSAGE" }, (event: any) => {
+            handleIncomingEvent("CHAT_MESSAGE", event.payload || {});
+          })
+          .on("broadcast", { event: "SCRATCHPAD_UPDATE" }, (event: any) => {
+            handleIncomingEvent("SCRATCHPAD_UPDATE", event.payload || {});
+          })
+          .subscribe((status: string) => {
+            if (status === "SUBSCRIBED") {
+              // Announce presence across machines
+              realtimeChannel
+                .send({
+                  type: "broadcast",
+                  event: "KICK_DUPLICATE_SESSION",
+                  payload: { peer: myProfile },
+                })
+                .catch(() => {});
 
-        realtimeChannel.send({
-          type: "broadcast",
-          event: "PEER_JOIN",
-          payload: { peer: myProfile },
-        }).catch(() => {});
+              realtimeChannel
+                .send({
+                  type: "broadcast",
+                  event: "PEER_JOIN",
+                  payload: { peer: myProfile },
+                })
+                .catch(() => {});
+            }
+          });
       } catch (err) {
         console.warn("Supabase realtime setup skipped/failed:", err);
       }
     }
 
     return () => {
-      channel.postMessage({
-        type: "PEER_LEAVE",
+      sendRoomBroadcast("PEER_LEAVE", {
         peerId: localUserId.current,
+        peerUserId: user.id,
       });
+
       channel.close();
 
       if (supabase && realtimeChannel) {
         try {
-          realtimeChannel.send({
-            type: "broadcast",
-            event: "PEER_LEAVE",
-            payload: { peerId: localUserId.current },
-          }).catch(() => {});
           supabase.removeChannel(realtimeChannel);
         } catch {}
       }
     };
-  }, [roomId, user.name, language]);
+  }, [roomId, user.id, user.email, user.name, language, sessionIteration]);
 
   // Scroll chat to bottom on new message
   useEffect(() => {
@@ -357,14 +551,11 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         const now = Date.now();
         if (now - lastBroadcastTime > 90) {
           lastBroadcastTime = now;
-          if (broadcastRef.current) {
-            broadcastRef.current.postMessage({
-              type: "SPEAKING_STATE",
-              peerId: localUserId.current,
-              speaking: speakingNow,
-              audioLevel: normalized,
-            });
-          }
+          sendRoomBroadcast("SPEAKING_STATE", {
+            peerId: localUserId.current,
+            speaking: speakingNow,
+            audioLevel: normalized,
+          });
         }
 
         animationFrameRef.current = requestAnimationFrame(checkVolume);
@@ -397,8 +588,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         setIsMicOn(true);
         setupAudioDetection(stream);
 
-        broadcastRef.current?.postMessage({
-          type: "MEDIA_TOGGLE",
+        sendRoomBroadcast("MEDIA_TOGGLE", {
           peerId: localUserId.current,
           micOn: true,
         });
@@ -426,8 +616,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
         cancelAnimationFrame(animationFrameRef.current);
       }
 
-      broadcastRef.current?.postMessage({
-        type: "MEDIA_TOGGLE",
+      sendRoomBroadcast("MEDIA_TOGGLE", {
         peerId: localUserId.current,
         micOn: false,
       });
@@ -455,8 +644,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
 
         setIsCamOn(true);
 
-        broadcastRef.current?.postMessage({
-          type: "MEDIA_TOGGLE",
+        sendRoomBroadcast("MEDIA_TOGGLE", {
           peerId: localUserId.current,
           camOn: true,
         });
@@ -480,8 +668,7 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       }
       setIsCamOn(false);
 
-      broadcastRef.current?.postMessage({
-        type: "MEDIA_TOGGLE",
+      sendRoomBroadcast("MEDIA_TOGGLE", {
         peerId: localUserId.current,
         camOn: false,
       });
@@ -565,39 +752,17 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
       chatTextareaRef.current.style.height = "auto";
     }
 
-    broadcastRef.current?.postMessage({
-      type: "CHAT_MESSAGE",
+    sendRoomBroadcast("CHAT_MESSAGE", {
       message: newMsg,
     });
-
-    if (supabase) {
-      try {
-        supabase.channel(`pencily-room-${roomId}`).send({
-          type: "broadcast",
-          event: "CHAT_MESSAGE",
-          payload: newMsg,
-        }).catch(() => {});
-      } catch {}
-    }
   };
 
   // 8. Update Shared Scratchpad
   const handleNotesChange = (value: string) => {
     setSharedNotes(value);
-    broadcastRef.current?.postMessage({
-      type: "SCRATCHPAD_UPDATE",
+    sendRoomBroadcast("SCRATCHPAD_UPDATE", {
       notesContent: value,
     });
-
-    if (supabase) {
-      try {
-        supabase.channel(`pencily-room-${roomId}`).send({
-          type: "broadcast",
-          event: "SCRATCHPAD_UPDATE",
-          payload: { notesContent: value },
-        }).catch(() => {});
-      } catch {}
-    }
   };
 
   const handleCopyNotes = () => {
@@ -1312,6 +1477,45 @@ export default function StudyRoomPage({ params }: { params: Promise<{ id: string
           </button>
         </div>
       </footer>
+
+      {/* MULTI-DEVICE SINGLE SESSION OVERLAY */}
+      {isEvicted && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F2747]/85 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-[#FFFDF9] border-2 border-[#0F2747] rounded-md shadow-2xl p-6 sm:p-7 space-y-4 text-center">
+            <div className="w-14 h-14 rounded-sm bg-amber-100 border-2 border-amber-300 text-amber-700 flex items-center justify-center mx-auto shadow-2xs">
+              <Monitor className="w-7 h-7" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="font-poppins font-black text-xl text-[#0F2747]">
+                {language === "vi" ? "Đã tham gia trên thiết bị khác" : "Session Active on Another Device"}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                {language === "vi"
+                  ? `Tài khoản của bạn vừa tham gia phòng học này từ một thiết bị hoặc trình duyệt khác. Để tránh xung đột âm thanh và kết nối, phiên làm việc trên máy này đã dừng.`
+                  : `Your account just joined this study room from another device or browser. To prevent audio echo and connection conflicts, this session has been disconnected.`}
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleLeaveRoom}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 font-bold text-xs shadow-2xs transition cursor-pointer"
+              >
+                {language === "vi" ? "Quay về Dashboard" : "Back to Dashboard"}
+              </button>
+              <button
+                type="button"
+                onClick={handleRejoinHere}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs transition cursor-pointer border-2 border-[#0F2747]"
+              >
+                {language === "vi" ? "Tiếp tục trên máy này" : "Continue on this device"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
