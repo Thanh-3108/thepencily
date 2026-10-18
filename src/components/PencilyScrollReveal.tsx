@@ -132,15 +132,15 @@ export function PencilyScrollProgressBar() {
   return (
     <div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-[#FAF7EE]/90 border-b border-slate-300 pointer-events-none select-none backdrop-blur-xs"
+      className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-[#FAF7EE]/90 border-b border-slate-300 pointer-events-none select-none backdrop-blur-xs overflow-hidden"
     >
       {/* Golden Pencil Fill Bar */}
       <div
         className="h-full bg-[#FFC83D] transition-[width] duration-150 ease-out relative flex items-center justify-end"
         style={{ width: `${scrollPercent}%` }}
       >
-        {/* Pencil lead indicator (Sharp rectangular nib - NO DOTS) */}
-        <div className="w-2 h-3 bg-[#0F2747] border border-[#FFC83D] rounded-xs shadow-2xs -mr-1" />
+        {/* Pencil lead indicator (Sharp rectangular nib - strictly flush with yellow bar) */}
+        <div className="w-2.5 h-full bg-[#0F2747] shrink-0" />
       </div>
     </div>
   );
