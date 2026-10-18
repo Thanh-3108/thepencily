@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { FacebookLogo, DiscordLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
+import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
 export function HomeStudentStories() {
   const { language } = usePencily();
@@ -109,49 +110,55 @@ export function HomeStudentStories() {
     <section id="stories" className="pt-20 sm:pt-28">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
-            {isVi ? "Sáng lập dự án" : "Founders"}
+        <PencilyScrollReveal animation="bounce-up" delay={50}>
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
+              {isVi ? "Sáng lập dự án" : "Founders"}
+            </div>
+            <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight text-balance">
+              {isVi ? "Ban Sáng Lập" : "Founding Board"}
+            </h2>
           </div>
-          <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight text-balance">
-            {isVi ? "Ban Sáng Lập" : "Founding Board"}
-          </h2>
-        </div>
+        </PencilyScrollReveal>
 
         {/* 1. FOUNDING BOARD: Clean & minimal - Just Avatar & Name */}
         <div className="flex items-center justify-center gap-12 sm:gap-24 mb-16">
           {/* Huỳnh Công Thành */}
-          <div className="flex flex-col items-center text-center group">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
-              <Image
-                src="/founder.png"
-                alt="Huỳnh Công Thành"
-                fill
-                className="object-cover object-center"
-                priority
-                sizes="(max-width: 640px) 96px, 112px"
-              />
+          <PencilyScrollReveal animation="tilt-left" delay={100} rotate="-1.2deg">
+            <div className="flex flex-col items-center text-center group">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
+                <Image
+                  src="/founder.png"
+                  alt="Huỳnh Công Thành"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                  sizes="(max-width: 640px) 96px, 112px"
+                />
+              </div>
+              <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
+                Huỳnh Công Thành
+              </h3>
             </div>
-            <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
-              Huỳnh Công Thành
-            </h3>
-          </div>
+          </PencilyScrollReveal>
 
           {/* Dương Quang Minh Khoa */}
-          <div className="flex flex-col items-center text-center group">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
-              <Image
-                src="/co-founder.png"
-                alt="Dương Quang Minh Khoa"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 96px, 112px"
-              />
+          <PencilyScrollReveal animation="tilt-right" delay={220} rotate="1.2deg">
+            <div className="flex flex-col items-center text-center group">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] overflow-hidden relative shadow-sm group-hover:scale-105 transition-transform">
+                <Image
+                  src="/co-founder.png"
+                  alt="Dương Quang Minh Khoa"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 96px, 112px"
+                />
+              </div>
+              <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
+                Dương Quang Minh Khoa
+              </h3>
             </div>
-            <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
-              Dương Quang Minh Khoa
-            </h3>
-          </div>
+          </PencilyScrollReveal>
         </div>
 
         {/* 2. BOARD OF DIRECTORS (Trang Sổ Nháp & Băng Keo Washi / Doodle Notebook Spread) */}
@@ -165,7 +172,7 @@ export function HomeStudentStories() {
             </div>
 
             {/* Official Pencily Paper Badge Asset */}
-            <div className="shrink-0 self-start sm:self-auto -mt-2 sm:mt-0">
+            <PencilyScrollReveal animation="stamp" delay={120} rotate="-6deg" className="shrink-0 self-start sm:self-auto -mt-2 sm:mt-0">
               <div className="relative w-20 h-20 sm:w-24 sm:h-24 select-none pointer-events-none transform -rotate-6 hover:rotate-0 transition-transform">
                 <Image
                   src="/brand/elements/pencily-paper-badge.png"
@@ -174,16 +181,22 @@ export function HomeStudentStories() {
                   className="object-contain drop-shadow-sm"
                 />
               </div>
-            </div>
+            </PencilyScrollReveal>
           </div>
 
           {/* 4 Tactile Notebook Member Cards (with washi tape & paperclips) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
             {boardOfDirectors.map((member, idx) => (
-              <div
+              <PencilyScrollReveal
                 key={idx}
-                className={`bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 hover:border-[#0F2747] shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group ${member.rotation} hover:rotate-0`}
+                animation={idx % 2 === 0 ? "tilt-left" : "tilt-right"}
+                delay={idx * 160}
+                rotate={member.rotation?.includes("-") ? "-0.75deg" : "0.5deg"}
+                className="h-full"
               >
+                <div
+                  className={`bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 hover:border-[#0F2747] shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group ${member.rotation} hover:rotate-0 h-full`}
+                >
                 {/* Authentic Washi Tape Strip at the Top */}
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-32 h-8 z-20 pointer-events-none select-none">
                   <Image
@@ -304,7 +317,8 @@ export function HomeStudentStories() {
                   )}
                 </div>
               </div>
-            ))}
+            </PencilyScrollReveal>
+          ))}
           </div>
         </div>
 
@@ -336,41 +350,47 @@ export function HomeStudentStories() {
               defaultTextEn: "\"[Placeholder] Experience joining small nightly study pods on Discord: Welcoming peers, zero fear of asking tough homework questions, and free Cornell notes...\"",
             },
           ].map((item, idx) => (
-            <div
+            <PencilyScrollReveal
               key={idx}
-              className="bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] transition-all flex flex-col justify-between shadow-xs"
+              animation="bounce-up"
+              delay={idx * 150}
+              className="h-full"
             >
-              <div>
-                {/* Placeholder Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-sm border-2 border-dashed border-slate-300 bg-[#FAF7F2] flex items-center justify-center text-slate-400">
-                    <User className="w-6 h-6" />
+              <div
+                className="bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] transition-all flex flex-col justify-between shadow-xs h-full"
+              >
+                <div>
+                  {/* Placeholder Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-sm border-2 border-dashed border-slate-300 bg-[#FAF7F2] flex items-center justify-center text-slate-400">
+                      <User className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded-xs border border-slate-200">
+                      {isVi ? item.badgeVi : item.badgeEn}
+                    </span>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded-xs border border-slate-200">
-                    {isVi ? item.badgeVi : item.badgeEn}
-                  </span>
+
+                  {/* Name & Role placeholder */}
+                  <h4 className="font-poppins font-bold text-sm text-[#0F2747]">
+                    {isVi ? `<Tên Người Chia Sẻ #${idx + 1}>` : `<Member Name #${idx + 1}>`}
+                  </h4>
+                  <div className="text-[11px] font-semibold text-[#4F7ECB] mb-3">
+                    {isVi ? item.roleVi : item.roleEn}
+                  </div>
+
+                  {/* Content placeholder */}
+                  <p className="text-xs text-slate-500 leading-relaxed italic p-3 rounded-xs bg-[#FAF7F2] border border-slate-200/80">
+                    {isVi ? item.defaultTextVi : item.defaultTextEn}
+                  </p>
                 </div>
 
-                {/* Name & Role placeholder */}
-                <h4 className="font-poppins font-bold text-sm text-[#0F2747]">
-                  {isVi ? `<Tên Người Chia Sẻ #${idx + 1}>` : `<Member Name #${idx + 1}>`}
-                </h4>
-                <div className="text-[11px] font-semibold text-[#4F7ECB] mb-3">
-                  {isVi ? item.roleVi : item.roleEn}
+                {/* Status footer */}
+                <div className="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-400">
+                  <span>{isVi ? "Trạng thái: Chờ duyệt" : "Status: Draft"}</span>
+                  <span className="font-bold text-[#0F2747]">{isVi ? "Sẵn sàng Proofcheck" : "Ready for Review"}</span>
                 </div>
-
-                {/* Content placeholder */}
-                <p className="text-xs text-slate-500 leading-relaxed italic p-3 rounded-xs bg-[#FAF7F2] border border-slate-200/80">
-                  {isVi ? item.defaultTextVi : item.defaultTextEn}
-                </p>
               </div>
-
-              {/* Status footer */}
-              <div className="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-400">
-                <span>{isVi ? "Trạng thái: Chờ duyệt" : "Status: Draft"}</span>
-                <span className="font-bold text-[#0F2747]">{isVi ? "Sẵn sàng Proofcheck" : "Ready for Review"}</span>
-              </div>
-            </div>
+            </PencilyScrollReveal>
           ))}
         </div>
       </div>

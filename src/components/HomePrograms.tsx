@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { BookOpen, HelpCircle, ArrowRight, Check, Award } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
 interface ProgramItem {
   id: string;
@@ -185,8 +186,9 @@ export function HomePrograms() {
     }
 
     return (
-      <div key={prog.id} className={cardContainerClasses}>
-        {ribbonClasses && <div className={ribbonClasses} />}
+      <PencilyScrollReveal key={prog.id} animation="bounce-up" delay={120} className="h-full">
+        <div className={cardContainerClasses}>
+          {ribbonClasses && <div className={ribbonClasses} />}
 
         <div>
           {/* Top Lockup */}
@@ -276,6 +278,7 @@ export function HomePrograms() {
           </Link>
         </div>
       </div>
+      </PencilyScrollReveal>
     );
   };
 
@@ -283,42 +286,46 @@ export function HomePrograms() {
     <section id="programs" className="pt-20 sm:pt-28">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
-            {language === "vi" ? "Mô hình đồng hành: The Pencily" : "Companion Model: The Pencily"}
+        <PencilyScrollReveal animation="bounce-up" delay={50}>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
+              {language === "vi" ? "Mô hình đồng hành: The Pencily" : "Companion Model: The Pencily"}
+            </div>
+            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
+              {language === "vi" ? "Các chương trình học tập bình đẳng" : "Equal Learning Programs"}
+            </h2>
           </div>
-          <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
-            {language === "vi" ? "Các chương trình học tập bình đẳng" : "Equal Learning Programs"}
-          </h2>
-        </div>
+        </PencilyScrollReveal>
 
         {/* Segmented Filter Tabs: Tiếng Anh / Tiếng Việt */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-          <button
-            type="button"
-            onClick={() => setActiveTab("english")}
-            className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === "english"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <Award className={`w-4 h-4 ${activeTab === "english" ? "text-white" : "text-[#4F7ECB]"}`} />
-            <span>{language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("vietnamese")}
-            className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === "vietnamese"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-emerald-600"}`} />
-            <span>{language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}</span>
-          </button>
-        </div>
+        <PencilyScrollReveal animation="stamp" delay={100}>
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+            <button
+              type="button"
+              onClick={() => setActiveTab("english")}
+              className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
+                activeTab === "english"
+                  ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                  : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
+              }`}
+            >
+              <Award className={`w-4 h-4 ${activeTab === "english" ? "text-white" : "text-[#4F7ECB]"}`} />
+              <span>{language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("vietnamese")}
+              className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
+                activeTab === "vietnamese"
+                  ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
+                  : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
+              }`}
+            >
+              <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-emerald-600"}`} />
+              <span>{language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}</span>
+            </button>
+          </div>
+        </PencilyScrollReveal>
 
         {/* Content Divided into Two Tracks */}
         <div>

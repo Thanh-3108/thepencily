@@ -4,6 +4,7 @@ import React from "react";
 import { ShieldCheck, Award, Clock, Users, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { PencilyPortfolioIcon } from "@/components/icons/PencilyIcons";
 import { usePencily } from "@/context/PencilyContext";
+import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
 interface HomeTutorPortfolioProps {
   onOpenTutorModal: () => void;
@@ -16,10 +17,11 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
   return (
     <section id="portfolio" className="pt-20 sm:pt-28">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
-        <div className="bg-white rounded-md p-8 sm:p-12 border-2 border-slate-300 shadow-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Column: Value Proposition */}
-            <div className="lg:col-span-7 space-y-6">
+        <PencilyScrollReveal animation="stamp" delay={80}>
+          <div className="bg-white rounded-md p-8 sm:p-12 border-2 border-slate-300 shadow-xs">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              {/* Left Column: Value Proposition */}
+              <div className="lg:col-span-7 space-y-6">
               <div>
                 <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
                   {isVi ? "Hồ sơ hoạt động ngoại khóa" : "Extracurricular Portfolio"}
@@ -170,6 +172,7 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
             </div>
           </div>
         </div>
+        </PencilyScrollReveal>
       </div>
     </section>
   );

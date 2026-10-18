@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Search, Users, Award, ArrowRight } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
 export function HomeHowItWorks() {
   const { language } = usePencily();
@@ -46,24 +47,33 @@ export function HomeHowItWorks() {
     <section id="how-it-works" className="pt-20 sm:pt-28">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
-            {isVi ? "Vận hành minh bạch" : "Transparent Operation"}
+        <PencilyScrollReveal animation="bounce-up" delay={50}>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
+              {isVi ? "Vận hành minh bạch" : "Transparent Operation"}
+            </div>
+            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
+              {isVi ? "Cách The Pencily hoạt động" : "How The Pencily Works"}
+            </h2>
           </div>
-          <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
-            {isVi ? "Cách The Pencily hoạt động" : "How The Pencily Works"}
-          </h2>
-        </div>
+        </PencilyScrollReveal>
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {steps.map((item) => {
+          {steps.map((item, idx) => {
             const Icon = item.icon;
+            const rotation = idx === 0 ? "-1.2deg" : idx === 1 ? "1deg" : "-0.8deg";
             return (
-              <div
+              <PencilyScrollReveal
                 key={item.step}
-                className="bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                animation={idx % 2 === 0 ? "tilt-left" : "tilt-right"}
+                delay={idx * 160}
+                rotate={rotation}
+                className="h-full"
               >
+                <div
+                  className="bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between h-full"
+                >
                 <div>
                   {/* Top Step Number & Icon */}
                   <div className="flex items-center justify-between mb-5">
@@ -102,7 +112,8 @@ export function HomeHowItWorks() {
                   </Link>
                 </div>
               </div>
-            );
+            </PencilyScrollReveal>
+          );
           })}
         </div>
       </div>
