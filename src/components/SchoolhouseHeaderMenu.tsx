@@ -69,13 +69,13 @@ export function SchoolhouseHeaderMenu({
       href: "/dashboard?tab=discord",
     },
     {
-      id: "notif-materials",
-      title: language === "vi" ? "Thư viện bài tập tóm tắt mới" : "New Study Notes",
+      id: "notif-classes",
+      title: language === "vi" ? "Lớp học nhóm mới tuần này" : "New Peer Study Sessions",
       desc:
         language === "vi"
-          ? "Đã cập nhật bộ tóm tắt trọng tâm môn Toán & ĐGNL tuần này."
-          : "Newly updated math and exam preparation summary sheets.",
-      href: "/dashboard?tab=library",
+          ? "Đã mở đăng ký các buổi thảo luận Toán, Tiếng Anh và ĐGNL hoàn toàn miễn phí."
+          : "Free peer review sessions for Math, English, and Aptitude tests are open.",
+      href: "/dashboard?tab=classes",
     },
   ];
 
