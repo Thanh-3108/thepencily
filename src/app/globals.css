@@ -210,3 +210,91 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
   animation: pencilyFloatSketch 4s ease-in-out infinite;
 }
 
+/* Floating Soap / Crystal Bubble Animations for The Pencily Bubble Interface */
+@keyframes pencilyBubbleFloatA {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-16px) rotate(1.2deg);
+  }
+  66% {
+    transform: translateY(8px) rotate(-0.8deg);
+  }
+}
+
+@keyframes pencilyBubbleFloatB {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-22px) rotate(-1.5deg);
+  }
+  75% {
+    transform: translateY(10px) rotate(1deg);
+  }
+}
+
+@keyframes pencilyBubbleFloatC {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-26px) rotate(1.8deg);
+  }
+}
+
+@keyframes pencilyBubbleFloatD {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(12px) rotate(-1deg);
+  }
+  70% {
+    transform: translateY(-14px) rotate(1.4deg);
+  }
+}
+
+@keyframes pencilyBubbleFloatE {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  45% {
+    transform: translateY(-18px) rotate(-1.2deg);
+  }
+  80% {
+    transform: translateY(9px) rotate(0.8deg);
+  }
+}
+
+.animate-bubble-float-a {
+  animation: pencilyBubbleFloatA 6.8s ease-in-out infinite;
+}
+
+.animate-bubble-float-b {
+  animation: pencilyBubbleFloatB 8.2s ease-in-out infinite;
+}
+
+.animate-bubble-float-c {
+  animation: pencilyBubbleFloatC 9.4s ease-in-out infinite;
+}
+
+.animate-bubble-float-d {
+  animation: pencilyBubbleFloatD 7.2s ease-in-out infinite;
+}
+
+.animate-bubble-float-e {
+  animation: pencilyBubbleFloatE 8.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bubble-float-a,
+  .animate-bubble-float-b,
+  .animate-bubble-float-c,
+  .animate-bubble-float-d,
+  .animate-bubble-float-e {
+    animation: none !important;
+  }
+}
+

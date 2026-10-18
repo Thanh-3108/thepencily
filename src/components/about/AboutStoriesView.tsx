@@ -119,7 +119,7 @@ export function AboutStoriesView() {
               <div className="w-24 h-24 sm:w-26 sm:h-26 rounded-md border-2 border-[#0F2747] bg-[#FAF7F2] shrink-0 overflow-hidden relative shadow-2xs">
                 <Image
                   src="/co-founder.png"
-                  alt="Dương Quang Minh Khoa - Co-Founder, Senior Advisor"
+                  alt="Dương Quang Minh Khoa - Co-Founder, Advisor"
                   fill
                   className="object-cover"
                   sizes="(max-width: 640px) 96px, 104px"
@@ -130,13 +130,13 @@ export function AboutStoriesView() {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-blue-900 bg-blue-100 border border-blue-300 px-2 py-0.5 rounded-xs inline-block mb-1">
-                      {isVi ? "Cố Vấn Cấp Cao" : "Senior Advisor"}
+                      {isVi ? "Cố Vấn" : "Advisor"}
                     </span>
                     <h3 className="font-poppins font-bold text-xl sm:text-2xl text-[#0F2747]">
                       Dương Quang Minh Khoa
                     </h3>
                     <p className="text-xs font-semibold text-[#4F7ECB]">
-                      Co-Founder, Senior Advisor
+                      Co-Founder, Advisor
                     </p>
                   </div>
 

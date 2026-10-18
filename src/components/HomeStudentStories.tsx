@@ -88,10 +88,10 @@ export function HomeStudentStories() {
       rotation: "sm:-rotate-[0.5deg]",
     },
     {
-      role: "Senior Advisor",
+      role: "Advisor",
       name: "Dương Quang Minh Khoa",
-      titleVi: "Cố Vấn Cấp Cao & Đồng Sáng Lập",
-      titleEn: "Senior Advisor & Co-Founder",
+      titleVi: "Cố Vấn & Đồng Sáng Lập",
+      titleEn: "Advisor & Co-Founder",
       levelVi: "THPT",
       levelEn: "High School",
       school: "Phổ Thông Năng Khiếu, ĐHQG-HCM",
