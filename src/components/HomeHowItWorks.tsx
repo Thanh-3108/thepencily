@@ -17,21 +17,13 @@ export function HomeHowItWorks() {
       id: 1,
       number: "100%",
       title: isVi ? "Lớp tình nguyện" : "Volunteer Classes",
-      detail: isVi ? "0đ Học phí • Tự nguyện" : "0 VND • 100% Free",
-      desc: isVi
-        ? "Mọi buổi học và tài liệu đều hoàn toàn miễn phí, xây dựng từ tinh thần chia sẻ phi lợi nhuận của học sinh dành cho học sinh."
-        : "All sessions and materials are completely free of charge, driven by a pure student-led non-profit spirit.",
       image: "/brand/elements/bubble-volunteer.jpg",
       floatClass: "animate-bubble-float-a",
     },
     {
       id: 2,
       number: "60'",
-      title: isVi ? "60 Phút mỗi buổi" : "60-Min Sessions",
-      detail: isVi ? "15' Lý thuyết • 35' Chữa đề • 10' Q&A" : "15m Theory • 35m Practice • 10m Q&A",
-      desc: isVi
-        ? "Thời lượng chuẩn tối ưu sự tập trung của học sinh: tóm gọn trọng tâm, chữa đề thực chiến và giải đáp dứt điểm thắc mắc."
-        : "Structured for optimal student focus: concise core theory, direct problem solving, and immediate Q&A.",
+      title: isVi ? "60 Phút" : "60-Min Sessions",
       image: "/brand/elements/bubble-duration.jpg",
       floatClass: "animate-bubble-float-b",
     },
@@ -39,21 +31,13 @@ export function HomeHowItWorks() {
       id: 3,
       number: "Peer",
       title: isVi ? "Tutor là học sinh" : "Student Peer Tutors",
-      detail: isVi ? "Đồng trang lứa • Không khoảng cách" : "Empathetic • Shared Perspective",
-      desc: isVi
-        ? "Gia sư là chính các bạn học sinh chuyên hoặc đạt điểm cao. Cùng góc nhìn nên dễ đồng cảm với áp lực và giải thích mộc mạc."
-        : "Tutors are high-achieving school peers who break down complex lessons with relatable empathy and zero condescension.",
       image: "/brand/elements/bubble-peer.jpg",
       floatClass: "animate-bubble-float-c",
     },
     {
       id: 4,
       number: "3 – 8",
-      title: isVi ? "Nhóm nhỏ thân mật" : "Small Study Pods",
-      detail: isVi ? "Bật mic tự do • Không phán xét" : "Interactive • Zero Judgment",
-      desc: isVi
-        ? "Mỗi phòng chỉ duy trì từ 3 đến 8 bạn. Không gian ấm cúng giúp bạn thoải mái bật mic hỏi bài mà không sợ đám đông hay bị chê cười."
-        : "Pods of only 3 to 8 learners give everyone space to speak up, share screens, and get direct tutor guidance without anxiety.",
+      title: isVi ? "Nhóm 3 – 8 bạn" : "3 – 8 Student Pods",
       image: "/brand/elements/bubble-pod.jpg",
       floatClass: "animate-bubble-float-d",
     },
@@ -109,27 +93,17 @@ export function HomeHowItWorks() {
                   className="absolute inset-0 rounded-full border border-white/70 shadow-[inset_0_2px_14px_rgba(255,255,255,0.95),inset_0_-6px_14px_rgba(15,39,71,0.06)] pointer-events-none"
                 />
 
-                {/* Inside Bubble Content: Pure typography, NO background island pills */}
-                <div className="relative z-10 flex flex-col items-center justify-center max-w-[190px] sm:max-w-[210px] select-none">
+                {/* Inside Bubble Content: Pure typography, NO background island pills, strictly the core item */}
+                <div className="relative z-10 flex flex-col items-center justify-center max-w-[180px] sm:max-w-[200px] select-none px-2">
                   {/* Big Highlighted Number */}
-                  <span className="font-poppins font-black text-3xl sm:text-4xl text-[#0F2747] tracking-tight leading-none mb-1.5">
+                  <span className="font-poppins font-black text-4xl sm:text-5xl text-[#0F2747] tracking-tight leading-none mb-2 drop-shadow-xs">
                     {b.number}
                   </span>
 
-                  {/* Title */}
-                  <h3 className="font-poppins font-bold text-sm sm:text-base text-[#0F2747] mb-1">
+                  {/* Title / Mục */}
+                  <h3 className="font-poppins font-bold text-base sm:text-lg text-[#0F2747] tracking-tight leading-snug">
                     {b.title}
                   </h3>
-
-                  {/* Clean detail text (NO background pill) */}
-                  <p className="text-[11px] font-semibold text-[#4F7ECB] mb-2 leading-tight">
-                    {b.detail}
-                  </p>
-
-                  {/* Description */}
-                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-3">
-                    {b.desc}
-                  </p>
                 </div>
               </div>
             </PencilyScrollReveal>
