@@ -423,6 +423,25 @@ export function SchoolhouseHeaderMenu({
                   )}
                 </div>
 
+                {/* ADMIN CONTROL PANEL LINK */}
+                {(user.platformRole === "admin" ||
+                  user.role === "admin" ||
+                  user.role === "Admin" ||
+                  user.email === "hhuuyynnhhccoonnggtthhaannhh@gmail.com" ||
+                  user.email === "thepencily@gmail.com") && (
+                  <div className="py-1 border-b-2 border-slate-100 bg-amber-50/80">
+                    <Link
+                      href="/admin"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-amber-950 hover:bg-amber-100 transition"
+                      role="menuitem"
+                    >
+                      <PencilyShieldIcon size={16} strokeWidth={2.4} className="text-amber-700 shrink-0" />
+                      <span>{language === "vi" ? "Bảng Quản Trị Admin (CMS & Data)" : "Admin Control Panel"}</span>
+                    </Link>
+                  </div>
+                )}
+
                 {/* TIER 2: COMMUNITY & SUPPORT */}
                 <div className="py-1 border-b-2 border-slate-100">
                   <button

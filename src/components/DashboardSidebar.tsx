@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Compass,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 
 import { isReviewer } from "@/lib/platform";
@@ -93,6 +94,22 @@ export function DashboardSidebar({
 
   // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
   const secondaryItems: SecondaryItem[] = [
+    ...(user.platformRole === "admin" ||
+    user.role === "admin" ||
+    user.role === "Admin" ||
+    user.email === "hhuuyynnhhccoonnggtthhaannhh@gmail.com" ||
+    user.email === "thepencily@gmail.com"
+      ? [
+          {
+            id: "academic" as const,
+            labelVi: "Bảng Quản Trị Admin",
+            labelEn: "Admin Deck",
+            icon: ShieldCheck,
+            isTab: false,
+            href: "/admin",
+          },
+        ]
+      : []),
     ...(isReviewer(user.platformRole) ? [{ id:"academic" as const,labelVi:"Ban Academic",labelEn:"Academic",icon:GraduationCap,isTab:true }] : []),
     {
       id: "become-tutor" as const,
