@@ -91,7 +91,7 @@ export function DiscordCommunity() {
         avatarText: "🤖",
         time: "Hôm nay lúc 19:30",
         badge: "BOT",
-        content: "🎉 Chào mừng các bạn học sinh đến với **The Pencily**! Toàn bộ phòng học, tài liệu Cornell và buổi kèm 1-1 đều mở tự do 100% phi lợi nhuận.",
+        content: "🎉 Chào mừng các bạn học sinh đến với **The Pencily**! Toàn bộ phòng học, tài liệu học tập và buổi kèm 1-1 đều mở tự do 100% phi lợi nhuận.",
       },
       {
         id: "msg-2",

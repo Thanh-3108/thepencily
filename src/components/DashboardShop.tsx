@@ -689,7 +689,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                 <p className="text-[11px] text-slate-600 leading-relaxed">
                   {isVi
                     ? "Đóng góp sơ đồ mindmap, đề cương ôn tập có ích cho các bạn học sinh."
-                    : "Share helpful mindmaps or Cornell notes with fellow students."}
+                    : "Share helpful mindmaps or study guides with fellow students."}
                 </p>
               </div>
 

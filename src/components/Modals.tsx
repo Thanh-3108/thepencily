@@ -73,7 +73,7 @@ export function ContributeResourceModal({ isOpen, onClose }: { isOpen: boolean; 
     title: "",
     subject: "Toán học",
     authorName: "",
-    resourceType: "Ghi chú Cornell",
+    resourceType: "Ghi chú & Tóm tắt",
     driveLink: "",
     notes: "",
   });
@@ -143,7 +143,7 @@ export function ContributeResourceModal({ isOpen, onClose }: { isOpen: boolean; 
                     <option value="Tiếng Anh">Tiếng Anh (IELTS/SAT)</option>
                     <option value="Vật lý">Vật lý / Physics</option>
                     <option value="Hóa học">Hóa học / Chemistry</option>
-                    <option value="Phương pháp tự học">Phương pháp tự học / Cornell</option>
+                    <option value="Phương pháp tự học">Phương pháp tự học hiệu quả</option>
                   </select>
                 </div>
                 <div>
@@ -155,7 +155,7 @@ export function ContributeResourceModal({ isOpen, onClose }: { isOpen: boolean; 
                     onChange={(e) => setFormData({ ...formData, resourceType: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-sm font-medium text-[#0F2747]"
                   >
-                    <option value="Ghi chú Cornell / Sổ tay">Ghi chú Cornell / Notes</option>
+                    <option value="Ghi chú & Tóm tắt kiến thức">Ghi chú & Tóm tắt / Notes</option>
                     <option value="Tổng hợp công thức / Cheat sheet">Tổng hợp công thức / Cheat sheet</option>
                     <option value="Bộ đề ôn tập có giải chi tiết">Bộ đề thi & Lời giải / Mock Exam</option>
                     <option value="Slide thuyết trình">Slide bài giảng / Slides</option>
@@ -319,7 +319,7 @@ export function RequestClassModal({
               <option value="IELTS Speaking">Tiếng Anh & IELTS / SAT</option>
               <option value="Vật Lý 12">Vật Lý 12 & Dao động / Điện xoay chiều</option>
               <option value="Hóa học 12">Hóa học 12</option>
-              <option value="Kỹ năng tự học">Kỹ năng tự học & Ghi chép Cornell</option>
+              <option value="Kỹ năng tự học">Kỹ năng tự học & Ghi chép trọng tâm</option>
               <option value="Khác">Chuyên đề khác</option>
             </select>
           </div>

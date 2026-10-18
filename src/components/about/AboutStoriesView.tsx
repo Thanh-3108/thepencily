@@ -52,7 +52,7 @@ export function AboutStoriesView() {
       quoteVi:
         "Tài liệu tóm tắt và các mẹo giải nhanh của các bạn Tutor tại đây rất thực tế. Không lý thuyết hàn lâm, mọi ghi chú đều đi thẳng vào bản chất câu hỏi thi đại học.",
       quoteEn:
-        "The concise Cornell notes and practical problem-solving tips shared by tutors are immediately actionable. No fluff, straight to what matters for exam mastery.",
+        "The concise study notes and practical problem-solving tips shared by tutors are immediately actionable. No fluff, straight to what matters for exam mastery.",
     },
   ];
 

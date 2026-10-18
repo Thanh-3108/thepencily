@@ -36,9 +36,9 @@ export function ResourceLibrary({ onOpenContributeModal }: { onOpenContributeMod
     },
     {
       id: "res-2",
-      title: "Bộ Ghi Chú Cornell: To Toàn Diện 500 Từ Vựng & Collocation IELTS C2",
+      title: "Bộ Ghi Chú Tổng Hợp: Toàn Diện 500 Từ Vựng & Collocation IELTS C2",
       subject: "Tiếng Anh",
-      type: "Cornell Notes",
+      type: "Summary Notes",
       grade: "Chung",
       author: "Khánh Linh",
       authorRole: "Contributor",

@@ -44,16 +44,11 @@ export function PencilyScrollReveal({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
-        }
+        setIsVisible(entry.isIntersecting);
       },
       {
         threshold,
-        rootMargin: "0px 0px -30px 0px",
+        rootMargin: "0px 0px -40px 0px",
       }
     );
 

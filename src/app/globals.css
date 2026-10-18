@@ -125,45 +125,53 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
 @keyframes pencilyTiltLeft {
   0% {
     opacity: 0;
-    transform: translateY(38px) rotate(-3.5deg) scale(0.94);
+    transform: translateY(34px) rotate(-3deg) scale(0.96);
   }
-  65% {
+  60% {
     opacity: 1;
-    transform: translateY(-4px) rotate(0.8deg) scale(1.018);
+    transform: translateY(-3px) rotate(0.8deg) scale(1.01);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(1px) rotate(-0.2deg) scale(1);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) rotate(var(--pencily-rotate, -1.2deg)) scale(1);
+    transform: translateY(0) rotate(0deg) scale(1);
   }
 }
 
 @keyframes pencilyTiltRight {
   0% {
     opacity: 0;
-    transform: translateY(38px) rotate(3.5deg) scale(0.94);
+    transform: translateY(34px) rotate(3deg) scale(0.96);
   }
-  65% {
+  60% {
     opacity: 1;
-    transform: translateY(-4px) rotate(-0.8deg) scale(1.018);
+    transform: translateY(-3px) rotate(-0.8deg) scale(1.01);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(1px) rotate(0.2deg) scale(1);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) rotate(var(--pencily-rotate, 1.2deg)) scale(1);
+    transform: translateY(0) rotate(0deg) scale(1);
   }
 }
 
 @keyframes pencilyStamp {
   0% {
     opacity: 0;
-    transform: scale(1.25) rotate(-6deg);
+    transform: scale(1.18) rotate(-4deg);
   }
-  60% {
+  65% {
     opacity: 1;
-    transform: scale(0.96) rotate(1deg);
+    transform: scale(0.98) rotate(0.6deg);
   }
   100% {
     opacity: 1;
-    transform: scale(1) rotate(var(--stamp-rotate, -2deg));
+    transform: scale(1) rotate(0deg);
   }
 }
 

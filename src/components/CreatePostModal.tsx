@@ -84,8 +84,8 @@ export function CreatePostModal({
           </div>
           <p className="text-sm sm:text-base text-[#4B5563] mt-1.5 leading-relaxed">
             {language === "vi"
-              ? "Chia sẻ tài liệu Cornell hoặc đặt câu hỏi để peer tutors và cộng đồng hỗ trợ trên Discord."
-              : "Share Cornell notes or ask questions for peer tutors and community support on Discord."}
+              ? "Chia sẻ tài liệu học tập hoặc đặt câu hỏi để peer tutors và cộng đồng hỗ trợ trên Discord."
+              : "Share study notes or ask questions for peer tutors and community support on Discord."}
           </p>
         </div>
 

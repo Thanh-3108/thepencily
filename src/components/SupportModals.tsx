@@ -257,7 +257,7 @@ export function ReportBugModal({ isOpen, onClose, onSubmitSuccess }: ReportBugMo
                 <option value="room">{isVi ? "Phòng học trực tuyến / Meet / Video" : "Virtual Room / Meet / Audio"}</option>
                 <option value="dashboard">{isVi ? "Dashboard / Bảng điều khiển / Lịch học" : "Dashboard / Schedule"}</option>
                 <option value="points">{isVi ? "Pencily Points (PP) / Đổi quà Shop" : "Pencily Points / Shop"}</option>
-                <option value="library">{isVi ? "Thư viện Cornell / Tài liệu" : "Cornell Library / Materials"}</option>
+                <option value="library">{isVi ? "Thư viện Tài liệu & Ghi chú" : "Library / Materials"}</option>
                 <option value="other">{isVi ? "Vấn đề khác" : "Other Issue"}</option>
               </select>
             </div>

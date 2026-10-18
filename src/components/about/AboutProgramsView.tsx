@@ -85,13 +85,13 @@ export function AboutProgramsView({ onOpenTutorModal }: AboutProgramsViewProps) 
         "Live screen-sharing and interactive whiteboards with 45 minutes of concise concept breakdown followed by 30 minutes of open Q&A.",
     },
     {
-      titleVi: "Kho Tài Liệu & Ghi Chú Độc Quyền (Library)",
+      titleVi: "Kho Tài Liệu & Ghi Chú Trọng Tâm (Library)",
       titleEn: "Open Resource Library",
       icon: FileText,
       descVi:
-        "Toàn bộ tài liệu tóm tắt Cornell, slide bài giảng, đề thi thử có lời giải chi tiết đều được lưu trữ vĩnh viễn và chia sẻ miễn phí 100% cho mọi thành viên.",
+        "Toàn bộ tài liệu tóm tắt trọng tâm, slide bài giảng, đề thi thử có lời giải chi tiết đều được lưu trữ vĩnh viễn và chia sẻ miễn phí 100% cho mọi thành viên.",
       descEn:
-        "Curated Cornell notes, presentation decks, and annotated mock exams stored permanently and shared completely free of charge.",
+        "Curated concise notes, presentation decks, and annotated mock exams stored permanently and shared completely free of charge.",
     },
   ];
 

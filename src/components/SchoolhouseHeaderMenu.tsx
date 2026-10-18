@@ -70,7 +70,7 @@ export function SchoolhouseHeaderMenu({
     },
     {
       id: "notif-materials",
-      title: language === "vi" ? "Thư viện bài tập Cornell mới" : "New Cornell Study Notes",
+      title: language === "vi" ? "Thư viện bài tập tóm tắt mới" : "New Study Notes",
       desc:
         language === "vi"
           ? "Đã cập nhật bộ tóm tắt trọng tâm môn Toán & ĐGNL tuần này."

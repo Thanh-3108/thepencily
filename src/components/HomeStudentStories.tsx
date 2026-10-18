@@ -346,8 +346,8 @@ export function HomeStudentStories() {
               roleEn: "<THPT Prep Student>",
               badgeVi: "Placeholder Member",
               badgeEn: "Member Placeholder",
-              defaultTextVi: "\"[Placeholder] Trải nghiệm học nhóm nhỏ lúc 21h trên Discord: Sự cởi mở, không sợ bị chê cười khi hỏi bài tập khó và nguồn tài liệu Cornell miễn phí...\"",
-              defaultTextEn: "\"[Placeholder] Experience joining small nightly study pods on Discord: Welcoming peers, zero fear of asking tough homework questions, and free Cornell notes...\"",
+              defaultTextVi: "\"[Placeholder] Trải nghiệm học nhóm nhỏ lúc 21h trên Discord: Sự cởi mở, không sợ bị chê cười khi hỏi bài tập khó và nguồn tài liệu tóm tắt miễn phí...\"",
+              defaultTextEn: "\"[Placeholder] Experience joining small nightly study pods on Discord: Welcoming peers, zero fear of asking tough homework questions, and free study notes...\"",
             },
           ].map((item, idx) => (
             <PencilyScrollReveal

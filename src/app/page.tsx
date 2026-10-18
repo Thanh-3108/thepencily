@@ -92,7 +92,7 @@ export default function Home() {
           {/* 4 Feature Cards with Playful Tilts & Staggered Reveal */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
             {/* Card 1: Học tập Peer-to-Peer -> Đến Dashboard / Tìm lớp */}
-            <PencilyScrollReveal animation="tilt-left" delay={80} rotate="-1.2deg" className="h-full">
+            <PencilyScrollReveal animation="bounce-up" delay={80} className="h-full">
               <Link
                 href="/dashboard?tab=classes"
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"
@@ -119,7 +119,7 @@ export default function Home() {
             </PencilyScrollReveal>
 
             {/* Card 2: Trở thành Tutor -> Mở modal ứng tuyển */}
-            <PencilyScrollReveal animation="tilt-right" delay={200} rotate="1.2deg" className="h-full">
+            <PencilyScrollReveal animation="bounce-up" delay={160} className="h-full">
               <button
                 type="button"
                 onClick={() => setIsApplyTutorOpen(true)}
@@ -147,7 +147,7 @@ export default function Home() {
             </PencilyScrollReveal>
 
             {/* Card 3: Chia sẻ tài liệu -> Đến Thư viện tài liệu */}
-            <PencilyScrollReveal animation="tilt-left" delay={320} rotate="-0.8deg" className="h-full">
+            <PencilyScrollReveal animation="bounce-up" delay={240} className="h-full">
               <Link
                 href="/dashboard?tab=resources"
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"
@@ -163,7 +163,7 @@ export default function Home() {
                   <p className="text-sm text-[#475569] leading-relaxed">
                     {language === "vi"
                       ? "Trao đổi đề cương, tài liệu tóm tắt và mẹo ôn thi thực chiến từ học sinh trường chuyên và các bạn chăm chỉ."
-                      : "Exchange study guides, concise Cornell summaries, and exam tips from top high school students."}
+                      : "Exchange study guides, concise summaries, and exam tips from top high school students."}
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center gap-1 group-hover:underline">
@@ -174,7 +174,7 @@ export default function Home() {
             </PencilyScrollReveal>
 
             {/* Card 4: Kết nối liên trường -> Đến Trang Cộng đồng */}
-            <PencilyScrollReveal animation="tilt-right" delay={440} rotate="1.5deg" className="h-full">
+            <PencilyScrollReveal animation="bounce-up" delay={320} className="h-full">
               <Link
                 href="/community"
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"

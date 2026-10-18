@@ -454,7 +454,7 @@ export function DashboardSettings({
 
           <div className="flex items-center justify-between p-3.5 rounded-sm bg-[#FAF7F2] border border-slate-200">
             <span className="text-xs font-bold text-[#0F2747]">
-              {isVi ? "Cập nhật bài tóm tắt Cornell mới" : "New Cornell study notes alerts"}
+              {isVi ? "Cập nhật tài liệu tóm tắt mới" : "New study notes alerts"}
             </span>
             <button
               type="button"
