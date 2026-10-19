@@ -44,7 +44,7 @@ export function HomeHowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="pt-20 sm:pt-28 pb-16 relative">
+    <section id="how-it-works" className="pt-20 sm:pt-28 pb-6 sm:pb-8 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header: Pure Clean Typography, NO Background Island, NO Emoji */}
         <PencilyScrollReveal animation="bounce-up" delay={50}>
@@ -100,7 +100,7 @@ export function HomeHowItWorks() {
         </div>
 
         {/* Clean, Straight Action Card */}
-        <PencilyScrollReveal animation="bounce-up" delay={200} className="mt-14 sm:mt-16">
+        <PencilyScrollReveal animation="bounce-up" delay={200} className="mt-10 sm:mt-12">
           <div className="bg-white rounded-md border-2 border-slate-300 p-6 sm:p-7 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 max-w-3xl mx-auto">
             <div className="space-y-1 text-center sm:text-left">
               <h4 className="font-poppins font-bold text-base sm:text-lg text-[#0F2747]">

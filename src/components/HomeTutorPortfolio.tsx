@@ -15,7 +15,7 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
   const isVi = language === "vi";
 
   return (
-    <section id="portfolio" className="pt-20 sm:pt-28">
+    <section id="portfolio" className="pt-6 sm:pt-8">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <PencilyScrollReveal animation="stamp" delay={80}>
           <div className="bg-white rounded-md p-8 sm:p-12 border-2 border-slate-300 shadow-xs">
