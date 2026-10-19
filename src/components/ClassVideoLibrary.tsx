@@ -3,36 +3,31 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Clock,
   Play,
   Pause,
-  RotateCcw,
-  RotateCw,
   Volume2,
   VolumeX,
+  Gauge,
+  Settings,
   Maximize,
   Minimize,
-  FileText,
-  BookOpen,
+  HelpCircle,
+  Check,
   CheckCircle2,
   XCircle,
-  ArrowRight,
-  ListVideo,
-  Search,
-  ExternalLink,
-  GraduationCap,
-  Calendar,
-  Gift,
-  HelpCircle,
+  RotateCcw,
+  RefreshCw,
   Sparkles,
   Share2,
   Layers,
   Award,
-  Check,
-  RefreshCw,
+  BookOpen,
+  FileText,
+  Search,
+  GraduationCap,
+  Gift,
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
-import { OwlMascot } from "@/components/Logo";
 
 // Declare YT window global
 declare global {
@@ -100,7 +95,7 @@ export interface VideoLesson {
   milestones: VideoMilestone[];
 }
 
-// 1 SINGLE ROCK-SOLID TEMPLATE LESSON OF NEVER GONNA GIVE YOU UP (Rick Astley)
+// 1 SINGLE MASTER LESSON: NEVER GONNA GIVE YOU UP (Rick Astley)
 export function getDefaultLessons(isVi: boolean): VideoLesson[] {
   return [
     {
@@ -131,36 +126,28 @@ export function getDefaultLessons(isVi: boolean): VideoLesson[] {
           title: isVi ? "1. Khúc dạo đầu & Giới thiệu nguyên tắc học tập" : "1. Introduction & Core Principles",
           time: "0:18",
           seconds: 18,
-          summary: isVi
-            ? "We're no strangers to love, you know the rules and so do I..."
-            : "We're no strangers to love, you know the rules and so do I...",
+          summary: "We're no strangers to love, you know the rules and so do I...",
         },
         {
           id: "ch-2",
           title: isVi ? "2. Điệp khúc cốt lõi: Cam kết không bao giờ bỏ cuộc" : "2. Core Chorus: Never Give Up",
           time: "0:43",
           seconds: 43,
-          summary: isVi
-            ? "Never gonna give you up, never gonna let you down, never gonna run around and desert you!"
-            : "Never gonna give you up, never gonna let you down, never gonna run around and desert you!",
+          summary: "Never gonna give you up, never gonna let you down, never gonna run around and desert you!",
         },
         {
           id: "ch-3",
           title: isVi ? "3. Điệp khúc 2: Tinh thần kiên trì & Thấu hiểu mục tiêu" : "3. Chorus 2: Perseverance & Vision",
           time: "1:34",
           seconds: 94,
-          summary: isVi
-            ? "We've known each other for so long, inside we both know what's been going on..."
-            : "We've known each other for so long, inside we both know what's been going on...",
+          summary: "We've known each other for so long, inside we both know what's been going on...",
         },
         {
           id: "ch-4",
           title: isVi ? "4. Điệp khúc cao trào & Lời cam kết danh dự" : "4. Climax Chorus & Honor Code",
           time: "2:16",
           seconds: 136,
-          summary: isVi
-            ? "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you."
-            : "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you.",
+          summary: "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you.",
         },
       ],
       transcript: [
@@ -213,13 +200,13 @@ export function getDefaultLessons(isVi: boolean): VideoLesson[] {
               id: "opt-1c",
               text: "Never gonna dance again, guilty feet have got no rhythm",
               isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Đây là lời bài hát Careless Whisper của George Michael!" : "Incorrect. That is George Michael's Careless Whisper!",
+              explanation: isVi ? "Chưa đúng. Đây là bài Careless Whisper của George Michael!" : "Incorrect. That's Careless Whisper by George Michael!",
             },
             {
               id: "opt-1d",
               text: "Don't stop believin', hold on to that feelin'",
               isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Đây là bài hát của Journey!" : "Incorrect. That is Journey's Don't Stop Believin'!",
+              explanation: isVi ? "Chưa đúng. Đây là bài hát của Journey!" : "Incorrect. That's Journey's Don't Stop Believin'!",
             },
           ],
           points: 5,
@@ -310,6 +297,175 @@ export function getDefaultLessons(isVi: boolean): VideoLesson[] {
   ];
 }
 
+// ==========================================
+// UNIFORM VIDEO CONTROLS (1 THANH ĐỒNG NHẤT DUY NHẤT)
+// ==========================================
+interface UniformVideoControlsProps {
+  isPlaying: boolean;
+  currentTime: number;
+  duration: number;
+  playbackRate: number;
+  isMuted: boolean;
+  milestones: VideoMilestone[];
+  solvedMilestoneIds: string[];
+  onTogglePlay: () => void;
+  onSeek: (time: number) => void;
+  onChangeSpeed: () => void;
+  onToggleMute: () => void;
+  onToggleFullscreen: () => void;
+  onMilestoneClick: (milestone: VideoMilestone) => void;
+}
+
+export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
+  isPlaying,
+  currentTime,
+  duration,
+  playbackRate,
+  isMuted,
+  milestones,
+  solvedMilestoneIds,
+  onTogglePlay,
+  onSeek,
+  onChangeSpeed,
+  onToggleMute,
+  onToggleFullscreen,
+  onMilestoneClick,
+}) => {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const progressPercent = duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
+
+  const formatTime = (seconds: number) => {
+    if (!seconds || isNaN(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  };
+
+  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!trackRef.current || duration <= 0) return;
+    const rect = trackRef.current.getBoundingClientRect();
+    const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    onSeek(clickRatio * duration);
+  };
+
+  return (
+    /* Thanh điều khiển đồng nhất (1 hàng ngang duy nhất ở đáy video) */
+    <div className="w-full bg-[#1e1e1e]/95 backdrop-blur-sm px-4 py-2.5 flex items-center gap-4 text-white select-none z-20 border-t border-white/10">
+      {/* 1. Nút Play / Pause */}
+      <button
+        onClick={onTogglePlay}
+        className="hover:text-amber-400 transition-colors focus:outline-none shrink-0 cursor-pointer"
+        title={isPlaying ? "Tạm dừng" : "Phát"}
+      >
+        {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
+      </button>
+
+      {/* 2. Thanh Timeline duy nhất (tích hợp cả tiến độ lẫn các cột mốc) */}
+      <div
+        ref={trackRef}
+        onClick={handleTrackClick}
+        className="relative flex-1 h-5 flex items-center cursor-pointer group"
+      >
+        {/* Nền thanh timeline */}
+        <div className="w-full h-1.5 bg-white/25 rounded-full overflow-visible relative">
+          {/* Phần thời lượng đã phát */}
+          <div
+            className="h-full bg-white rounded-full transition-all duration-75"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+
+        {/* Các cột mốc câu hỏi (Milestones) ghim trực tiếp lên thanh timeline này */}
+        {duration > 0 &&
+          milestones.map((m) => {
+            const leftPercent = Math.min(Math.max((m.seconds / duration) * 100, 0), 100);
+            const isCompleted = solvedMilestoneIds.includes(m.id);
+
+            return (
+              <button
+                key={m.id}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMilestoneClick(m);
+                }}
+                style={{ left: `${leftPercent}%` }}
+                className={`absolute -translate-x-1/2 z-10 w-4 h-5 rounded-sm flex items-center justify-center border transition-transform hover:scale-125 cursor-pointer shadow-xs ${
+                  isCompleted
+                    ? "bg-emerald-500 border-emerald-300 text-slate-950"
+                    : "bg-amber-400 border-amber-600 text-slate-950"
+                }`}
+                title={`Cột mốc tại ${m.timeFormatted}: ${m.title} (${isCompleted ? "Đã xong" : "Chưa làm"})`}
+              >
+                {isCompleted ? (
+                  <Check className="w-3 h-3 stroke-[3]" />
+                ) : (
+                  <HelpCircle className="w-3 h-3 stroke-[2.5]" />
+                )}
+              </button>
+            );
+          })}
+
+        {/* Con chạy (Thumb) kiểu chữ nhật có vạch khía như ảnh mẫu */}
+        <div
+          style={{ left: `${progressPercent}%` }}
+          className="absolute -translate-x-1/2 z-20 w-3.5 h-4 bg-white rounded-[3px] shadow-md flex items-center justify-center gap-[1.5px] pointer-events-none transition-transform group-hover:scale-110"
+        >
+          <span className="w-[1px] h-2 bg-neutral-400" />
+          <span className="w-[1px] h-2 bg-neutral-400" />
+          <span className="w-[1px] h-2 bg-neutral-400" />
+        </div>
+      </div>
+
+      {/* 3. Thời gian hiện tại / Tổng thời lượng */}
+      <div className="text-xs font-medium tabular-nums tracking-tight whitespace-nowrap shrink-0">
+        <span className="text-white font-semibold">{formatTime(currentTime)}</span>
+        <span className="text-white/60"> / {formatTime(duration)}</span>
+      </div>
+
+      {/* 4. Cụm nút chức năng bên phải: Tốc độ, Âm lượng, Cài đặt, Fullscreen */}
+      <div className="flex items-center gap-3 shrink-0">
+        <button
+          onClick={onChangeSpeed}
+          className="hover:text-amber-400 transition-colors flex items-center gap-1 text-xs font-semibold cursor-pointer"
+          title={`Tốc độ phát: ${playbackRate}x (Bấm để đổi)`}
+        >
+          <Gauge className="w-4 h-4" />
+          <span>{playbackRate}x</span>
+        </button>
+
+        <button
+          onClick={onToggleMute}
+          className="hover:text-amber-400 transition-colors cursor-pointer"
+          title={isMuted ? "Bật tiếng" : "Tắt tiếng"}
+        >
+          {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+
+        <button
+          onClick={() => alert("Cài đặt chất lượng video: Tự động (HD)")}
+          className="hover:text-amber-400 transition-colors cursor-pointer"
+          title="Cài đặt"
+        >
+          <Settings className="w-4 h-4" />
+        </button>
+
+        <button
+          onClick={onToggleFullscreen}
+          className="hover:text-amber-400 transition-colors cursor-pointer"
+          title="Toàn màn hình"
+        >
+          <Maximize className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ==========================================
+// MAIN CLASS VIDEO LIBRARY COMPONENT
+// ==========================================
 interface ClassVideoLibraryProps {
   onGoToProfile?: () => void;
   onOpenExchangeShop?: () => void;
@@ -340,8 +496,6 @@ export function ClassVideoLibrary({
   const [duration, setDuration] = useState<number>(213);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [isApiReady, setIsApiReady] = useState<boolean>(false);
 
   // Interactive Milestones State (H5P features)
   const [activeMilestone, setActiveMilestone] = useState<VideoMilestone | null>(null);
@@ -374,14 +528,14 @@ export function ClassVideoLibrary({
     }
   }, []);
 
-  // Update activeLesson when defaultLessons or lessons prop changes
+  // Update activeLesson when defaultLessons changes
   useEffect(() => {
     if (effectiveLessons.length > 0) {
       setActiveLesson(effectiveLessons[0]);
     }
   }, [effectiveLessons]);
 
-  // INITIALIZE YOUTUBE IFRAME API
+  // INITIALIZE YOUTUBE IFRAME API (controls: 0, disablekb: 1, modestbranding: 1)
   useEffect(() => {
     let isMounted = true;
 
@@ -404,17 +558,20 @@ export function ClassVideoLibrary({
         width: "100%",
         height: "100%",
         playerVars: {
+          controls: 0, // Tắt hoàn toàn thanh timeline màu đỏ mặc định của YouTube
+          disablekb: 1, // Tắt phím tắt mặc định của YouTube để tránh xung đột
+          fs: 0, // Dùng nút Fullscreen của container thay vì của iframe
+          iv_load_policy: 3, // Ẩn annotations
+          modestbranding: 1, // Giảm thiểu logo YouTube
+          rel: 0, // Hạn chế gợi ý video ngoài kênh khi tạm dừng
+          playsinline: 1,
           autoplay: 0,
-          controls: 1, // Keep native YouTube controls active so student has full native controls
-          rel: 0,
-          modestbranding: 1,
           enablejsapi: 1,
           origin: typeof window !== "undefined" ? window.location.origin : undefined,
         },
         events: {
           onReady: (event: any) => {
             if (!isMounted) return;
-            setIsApiReady(true);
             const dur = event.target.getDuration();
             if (dur && dur > 0) {
               setDuration(Math.floor(dur));
@@ -422,10 +579,7 @@ export function ClassVideoLibrary({
           },
           onStateChange: (event: any) => {
             if (!isMounted) return;
-            // YT.PlayerState:
-            // 1: PLAYING
-            // 2: PAUSED
-            // 0: ENDED
+            // 1: PLAYING, 2: PAUSED, 0: ENDED
             if (event.data === 1) {
               setIsPlaying(true);
             } else if (event.data === 2) {
@@ -434,7 +588,7 @@ export function ClassVideoLibrary({
               setIsPlaying(false);
               const dur = event.target.getDuration();
               if (dur > 0) setCurrentTime(Math.floor(dur));
-              setActiveTab("summary"); // Show completion summary when video naturally ends
+              setActiveTab("summary");
             }
           },
         },
@@ -477,7 +631,6 @@ export function ClassVideoLibrary({
       if (player && typeof player.getCurrentTime === "function") {
         try {
           const state = player.getPlayerState();
-          // State 1 is actively playing
           if (state === 1) {
             setIsPlaying(true);
             const rawTime = player.getCurrentTime();
@@ -493,7 +646,6 @@ export function ClassVideoLibrary({
             if (currentSecond !== lastSecondRef.current) {
               lastSecondRef.current = currentSecond;
 
-              // Check if any milestone falls on this exact second
               const hitMilestone = activeLesson.milestones.find(
                 (m) =>
                   m.seconds === currentSecond &&
@@ -519,9 +671,7 @@ export function ClassVideoLibrary({
             const rawDur = player.getDuration();
             if (rawDur > 0) setCurrentTime(Math.floor(rawDur));
           }
-        } catch (err) {
-          // Player not yet initialized
-        }
+        } catch (err) {}
       }
 
       animId = requestAnimationFrame(checkPlayhead);
@@ -574,19 +724,15 @@ export function ClassVideoLibrary({
     [duration, activeLesson]
   );
 
-  const handleSkip = useCallback(
-    (delta: number) => {
-      handleSeek(currentTime + delta);
-    },
-    [currentTime, handleSeek]
-  );
-
-  const handleSetRate = useCallback((rate: number) => {
-    setPlaybackRate(rate);
+  const handleCycleSpeed = useCallback(() => {
+    const speeds = [1, 1.25, 1.5, 2, 0.75];
+    const currentIndex = speeds.indexOf(playbackRate);
+    const nextSpeed = speeds[(currentIndex + 1) % speeds.length];
+    setPlaybackRate(nextSpeed);
     if (playerRef.current && typeof playerRef.current.setPlaybackRate === "function") {
-      playerRef.current.setPlaybackRate(rate);
+      playerRef.current.setPlaybackRate(nextSpeed);
     }
-  }, []);
+  }, [playbackRate]);
 
   const handleToggleMute = useCallback(() => {
     if (playerRef.current) {
@@ -604,10 +750,8 @@ export function ClassVideoLibrary({
     if (!playerContainerRef.current) return;
     if (!document.fullscreenElement) {
       playerContainerRef.current.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
     } else {
       document.exitFullscreen().catch(() => {});
-      setIsFullscreen(false);
     }
   };
 
@@ -688,14 +832,6 @@ export function ClassVideoLibrary({
     setTimeout(() => setRewardToast(null), 4000);
   };
 
-  // Helper format seconds -> mm:ss
-  const formatTime = (secs: number) => {
-    const s = Math.max(0, Math.floor(secs));
-    const m = Math.floor(s / 60);
-    const remainder = s % 60;
-    return `${m}:${remainder < 10 ? "0" : ""}${remainder}`;
-  };
-
   const solvedCountInLesson = activeLesson.milestones.filter((m) =>
     solvedMilestoneIds.includes(m.id)
   ).length;
@@ -770,33 +906,36 @@ export function ClassVideoLibrary({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* LEFT COLUMN: INTERACTIVE VIDEO PLAYER (8 COLS) */}
         <div className="lg:col-span-8 space-y-4">
-          {/* THEATER BOX */}
+          {/* THEATER BOX (UNIFORM PLAYER CONTAINER) */}
           <div
             ref={playerContainerRef}
-            className="bg-slate-950 rounded-md border-2 border-slate-800 shadow-lg overflow-hidden flex flex-col relative"
+            className="relative w-full aspect-video bg-black flex flex-col overflow-hidden rounded-md border-2 border-slate-800 shadow-xl"
           >
-            {/* LECTURE HEADER BANNER */}
-            <div className="px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-white z-10">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider shrink-0">
-                  {isVi ? "Video Bài giảng" : "Lecture Video"}
-                </span>
-                <h3 className="font-poppins font-bold text-xs sm:text-sm text-slate-100 truncate">
-                  {activeLesson.title}
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="text-[11px] font-mono text-amber-300 font-bold">
-                  {solvedCountInLesson}/{totalMilestonesInLesson} {isVi ? "Cột mốc bài tập" : "Milestones"}
-                </span>
-              </div>
+            {/* FLOATING TOP BADGES */}
+            <div className="absolute top-3 left-3 z-15 flex items-center gap-2 pointer-events-none">
+              <span className="px-2 py-0.5 rounded-xs bg-black/80 backdrop-blur-xs text-white text-[11px] font-bold border border-white/10">
+                {activeLesson.title}
+              </span>
+              <span className="px-2 py-0.5 rounded-xs bg-amber-400/90 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-2xs">
+                {solvedCountInLesson}/{totalMilestonesInLesson} {isVi ? "Cột mốc bài tập" : "Milestones"}
+              </span>
             </div>
 
-            {/* VIDEO VIEWPORT & OVERLAYS */}
-            <div className="relative w-full aspect-video bg-black overflow-hidden group">
-              {/* STABLE YOUTUBE API DOM CONTAINER */}
-              <div id="pencily-yt-iframe-container" className="w-full h-full" />
+            {/* VÙNG HIỂN THỊ VIDEO */}
+            <div className="relative flex-1 w-full overflow-hidden bg-black">
+              {/* YOUTUBE IFRAME BỊ KHÓA POINTER-EVENTS ĐỂ KHÔNG BAO GIỜ HIỆN THANH ĐỎ */}
+              <div
+                id="pencily-yt-iframe-container"
+                className="w-full h-full pointer-events-none"
+              />
+
+              {/* LỚP CHẮN TRONG SUỐT NHẬN CLICK ĐỂ PLAY/PAUSE MƯỢT MÀ */}
+              <div
+                onClick={handleTogglePlay}
+                onDoubleClick={handleToggleFullscreen}
+                className="absolute inset-0 z-10 cursor-pointer"
+                title={isPlaying ? "Bấm để tạm dừng" : "Bấm để phát"}
+              />
 
               {/* H5P INTERACTIVE QUESTION OVERLAY (POPS UP AT MILESTONE) */}
               {activeMilestone && (
@@ -980,150 +1119,25 @@ export function ClassVideoLibrary({
               )}
             </div>
 
-            {/* CUSTOM INTERACTIVE CONTROLS TOOLBAR (H5P STYLE - 100% IN SYNC) */}
-            <div className="p-3 bg-slate-900 border-t border-slate-800 text-white space-y-2">
-              {/* TIMELINE PROGRESS BAR WITH MILESTONE PINS */}
-              <div className="space-y-1">
-                <div
-                  className="relative w-full h-3 bg-slate-800 hover:h-4 rounded-xs cursor-pointer group transition-all"
-                  onClick={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const clickX = e.clientX - rect.left;
-                    const pct = Math.max(0, Math.min(1, clickX / rect.width));
-                    handleSeek(pct * duration);
-                  }}
-                >
-                  {/* Played Track */}
-                  <div
-                    className="absolute top-0 left-0 bottom-0 bg-amber-400 rounded-xs transition-all"
-                    style={{ width: `${Math.min(100, Math.max(0, (currentTime / (duration || 213)) * 100))}%` }}
-                  />
-
-                  {/* MILESTONE TICK MARKERS (STRICT NO "NỐT RUỒI" - SQUARISH TABS ONLY!) */}
-                  {activeLesson.milestones.map((m) => {
-                    const leftPct = (m.seconds / (duration || 213)) * 100;
-                    const isSolved = solvedMilestoneIds.includes(m.id);
-
-                    return (
-                      <button
-                        key={m.id}
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleOpenMilestone(m);
-                        }}
-                        style={{ left: `${leftPct}%` }}
-                        className={`absolute -top-1.5 -translate-x-1/2 w-3.5 h-6 rounded-xs border flex items-center justify-center shadow-xs transition-transform hover:scale-125 cursor-pointer z-10 ${
-                          isSolved
-                            ? "bg-emerald-500 border-emerald-800 text-white"
-                            : "bg-amber-300 hover:bg-amber-400 border-amber-700 text-slate-950"
-                        }`}
-                        title={`${m.title} (${m.timeFormatted}) • ${isSolved ? (isVi ? "Đã làm (+5 PP)" : "Solved") : (isVi ? "Chưa làm" : "Unsolved")}`}
-                      >
-                        {isSolved ? (
-                          <Check className="w-2.5 h-2.5 stroke-[3]" />
-                        ) : (
-                          <HelpCircle className="w-2.5 h-2.5" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Timeline timecode labels */}
-                <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                  <span>{formatTime(currentTime)}</span>
-                  <div className="flex items-center gap-1 text-[10px] text-amber-300">
-                    <Sparkles className="w-3 h-3" />
-                    <span>
-                      {isVi
-                        ? `Đã hoàn thành ${solvedCountInLesson}/${totalMilestonesInLesson} cột mốc`
-                        : `${solvedCountInLesson}/${totalMilestonesInLesson} milestones completed`}
-                    </span>
-                  </div>
-                  <span>{formatTime(duration)}</span>
-                </div>
-              </div>
-
-              {/* CONTROLS BUTTONS ROW */}
-              <div className="flex items-center justify-between pt-1">
-                {/* Left: Play / Pause, Rewind, FastForward, Time */}
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button
-                    type="button"
-                    onClick={handleTogglePlay}
-                    className="w-8 h-8 rounded-xs bg-amber-400 hover:bg-amber-500 text-slate-950 flex items-center justify-center transition active:scale-95 cursor-pointer shadow-xs border border-amber-600"
-                    title={isPlaying ? "Tạm dừng" : "Phát video"}
-                  >
-                    {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSkip(-10)}
-                    className="p-1.5 rounded-xs hover:bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer"
-                    title={isVi ? "Tua lại 10s" : "Rewind 10s"}
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSkip(10)}
-                    className="p-1.5 rounded-xs hover:bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer"
-                    title={isVi ? "Tua tới 10s" : "Forward 10s"}
-                  >
-                    <RotateCw className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleToggleMute}
-                    className="p-1.5 rounded-xs hover:bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer"
-                    title={isMuted ? "Bật âm thanh" : "Tắt tiếng"}
-                  >
-                    {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
-                  </button>
-
-                  {/* Exact synchronized counter */}
-                  <span className="font-mono text-xs text-slate-200 font-semibold px-2 py-0.5 rounded-xs bg-slate-800">
-                    {formatTime(currentTime)} / {formatTime(duration)}
-                  </span>
-                </div>
-
-                {/* Right: Speed, Fullscreen */}
-                <div className="flex items-center gap-2">
-                  {/* Playback speed selector */}
-                  <div className="flex items-center bg-slate-800 rounded-xs border border-slate-700 p-0.5">
-                    {[1, 1.25, 1.5].map((rate) => (
-                      <button
-                        key={rate}
-                        type="button"
-                        onClick={() => handleSetRate(rate)}
-                        className={`px-1.5 py-0.5 rounded-xs text-[10px] font-mono font-bold transition cursor-pointer ${
-                          playbackRate === rate ? "bg-amber-400 text-slate-950" : "text-slate-400 hover:text-white"
-                        }`}
-                      >
-                        {rate}x
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Fullscreen */}
-                  <button
-                    type="button"
-                    onClick={handleToggleFullscreen}
-                    className="p-1.5 rounded-xs hover:bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer"
-                    title={isFullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"}
-                  >
-                    {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-            </div>
+            {/* THANH TIMELINE DUY NHẤT Ở ĐÁY (UNIFORM VIDEO CONTROLS) */}
+            <UniformVideoControls
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              duration={duration}
+              playbackRate={playbackRate}
+              isMuted={isMuted}
+              milestones={activeLesson.milestones}
+              solvedMilestoneIds={solvedMilestoneIds}
+              onTogglePlay={handleTogglePlay}
+              onSeek={handleSeek}
+              onChangeSpeed={handleCycleSpeed}
+              onToggleMute={handleToggleMute}
+              onToggleFullscreen={handleToggleFullscreen}
+              onMilestoneClick={handleOpenMilestone}
+            />
 
             {/* H5P FOOTER INFO BAR */}
-            <div className="px-4 py-2 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="px-4 py-2 bg-slate-950 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -1486,10 +1500,12 @@ export function ClassVideoLibrary({
           {/* ACTIVE LESSON DETAILS CARD */}
           <div className="bg-white rounded-md border-2 border-slate-300 shadow-2xs overflow-hidden p-4 space-y-3">
             <div className="flex items-center gap-2">
-              <ListVideo className="w-4 h-4 text-[#F59E0B]" />
-              <h3 className="font-poppins font-bold text-sm text-[#0F2747]">
-                {isVi ? "Bài học đang phát" : "Current Lesson"}
-              </h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-sm bg-amber-100 text-amber-900 border border-amber-300 inline-block">
+                {activeLesson.subject}
+              </span>
+              <span className="text-xs text-slate-500 font-mono">
+                {activeLesson.duration}
+              </span>
             </div>
 
             <div className="relative w-full aspect-video rounded-sm overflow-hidden bg-slate-900 border-2 border-slate-200 shadow-2xs">
@@ -1499,14 +1515,11 @@ export function ClassVideoLibrary({
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-1.5 right-1.5 px-2 py-0.5 rounded-xs bg-black/80 text-white font-mono font-bold text-xs">
-                {formatTime(duration)}
+                {activeLesson.duration}
               </div>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-sm bg-amber-100 text-amber-900 border border-amber-300 inline-block">
-                {activeLesson.subject}
-              </span>
               <h4 className="font-poppins font-bold text-sm text-[#0F2747] leading-snug">
                 {activeLesson.title}
               </h4>
