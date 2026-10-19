@@ -786,6 +786,7 @@ export function ClassVideoLibrary({
           playsinline: 1,
           autoplay: 0,
           enablejsapi: 1,
+          cc_load_policy: 0, // Tắt hiển thị phụ đề mặc định
           origin: typeof window !== "undefined" ? window.location.origin : undefined,
         },
         events: {
@@ -820,6 +821,11 @@ export function ClassVideoLibrary({
               setIsPlaying(false);
             } else if (event.data === 0) {
               setIsPlaying(false);
+              try {
+                // Ngăn chặn YouTube tự ý hiển thị lưới 12 video gợi ý ở màn hình kết thúc
+                event.target.pauseVideo();
+                event.target.seekTo(0, true);
+              } catch (e) {}
               const dur = event.target.getDuration();
               if (dur > 0) setCurrentTime(Math.floor(dur));
               setActiveTab("summary");
@@ -1186,12 +1192,19 @@ export function ClassVideoLibrary({
             </div>
 
             {/* VÙNG HIỂN THỊ VIDEO */}
-            <div className="relative flex-1 w-full overflow-hidden bg-black">
-              {/* YOUTUBE IFRAME BỊ KHÓA POINTER-EVENTS ĐỂ KHÔNG BAO GIỜ HIỆN THANH ĐỎ */}
-              <div
-                id="pencily-yt-iframe-container"
-                className="w-full h-full pointer-events-none"
-              />
+            <div className="relative flex-1 w-full overflow-hidden bg-black flex items-center justify-center">
+              {/* LỚP CẮT CẢNH (CROP & SCALE) ĐỂ ẨN HOÀN TOÀN NÚT 'VIDEO KHÁC', LOGO VÀ WATERMARK YOUTUBE */}
+              <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
+                <div
+                  style={{ transform: "scale(1.18)", transformOrigin: "50% 20%" }}
+                  className="w-full h-full pointer-events-none [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:pointer-events-none"
+                >
+                  <div
+                    id="pencily-yt-iframe-container"
+                    className="w-full h-full pointer-events-none"
+                  />
+                </div>
+              </div>
 
               {/* LỚP CHẮN TRONG SUỐT NHẬN CLICK ĐỂ PLAY/PAUSE MƯỢT MÀ */}
               <div
