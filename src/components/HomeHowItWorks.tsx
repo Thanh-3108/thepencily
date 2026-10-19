@@ -52,14 +52,9 @@ export function HomeHowItWorks() {
             <p className="text-xs font-bold uppercase tracking-widest text-[#4F7ECB] mb-2">
               Peer-tutoring model
             </p>
-            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight mb-3">
+            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight">
               {isVi ? "Cách The Pencily hoạt động" : "How The Pencily Works"}
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl mx-auto">
-              {isVi
-                ? "Mô hình kèm cặp đồng đẳng phi lợi nhuận: các buổi học 60 phút gọn gàng, nhóm nhỏ thân mật và không áp lực điểm số."
-                : "A non-profit peer-tutoring ecosystem: concise 60-minute sessions, cozy small pods, and zero pressure."}
-            </p>
           </div>
         </PencilyScrollReveal>
 
