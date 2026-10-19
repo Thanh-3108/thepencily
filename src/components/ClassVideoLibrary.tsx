@@ -1213,187 +1213,6 @@ export function ClassVideoLibrary({
                 className="absolute inset-0 z-10 cursor-pointer"
                 title={isPlaying ? "Bấm để tạm dừng" : "Bấm để phát"}
               />
-
-              {/* H5P INTERACTIVE QUESTION OVERLAY (POPS UP AT MILESTONE) */}
-              {activeMilestone && (
-                <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 z-30 animate-fadeIn">
-                  <div className="w-full max-w-xl bg-white rounded-sm border-2 border-[#0F2747] shadow-2xl p-5 sm:p-6 space-y-4 max-h-full overflow-y-auto">
-                    {/* Milestone Header */}
-                    <div className="flex items-start justify-between gap-3 border-b-2 border-slate-100 pb-3">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider">
-                            {isVi ? "Cột mốc bài tập" : "Checkpoint Quiz"}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-slate-500">
-                            ⏱ {activeMilestone.timeFormatted}
-                          </span>
-                          <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-xs border border-emerald-200">
-                            +{activeMilestone.points} PP
-                          </span>
-                        </div>
-                        <h4 className="font-poppins font-black text-sm sm:text-base text-[#0F2747]">
-                          {activeMilestone.title}
-                        </h4>
-                      </div>
-
-                      <button
-                        onClick={handleResumePlayback}
-                        className="text-slate-400 hover:text-slate-600 p-1 rounded-xs transition cursor-pointer"
-                        title={isVi ? "Bỏ qua & Tiếp tục xem" : "Skip & Continue"}
-                      >
-                        <XCircle className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    {/* Question Prompt */}
-                    <div className="p-3 rounded-xs bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-semibold text-[#0F2747] leading-relaxed">
-                      {activeMilestone.question}
-                    </div>
-
-                    {/* Options List */}
-                    <div className="space-y-2">
-                      {activeMilestone.options.map((opt) => {
-                        const isSelected = selectedOptionId === opt.id;
-                        let optStyle = "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800";
-
-                        if (isSelected && !isAnswerSubmitted) {
-                          optStyle = "bg-amber-100/80 border-amber-500 text-[#0F2747] ring-1 ring-amber-500";
-                        } else if (isAnswerSubmitted) {
-                          if (opt.isCorrect) {
-                            optStyle = "bg-emerald-50 border-emerald-500 text-emerald-950 ring-1 ring-emerald-500";
-                          } else if (isSelected && !opt.isCorrect) {
-                            optStyle = "bg-rose-50 border-rose-400 text-rose-950";
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={opt.id}
-                            disabled={isAnswerSubmitted}
-                            onClick={() => setSelectedOptionId(opt.id)}
-                            className={`w-full text-left p-3 rounded-xs border-2 text-xs transition flex items-start gap-2.5 cursor-pointer ${optStyle}`}
-                          >
-                            <span className="font-black text-slate-500 shrink-0">
-                              {isSelected ? (
-                                <span className="w-4 h-4 rounded-xs bg-[#0F2747] text-white flex items-center justify-center text-[10px]">
-                                  ✓
-                                </span>
-                              ) : (
-                                <span className="w-4 h-4 rounded-xs border border-slate-400 flex items-center justify-center text-[10px]">
-                                  •
-                                </span>
-                              )}
-                            </span>
-                            <span className="flex-1 leading-snug">{opt.text}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Feedback Explanation */}
-                    {isAnswerSubmitted && (
-                      <div
-                        className={`p-3 rounded-xs border-2 text-xs space-y-1 ${
-                          isAnswerCorrect
-                            ? "bg-emerald-50 border-emerald-400 text-emerald-950"
-                            : "bg-rose-50 border-rose-400 text-rose-950"
-                        }`}
-                      >
-                        <div className="flex items-center gap-1.5 font-bold">
-                          {isAnswerCorrect ? (
-                            <>
-                              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                              <span>{isVi ? "Chính xác tuyệt vời! (+5 PP)" : "Excellent! Correct (+5 PP)"}</span>
-                            </>
-                          ) : (
-                            <>
-                              <XCircle className="w-4 h-4 text-rose-600" />
-                              <span>{isVi ? "Chưa chính xác! Hãy đọc lại lời giải dưới đây:" : "Not quite! Read the explanation below:"}</span>
-                            </>
-                          )}
-                        </div>
-                        <p className="text-[11px] leading-relaxed text-slate-700">
-                          {activeMilestone.options.find((o) => o.isCorrect)?.explanation}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Hint */}
-                    {showHint && activeMilestone.hint && !isAnswerSubmitted && (
-                      <div className="p-2.5 rounded-xs bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-start gap-2">
-                        <HelpCircle className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                        <span>{activeMilestone.hint}</span>
-                      </div>
-                    )}
-
-                    {/* Bottom Actions */}
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-slate-200">
-                      <div className="flex items-center gap-2">
-                        {!isAnswerSubmitted && activeMilestone.hint && (
-                          <button
-                            type="button"
-                            onClick={() => setShowHint(!showHint)}
-                            className="text-xs text-slate-500 hover:text-slate-800 underline font-semibold cursor-pointer"
-                          >
-                            {showHint ? (isVi ? "Ẩn gợi ý" : "Hide hint") : (isVi ? "💡 Xem gợi ý" : "💡 Show hint")}
-                          </button>
-                        )}
-                        <button
-                          type="button"
-                          onClick={handleReviewLesson}
-                          className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#0F2747] font-semibold cursor-pointer"
-                          title={isVi ? "Tua lại 15 giây trước để nghe lại" : "Rewind 15s to re-listen"}
-                        >
-                          <RotateCcw className="w-3.5 h-3.5" />
-                          <span>{isVi ? "Xem lại 15s trước" : "Re-watch 15s"}</span>
-                        </button>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {!isAnswerSubmitted ? (
-                          <button
-                            type="button"
-                            disabled={!selectedOptionId}
-                            onClick={handleSubmitMilestone}
-                            className={`px-5 py-2 rounded-xs font-bold text-xs transition cursor-pointer shadow-xs ${
-                              selectedOptionId
-                                ? "bg-amber-400 hover:bg-amber-500 text-slate-950 border-2 border-amber-600 active:scale-95"
-                                : "bg-slate-200 text-slate-400 border-2 border-slate-300 cursor-not-allowed"
-                            }`}
-                          >
-                            {isVi ? "Kiểm tra đáp án" : "Check Answer"}
-                          </button>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            {!isAnswerCorrect && (
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setIsAnswerSubmitted(false);
-                                  setSelectedOptionId(null);
-                                }}
-                                className="px-3.5 py-2 rounded-xs bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-800 text-xs font-bold transition active:scale-95 cursor-pointer"
-                              >
-                                <RefreshCw className="w-3.5 h-3.5 inline mr-1" />
-                                <span>{isVi ? "Thử lại" : "Retry"}</span>
-                              </button>
-                            )}
-
-                            <button
-                              type="button"
-                              onClick={handleResumePlayback}
-                              className="px-5 py-2 rounded-xs bg-[#0F2747] hover:bg-[#1E3A8A] text-white border-2 border-slate-800 font-bold text-xs transition active:scale-95 cursor-pointer flex items-center gap-1.5"
-                            >
-                              <span>{isVi ? "Tiếp tục xem bài giảng ▶" : "Continue Lecture ▶"}</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* THANH TIMELINE DUY NHẤT Ở ĐÁY (UNIFORM VIDEO CONTROLS WITH QUALITY MENU) */}
@@ -1441,6 +1260,189 @@ export function ClassVideoLibrary({
                 <span>{isVi ? "Học liệu số The Pencily • Chuẩn H5P" : "The Pencily Interactive H5P"}</span>
               </div>
             </div>
+
+            {/* H5P INTERACTIVE QUESTION OVERLAY (POPS UP AT MILESTONE) - COVERS FULL THEATER BOX */}
+            {activeMilestone && (
+              <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 z-40 animate-fadeIn">
+                <div className="w-full max-w-xl bg-white rounded-sm border-2 border-[#0F2747] shadow-2xl p-3 sm:p-4 space-y-2 max-h-full flex flex-col justify-between">
+                  {/* Milestone Header (Compact 1-row) */}
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-1.5 shrink-0">
+                    <div className="flex items-center gap-2 flex-wrap min-w-0">
+                      <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider shrink-0">
+                        {isVi ? "Cột mốc bài tập" : "Checkpoint Quiz"}
+                      </span>
+                      <span className="text-[11px] font-mono font-bold text-slate-500 shrink-0">
+                        ⏱ {activeMilestone.timeFormatted}
+                      </span>
+                      <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-xs border border-emerald-200 shrink-0">
+                        +{activeMilestone.points} PP
+                      </span>
+                      <span className="font-poppins font-bold text-xs text-[#0F2747] truncate max-w-[200px] hidden sm:inline">
+                        • {activeMilestone.title}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleResumePlayback}
+                      className="text-slate-400 hover:text-slate-700 p-0.5 rounded-xs transition cursor-pointer shrink-0"
+                      title={isVi ? "Bỏ qua & Tiếp tục xem" : "Skip & Continue"}
+                    >
+                      <XCircle className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Question Prompt */}
+                  <div className="px-3 py-1.5 sm:py-2 rounded-xs bg-amber-50/80 border-l-4 border-amber-400 text-xs sm:text-sm font-semibold text-[#0F2747] leading-snug shrink-0">
+                    {activeMilestone.question}
+                  </div>
+
+                  {/* Options List (Grid 2-col on desktop / stacked on mobile) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 shrink-0">
+                    {activeMilestone.options.map((opt, idx) => {
+                      const isSelected = selectedOptionId === opt.id;
+                      let optStyle = "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800";
+
+                      if (isSelected && !isAnswerSubmitted) {
+                        optStyle = "bg-amber-100/80 border-amber-500 text-[#0F2747] ring-1 ring-amber-500";
+                      } else if (isAnswerSubmitted) {
+                        if (opt.isCorrect) {
+                          optStyle = "bg-emerald-50 border-emerald-500 text-emerald-950 ring-1 ring-emerald-500";
+                        } else if (isSelected && !opt.isCorrect) {
+                          optStyle = "bg-rose-50 border-rose-400 text-rose-950";
+                        }
+                      }
+
+                      const optionLetter = String.fromCharCode(65 + idx);
+
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          disabled={isAnswerSubmitted}
+                          onClick={() => setSelectedOptionId(opt.id)}
+                          className={`w-full text-left py-1.5 px-2.5 rounded-xs border text-xs transition flex items-start gap-2 cursor-pointer ${optStyle}`}
+                        >
+                          <span className="shrink-0 font-mono font-bold text-[10px] mt-0.5">
+                            {isSelected ? (
+                              <span className="w-4 h-4 rounded-xs bg-[#0F2747] text-white flex items-center justify-center">
+                                ✓
+                              </span>
+                            ) : (
+                              <span className="w-4 h-4 rounded-xs border border-slate-300 bg-white text-slate-600 flex items-center justify-center">
+                                {optionLetter}
+                              </span>
+                            )}
+                          </span>
+                          <span className="flex-1 leading-snug">{opt.text}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Feedback Explanation */}
+                  {isAnswerSubmitted && (
+                    <div
+                      className={`p-2 rounded-xs border text-xs space-y-0.5 shrink-0 animate-fadeIn ${
+                        isAnswerCorrect
+                          ? "bg-emerald-50 border-emerald-400 text-emerald-950"
+                          : "bg-rose-50 border-rose-400 text-rose-950"
+                      }`}
+                    >
+                      <div className="flex items-center gap-1.5 font-bold text-[11px]">
+                        {isAnswerCorrect ? (
+                          <>
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            <span>{isVi ? "Chính xác tuyệt vời! (+5 PP)" : "Excellent! Correct (+5 PP)"}</span>
+                          </>
+                        ) : (
+                          <>
+                            <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+                            <span>{isVi ? "Chưa chính xác! Lời giải:" : "Not quite! Explanation:"}</span>
+                          </>
+                        )}
+                      </div>
+                      <p className="text-[11px] leading-tight text-slate-700">
+                        {activeMilestone.options.find((o) => o.isCorrect)?.explanation}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Hint */}
+                  {showHint && activeMilestone.hint && !isAnswerSubmitted && (
+                    <div className="p-2 rounded-xs bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-center gap-2 shrink-0 animate-fadeIn">
+                      <HelpCircle className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span className="text-[11px] leading-tight">{activeMilestone.hint}</span>
+                    </div>
+                  )}
+
+                  {/* Bottom Actions */}
+                  <div className="flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200 shrink-0">
+                    <div className="flex items-center gap-2">
+                      {!isAnswerSubmitted && activeMilestone.hint && (
+                        <button
+                          type="button"
+                          onClick={() => setShowHint(!showHint)}
+                          className="text-[11px] text-slate-500 hover:text-slate-800 underline font-semibold cursor-pointer"
+                        >
+                          {showHint ? (isVi ? "Ẩn gợi ý" : "Hide hint") : (isVi ? "💡 Gợi ý" : "💡 Hint")}
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleReviewLesson}
+                        className="inline-flex items-center gap-1 text-[11px] text-slate-600 hover:text-[#0F2747] font-semibold cursor-pointer"
+                        title={isVi ? "Tua lại 15 giây trước để nghe lại" : "Rewind 15s to re-listen"}
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        <span>{isVi ? "Xem lại 15s" : "Re-watch 15s"}</span>
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      {!isAnswerSubmitted ? (
+                        <button
+                          type="button"
+                          disabled={!selectedOptionId}
+                          onClick={handleSubmitMilestone}
+                          className={`px-4 py-1.5 rounded-xs font-bold text-xs transition cursor-pointer shadow-xs ${
+                            selectedOptionId
+                              ? "bg-amber-400 hover:bg-amber-500 text-slate-950 border border-amber-600 active:scale-95"
+                              : "bg-slate-200 text-slate-400 border border-slate-300 cursor-not-allowed"
+                          }`}
+                        >
+                          {isVi ? "Kiểm tra đáp án" : "Check Answer"}
+                        </button>
+                      ) : (
+                        <div className="flex items-center gap-1.5">
+                          {!isAnswerCorrect && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsAnswerSubmitted(false);
+                                setSelectedOptionId(null);
+                              }}
+                              className="px-3 py-1.5 rounded-xs bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold transition active:scale-95 cursor-pointer"
+                            >
+                              <RefreshCw className="w-3 h-3 inline mr-1" />
+                              <span>{isVi ? "Thử lại" : "Retry"}</span>
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={handleResumePlayback}
+                            className="px-4 py-1.5 rounded-xs bg-[#0F2747] hover:bg-[#1E3A8A] text-white border border-slate-800 font-bold text-xs transition active:scale-95 cursor-pointer flex items-center gap-1"
+                          >
+                            <span>{isVi ? "Tiếp tục xem ▶" : "Continue ▶"}</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 3. TUTOR & ATTENDANCE BAR */}
