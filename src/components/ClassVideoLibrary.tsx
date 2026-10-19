@@ -1196,7 +1196,7 @@ export function ClassVideoLibrary({
               {/* LỚP CẮT CẢNH (CROP & SCALE) ĐỂ ẨN HOÀN TOÀN NÚT 'VIDEO KHÁC', LOGO VÀ WATERMARK YOUTUBE */}
               <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
                 <div
-                  style={{ transform: "scale(1.18)", transformOrigin: "50% 20%" }}
+                  style={{ transform: "scale(1.36)", transformOrigin: "50% 0%" }}
                   className="w-full h-full pointer-events-none [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:pointer-events-none"
                 >
                   <div
