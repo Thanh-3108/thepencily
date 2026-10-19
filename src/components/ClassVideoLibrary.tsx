@@ -26,6 +26,7 @@ import {
   Search,
   GraduationCap,
   Gift,
+  ChevronRight,
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 
@@ -94,6 +95,17 @@ export interface VideoLesson {
   transcript: VideoTranscriptItem[];
   milestones: VideoMilestone[];
 }
+
+export const QUALITY_LABELS: Record<string, { label: string; badge?: string }> = {
+  auto: { label: "Tự động", badge: "Auto" },
+  default: { label: "Tự động", badge: "Auto" },
+  hd1080: { label: "1080p", badge: "Full HD" },
+  hd720: { label: "720p", badge: "HD" },
+  large: { label: "480p", badge: "SD" },
+  medium: { label: "360p" },
+  small: { label: "240p" },
+  tiny: { label: "144p" },
+};
 
 // 1 SINGLE MASTER LESSON: NEVER GONNA GIVE YOU UP (Rick Astley)
 export function getDefaultLessons(isVi: boolean): VideoLesson[] {
@@ -308,12 +320,17 @@ interface UniformVideoControlsProps {
   isMuted: boolean;
   milestones: VideoMilestone[];
   solvedMilestoneIds: string[];
+  currentQuality: string;
+  availableQualities: string[];
+  autoPauseAtMilestone: boolean;
   onTogglePlay: () => void;
   onSeek: (time: number) => void;
-  onChangeSpeed: () => void;
+  onChangeSpeed: (speed: number) => void;
   onToggleMute: () => void;
   onToggleFullscreen: () => void;
   onMilestoneClick: (milestone: VideoMilestone) => void;
+  onSelectQuality: (quality: string) => void;
+  onToggleAutoPause: () => void;
 }
 
 export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
@@ -324,14 +341,39 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
   isMuted,
   milestones,
   solvedMilestoneIds,
+  currentQuality,
+  availableQualities,
+  autoPauseAtMilestone,
   onTogglePlay,
   onSeek,
   onChangeSpeed,
   onToggleMute,
   onToggleFullscreen,
   onMilestoneClick,
+  onSelectQuality,
+  onToggleAutoPause,
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
+  const settingsMenuRef = useRef<HTMLDivElement>(null);
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [settingsView, setSettingsView] = useState<"main" | "quality" | "speed">("main");
+
+  // Close settings popover when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (settingsMenuRef.current && !settingsMenuRef.current.contains(e.target as Node)) {
+        setIsSettingsOpen(false);
+        setSettingsView("main");
+      }
+    };
+    if (isSettingsOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isSettingsOpen]);
 
   const progressPercent = duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
 
@@ -349,9 +391,33 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
     onSeek(clickRatio * duration);
   };
 
+  const currentQualityDisplay = useMemo(() => {
+    const info = QUALITY_LABELS[currentQuality];
+    if (info) {
+      return info.badge ? `${info.label} (${info.badge})` : info.label;
+    }
+    return currentQuality || "Tự động";
+  }, [currentQuality]);
+
+  // Build selectable quality list
+  const qualityList = useMemo(() => {
+    const standardKeys = ["auto", "hd1080", "hd720", "large", "medium", "small"];
+    const merged = Array.from(new Set(["auto", ...(availableQualities.length > 0 ? availableQualities : standardKeys)]));
+    return merged.map((key) => {
+      const meta = QUALITY_LABELS[key] || { label: key };
+      return {
+        id: key,
+        label: meta.label,
+        badge: meta.badge,
+      };
+    });
+  }, [availableQualities]);
+
+  const speedList = [0.75, 1, 1.25, 1.5, 2];
+
   return (
     /* Thanh điều khiển đồng nhất (1 hàng ngang duy nhất ở đáy video) */
-    <div className="w-full bg-[#1e1e1e]/95 backdrop-blur-sm px-4 py-2.5 flex items-center gap-4 text-white select-none z-20 border-t border-white/10">
+    <div className="relative w-full bg-[#1e1e1e]/95 backdrop-blur-sm px-4 py-2.5 flex items-center gap-4 text-white select-none z-20 border-t border-white/10">
       {/* 1. Nút Play / Pause */}
       <button
         onClick={onTogglePlay}
@@ -425,9 +491,13 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
       </div>
 
       {/* 4. Cụm nút chức năng bên phải: Tốc độ, Âm lượng, Cài đặt, Fullscreen */}
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-3 shrink-0 relative" ref={settingsMenuRef}>
+        {/* Nút chu kỳ tốc độ nhanh */}
         <button
-          onClick={onChangeSpeed}
+          onClick={() => {
+            const nextIdx = (speedList.indexOf(playbackRate) + 1) % speedList.length;
+            onChangeSpeed(speedList[nextIdx]);
+          }}
           className="hover:text-amber-400 transition-colors flex items-center gap-1 text-xs font-semibold cursor-pointer"
           title={`Tốc độ phát: ${playbackRate}x (Bấm để đổi)`}
         >
@@ -435,6 +505,7 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
           <span>{playbackRate}x</span>
         </button>
 
+        {/* Nút bật/tắt tiếng */}
         <button
           onClick={onToggleMute}
           className="hover:text-amber-400 transition-colors cursor-pointer"
@@ -443,14 +514,21 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
           {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
         </button>
 
+        {/* Nút Cài đặt (Mở menu chất lượng & tùy chọn xịn xò) */}
         <button
-          onClick={() => alert("Cài đặt chất lượng video: Tự động (HD)")}
-          className="hover:text-amber-400 transition-colors cursor-pointer"
-          title="Cài đặt"
+          onClick={() => {
+            setIsSettingsOpen(!isSettingsOpen);
+            setSettingsView("main");
+          }}
+          className={`hover:text-amber-400 transition-colors cursor-pointer p-1 rounded-xs ${
+            isSettingsOpen ? "text-amber-400 bg-white/10" : ""
+          }`}
+          title="Cài đặt chất lượng video & tùy chọn"
         >
           <Settings className="w-4 h-4" />
         </button>
 
+        {/* Nút Toàn màn hình */}
         <button
           onClick={onToggleFullscreen}
           className="hover:text-amber-400 transition-colors cursor-pointer"
@@ -458,6 +536,144 @@ export const UniformVideoControls: React.FC<UniformVideoControlsProps> = ({
         >
           <Maximize className="w-4 h-4" />
         </button>
+
+        {/* FLOATING SETTINGS & QUALITY POPOVER MENU */}
+        {isSettingsOpen && (
+          <div className="absolute bottom-11 right-0 z-50 w-64 bg-[#18181b]/98 backdrop-blur-md rounded-md border border-white/15 shadow-2xl overflow-hidden text-xs select-none animate-fadeIn">
+            {/* Header */}
+            <div className="px-3 py-2 bg-white/5 border-b border-white/10 flex items-center justify-between font-bold text-slate-200">
+              <div className="flex items-center gap-1.5">
+                <Settings className="w-3.5 h-3.5 text-amber-400" />
+                <span>
+                  {settingsView === "main"
+                    ? "Cài đặt trình phát"
+                    : settingsView === "quality"
+                    ? "Chất lượng video"
+                    : "Tốc độ phát"}
+                </span>
+              </div>
+              {settingsView !== "main" && (
+                <button
+                  onClick={() => setSettingsView("main")}
+                  className="text-[11px] text-amber-400 hover:text-amber-300 font-semibold cursor-pointer"
+                >
+                  ← Quay lại
+                </button>
+              )}
+            </div>
+
+            {/* MAIN SETTINGS MENU */}
+            {settingsView === "main" && (
+              <div className="p-1 space-y-0.5">
+                {/* 1. Chất lượng video */}
+                <button
+                  type="button"
+                  onClick={() => setSettingsView("quality")}
+                  className="w-full px-3 py-2 rounded-xs hover:bg-white/10 flex items-center justify-between text-left transition cursor-pointer"
+                >
+                  <span className="text-slate-300">Chất lượng</span>
+                  <div className="flex items-center gap-1 text-slate-400">
+                    <span className="text-[11px] text-amber-400 font-bold">{currentQualityDisplay}</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  </div>
+                </button>
+
+                {/* 2. Tốc độ phát */}
+                <button
+                  type="button"
+                  onClick={() => setSettingsView("speed")}
+                  className="w-full px-3 py-2 rounded-xs hover:bg-white/10 flex items-center justify-between text-left transition cursor-pointer"
+                >
+                  <span className="text-slate-300">Tốc độ phát</span>
+                  <div className="flex items-center gap-1 text-slate-400">
+                    <span className="text-[11px] text-amber-400 font-bold">{playbackRate === 1 ? "Chuẩn (1.0x)" : `${playbackRate}x`}</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  </div>
+                </button>
+
+                {/* 3. Tự dừng khi gặp cột mốc câu hỏi */}
+                <div className="px-3 py-2 rounded-xs flex items-center justify-between text-left border-t border-white/10 mt-1 pt-1.5">
+                  <div className="space-y-0.5">
+                    <span className="text-slate-300 block text-[11px]">Tự dừng khi gặp câu hỏi</span>
+                    <span className="text-[10px] text-slate-500 block">Dừng video để học sinh làm bài tập</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onToggleAutoPause}
+                    className={`w-8 h-4 rounded-xs border transition-colors cursor-pointer relative shrink-0 ${
+                      autoPauseAtMilestone ? "bg-amber-400 border-amber-600" : "bg-neutral-700 border-neutral-600"
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 w-3 h-3 bg-slate-950 rounded-xs transition-transform ${
+                        autoPauseAtMilestone ? "right-0.5" : "left-0.5"
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* QUALITY SELECT SUBMENU */}
+            {settingsView === "quality" && (
+              <div className="p-1 max-h-56 overflow-y-auto space-y-0.5">
+                {qualityList.map((q) => {
+                  const isSelected = currentQuality === q.id || (q.id === "auto" && (!currentQuality || currentQuality === "default"));
+                  return (
+                    <button
+                      key={q.id}
+                      type="button"
+                      onClick={() => {
+                        onSelectQuality(q.id);
+                        setIsSettingsOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 rounded-xs flex items-center justify-between text-left transition cursor-pointer ${
+                        isSelected ? "bg-amber-400/20 text-amber-300 font-bold" : "hover:bg-white/10 text-slate-200"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {isSelected ? <Check className="w-3.5 h-3.5 text-amber-400 stroke-[3]" /> : <span className="w-3.5" />}
+                        <span>{q.label}</span>
+                      </div>
+                      {q.badge && (
+                        <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-amber-400/20 text-amber-300 font-mono font-bold">
+                          {q.badge}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* SPEED SELECT SUBMENU */}
+            {settingsView === "speed" && (
+              <div className="p-1 space-y-0.5">
+                {speedList.map((s) => {
+                  const isSelected = playbackRate === s;
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => {
+                        onChangeSpeed(s);
+                        setIsSettingsOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 rounded-xs flex items-center justify-between text-left transition cursor-pointer ${
+                        isSelected ? "bg-amber-400/20 text-amber-300 font-bold" : "hover:bg-white/10 text-slate-200"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {isSelected ? <Check className="w-3.5 h-3.5 text-amber-400 stroke-[3]" /> : <span className="w-3.5" />}
+                        <span>{s === 1 ? "Chuẩn (1.0x)" : `${s}x`}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -496,6 +712,9 @@ export function ClassVideoLibrary({
   const [duration, setDuration] = useState<number>(213);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [currentQuality, setCurrentQuality] = useState<string>("auto");
+  const [availableQualities, setAvailableQualities] = useState<string[]>([]);
+  const [autoPauseAtMilestone, setAutoPauseAtMilestone] = useState<boolean>(true);
 
   // Interactive Milestones State (H5P features)
   const [activeMilestone, setActiveMilestone] = useState<VideoMilestone | null>(null);
@@ -576,12 +795,27 @@ export function ClassVideoLibrary({
             if (dur && dur > 0) {
               setDuration(Math.floor(dur));
             }
+            // Fetch available qualities
+            if (typeof event.target.getAvailableQualityLevels === "function") {
+              const qLevels = event.target.getAvailableQualityLevels();
+              if (Array.isArray(qLevels) && qLevels.length > 0) {
+                setAvailableQualities(qLevels);
+              }
+            }
+            if (typeof event.target.getPlaybackQuality === "function") {
+              const currentQ = event.target.getPlaybackQuality();
+              if (currentQ) setCurrentQuality(currentQ);
+            }
           },
           onStateChange: (event: any) => {
             if (!isMounted) return;
             // 1: PLAYING, 2: PAUSED, 0: ENDED
             if (event.data === 1) {
               setIsPlaying(true);
+              if (typeof event.target.getPlaybackQuality === "function") {
+                const currentQ = event.target.getPlaybackQuality();
+                if (currentQ) setCurrentQuality(currentQ);
+              }
             } else if (event.data === 2) {
               setIsPlaying(false);
             } else if (event.data === 0) {
@@ -646,22 +880,25 @@ export function ClassVideoLibrary({
             if (currentSecond !== lastSecondRef.current) {
               lastSecondRef.current = currentSecond;
 
-              const hitMilestone = activeLesson.milestones.find(
-                (m) =>
-                  m.seconds === currentSecond &&
-                  !triggeredMilestoneRef.current.has(m.id) &&
-                  !solvedMilestoneIds.includes(m.id)
-              );
+              // Check if any milestone falls on this exact second and autoPause is enabled
+              if (autoPauseAtMilestone) {
+                const hitMilestone = activeLesson.milestones.find(
+                  (m) =>
+                    m.seconds === currentSecond &&
+                    !triggeredMilestoneRef.current.has(m.id) &&
+                    !solvedMilestoneIds.includes(m.id)
+                );
 
-              if (hitMilestone) {
-                triggeredMilestoneRef.current.add(hitMilestone.id);
-                player.pauseVideo();
-                setIsPlaying(false);
-                setActiveMilestone(hitMilestone);
-                setSelectedOptionId(null);
-                setIsAnswerSubmitted(false);
-                setIsAnswerCorrect(null);
-                setShowHint(false);
+                if (hitMilestone) {
+                  triggeredMilestoneRef.current.add(hitMilestone.id);
+                  player.pauseVideo();
+                  setIsPlaying(false);
+                  setActiveMilestone(hitMilestone);
+                  setSelectedOptionId(null);
+                  setIsAnswerSubmitted(false);
+                  setIsAnswerCorrect(null);
+                  setShowHint(false);
+                }
               }
             }
           } else if (state === 2) {
@@ -679,7 +916,7 @@ export function ClassVideoLibrary({
 
     animId = requestAnimationFrame(checkPlayhead);
     return () => cancelAnimationFrame(animId);
-  }, [activeLesson, solvedMilestoneIds]);
+  }, [activeLesson, solvedMilestoneIds, autoPauseAtMilestone]);
 
   // Player controls
   const handlePlay = useCallback(() => {
@@ -724,15 +961,40 @@ export function ClassVideoLibrary({
     [duration, activeLesson]
   );
 
-  const handleCycleSpeed = useCallback(() => {
-    const speeds = [1, 1.25, 1.5, 2, 0.75];
-    const currentIndex = speeds.indexOf(playbackRate);
-    const nextSpeed = speeds[(currentIndex + 1) % speeds.length];
-    setPlaybackRate(nextSpeed);
+  const handleSetSpeed = useCallback((speed: number) => {
+    setPlaybackRate(speed);
     if (playerRef.current && typeof playerRef.current.setPlaybackRate === "function") {
-      playerRef.current.setPlaybackRate(nextSpeed);
+      playerRef.current.setPlaybackRate(speed);
     }
-  }, [playbackRate]);
+  }, []);
+
+  const handleSelectQuality = useCallback((qualityId: string) => {
+    setCurrentQuality(qualityId);
+    if (playerRef.current && typeof playerRef.current.setPlaybackQuality === "function") {
+      playerRef.current.setPlaybackQuality(qualityId);
+    }
+    const meta = QUALITY_LABELS[qualityId];
+    const name = meta ? (meta.badge ? `${meta.label} (${meta.badge})` : meta.label) : qualityId;
+    setRewardToast({
+      message: `⚙️ Đã thiết lập chất lượng video: ${name}`,
+      points: 0,
+    });
+    setTimeout(() => setRewardToast(null), 3000);
+  }, []);
+
+  const handleToggleAutoPause = useCallback(() => {
+    setAutoPauseAtMilestone((prev) => {
+      const next = !prev;
+      setRewardToast({
+        message: next
+          ? "⏸️ Đã bật: Tự động dừng tại cột mốc câu hỏi"
+          : "▶️ Đã tắt: Video sẽ phát liên tục qua cột mốc",
+        points: 0,
+      });
+      setTimeout(() => setRewardToast(null), 3000);
+      return next;
+    });
+  }, []);
 
   const handleToggleMute = useCallback(() => {
     if (playerRef.current) {
@@ -889,16 +1151,18 @@ export function ClassVideoLibrary({
         )}
       </div>
 
-      {/* REWARD TOAST POPUP */}
+      {/* REWARD / STATUS TOAST POPUP */}
       {rewardToast && (
         <div className="p-3 bg-emerald-50 border-2 border-emerald-500 rounded-sm text-emerald-950 font-bold text-xs flex items-center justify-between shadow-md animate-fadeIn">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{rewardToast.message}</span>
           </div>
-          <span className="text-[11px] bg-emerald-600 text-white px-2 py-0.5 rounded-xs font-mono">
-            +{rewardToast.points} PP
-          </span>
+          {rewardToast.points > 0 && (
+            <span className="text-[11px] bg-emerald-600 text-white px-2 py-0.5 rounded-xs font-mono">
+              +{rewardToast.points} PP
+            </span>
+          )}
         </div>
       )}
 
@@ -1119,7 +1383,7 @@ export function ClassVideoLibrary({
               )}
             </div>
 
-            {/* THANH TIMELINE DUY NHẤT Ở ĐÁY (UNIFORM VIDEO CONTROLS) */}
+            {/* THANH TIMELINE DUY NHẤT Ở ĐÁY (UNIFORM VIDEO CONTROLS WITH QUALITY MENU) */}
             <UniformVideoControls
               isPlaying={isPlaying}
               currentTime={currentTime}
@@ -1128,12 +1392,17 @@ export function ClassVideoLibrary({
               isMuted={isMuted}
               milestones={activeLesson.milestones}
               solvedMilestoneIds={solvedMilestoneIds}
+              currentQuality={currentQuality}
+              availableQualities={availableQualities}
+              autoPauseAtMilestone={autoPauseAtMilestone}
               onTogglePlay={handleTogglePlay}
               onSeek={handleSeek}
-              onChangeSpeed={handleCycleSpeed}
+              onChangeSpeed={handleSetSpeed}
               onToggleMute={handleToggleMute}
               onToggleFullscreen={handleToggleFullscreen}
               onMilestoneClick={handleOpenMilestone}
+              onSelectQuality={handleSelectQuality}
+              onToggleAutoPause={handleToggleAutoPause}
             />
 
             {/* H5P FOOTER INFO BAR */}
