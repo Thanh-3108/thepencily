@@ -27,8 +27,22 @@ import {
   GraduationCap,
   Gift,
   ChevronRight,
+  Plus,
+  Download,
+  Upload,
+  Copy,
+  ExternalLink,
+  Film,
+  ChevronDown,
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
+import {
+  parseYouTubeId,
+  downloadH5PFile,
+  importH5PFormat,
+  formatSecondsToTime,
+  parseTimeToSeconds,
+} from "@/lib/h5pConverter";
 
 // Declare YT window global
 declare global {
@@ -107,9 +121,179 @@ export const QUALITY_LABELS: Record<string, { label: string; badge?: string }> =
   tiny: { label: "144p" },
 };
 
-// 1 SINGLE MASTER LESSON: NEVER GONNA GIVE YOU UP (Rick Astley)
+// PRESET LESSONS (PTNK Chemistry from Image 1 & Rick Astley)
 export function getDefaultLessons(isVi: boolean): VideoLesson[] {
   return [
+    {
+      id: "ptnk-hoa-hoc-11-chuan-do-acid-base",
+      youtubeId: "v_0K71Jq3h8",
+      title: isVi
+        ? "Hoa hoc-11-HK1-Phuong phap chuan do acid-base-Final"
+        : "Chemistry-11-Sem1-Acid-base titration method-Final",
+      duration: "10:59",
+      totalSeconds: 659,
+      subject: isVi ? "Học liệu số Tổ Hóa học Trường PTNK" : "Digital Material - PTNK Chemistry Dept",
+      gradeLevel: isVi ? "Hóa học 11 • Chuẩn H5P Interactive Video" : "Chemistry 11 • H5P Interactive Video",
+      tutor: {
+        name: isVi ? "Tổ Hóa học Trường PTNK" : "PTNK Chemistry Dept",
+        avatar: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=256&q=80",
+        school: isVi ? "Trường Phổ Thông Năng Khiếu - ĐHQG TP.HCM" : "High School for the Gifted - VNU-HCM",
+        grade: isVi ? "Học liệu Số Quốc Gia" : "National Digital Material",
+        bio: isVi
+          ? "Học liệu số tương tác môn Hóa học do Tổ Hóa học Trường Phổ thông Năng khiếu (ĐHQG TP.HCM) phát triển theo chuẩn H5P Interactive Video quốc tế. Không tốn dung lượng máy chủ nhờ truyền dẫn trực tiếp từ YouTube."
+          : "Interactive chemistry learning material created by PTNK Chemistry Department, featuring embedded checkpoint exercises.",
+        sessions: 1240,
+        specialty: isVi ? "Chuẩn độ acid-base, Oxi hóa - Khử, Phản ứng dung dịch" : "Titration, Redox, Solution Reactions",
+        badge: isVi ? "Học Liệu PTNK" : "PTNK Verified",
+      },
+      syllabus: [
+        {
+          id: "ptnk-ch-1",
+          title: isVi ? "1. Nguyên tắc chuẩn độ dung dịch Acid - Base" : "1. Principles of Acid-Base Titration",
+          time: "1:20",
+          seconds: 80,
+          summary: "Nguyên tắc sử dụng dung dịch chuẩn để xác định nồng độ dung dịch chưa biết...",
+        },
+        {
+          id: "ptnk-ch-2",
+          title: isVi ? "2. Thực hành thí nghiệm & Điểm tương đương" : "2. Experimental Procedure & Equivalence Point",
+          time: "5:15",
+          seconds: 315,
+          summary: "Quy trình tráng buret, sử dụng pipet và nhận biết đổi màu chất chỉ thị...",
+        },
+        {
+          id: "ptnk-ch-3",
+          title: isVi ? "3. Câu hỏi vận dụng: 10FeSO4 + 2KMnO4 + 8H2SO4" : "3. Application: 10FeSO4 + 2KMnO4 + 8H2SO4",
+          time: "9:56",
+          seconds: 596,
+          summary: "Phản ứng oxi hóa khử 10FeSO4 + 2KMnO4 + 8H2SO4 -> 5Fe2(SO4)3 + K2SO4 + 2MnSO4 + 8H2O...",
+        },
+      ],
+      transcript: [
+        { time: "1:20", seconds: 80, speaker: "Giáo viên PTNK", text: "Chào các em, hôm nay chúng ta cùng tìm hiểu phương pháp chuẩn độ acid - base." },
+        { time: "5:15", seconds: 315, speaker: "Giáo viên PTNK", text: "Điểm tương đương là thời điểm mà chất chuẩn phản ứng vừa đủ với chất cần xác định." },
+        { time: "9:56", seconds: 596, speaker: "Giáo viên PTNK", text: "Bây giờ chúng ta cùng đến với câu hỏi vận dụng về phản ứng chuẩn độ FeSO4 bằng KMnO4 trong môi trường acid." },
+      ],
+      milestones: [
+        {
+          id: "ptnk-m-1",
+          seconds: 80,
+          timeFormatted: "1:20",
+          title: isVi ? "Cột mốc 1: Dụng cụ chuẩn độ (1:20)" : "Milestone 1: Titration Equipment (1:20)",
+          question: isVi
+            ? "Trong thí nghiệm chuẩn độ acid - base, dụng cụ chia vạch chính xác nào có khóa điều chỉnh giọt để nhỏ dung dịch chuẩn?"
+            : "In an acid-base titration experiment, which precision apparatus has a stopcock to dispense titrant drop by drop?",
+          options: [
+            {
+              id: "ptnk-opt-1a",
+              text: isVi ? "Buret (Burette) thủy tinh có khóa chia giọt" : "Glass burette with stopcock",
+              isCorrect: true,
+              explanation: isVi
+                ? "Chính xác! Buret có vạch chia chính xác từ 0 - 25ml hoặc 50ml, có khóa kiểm soát tốc độ nhỏ giọt."
+                : "Correct! The burette has calibrated markings and a stopcock for precise titrant dispensing.",
+            },
+            {
+              id: "ptnk-opt-1b",
+              text: isVi ? "Ống đong chia vạch thông thường" : "Graduated cylinder",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. Ống đong có độ chính xác thấp, không dùng cho chuẩn độ phân tích." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-1c",
+              text: isVi ? "Cốc thủy tinh chịu nhiệt (Beaker)" : "Glass beaker",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. Cốc thủy tinh chỉ dùng đựng dung dịch." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-1d",
+              text: isVi ? "Bình tam giác đậy nút kín" : "Conical flask with stopper",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. Bình tam giác (Erlenmeyer) dùng để chứa dung dịch cần chuẩn độ ở dưới buret." : "Incorrect.",
+            },
+          ],
+          points: 5,
+          hint: isVi ? "Dụng cụ dạng ống dài gắn trên giá sắt có khóa xả ở đáy." : "Long calibrated glass tube with a stopcock.",
+        },
+        {
+          id: "ptnk-m-2",
+          seconds: 315,
+          timeFormatted: "5:15",
+          title: isVi ? "Cột mốc 2: Điểm tương đương (5:15)" : "Milestone 2: Equivalence Point (5:15)",
+          question: isVi
+            ? "Khái niệm 'Điểm tương đương' trong phương pháp chuẩn độ là thời điểm nào sau đây?"
+            : "What does 'Equivalence Point' mean in a titration procedure?",
+          options: [
+            {
+              id: "ptnk-opt-2a",
+              text: isVi ? "Thời điểm chất chuẩn phản ứng vừa đủ với lượng chất cần xác định trong bình" : "Point when titrant has reacted stoichiometrically with analyte",
+              isCorrect: true,
+              explanation: isVi
+                ? "Chính xác! Điểm tương đương là lúc số mol electron nhường bằng số mol electron nhận (hoặc số mol H+ bằng số mol OH-)."
+                : "Correct! The equivalence point is when stoichiometric completion is reached.",
+            },
+            {
+              id: "ptnk-opt-2b",
+              text: isVi ? "Thời điểm dung dịch bắt đầu sôi" : "When the solution boils",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-2c",
+              text: isVi ? "Thời điểm dung dịch đạt trạng thái bão hòa kết tủa" : "When solution reaches precipitation saturation",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-2d",
+              text: isVi ? "Thời điểm dung dịch cạn hết nước" : "When all water evaporates",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng." : "Incorrect.",
+            },
+          ],
+          points: 5,
+          hint: isVi ? "Thời điểm phản ứng vừa đủ theo tỷ lệ hóa học." : "Point of stoichiometric completeness.",
+        },
+        {
+          id: "ptnk-m-3",
+          seconds: 596,
+          timeFormatted: "9:56",
+          title: isVi ? "Cột mốc 3: Câu hỏi vận dụng PTNK (9:56)" : "Milestone 3: PTNK Chemistry Application (9:56)",
+          question: isVi
+            ? "Phản ứng hoá học xảy ra trong thí nghiệm: 10FeSO4 + 2KMnO4 + 8H2SO4 -> 5Fe2(SO4)3 + K2SO4 + 2MnSO4 + 8H2O. Tỉ lệ mol phản ứng giữa chất khử FeSO4 và chất oxi hoá KMnO4 là bao nhiêu?"
+            : "In the experiment reaction: 10FeSO4 + 2KMnO4 + 8H2SO4 -> 5Fe2(SO4)3 + K2SO4 + 2MnSO4 + 8H2O. What is the stoichiometric molar ratio between reducing agent FeSO4 and oxidizing agent KMnO4?",
+          options: [
+            {
+              id: "ptnk-opt-3a",
+              text: isVi ? "5 : 1 (Cứ 10 mol FeSO4 phản ứng với 2 mol KMnO4, rút gọn là 5 : 1)" : "5 : 1 (10 mol FeSO4 reacts with 2 mol KMnO4, simplified to 5:1)",
+              isCorrect: true,
+              explanation: isVi
+                ? "Chính xác tuyệt vời! Hệ số cân bằng phản ứng oxi hóa - khử là 10Fe2+ và 2Mn7+, tỉ lệ mol là 10:2 = 5:1."
+                : "Correct! The stoichiometric ratio is 10:2, which simplifies to 5:1.",
+            },
+            {
+              id: "ptnk-opt-3b",
+              text: isVi ? "1 : 1" : "1 : 1",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. Mn7+ nhận 5 electron trong khi Fe2+ chỉ nhường 1 electron." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-3c",
+              text: isVi ? "2 : 5" : "2 : 5",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. Tỉ lệ này bị nghịch đảo giữa chất khử và chất oxi hóa." : "Incorrect.",
+            },
+            {
+              id: "ptnk-opt-3d",
+              text: isVi ? "10 : 8" : "10 : 8",
+              isCorrect: false,
+              explanation: isVi ? "Chưa đúng. 8 là hệ số của môi trường H2SO4." : "Incorrect.",
+            },
+          ],
+          points: 5,
+          hint: isVi ? "Xem hệ số đứng trước FeSO4 và KMnO4 trong phương trình trên slide." : "Examine coefficients of FeSO4 and KMnO4 on the slide.",
+        },
+      ],
+    },
     {
       id: "rick-astley-never-gonna-give-you-up",
       youtubeId: "dQw4w9WgXcQ",
@@ -702,8 +886,33 @@ export function ClassVideoLibrary({
   const defaultLessons = useMemo(() => getDefaultLessons(isVi), [isVi]);
   const effectiveLessons = lessons && lessons.length > 0 ? lessons : defaultLessons;
 
+  // Custom H5P Lessons from localStorage
+  const [customLessons, setCustomLessons] = useState<VideoLesson[]>([]);
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [showReuseModal, setShowReuseModal] = useState<boolean>(false);
+  const [showLessonSelector, setShowLessonSelector] = useState<boolean>(false);
+
+  // Form state for creating a new lesson in H5P Studio
+  const [newLessonUrl, setNewLessonUrl] = useState<string>("");
+  const [newLessonTitle, setNewLessonTitle] = useState<string>("");
+  const [newLessonSubject, setNewLessonSubject] = useState<string>("");
+  const [newLessonTutor, setNewLessonTutor] = useState<string>("");
+  const [newLessonMilestones, setNewLessonMilestones] = useState<VideoMilestone[]>([]);
+
+  // New milestone form state inside modal
+  const [msTimeInput, setMsTimeInput] = useState<string>("1:00");
+  const [msTitleInput, setMsTitleInput] = useState<string>("");
+  const [msQuestionInput, setMsQuestionInput] = useState<string>("");
+  const [msOptions, setMsOptions] = useState<string[]>(["", "", "", ""]);
+  const [msCorrectIdx, setMsCorrectIdx] = useState<number>(0);
+  const [msExplanation, setMsExplanation] = useState<string>("");
+
+  const allLessons = useMemo(() => {
+    return [...customLessons, ...effectiveLessons];
+  }, [customLessons, effectiveLessons]);
+
   // Active Lesson State
-  const [activeLesson, setActiveLesson] = useState<VideoLesson>(effectiveLessons[0]);
+  const [activeLesson, setActiveLesson] = useState<VideoLesson>(allLessons[0]);
   const [activeTab, setActiveTab] = useState<"milestones" | "transcript" | "syllabus" | "summary">("milestones");
 
   // Real YouTube Player State
@@ -735,24 +944,31 @@ export function ClassVideoLibrary({
   const triggeredMilestoneRef = useRef<Set<string>>(new Set());
   const lastSecondRef = useRef<number>(-1);
 
-  // Load saved progress from localStorage
+  // Load saved progress and custom H5P lessons from localStorage
   useEffect(() => {
     try {
       const savedSolved = localStorage.getItem("pencily_solved_milestones");
       if (savedSolved) setSolvedMilestoneIds(JSON.parse(savedSolved));
       const savedClaimed = localStorage.getItem("pencily_claimed_lessons");
       if (savedClaimed) setClaimedLessonIds(JSON.parse(savedClaimed));
+      const savedCustom = localStorage.getItem("pencily_custom_h5p_lessons");
+      if (savedCustom) {
+        const parsed = JSON.parse(savedCustom);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setCustomLessons(parsed);
+        }
+      }
     } catch {
       // ignore
     }
   }, []);
 
-  // Update activeLesson when defaultLessons changes
+  // Update activeLesson when allLessons changes
   useEffect(() => {
-    if (effectiveLessons.length > 0) {
-      setActiveLesson(effectiveLessons[0]);
+    if (allLessons.length > 0 && !allLessons.some((l) => l.id === activeLesson.id)) {
+      setActiveLesson(allLessons[0]);
     }
-  }, [effectiveLessons]);
+  }, [allLessons]);
 
   // INITIALIZE YOUTUBE IFRAME API (controls: 0, disablekb: 1, modestbranding: 1)
   useEffect(() => {
@@ -1181,32 +1397,114 @@ export function ClassVideoLibrary({
             ref={playerContainerRef}
             className="relative w-full aspect-video bg-black flex flex-col overflow-hidden rounded-md border-2 border-slate-800 shadow-xl"
           >
-            {/* FLOATING TOP BADGES */}
-            <div className="absolute top-3 left-3 z-15 flex items-center gap-2 pointer-events-none">
-              <span className="px-2 py-0.5 rounded-xs bg-black/80 backdrop-blur-xs text-white text-[11px] font-bold border border-white/10">
-                {activeLesson.title}
-              </span>
-              <span className="px-2 py-0.5 rounded-xs bg-amber-400/90 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-2xs">
-                {solvedCountInLesson}/{totalMilestonesInLesson} {isVi ? "Cột mốc bài tập" : "Milestones"}
-              </span>
-            </div>
-
-            {/* VÙNG HIỂN THỊ VIDEO */}
-            <div className="relative flex-1 w-full overflow-hidden bg-black flex items-center justify-center">
-              {/* LỚP CẮT CẢNH (CROP & SCALE) ĐỂ ẨN HOÀN TOÀN NÚT 'VIDEO KHÁC', LOGO VÀ WATERMARK YOUTUBE */}
-              <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
-                <div
-                  style={{ transform: "scale(1.36)", transformOrigin: "50% 0%" }}
-                  className="w-full h-full pointer-events-none [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:pointer-events-none"
-                >
-                  <div
-                    id="pencily-yt-iframe-container"
-                    className="w-full h-full pointer-events-none"
-                  />
-                </div>
+            {/* FLOATING TOP BAR (LESSON SWITCHER & H5P CREATOR) */}
+            <div className="absolute top-3 inset-x-3 z-15 flex items-center justify-between pointer-events-none gap-2">
+              <div className="flex items-center gap-2 pointer-events-auto min-w-0">
+                <span className="px-2.5 py-1 rounded-xs bg-black/85 backdrop-blur-xs text-white text-xs font-bold border border-white/10 shadow-sm max-w-[200px] sm:max-w-xs truncate">
+                  {activeLesson.title}
+                </span>
+                <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-2xs shrink-0">
+                  {solvedCountInLesson}/{totalMilestonesInLesson} {isVi ? "Cột mốc" : "Milestones"}
+                </span>
               </div>
 
-              {/* LỚP CHẮN TRONG SUỐT NHẬN CLICK ĐỂ PLAY/PAUSE MƯỢT MÀ */}
+              {/* LESSON SWITCHER & H5P CREATOR BUTTONS */}
+              <div className="flex items-center gap-1.5 pointer-events-auto relative shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setShowLessonSelector(!showLessonSelector)}
+                  className="px-2.5 py-1 rounded-xs bg-slate-900/90 hover:bg-slate-800 text-white text-xs font-bold border border-white/15 backdrop-blur-xs flex items-center gap-1.5 transition cursor-pointer shadow-sm"
+                >
+                  <Film className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{isVi ? `Bài học (${allLessons.length})` : `Lessons (${allLessons.length})`}</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNewLessonUrl("");
+                    setNewLessonTitle("");
+                    setNewLessonSubject(activeLesson.subject || "");
+                    setNewLessonTutor(activeLesson.tutor.name || "");
+                    setNewLessonMilestones([]);
+                    setShowCreateModal(true);
+                  }}
+                  className="px-2.5 py-1 rounded-xs bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black border border-amber-600 flex items-center gap-1 transition cursor-pointer shadow-sm active:scale-95"
+                  title={isVi ? "Tạo bài học tương tác H5P mới từ video YouTube" : "Create new H5P interactive lesson"}
+                >
+                  <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                  <span className="hidden sm:inline">{isVi ? "Tạo bài H5P" : "New H5P"}</span>
+                </button>
+
+                {/* LESSON SELECTOR DROPDOWN */}
+                {showLessonSelector && (
+                  <div className="absolute top-full right-0 mt-1.5 w-72 sm:w-80 bg-slate-900/95 backdrop-blur-md rounded-xs border-2 border-slate-700 shadow-2xl p-2 z-50 space-y-1 animate-fadeIn">
+                    <div className="px-2 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between border-b border-white/10 pb-1.5 mb-1">
+                      <span>{isVi ? "Chọn bài giảng tương tác" : "Select Lesson"}</span>
+                      <span className="text-amber-400">{allLessons.length} {isVi ? "bài" : "lessons"}</span>
+                    </div>
+
+                    <div className="max-h-60 overflow-y-auto space-y-1">
+                      {allLessons.map((l) => {
+                        const isCurrent = l.id === activeLesson.id;
+                        return (
+                          <button
+                            key={l.id}
+                            type="button"
+                            onClick={() => {
+                              setActiveLesson(l);
+                              setShowLessonSelector(false);
+                            }}
+                            className={`w-full text-left p-2 rounded-xs text-xs transition flex items-center gap-2.5 cursor-pointer ${
+                              isCurrent
+                                ? "bg-amber-400 text-slate-950 font-bold"
+                                : "text-white hover:bg-white/10"
+                            }`}
+                          >
+                            <img
+                              src={`https://img.youtube.com/vi/${l.youtubeId}/default.jpg`}
+                              alt={l.title}
+                              className="w-10 h-7 object-cover rounded-xs border border-white/20 shrink-0"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate font-semibold leading-tight">{l.title}</p>
+                              <p className={`text-[10px] truncate ${isCurrent ? "text-slate-800" : "text-slate-400"}`}>
+                                {l.tutor.name} • {l.milestones.length} {isVi ? "cột mốc" : "milestones"}
+                              </p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* VÙNG HIỂN THỊ VIDEO (CHUẨN H5P TỶ LỆ 16:9 NGUYÊN BẢN) */}
+            <div className="relative flex-1 w-full overflow-hidden bg-black flex items-center justify-center">
+              <div className="w-full h-full pointer-events-none [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:pointer-events-none">
+                <div
+                  id="pencily-yt-iframe-container"
+                  className="w-full h-full pointer-events-none"
+                />
+              </div>
+
+              {/* NÚT PLAY LỚN TRUNG TÂM KHI TẠM DỪNG (CHUẨN H5P NHƯ ẢNH MẪU 1) */}
+              {!isPlaying && !activeMilestone && (
+                <div
+                  onClick={handleTogglePlay}
+                  className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer pointer-events-auto group"
+                  title={isVi ? "Bấm để phát video" : "Click to Play"}
+                >
+                  <div className="w-16 h-16 rounded-md bg-[#0F2747]/85 group-hover:bg-[#0F2747] text-white flex items-center justify-center shadow-2xl transition-all group-hover:scale-110 border-2 border-white/20">
+                    <Play className="w-7 h-7 fill-current ml-1 text-white" />
+                  </div>
+                </div>
+              )}
+
+              {/* LỚP CHẮN TRONG SUỐT NHẬN CLICK ĐỂ PLAY/PAUSE */}
               <div
                 onClick={handleTogglePlay}
                 onDoubleClick={handleToggleFullscreen}
@@ -1242,22 +1540,24 @@ export function ClassVideoLibrary({
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => {
-                    navigator.clipboard?.writeText(window.location.href);
-                    alert(isVi ? "Đã sao chép liên kết bài học tương tác!" : "Copied interactive lesson link!");
-                  }}
-                  className="inline-flex items-center gap-1 hover:text-slate-200 transition cursor-pointer"
+                  onClick={() => setShowReuseModal(true)}
+                  className="inline-flex items-center gap-1.5 hover:text-white font-semibold transition cursor-pointer text-slate-300"
+                  title={isVi ? "Sử dụng lại / Tải file H5P" : "Reuse / Download H5P"}
                 >
-                  <Share2 className="w-3 h-3 text-slate-400" />
-                  <span>{isVi ? "Sử dụng lại / Chia sẻ" : "Reuse / Share"}</span>
+                  <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{isVi ? "Sử dụng lại" : "Reuse"}</span>
                 </button>
                 <span className="text-slate-700">|</span>
-                <span>{activeLesson.gradeLevel}</span>
+                <span className="text-slate-400 truncate max-w-[200px]">{activeLesson.gradeLevel}</span>
               </div>
 
-              <div className="flex items-center gap-1.5 font-bold text-slate-400">
-                <Layers className="w-3.5 h-3.5 text-amber-400" />
-                <span>{isVi ? "Học liệu số The Pencily • Chuẩn H5P" : "The Pencily Interactive H5P"}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-slate-500 text-[10px] hidden sm:inline">
+                  {isVi ? "0đ Cloud Storage • YouTube Engine" : "0$ Cloud Cost • YouTube Engine"}
+                </span>
+                <div className="flex items-center gap-1 px-2 py-0.5 rounded-xs bg-slate-800 text-amber-400 font-mono font-bold text-[11px] border border-slate-700">
+                  <span>H5P</span>
+                </div>
               </div>
             </div>
 
@@ -1850,6 +2150,567 @@ export function ClassVideoLibrary({
           </div>
         </div>
       </div>
+
+      {/* 4. MODAL: SỬ DỤNG LẠI / XUẤT H5P PACKAGE */}
+      {showReuseModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="w-full max-w-lg bg-white rounded-sm border-2 border-[#0F2747] shadow-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between border-b pb-3 border-slate-200">
+              <div className="flex items-center gap-2">
+                <RefreshCw className="w-5 h-5 text-amber-500" />
+                <h3 className="font-poppins font-black text-sm sm:text-base text-[#0F2747]">
+                  {isVi ? "Sử dụng lại Học liệu số (H5P)" : "Reuse & Share H5P Content"}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowReuseModal(false)}
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-xs transition cursor-pointer"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {isVi
+                ? `Bài học "${activeLesson.title}" được định dạng theo chuẩn quốc tế H5P Interactive Video, hoàn toàn tương thích để nhúng hoặc xuất sang hệ thống Moodle, Canvas, Blackboard hoặc trang web của trường.`
+                : `This lesson conforms to the open H5P Interactive Video standard.`}
+            </p>
+
+            <div className="space-y-2.5">
+              {/* Option 1: Download .h5p.json */}
+              <button
+                type="button"
+                onClick={() => {
+                  downloadH5PFile(activeLesson);
+                  setRewardToast({
+                    message: isVi ? "📥 Đã tải xuống tệp H5P (.h5p.json)!" : "📥 Downloaded H5P package!",
+                    points: 0,
+                  });
+                  setTimeout(() => setRewardToast(null), 3000);
+                  setShowReuseModal(false);
+                }}
+                className="w-full text-left p-3 rounded-xs border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition flex items-center justify-between cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xs bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                    <Download className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-xs text-[#0F2747] group-hover:text-amber-900">
+                      {isVi ? "Tải tệp gói H5P (.h5p.json)" : "Download H5P Package"}
+                    </h5>
+                    <p className="text-[11px] text-slate-500">
+                      {isVi ? "Tệp định dạng chuẩn H5P chứa toàn bộ câu hỏi và mốc dừng" : "JSON file ready for LMS"}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600" />
+              </button>
+
+              {/* Option 2: Copy Share / Embed */}
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard?.writeText(window.location.href);
+                  setRewardToast({
+                    message: isVi ? "📋 Đã sao chép liên kết bài học tương tác!" : "📋 Copied lesson URL!",
+                    points: 0,
+                  });
+                  setTimeout(() => setRewardToast(null), 3000);
+                  setShowReuseModal(false);
+                }}
+                className="w-full text-left p-3 rounded-xs border-2 border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 transition flex items-center justify-between cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xs bg-blue-100 text-blue-800 flex items-center justify-center shrink-0 font-bold">
+                    <Share2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-xs text-[#0F2747] group-hover:text-blue-900">
+                      {isVi ? "Sao chép liên kết chia sẻ trực tiếp" : "Copy Direct Share Link"}
+                    </h5>
+                    <p className="text-[11px] text-slate-500">
+                      {isVi ? "Học sinh mở liên kết là làm bài ngay lập tức" : "Direct access for students"}
+                    </p>
+                  </div>
+                </div>
+                <Copy className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              </button>
+
+              {/* Option 3: Create new */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowReuseModal(false);
+                  setNewLessonUrl("");
+                  setNewLessonTitle("");
+                  setNewLessonSubject(activeLesson.subject || "");
+                  setNewLessonTutor(activeLesson.tutor.name || "");
+                  setNewLessonMilestones([]);
+                  setShowCreateModal(true);
+                }}
+                className="w-full text-left p-3 rounded-xs border-2 border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/50 transition flex items-center justify-between cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xs bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold">
+                    <Plus className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-xs text-[#0F2747] group-hover:text-emerald-900">
+                      {isVi ? "Tạo bài học H5P mới từ video YouTube" : "Create New H5P from YouTube"}
+                    </h5>
+                    <p className="text-[11px] text-slate-500">
+                      {isVi ? "Chỉ cần dán link YouTube, không tốn dung lượng máy chủ" : "Zero cloud cost via YouTube"}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+              </button>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowReuseModal(false)}
+                className="px-4 py-1.5 rounded-xs bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer"
+              >
+                {isVi ? "Đóng" : "Close"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. MODAL: H5P INTERACTIVE STUDIO (TẠO BÀI HỌC MỚI TỪ YOUTUBE) */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-5 animate-fadeIn overflow-y-auto">
+          <div className="w-full max-w-2xl bg-white rounded-sm border-2 border-[#0F2747] shadow-2xl p-5 sm:p-6 space-y-4 my-auto max-h-[92vh] overflow-y-auto">
+            {/* Header */}
+            <div className="flex items-start justify-between border-b pb-3 border-slate-200">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider">
+                    H5P Studio
+                  </span>
+                  <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-xs border border-emerald-200 font-bold">
+                    0đ Cloud Storage
+                  </span>
+                </div>
+                <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747]">
+                  {isVi ? "Tạo bài học tương tác chuẩn H5P từ YouTube" : "Create Interactive H5P Lesson from YouTube"}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCreateModal(false)}
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-xs transition cursor-pointer"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Quick Import Box */}
+            <div className="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xs flex flex-col sm:flex-row items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2">
+                <Upload className="w-4 h-4 text-slate-600 shrink-0" />
+                <span className="text-xs text-slate-700 font-medium">
+                  {isVi ? "Đã có sẵn file H5P (.h5p.json)?" : "Already have an H5P file (.h5p.json)?"}
+                </span>
+              </div>
+              <label className="px-3 py-1 rounded-xs bg-white hover:bg-slate-100 border border-slate-300 text-[#0F2747] font-bold text-xs cursor-pointer shadow-2xs transition">
+                <span>{isVi ? "Nhập file JSON..." : "Import JSON..."}</span>
+                <input
+                  type="file"
+                  accept=".json,.h5p"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                      try {
+                        const json = JSON.parse(event.target?.result as string);
+                        const imported = importH5PFormat(json, isVi ? "Hóa học / Khoa học" : "Science");
+                        if (imported && imported.youtubeId) {
+                          setNewLessonUrl(`https://www.youtube.com/watch?v=${imported.youtubeId}`);
+                          if (imported.title) setNewLessonTitle(imported.title);
+                          if (imported.subject) setNewLessonSubject(imported.subject);
+                          if (imported.milestones && imported.milestones.length > 0) {
+                            setNewLessonMilestones(imported.milestones as VideoMilestone[]);
+                          }
+                          setRewardToast({
+                            message: isVi ? `✅ Đã nhập thành công bài học "${imported.title}"!` : "✅ Imported lesson successfully!",
+                            points: 0,
+                          });
+                          setTimeout(() => setRewardToast(null), 3000);
+                        } else {
+                          alert(isVi ? "Tệp không chứa video YouTube hoặc định dạng chưa hợp lệ." : "Invalid H5P JSON file.");
+                        }
+                      } catch (err) {
+                        alert(isVi ? "Không thể đọc tệp JSON này." : "Error reading JSON.");
+                      }
+                    };
+                    reader.readAsText(file);
+                  }}
+                />
+              </label>
+            </div>
+
+            {/* STEP 1: YouTube URL */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-[#0F2747]">
+                1. {isVi ? "Liên kết video YouTube (0đ Cloud Storage)" : "YouTube Video URL (Zero Cloud Cost)"} <span className="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={newLessonUrl}
+                onChange={(e) => {
+                  setNewLessonUrl(e.target.value);
+                  const parsed = parseYouTubeId(e.target.value);
+                  if (parsed && !newLessonTitle) {
+                    setNewLessonTitle(`Bài học H5P - ${parsed}`);
+                  }
+                }}
+                placeholder="https://www.youtube.com/watch?v=... hoặc dQw4w9WgXcQ"
+                className="w-full px-3 py-2 text-xs rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none"
+              />
+
+              {parseYouTubeId(newLessonUrl) ? (
+                <div className="p-2.5 bg-emerald-50 border border-emerald-300 rounded-xs flex items-center gap-3">
+                  <img
+                    src={`https://img.youtube.com/vi/${parseYouTubeId(newLessonUrl)}/mqdefault.jpg`}
+                    alt="Preview"
+                    className="w-16 h-10 object-cover rounded-xs border border-emerald-400 shrink-0"
+                  />
+                  <div className="text-[11px] text-emerald-900">
+                    <p className="font-bold">
+                      ✅ {isVi ? "Đã nhận diện Video ID:" : "Recognized Video ID:"} <span className="font-mono">{parseYouTubeId(newLessonUrl)}</span>
+                    </p>
+                    <p className="text-[10px] text-emerald-700">
+                      {isVi ? "Video sẽ truyền phát trực tiếp từ YouTube, không tốn dung lượng lưu trữ." : "Streamed directly from YouTube with zero storage cost."}
+                    </p>
+                  </div>
+                </div>
+              ) : newLessonUrl ? (
+                <p className="text-[11px] text-amber-700 font-medium">
+                  ⚠️ {isVi ? "Vui lòng nhập đúng định dạng link YouTube (e.g. https://www.youtube.com/watch?v=...)" : "Please enter a valid YouTube URL."}
+                </p>
+              ) : null}
+            </div>
+
+            {/* STEP 2: Lesson Info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-[#0F2747]">
+                  2. {isVi ? "Tiêu đề bài giảng" : "Lesson Title"} <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={newLessonTitle}
+                  onChange={(e) => setNewLessonTitle(e.target.value)}
+                  placeholder={isVi ? "VD: Hóa học 11 - Chuẩn độ Acid - Base" : "e.g. Acid-Base Titration"}
+                  className="w-full px-3 py-1.5 text-xs rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-[#0F2747]">
+                  3. {isVi ? "Môn học / Khối lớp" : "Subject / Grade"}
+                </label>
+                <input
+                  type="text"
+                  value={newLessonSubject}
+                  onChange={(e) => setNewLessonSubject(e.target.value)}
+                  placeholder={isVi ? "VD: Hóa học 11 • Thí nghiệm" : "e.g. Chemistry 11"}
+                  className="w-full px-3 py-1.5 text-xs rounded-xs border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* STEP 3: Milestones Manager */}
+            <div className="space-y-2 pt-2 border-t border-slate-200">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-[#0F2747]">
+                  4. {isVi ? "Các cột mốc kiểm tra kiến thức (H5P Milestones)" : "Interactive Checkpoints"} ({newLessonMilestones.length})
+                </label>
+                <span className="text-[11px] text-slate-500">
+                  {isVi ? "Tự động dừng video để học viên làm bài" : "Pauses video for student quiz"}
+                </span>
+              </div>
+
+              {/* Added Milestones List */}
+              {newLessonMilestones.length > 0 ? (
+                <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                  {newLessonMilestones.map((ms, idx) => (
+                    <div
+                      key={ms.id || idx}
+                      className="p-2 bg-slate-50 border border-slate-300 rounded-xs flex items-center justify-between text-xs gap-2"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="px-1.5 py-0.5 rounded-xs bg-amber-400 text-slate-950 font-mono font-bold text-[10px] shrink-0">
+                          ⏱ {ms.timeFormatted}
+                        </span>
+                        <p className="truncate font-medium text-[#0F2747]">{ms.question}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setNewLessonMilestones(newLessonMilestones.filter((_, i) => i !== idx));
+                        }}
+                        className="text-rose-500 hover:text-rose-700 text-[11px] font-bold shrink-0 cursor-pointer p-1"
+                      >
+                        {isVi ? "Xóa" : "Delete"}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[11px] text-slate-400 italic">
+                  {isVi ? "Chưa có cột mốc câu hỏi nào. Hãy thêm ít nhất 1 câu hỏi bên dưới." : "No checkpoints added yet."}
+                </p>
+              )}
+
+              {/* Add New Milestone Card */}
+              <div className="p-3 bg-amber-50/50 border border-amber-300 rounded-xs space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-[#0F2747]">
+                      {isVi ? "Thời điểm dừng video (phút:giây)" : "Pause Timestamp (mm:ss)"}
+                    </label>
+                    <input
+                      type="text"
+                      value={msTimeInput}
+                      onChange={(e) => setMsTimeInput(e.target.value)}
+                      placeholder="1:30"
+                      className="w-full px-2.5 py-1 text-xs rounded-xs border border-slate-300 font-mono"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-[#0F2747]">
+                      {isVi ? "Tiêu đề cột mốc" : "Checkpoint Title"}
+                    </label>
+                    <input
+                      type="text"
+                      value={msTitleInput}
+                      onChange={(e) => setMsTitleInput(e.target.value)}
+                      placeholder={isVi ? "Cột mốc: Câu hỏi ôn tập" : "Review Question"}
+                      className="w-full px-2.5 py-1 text-xs rounded-xs border border-slate-300"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-[#0F2747]">
+                    {isVi ? "Nội dung câu hỏi" : "Question Prompt"}
+                  </label>
+                  <input
+                    type="text"
+                    value={msQuestionInput}
+                    onChange={(e) => setMsQuestionInput(e.target.value)}
+                    placeholder={isVi ? "Nhập câu hỏi trắc nghiệm tại đây..." : "Enter multiple-choice question..."}
+                    className="w-full px-2.5 py-1 text-xs rounded-xs border border-slate-300"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold text-[#0F2747]">
+                    {isVi ? "Các phương án lựa chọn (Chọn tròn để đặt đáp án đúng)" : "Options (Pick correct)"}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {msOptions.map((optText, optIdx) => (
+                      <div key={optIdx} className="flex items-center gap-1.5 bg-white p-1 rounded-xs border border-slate-300">
+                        <input
+                          type="radio"
+                          name="correct-opt"
+                          checked={msCorrectIdx === optIdx}
+                          onChange={() => setMsCorrectIdx(optIdx)}
+                          className="accent-[#0F2747] cursor-pointer"
+                        />
+                        <span className="font-mono font-bold text-[10px] text-slate-500">
+                          {String.fromCharCode(65 + optIdx)}:
+                        </span>
+                        <input
+                          type="text"
+                          value={optText}
+                          onChange={(e) => {
+                            const updated = [...msOptions];
+                            updated[optIdx] = e.target.value;
+                            setMsOptions(updated);
+                          }}
+                          placeholder={`${isVi ? "Phương án" : "Option"} ${String.fromCharCode(65 + optIdx)}`}
+                          className="flex-1 text-xs px-1 py-0.5 focus:outline-none"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-[#0F2747]">
+                    {isVi ? "Lời giải thích khi học sinh trả lời" : "Explanation Feedback"}
+                  </label>
+                  <input
+                    type="text"
+                    value={msExplanation}
+                    onChange={(e) => setMsExplanation(e.target.value)}
+                    placeholder={isVi ? "Giải thích ngắn vì sao đáp án này đúng..." : "Explanation why correct..."}
+                    className="w-full px-2.5 py-1 text-xs rounded-xs border border-slate-300"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!msQuestionInput.trim()) {
+                      alert(isVi ? "Vui lòng nhập nội dung câu hỏi." : "Please enter question text.");
+                      return;
+                    }
+                    const validOpts = msOptions.filter((o) => o.trim() !== "");
+                    if (validOpts.length < 2) {
+                      alert(isVi ? "Cần ít nhất 2 phương án trả lời." : "At least 2 options required.");
+                      return;
+                    }
+
+                    const sec = parseTimeToSeconds(msTimeInput) || 30;
+                    const newMs: VideoMilestone = {
+                      id: `ms-custom-${Date.now()}`,
+                      seconds: sec,
+                      timeFormatted: formatSecondsToTime(sec),
+                      title: msTitleInput.trim() || `Cột mốc tại ${formatSecondsToTime(sec)}`,
+                      question: msQuestionInput.trim(),
+                      options: validOpts.map((text, i) => ({
+                        id: `opt-${Date.now()}-${i}`,
+                        text,
+                        isCorrect: i === msCorrectIdx,
+                        explanation:
+                          i === msCorrectIdx
+                            ? msExplanation.trim() || "Chính xác tuyệt vời!"
+                            : "Chưa chính xác.",
+                      })),
+                      points: 5,
+                    };
+
+                    const sorted = [...newLessonMilestones, newMs].sort((a, b) => a.seconds - b.seconds);
+                    setNewLessonMilestones(sorted);
+
+                    // Clear mini-form
+                    setMsQuestionInput("");
+                    setMsExplanation("");
+                    setMsOptions(["", "", "", ""]);
+                    setMsTitleInput("");
+                  }}
+                  className="px-3 py-1.5 rounded-xs bg-[#0F2747] hover:bg-[#1E3A8A] text-white text-xs font-bold transition cursor-pointer flex items-center gap-1"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>{isVi ? "Thêm cột mốc câu hỏi này" : "Add Checkpoint"}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex items-center justify-between pt-3 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => setShowCreateModal(false)}
+                className="px-4 py-2 rounded-xs bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer"
+              >
+                {isVi ? "Hủy" : "Cancel"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const yId = parseYouTubeId(newLessonUrl);
+                  if (!yId) {
+                    alert(isVi ? "Vui lòng nhập đường dẫn YouTube hợp lệ." : "Please enter a valid YouTube URL.");
+                    return;
+                  }
+                  if (!newLessonTitle.trim()) {
+                    alert(isVi ? "Vui lòng nhập tiêu đề bài học." : "Please enter lesson title.");
+                    return;
+                  }
+
+                  const createdLesson: VideoLesson = {
+                    id: `custom-lesson-${Date.now()}`,
+                    youtubeId: yId,
+                    title: newLessonTitle.trim(),
+                    duration: "10:00",
+                    totalSeconds: 600,
+                    subject: newLessonSubject.trim() || (isVi ? "Học liệu số H5P" : "H5P Interactive Video"),
+                    gradeLevel: isVi ? "Chuẩn H5P Interactive Video" : "H5P Standard Interactive Video",
+                    tutor: {
+                      name: newLessonTutor.trim() || (isVi ? "Giáo viên The Pencily" : "The Pencily Tutor"),
+                      avatar: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80`,
+                      school: isVi ? "The Pencily H5P Digital Academy" : "The Pencily H5P Digital Academy",
+                      grade: isVi ? "Tác giả H5P" : "H5P Author",
+                      bio: isVi ? "Bài giảng tương tác chuẩn H5P được tạo tự động từ YouTube." : "Interactive H5P video created via YouTube.",
+                      sessions: 1,
+                      specialty: isVi ? "Học liệu tương tác" : "Interactive Media",
+                      badge: "H5P Creator",
+                    },
+                    syllabus: [
+                      {
+                        id: "syl-1",
+                        title: isVi ? "Khúc mở đầu" : "Introduction",
+                        time: "0:00",
+                        seconds: 0,
+                        summary: "Bắt đầu bài giảng tương tác.",
+                      },
+                    ],
+                    transcript: [],
+                    milestones:
+                      newLessonMilestones.length > 0
+                        ? newLessonMilestones
+                        : [
+                            {
+                              id: `ms-default-1`,
+                              seconds: 30,
+                              timeFormatted: "0:30",
+                              title: isVi ? "Cột mốc kiểm tra kiến thức" : "Checkpoint Quiz",
+                              question: isVi ? "Bạn đã hiểu rõ nội dung vừa được giới thiệu chưa?" : "Have you understood the content?",
+                              options: [
+                                {
+                                  id: "opt-1",
+                                  text: isVi ? "Đã hiểu rõ và sẵn sàng tiếp tục" : "Understood and ready to continue",
+                                  isCorrect: true,
+                                  explanation: isVi ? "Tuyệt vời! Tiếp tục phát huy nhé." : "Great job!",
+                                },
+                                {
+                                  id: "opt-2",
+                                  text: isVi ? "Cần nghe lại đoạn trước" : "Need to re-listen",
+                                  isCorrect: false,
+                                  explanation: isVi ? "Hãy dùng nút tua lại 15s để nghe lại nhé." : "Rewind 15s to re-listen.",
+                                },
+                              ],
+                              points: 5,
+                            },
+                          ],
+                  };
+
+                  const updatedCustom = [createdLesson, ...customLessons];
+                  setCustomLessons(updatedCustom);
+                  try {
+                    localStorage.setItem("pencily_custom_h5p_lessons", JSON.stringify(updatedCustom));
+                  } catch (e) {}
+
+                  setActiveLesson(createdLesson);
+                  setShowCreateModal(false);
+                  setRewardToast({
+                    message: isVi ? `🎉 Đã xuất bản bài giảng H5P: "${createdLesson.title}"!` : "🎉 Published H5P lesson successfully!",
+                    points: 0,
+                  });
+                  setTimeout(() => setRewardToast(null), 4000);
+                }}
+                className="px-5 py-2 rounded-xs bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs transition cursor-pointer shadow-md border-2 border-amber-600 active:scale-95 flex items-center gap-1.5"
+              >
+                <Sparkles className="w-4 h-4 text-slate-950" />
+                <span>{isVi ? "Xuất bản & Học ngay ▶" : "Publish & Play Now ▶"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
