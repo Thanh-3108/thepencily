@@ -43,14 +43,16 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
   const marginRight = 20;
   const contentWidth = pageWidth - marginLeft - marginRight;
 
-  // Attempt to load full Unicode fonts (Arial Regular & Bold)
-  const [regularFontB64, boldFontB64] = await Promise.all([
+  // Attempt to load full Unicode fonts (Arial Regular & Bold) and Grand Hotel
+  const [regularFontB64, boldFontB64, grandHotelB64] = await Promise.all([
     loadFontAsBase64("/fonts/arial.ttf"),
     loadFontAsBase64("/fonts/arialbd.ttf"),
+    loadFontAsBase64("/fonts/GrandHotel-Regular.ttf"),
   ]);
 
   let fontRegular = "helvetica";
   let fontBold = "helvetica";
+  let fontBrand = "helvetica";
   let hasUnicode = false;
 
   if (regularFontB64) {
@@ -71,6 +73,17 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
       fontBold = "Arial";
     } catch (e) {
       console.warn("Error adding bold font:", e);
+    }
+  }
+
+  fontBrand = fontBold;
+  if (grandHotelB64) {
+    try {
+      doc.addFileToVFS("GrandHotel-Regular.ttf", grandHotelB64);
+      doc.addFont("GrandHotel-Regular.ttf", "GrandHotel", "normal");
+      fontBrand = "GrandHotel";
+    } catch (e) {
+      console.warn("Error adding GrandHotel font:", e);
     }
   }
 
@@ -129,11 +142,18 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
   doc.setFillColor(15, 39, 71); // #0F2747 Deep Navy
   doc.rect(marginLeft, 15, contentWidth, 3, "F");
 
-  // Logo / Title
-  doc.setFont(fontBold, "bold");
-  doc.setFontSize(22);
-  doc.setTextColor(15, 39, 71);
-  doc.text("The Pencily", marginLeft, 28);
+  // Logo / Title in Grand Hotel brand font
+  if (fontBrand === "GrandHotel") {
+    doc.setFont(fontBrand, "normal");
+    doc.setFontSize(32);
+    doc.setTextColor(15, 39, 71);
+    doc.text("The Pencily", marginLeft, 28);
+  } else {
+    doc.setFont(fontBold, "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(15, 39, 71);
+    doc.text("The Pencily", marginLeft, 28);
+  }
 
   doc.setFont(fontRegular, "normal");
   doc.setFontSize(9);
@@ -144,8 +164,8 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
     33
   );
 
-  // Verification Code (top right)
-  doc.setFont("courier", "bold");
+  // Verification Code (top right) - Using Unicode font to prevent character corruption
+  doc.setFont(fontBold, "bold");
   doc.setFontSize(8);
   doc.setTextColor(79, 126, 203);
   doc.text(`MÃ XÁC THỰC: ${certId}`, pageWidth - marginRight, 28, { align: "right" });
@@ -345,11 +365,18 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
   doc.setFillColor(15, 39, 71);
   doc.rect(marginLeft, 15, contentWidth, 3, "F");
 
-  // Logo / Title
-  doc.setFont(fontBold, "bold");
-  doc.setFontSize(22);
-  doc.setTextColor(15, 39, 71);
-  doc.text("The Pencily", marginLeft, 28);
+  // Logo / Title in Grand Hotel brand font
+  if (fontBrand === "GrandHotel") {
+    doc.setFont(fontBrand, "normal");
+    doc.setFontSize(32);
+    doc.setTextColor(15, 39, 71);
+    doc.text("The Pencily", marginLeft, 28);
+  } else {
+    doc.setFont(fontBold, "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(15, 39, 71);
+    doc.text("The Pencily", marginLeft, 28);
+  }
 
   doc.setFont(fontRegular, "normal");
   doc.setFontSize(9);
@@ -357,7 +384,7 @@ export async function downloadPencilyCertificatePdf(user: StudentUser, language:
   doc.text("Equal Peer-to-Peer Learning Network | 100% Non-Profit", marginLeft, 33);
 
   // Verification Code (top right)
-  doc.setFont("courier", "bold");
+  doc.setFont(fontBold, "bold");
   doc.setFontSize(8);
   doc.setTextColor(79, 126, 203);
   doc.text(`CERT ID: ${certId}`, pageWidth - marginRight, 28, { align: "right" });
