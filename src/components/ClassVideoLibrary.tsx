@@ -28,8 +28,6 @@ import {
   Share2,
   Layers,
   Award,
-  ChevronRight,
-  BookmarkCheck,
   Check,
   RefreshCw,
 } from "lucide-react";
@@ -102,492 +100,210 @@ export interface VideoLesson {
   milestones: VideoMilestone[];
 }
 
+// 1 SINGLE ROCK-SOLID TEMPLATE LESSON OF NEVER GONNA GIVE YOU UP (Rick Astley)
 export function getDefaultLessons(isVi: boolean): VideoLesson[] {
   return [
     {
-      id: "ptnk-hoa-11-chuan-do-acid-base",
-      youtubeId: "__v3ZZldoCg",
+      id: "rick-astley-never-gonna-give-you-up",
+      youtubeId: "dQw4w9WgXcQ",
       title: isVi
-        ? "Video Bài giảng: Phương pháp chuẩn độ Acid-Base"
-        : "Video Lecture: Acid-Base Titration Method",
-      duration: "10:59",
-      totalSeconds: 659,
-      subject: isVi ? "Hóa Học 11 • Thí Nghiệm & Chuẩn Độ" : "Chemistry 11 • Titration Labs",
-      gradeLevel: isVi ? "Chương trình GDPT Hóa 11 Mới" : "Grade 11 Chemistry",
+        ? "Rick Astley - Never Gonna Give You Up (Bài Học Mẫu / Interactive Lesson)"
+        : "Rick Astley - Never Gonna Give You Up (Interactive Sample Lesson)",
+      duration: "3:33",
+      totalSeconds: 213,
+      subject: isVi ? "Kỹ Năng & Động Lực Học Tập" : "Motivation & Resilience",
+      gradeLevel: isVi ? "Bài giảng Tương tác Mẫu The Pencily" : "The Pencily Interactive Masterclass",
       tutor: {
-        name: isVi ? "Tổ Hóa học Trường PTNK & Ban Học thuật The Pencily" : "PTNK Chemistry Faculty & The Pencily Academic Board",
-        avatar: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=256&q=80",
-        school: isVi ? "Trường Phổ thông Năng khiếu (PTNK) - ĐHQG TP.HCM" : "High School for the Gifted (PTNK) - VNU HCM",
-        grade: isVi ? "Học liệu số & Cố vấn chuyên môn" : "Digital Curriculum & Subject Mentor",
+        name: "Rick Astley",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80",
+        school: isVi ? "Học Viện Âm Nhạc & Cố Vấn Tinh Thần The Pencily" : "The Pencily Music Academy & Senior Mentor",
+        grade: isVi ? "Cố Vấn Truyền Cảm Hứng Danh Dự" : "Honorary Inspirational Mentor",
         bio: isVi
-          ? "Bài giảng trực quan theo chương trình Hóa học 11 mới, hướng dẫn quy tắc chuẩn độ dung dịch acid - base, kỹ thuật dùng burette, pipette và chất chỉ thị phenolphthalein."
-          : "Interactive video lecture following the modern grade 11 curriculum, explaining titration principles, burette and indicator techniques.",
-        sessions: 1420,
-        specialty: isVi ? "Hóa Phân Tích & Hóa Đại Cương" : "Analytical & General Chemistry",
-        badge: isVi ? "Học liệu PTNK" : "PTNK Certified",
+          ? "Tác giả của bài hát bất hủ 'Never Gonna Give You Up'. Bài giảng mẫu tương tác với các cột mốc kiểm tra kiến thức về tinh thần kiên trì, cam kết không bỏ cuộc và bộ quy tắc danh dự The Pencily."
+          : "Creator of the iconic anthem 'Never Gonna Give You Up'. Interactive masterclass exploring persistence, commitment and the honor code.",
+        sessions: 1987,
+        specialty: isVi ? "Động lực kiên trì & Tinh thần bất bại" : "Resilience & Never Giving Up",
+        badge: isVi ? "Huyền Thoại (Legendary)" : "Legendary",
       },
       syllabus: [
         {
           id: "ch-1",
-          title: isVi ? "1. Mục tiêu bài học & Khái niệm chuẩn độ" : "1. Objectives & Titration Concept",
-          time: "0:39",
-          seconds: 39,
+          title: isVi ? "1. Khúc dạo đầu & Giới thiệu nguyên tắc học tập" : "1. Introduction & Core Principles",
+          time: "0:18",
+          seconds: 18,
           summary: isVi
-            ? "Nêu nguyên tắc xác định nồng độ acid mạnh, base mạnh bằng phương pháp chuẩn độ thể tích."
-            : "Core principle of volumetric acid-base titration using standardized solutions.",
+            ? "We're no strangers to love, you know the rules and so do I..."
+            : "We're no strangers to love, you know the rules and so do I...",
         },
         {
           id: "ch-2",
-          title: isVi ? "2. Bộ dụng cụ chuẩn độ: Burette, Pipette, Erlenmeyer" : "2. Apparatus: Burette, Pipette, Flask",
-          time: "2:45",
-          seconds: 165,
+          title: isVi ? "2. Điệp khúc cốt lõi: Cam kết không bao giờ bỏ cuộc" : "2. Core Chorus: Never Give Up",
+          time: "0:43",
+          seconds: 43,
           summary: isVi
-            ? "Cách tráng rửa, nạp dung dịch vào burette và kỹ thuật lấy thể tích chính xác bằng pipette bầu."
-            : "Proper handling, rinsing and meniscus reading techniques for burettes and volumetric pipettes.",
+            ? "Never gonna give you up, never gonna let you down, never gonna run around and desert you!"
+            : "Never gonna give you up, never gonna let you down, never gonna run around and desert you!",
         },
         {
           id: "ch-3",
-          title: isVi ? "3. Chất chỉ thị màu & Điểm tương đương" : "3. Indicators & Equivalence Point",
-          time: "6:15",
-          seconds: 375,
+          title: isVi ? "3. Điệp khúc 2: Tinh thần kiên trì & Thấu hiểu mục tiêu" : "3. Chorus 2: Perseverance & Vision",
+          time: "1:34",
+          seconds: 94,
           summary: isVi
-            ? "Hiện tượng đổi màu của Phenolphthalein tại điểm kết thúc chuẩn độ (hồng nhạt bền vững)."
-            : "Color transition of phenolphthalein indicator at the stoichiometric end point.",
+            ? "We've known each other for so long, inside we both know what's been going on..."
+            : "We've known each other for so long, inside we both know what's been going on...",
         },
         {
           id: "ch-4",
-          title: isVi ? "4. Công thức tính toán nồng độ mol & Sai số" : "4. Molarity Calculation & Error Analysis",
-          time: "9:20",
-          seconds: 560,
+          title: isVi ? "4. Điệp khúc cao trào & Lời cam kết danh dự" : "4. Climax Chorus & Honor Code",
+          time: "2:16",
+          seconds: 136,
           summary: isVi
-            ? "Áp dụng định luật đương lượng C1.V1 = C2.V2 để tìm nồng độ dung dịch acid/base chưa biết."
-            : "Applying C1.V1 = C2.V2 to calculate unknown acid/base concentration with precision.",
+            ? "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you."
+            : "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you.",
         },
       ],
       transcript: [
-        { time: "0:05", seconds: 5, speaker: "Cô giáo PTNK", text: isVi ? "Chào các em học sinh, hôm nay chúng ta cùng tìm hiểu chuyên đề Phương pháp chuẩn độ Acid-Base." : "Welcome students, today we explore the Acid-Base Titration Method." },
-        { time: "0:20", seconds: 20, speaker: "Cô giáo PTNK", text: isVi ? "Mục tiêu bài học: Nêu được nguyên tắc xác định nồng độ acid mạnh, base mạnh bằng phương pháp chuẩn độ." : "Lesson objective: State the principle of determining strong acid/base concentrations via titration." },
-        { time: "0:39", seconds: 39, speaker: "Cô giáo PTNK", text: isVi ? "Trình bày được nguyên tắc xác định nồng độ của axit mạnh và chuẩn bị thực hành đo đạc." : "Presenting the core theory behind neutralizing acids and quantitative measurement." },
-        { time: "1:15", seconds: 75, speaker: "Cô giáo PTNK", text: isVi ? "Chuẩn độ là phương pháp xác định nồng độ của một chất bằng một dung dịch khác đã biết chính xác nồng độ." : "Titration determines an unknown concentration using a carefully standardized solution." },
-        { time: "2:45", seconds: 165, speaker: "Cô giáo PTNK", text: isVi ? "Chúng ta sử dụng một burette chứa dung dịch chuẩn NaOH 0.1M và bình tam giác chứa HCl cần xác định." : "We use a burette filled with 0.1M standard NaOH and a conical flask holding the unknown HCl." },
-        { time: "4:10", seconds: 250, speaker: "Cô giáo PTNK", text: isVi ? "Khi nhỏ dung dịch, tay trái vòng qua khóa burette điều chỉnh từng giọt, tay phải lắc đều bình tam giác." : "Turn the stopcock with your left hand while gently swirling the flask with your right." },
-        { time: "6:15", seconds: 375, speaker: "Cô giáo PTNK", text: isVi ? "Khi dung dịch xuất hiện màu hồng nhạt bền vững trong 30 giây, đó chính là điểm dừng chuẩn độ." : "When the solution turns pale pink and remains for 30 seconds, we reached the end point." },
-        { time: "8:00", seconds: 480, speaker: "Cô giáo PTNK", text: isVi ? "Ghi lại thể tích NaOH đã dùng trên vạch chia của burette ngang tầm mắt để tránh sai số khúc xạ." : "Read the burette volume at eye level to avoid parallax errors." },
-        { time: "9:20", seconds: 560, speaker: "Cô giáo PTNK", text: isVi ? "Áp dụng công thức C_acid nhân V_acid bằng C_base nhân V_base để tính ra nồng độ mol chính xác." : "Apply C_acid * V_acid = C_base * V_base to calculate the exact molarity." },
+        { time: "0:18", seconds: 18, speaker: "Rick Astley", text: "We're no strangers to love" },
+        { time: "0:22", seconds: 22, speaker: "Rick Astley", text: "You know the rules and so do I" },
+        { time: "0:27", seconds: 27, speaker: "Rick Astley", text: "A full commitment's what I'm thinking of" },
+        { time: "0:31", seconds: 31, speaker: "Rick Astley", text: "You wouldn't get this from any other guy" },
+        { time: "0:35", seconds: 35, speaker: "Rick Astley", text: "I just wanna tell you how I'm feeling" },
+        { time: "0:40", seconds: 40, speaker: "Rick Astley", text: "Gotta make you understand" },
+        { time: "0:43", seconds: 43, speaker: "Rick Astley", text: "Never gonna give you up, never gonna let you down" },
+        { time: "0:48", seconds: 48, speaker: "Rick Astley", text: "Never gonna run around and desert you" },
+        { time: "0:52", seconds: 52, speaker: "Rick Astley", text: "Never gonna make you cry, never gonna say goodbye" },
+        { time: "0:56", seconds: 56, speaker: "Rick Astley", text: "Never gonna tell a lie and hurt you" },
+        { time: "1:08", seconds: 68, speaker: "Rick Astley", text: "We've known each other for so long" },
+        { time: "1:13", seconds: 73, speaker: "Rick Astley", text: "Your heart's been aching, but you're too shy to say it" },
+        { time: "1:17", seconds: 77, speaker: "Rick Astley", text: "Inside, we both know what's been going on" },
+        { time: "1:21", seconds: 81, speaker: "Rick Astley", text: "We know the game and we're gonna play it" },
+        { time: "1:25", seconds: 85, speaker: "Rick Astley", text: "And if you ask me how I'm feeling, don't tell me you're too blind to see" },
+        { time: "1:34", seconds: 94, speaker: "Rick Astley", text: "Never gonna give you up, never gonna let you down!" },
+        { time: "1:43", seconds: 103, speaker: "Rick Astley", text: "Never gonna make you cry, never gonna say goodbye" },
+        { time: "2:16", seconds: 136, speaker: "Rick Astley", text: "(Ooh, give you up) Never gonna give, never gonna give (Give you up)" },
+        { time: "2:32", seconds: 152, speaker: "Rick Astley", text: "Never gonna give you up, never gonna let you down, never gonna run around and desert you!" },
+        { time: "3:00", seconds: 180, speaker: "Rick Astley", text: "Never gonna make you cry, never gonna say goodbye, never gonna tell a lie and hurt you!" },
       ],
       milestones: [
         {
           id: "m-1",
-          seconds: 39,
-          timeFormatted: "0:39",
-          title: isVi ? "Cột mốc 1: Mục tiêu & Nguyên tắc Chuẩn độ" : "Milestone 1: Principle of Titration",
+          seconds: 43,
+          timeFormatted: "0:43",
+          title: isVi ? "Cột mốc 1: Điệp khúc cốt lõi (0:43)" : "Milestone 1: The Core Chorus (0:43)",
           question: isVi
-            ? "Mục đích chính của phương pháp chuẩn độ acid - base là gì?"
-            : "What is the primary objective of an acid-base titration?",
+            ? "Tại điệp khúc kinh điển bắt đầu ở giây 0:43, Rick Astley đã đưa ra lời hứa hẹn cốt lõi nào đầu tiên?"
+            : "At the iconic chorus at 0:43, what is Rick Astley's primary promise?",
           options: [
             {
               id: "opt-1a",
-              text: isVi
-                ? "Xác định nồng độ của dung dịch acid (hoặc base) chưa biết bằng một dung dịch chuẩn đã biết chính xác nồng độ."
-                : "Determine the concentration of an unknown acid/base solution using a known standard solution.",
+              text: "Never gonna give you up, never gonna let you down",
               isCorrect: true,
               explanation: isVi
-                ? "Chính xác! Chuẩn độ là phương pháp phân tích định lượng thể tích dựa trên phản ứng trung hòa vừa đủ với dung dịch chuẩn."
-                : "Correct! Titration is a quantitative volumetric analysis technique based on exact neutralization with a standard solution.",
+                ? "Chính xác! Lời hứa bất hủ 'Never gonna give you up, never gonna let you down' là cam kết kiên trì nổi tiếng nhất thế giới!"
+                : "Correct! 'Never gonna give you up, never gonna let you down' is the worldwide anthem of loyalty and dedication!",
             },
             {
               id: "opt-1b",
-              text: isVi
-                ? "Làm biến đổi màu sắc dung dịch sang màu đỏ để kiểm tra độ độc hại của hóa chất."
-                : "Change the solution color to red to test chemical toxicity.",
+              text: "Always gonna give you up, always gonna let you down",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Màu sắc đổi là do chất chỉ thị pH, mục đích thực sự là xác định nồng độ mol của dung dịch."
-                : "Incorrect. The color change is just an indicator transition; the true goal is finding the concentration.",
+              explanation: isVi ? "Chưa đúng. Rick Astley cam kết 'Never' chứ không phải 'Always'!" : "Incorrect. Rick promises 'Never', not 'Always'!",
             },
             {
               id: "opt-1c",
-              text: isVi
-                ? "Tách kết tủa không tan giữa acid mạnh và base mạnh ra khỏi hỗn hợp."
-                : "Precipitate an insoluble salt from the acid-base mixture.",
+              text: "Never gonna dance again, guilty feet have got no rhythm",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Phản ứng giữa acid mạnh và base mạnh sinh ra muối tan và nước (H+ + OH- -> H2O), không tạo kết tủa."
-                : "Incorrect. Strong acid and base neutralization yields soluble salt and water, not a precipitate.",
+              explanation: isVi ? "Chưa đúng. Đây là lời bài hát Careless Whisper của George Michael!" : "Incorrect. That is George Michael's Careless Whisper!",
             },
             {
               id: "opt-1d",
-              text: isVi
-                ? "Đo nhiệt độ sôi của dung dịch acid khi hòa tan trong nước cất."
-                : "Measure the boiling point of the acid solution in distilled water.",
+              text: "Don't stop believin', hold on to that feelin'",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Chuẩn độ không đo nhiệt độ sôi mà đo thể tích dung dịch chuẩn tiêu tốn."
-                : "Incorrect. Titration measures consumed volume, not boiling points.",
+              explanation: isVi ? "Chưa đúng. Đây là bài hát của Journey!" : "Incorrect. That is Journey's Don't Stop Believin'!",
             },
           ],
           points: 5,
-          hint: isVi ? "Gợi ý: Hãy chú ý từ khóa 'xác định nồng độ' và 'dung dịch chuẩn'." : "Hint: Focus on 'determining concentration' using a 'standard solution'.",
+          hint: isVi ? "Gợi ý: Tên của bài hát chính là câu mở đầu điệp khúc." : "Hint: The song title is the first line of the chorus.",
         },
         {
           id: "m-2",
-          seconds: 165,
-          timeFormatted: "2:45",
-          title: isVi ? "Cột mốc 2: Dụng cụ chứa dung dịch chuẩn" : "Milestone 2: Titration Apparatus",
+          seconds: 94,
+          timeFormatted: "1:34",
+          title: isVi ? "Cột mốc 2: Tinh thần kiên trì trong học tập (1:34)" : "Milestone 2: Perseverance in Learning (1:34)",
           question: isVi
-            ? "Trong thí nghiệm chuẩn độ, dụng cụ chia độ có khóa điều chỉnh giọt dùng để chứa dung dịch chuẩn là gì?"
-            : "In a titration setup, which glassware with a stopcock holds the titrant?",
+            ? "Thông điệp cốt lõi của 'Never Gonna Give You Up' khi áp dụng vào tinh thần học tập tại The Pencily là gì?"
+            : "How does the message of 'Never Gonna Give You Up' apply to learning at The Pencily?",
           options: [
             {
               id: "opt-2a",
-              text: isVi ? "Burette (buret)" : "Burette",
+              text: isVi
+                ? "Kiên trì tới cùng, không bao giờ bỏ cuộc trước các bài toán khó và thử thách học thuật"
+                : "Persevere relentlessly; never give up when facing tough academic challenges",
               isCorrect: true,
               explanation: isVi
-                ? "Chính xác! Burette là ống thủy tinh chia độ có khóa ở đáy giúp kiểm soát chính xác thể tích dung dịch nhỏ xuống."
-                : "Correct! A burette is calibrated glassware with a stopcock to precisely dispense the titrant.",
+                ? "Chính xác! Tinh thần 'Never give up' của Rick Astley chính là kim chỉ nam cho học sinh The Pencily khi ôn luyện thi và giải đề."
+                : "Correct! The 'Never give up' mindset empowers The Pencily peers to conquer difficult exams and concepts.",
             },
             {
               id: "opt-2b",
-              text: isVi ? "Ống đong hình trụ (graduated cylinder)" : "Graduated cylinder",
+              text: isVi ? "Gặp bài khó thì lập tức tắt máy đi ngủ" : "Give up immediately when encountering difficult problems",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Ống đong có độ chia lớn và không có khóa nhỏ giọt nên độ chính xác không đủ cho chuẩn độ."
-                : "Incorrect. Measuring cylinders lack precise drop control and volumetric accuracy.",
+              explanation: isVi ? "Chưa đúng. Tinh thần của The Pencily là học tập chủ động và tương trợ lẫn nhau!" : "Incorrect. The Pencily stands for active peer collaboration!",
             },
             {
               id: "opt-2c",
-              text: isVi ? "Cốc thủy tinh chịu nhiệt (Beaker)" : "Beaker",
+              text: isVi ? "Chỉ học khi có thưởng đồ ăn" : "Only study when bribed with snacks",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Cốc thủy tinh chỉ dùng để chứa hóa chất trung gian, vạch chia chỉ mang tính ước lượng."
-                : "Incorrect. Beakers are for rough holding, not precise titration delivery.",
+              explanation: isVi ? "Chưa đúng. Động lực học tập phải xuất phát từ mục tiêu tri thức của bản thân." : "Incorrect. Motivation comes from personal growth.",
             },
             {
               id: "opt-2d",
-              text: isVi ? "Phễu chiết quả lê" : "Separatory funnel",
+              text: isVi ? "Không cần tự học vì đã có người giải hộ" : "Rely entirely on others to do homework",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Phễu chiết dùng để chiết tách 2 chất lỏng không hòa tan vào nhau."
-                : "Incorrect. Separatory funnels are used for liquid-liquid extraction.",
+              explanation: isVi ? "Chưa đúng. The Pencily khuyến khích tư duy phản biện độc lập." : "Incorrect. Independence and peer synergy are core.",
             },
           ],
           points: 5,
-          hint: isVi ? "Dụng cụ hình ống dài, có vạch chia từ 0 đến 25ml hoặc 50ml và có khóa xoay ở đáy." : "Long cylindrical tube with stopcock.",
+          hint: isVi ? "Hãy chọn phương án thể hiện tinh thần kiên trì và tích cực nhất." : "Choose the option representing resilience.",
         },
         {
           id: "m-3",
-          seconds: 375,
-          timeFormatted: "6:15",
-          title: isVi ? "Cột mốc 3: Nhận biết Điểm dừng chuẩn độ" : "Milestone 3: Detecting End Point",
+          seconds: 136,
+          timeFormatted: "2:16",
+          title: isVi ? "Cột mốc 3: Lời cam kết Danh dự (2:16)" : "Milestone 3: The Honor Code (2:16)",
           question: isVi
-            ? "Khi chuẩn độ HCl bằng dung dịch chuẩn NaOH với chất chỉ thị Phenolphthalein, dấu hiệu nào cho biết phản ứng vừa đủ (điểm dừng)?"
-            : "When titrating HCl with NaOH using phenolphthalein indicator, how do you spot the end point?",
+            ? "Ở đoạn chuyển tiếp (Bridge) tại phút 2:16, câu hát nào sau đây thể hiện sự trung thực và tôn trọng?"
+            : "In the bridge at 2:16, which line expresses honesty and mutual respect?",
           options: [
             {
               id: "opt-3a",
-              text: isVi
-                ? "Dung dịch trong bình tam giác từ không màu chuyển sang màu hồng nhạt bền vững trong 30 giây."
-                : "The solution turns from colorless to faint persistent pink for 30 seconds.",
+              text: "Never gonna tell a lie and hurt you",
               isCorrect: true,
               explanation: isVi
-                ? "Chính xác! Khi 1 giọt NaOH dư làm pH vượt qua điểm tương đương (~8.2), phenolphthalein chuyển sang màu hồng nhạt báo hiệu kết thúc chuẩn độ."
-                : "Correct! When a tiny excess drop of NaOH elevates the pH above 8.2, phenolphthalein exhibits a persistent faint pink shade.",
+                ? "Chính xác! 'Never gonna tell a lie and hurt you' - cam kết trung thực tuyệt đối, tương đồng với Bộ Quy tắc Danh dự (Honor Code) của The Pencily!"
+                : "Correct! 'Never gonna tell a lie and hurt you' aligns perfectly with The Pencily academic Honor Code!",
             },
             {
               id: "opt-3b",
-              text: isVi
-                ? "Dung dịch xuất hiện kết tủa trắng đục và tỏa nhiều khói trắng."
-                : "A dense white precipitate forms with white smoke.",
+              text: "Tell me why, ain't nothing but a heartache",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Phản ứng trung hòa HCl + NaOH không tạo kết tủa hay khói trắng."
-                : "Incorrect. Neutralization creates soluble NaCl, not precipitates.",
+              explanation: isVi ? "Chưa đúng. Đây là bài I Want It That Way của Backstreet Boys!" : "Incorrect. That's Backstreet Boys!",
             },
             {
               id: "opt-3c",
-              text: isVi
-                ? "Dung dịch chuyển sang màu xanh dương đậm ngay lập tức."
-                : "The solution flashes intense deep blue.",
+              text: "We will, we will rock you",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Phenolphthalein chỉ chuyển từ không màu sang hồng hoặc tím đỏ trong môi trường kiềm."
-                : "Incorrect. Phenolphthalein transitions from colorless to pink, never blue.",
+              explanation: isVi ? "Chưa đúng. Đây là bài hát của Queen!" : "Incorrect. That's Queen!",
             },
             {
               id: "opt-3d",
-              text: isVi
-                ? "Bình tam giác rung lắc mạnh và phát ra tiếng nổ lách tách."
-                : "The flask violently rattles and crackles.",
+              text: "Is this the real life, is this just fantasy",
               isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Chuẩn độ là thao tác thí nghiệm êm dịu, không gây nổ."
-                : "Incorrect. Titration is an orderly and controlled chemical operation.",
+              explanation: isVi ? "Chưa đúng. Đây là Bohemian Rhapsody!" : "Incorrect. That's Bohemian Rhapsody!",
             },
           ],
           points: 5,
-          hint: isVi ? "Chất chỉ thị phenolphthalein trong môi trường base chuyển sang màu gì?" : "Recall phenolphthalein color in basic medium.",
-        },
-        {
-          id: "m-4",
-          seconds: 560,
-          timeFormatted: "9:20",
-          title: isVi ? "Cột mốc 4: Công thức tính toán Nồng độ Mol" : "Milestone 4: Concentration Formula",
-          question: isVi
-            ? "Tại điểm tương đương của phản ứng HCl + NaOH → NaCl + H2O, hệ thức nào sau đây được dùng để tính nồng độ mol C_acid?"
-            : "At the equivalence point of HCl + NaOH, which formula yields C_acid?",
-          options: [
-            {
-              id: "opt-4a",
-              text: isVi ? "C_acid = (C_base × V_base) / V_acid" : "C_acid = (C_base * V_base) / V_acid",
-              isCorrect: true,
-              explanation: isVi
-                ? "Chính xác! Vì số mol n_acid = n_base (tỉ lệ 1:1), nên C_acid × V_acid = C_base × V_base, suy ra C_acid = (C_base × V_base) / V_acid."
-                : "Correct! Due to 1:1 stoichiometry, n_acid = n_base, hence C_acid * V_acid = C_base * V_base.",
-            },
-            {
-              id: "opt-4b",
-              text: isVi ? "C_acid = (C_base × V_acid) / V_base" : "C_acid = (C_base * V_acid) / V_base",
-              isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Phép biến đổi công thức bị nghịch đảo thể tích."
-                : "Incorrect. The volume terms are inverted.",
-            },
-            {
-              id: "opt-4c",
-              text: isVi ? "C_acid = C_base + V_base - V_acid" : "C_acid = C_base + V_base - V_acid",
-              isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Không thể cộng trừ nồng độ mol với thể tích lít."
-                : "Incorrect. Units cannot be directly added.",
-            },
-            {
-              id: "opt-4d",
-              text: isVi ? "C_acid = C_base × V_base × V_acid" : "C_acid = C_base * V_base * V_acid",
-              isCorrect: false,
-              explanation: isVi
-                ? "Chưa đúng. Đây không phải biểu thức của định luật đương lượng."
-                : "Incorrect. This violates stoichiometric conservation.",
-            },
-          ],
-          points: 5,
-          hint: isVi ? "Áp dụng định luật bảo toàn số mol: n_acid = n_base." : "Apply mole equivalence: n_acid = n_base.",
-        },
-      ],
-    },
-    {
-      id: "sat-math-quadratic-speed",
-      youtubeId: "WTsaFN9hmOE",
-      title: isVi
-        ? "Video Bài giảng: Digital SAT Math - Kỹ thuật Giải Nhanh Đồ Thị Bậc Hai & Parabola"
-        : "Video Lecture: Digital SAT Math - Quick Vertex & Parabola Tricks",
-      duration: "12:40",
-      totalSeconds: 760,
-      subject: isVi ? "Toán Học • Digital SAT Math" : "Mathematics • Digital SAT",
-      gradeLevel: isVi ? "Chương trình Luyện thi Chuẩn hóa SAT" : "SAT Standardized Prep",
-      tutor: {
-        name: "Nguyễn Minh Đức",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80",
-        school: isVi ? "Đại học Bách Khoa TP.HCM & Peer Tutor The Pencily" : "HCMUT & The Pencily Senior Peer Tutor",
-        grade: isVi ? "SAT 1560 (Math 800)" : "SAT 1560 (Math 800)",
-        bio: isVi
-          ? "Thủ khoa khối A1, hướng dẫn chiến thuật đọc đồ thị bậc hai Desmos, công thức đỉnh Parabola và bẫy nghiệm phương trình trong bài thi Digital SAT."
-          : "SAT Math 800 mentor sharing vertex speed strategies and Desmos shortcuts.",
-        sessions: 340,
-        specialty: isVi ? "Toán Cao Cấp & Digital SAT" : "Advanced Math & SAT Prep",
-        badge: isVi ? "Math 800 Tutor" : "Math 800 Tutor",
-      },
-      syllabus: [
-        {
-          id: "sat-ch-1",
-          title: isVi ? "1. Tọa độ đỉnh Parabola (-b/2a) & Giá trị cực trị" : "1. Vertex Formula (-b/2a) & Extremum",
-          time: "0:45",
-          seconds: 45,
-          summary: isVi ? "Bí quyết tìm nhanh tọa độ đỉnh không cần đạo hàm." : "Fast vertex identification without derivatives.",
-        },
-        {
-          id: "sat-ch-2",
-          title: isVi ? "2. Định lý Vi-et và tổng tích hai nghiệm" : "2. Vieta Formulas for Sum and Product",
-          time: "4:30",
-          seconds: 270,
-          summary: isVi ? "Sử dụng S = -b/a và P = c/a để triệt tiêu thời gian bấm máy." : "Eliminate manual steps using Vieta rules.",
-        },
-        {
-          id: "sat-ch-3",
-          title: isVi ? "3. Biện luận số giao điểm bằng biệt thức Delta" : "3. Discriminant Delta & Intersections",
-          time: "8:50",
-          seconds: 530,
-          summary: isVi ? "Dấu hiệu Delta > 0, = 0, < 0 trong các bài toán chứa tham số k." : "Analyzing zero, one or two roots in parametric SAT questions.",
-        },
-      ],
-      transcript: [
-        { time: "0:10", seconds: 10, speaker: "Minh Đức", text: isVi ? "Chào các bạn! Trong Digital SAT Math, phần Parabola chiếm tới 15% tổng số câu hỏi Đại số." : "Hello everyone! Parabolas make up 15% of algebra questions on Digital SAT." },
-        { time: "0:45", seconds: 45, speaker: "Minh Đức", text: isVi ? "Hãy luôn nhớ tọa độ đỉnh h bằng trừ b chia cho 2a khi đề bài hỏi giá trị lớn nhất hoặc nhỏ nhất." : "Always remember h = -b / (2a) when asked for maximum or minimum values." },
-        { time: "4:30", seconds: 270, speaker: "Minh Đức", text: isVi ? "Đừng bao giờ giải từng nghiệm x1, x2 nếu đề bài chỉ hỏi tổng nghiệm x1 + x2." : "Never compute individual roots if the question only seeks x1 + x2." },
-        { time: "8:50", seconds: 530, speaker: "Minh Đức", text: isVi ? "Khi đường thẳng tiếp xúc với parabol, delta của phương trình hoành độ giao điểm luôn bằng 0." : "When a line is tangent to a parabola, the discriminant delta is strictly 0." },
-      ],
-      milestones: [
-        {
-          id: "sat-m-1",
-          seconds: 45,
-          timeFormatted: "0:45",
-          title: isVi ? "Cột mốc 1: Tọa độ hoành độ đỉnh Parabola" : "Milestone 1: Vertex x-coordinate",
-          question: isVi
-            ? "Cho hàm số f(x) = 2x² - 8x + 5. Hoành độ của đỉnh parabol đạt giá trị là bao nhiêu?"
-            : "For f(x) = 2x² - 8x + 5, what is the x-coordinate of the vertex?",
-          options: [
-            {
-              id: "sat-opt-1a",
-              text: "x = 2",
-              isCorrect: true,
-              explanation: isVi
-                ? "Chính xác! Công thức hoành độ đỉnh x_v = -b / (2a) = -(-8) / (2 × 2) = 8 / 4 = 2."
-                : "Correct! x_v = -b / (2a) = -(-8) / (2 * 2) = 2.",
-            },
-            {
-              id: "sat-opt-1b",
-              text: "x = -2",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Chú ý dấu trừ trong công thức -b / (2a)." : "Incorrect. Check the sign in -b / (2a).",
-            },
-            {
-              id: "sat-opt-1c",
-              text: "x = 4",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Mẫu số phải là 2a = 4, do đó 8 / 4 = 2." : "Incorrect. The denominator is 2a.",
-            },
-            {
-              id: "sat-opt-1d",
-              text: "x = -4",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Vui lòng kiểm tra lại phép tính." : "Incorrect. Recalculate -(-8) / (2*2).",
-            },
-          ],
-          points: 5,
-        },
-        {
-          id: "sat-m-2",
-          seconds: 270,
-          timeFormatted: "4:30",
-          title: isVi ? "Cột mốc 2: Định lý Vi-et thần tốc" : "Milestone 2: Quick Vieta Theorem",
-          question: isVi
-            ? "Phương trình x² - 14x + 48 = 0 có hai nghiệm phân biệt x1 và x2. Giá trị của (x1 + x2) là:"
-            : "For x² - 14x + 48 = 0 with roots x1 and x2, what is (x1 + x2)?",
-          options: [
-            {
-              id: "sat-opt-2a",
-              text: "14",
-              isCorrect: true,
-              explanation: isVi
-                ? "Chính xác! Theo định lý Vi-et: x1 + x2 = -b / a = -(-14) / 1 = 14 mà không cần phân tích đa thức thành nhân tử."
-                : "Correct! Vieta's theorem gives x1 + x2 = -(-14) / 1 = 14 instantly.",
-            },
-            {
-              id: "sat-opt-2b",
-              text: "-14",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. -(-14) là dương 14." : "Incorrect. -(-14) is positive 14.",
-            },
-            {
-              id: "sat-opt-2c",
-              text: "48",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. 48 là tích hai nghiệm (x1 × x2)." : "Incorrect. 48 is the product x1 * x2.",
-            },
-            {
-              id: "sat-opt-2d",
-              text: "7",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. 7 là trung bình cộng hai nghiệm." : "Incorrect. 7 is the average of roots.",
-            },
-          ],
-          points: 5,
-        },
-      ],
-    },
-    {
-      id: "ielts-writing-task-2-mastery",
-      youtubeId: "uE7Np9W6Ors",
-      title: isVi
-        ? "Video Bài giảng: IELTS Writing Task 2 - Paraphrase & Thesis Statement Đạt Band 8.0"
-        : "Video Lecture: IELTS Writing Task 2 - 8.0 Intro & Thesis Statement",
-      duration: "14:15",
-      totalSeconds: 855,
-      subject: isVi ? "Tiếng Anh • IELTS Academic Writing" : "English • IELTS Academic",
-      gradeLevel: isVi ? "Luyện thi Chứng chỉ Quốc tế IELTS" : "IELTS International Certification",
-      tutor: {
-        name: "Trần Mai Anh",
-        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&q=80",
-        school: isVi ? "Học viện Ngoại giao & Peer Tutor The Pencily" : "Diplomatic Academy & The Pencily Tutor",
-        grade: isVi ? "IELTS Overall 8.5 (Writing 8.0)" : "IELTS Overall 8.5 (Writing 8.0)",
-        bio: isVi
-          ? "Cố vấn phương pháp viết luận học thuật Task 2, hướng dẫn cấu trúc mở bài 2 câu gãy gọn, chuyển ngữ từ vựng C1/C2 tự nhiên và trả lời dứt khoát prompt."
-          : "IELTS 8.5 mentor showing exact 2-sentence intro templates and academic paraphrasing.",
-        sessions: 512,
-        specialty: isVi ? "IELTS Writing & Speaking" : "IELTS Writing & Speaking",
-        badge: isVi ? "IELTS 8.5 Mentor" : "IELTS 8.5 Mentor",
-      },
-      syllabus: [
-        {
-          id: "ielts-ch-1",
-          title: isVi ? "1. Phân tích yêu cầu đề bài (Prompt Deconstruction)" : "1. Prompt Deconstruction",
-          time: "1:00",
-          seconds: 60,
-          summary: isVi ? "Xác định dạng bài Opinion, Discussion hay Two-part question." : "Classify prompt type accurately.",
-        },
-        {
-          id: "ielts-ch-2",
-          title: isVi ? "2. Kỹ thuật Paraphrase câu dẫn chủ đề" : "2. Academic Paraphrasing Techniques",
-          time: "5:20",
-          seconds: 320,
-          summary: isVi ? "Biến đổi từ loại (nominalisation) và dùng từ đồng nghĩa chuẩn xác." : "Use word-family shifts and precise synonyms.",
-        },
-        {
-          id: "ielts-ch-3",
-          title: isVi ? "3. Viết Thesis Statement thể hiện lập trường dứt khoát" : "3. Drafting a Direct Thesis Statement",
-          time: "10:15",
-          seconds: 615,
-          summary: isVi ? "Cách trình bày quan điểm người viết rõ ràng ngay trong phần mở bài." : "State your clear stance in the introductory paragraph.",
-        },
-      ],
-      transcript: [
-        { time: "0:15", seconds: 15, speaker: "Mai Anh", text: isVi ? "Chào các bạn! Một mở bài Task 2 chuẩn mực chỉ cần đúng 2 câu và hoàn thành trong tối đa 5 phút." : "Hello! A solid Task 2 intro needs just two sentences written within 5 minutes." },
-        { time: "1:00", seconds: 60, speaker: "Mai Anh", text: isVi ? "Câu thứ nhất để paraphrase lại đề bài, và câu thứ hai là thesis statement thể hiện rõ quan điểm của bạn." : "Sentence one paraphrases the prompt, while sentence two states your clear thesis." },
-        { time: "5:20", seconds: 320, speaker: "Mai Anh", text: isVi ? "Tránh thay thế từ mù quáng bằng từ điển thesaurus; hãy ưu tiên thay đổi cấu trúc ngữ pháp trước." : "Avoid blind synonym substitution; prioritize grammatical restructuring first." },
-      ],
-      milestones: [
-        {
-          id: "ielts-m-1",
-          seconds: 60,
-          timeFormatted: "1:00",
-          title: isVi ? "Cột mốc 1: Cấu trúc mở bài tối ưu" : "Milestone 1: Optimal Intro Structure",
-          question: isVi
-            ? "Độ dài và số lượng câu lý tưởng cho phần Mở bài (Introduction) của bài luận IELTS Writing Task 2 là bao nhiêu?"
-            : "What is the recommended sentence count for an IELTS Task 2 introduction?",
-          options: [
-            {
-              id: "ielts-opt-1a",
-              text: isVi
-                ? "2 câu (1 câu Paraphrase đề bài + 1 câu Thesis Statement trả lời trực diện câu hỏi)"
-                : "2 sentences (1 Paraphrase sentence + 1 direct Thesis Statement)",
-              isCorrect: true,
-              explanation: isVi
-                ? "Chính xác! Cấu trúc 2 câu (khoảng 35 - 45 từ) giúp bạn tiết kiệm thời gian cho 2 đoạn thân bài mà vẫn đảm bảo tiêu chí Task Response tối đa."
-                : "Correct! A crisp 2-sentence intro (35-45 words) satisfies Task Response while leaving ample time for body paragraphs.",
-            },
-            {
-              id: "ielts-opt-1b",
-              text: isVi ? "5 đến 6 câu thật dài để tạo ấn tượng cho giám khảo" : "5 to 6 long sentences to impress examiners",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Viết mở bài quá dài sẽ làm bạn thiếu thời gian viết thân bài và kết bài." : "Incorrect. Long intros waste crucial body paragraph time.",
-            },
-            {
-              id: "ielts-opt-1c",
-              text: isVi ? "Chỉ cần 1 câu sao chép y hệt đề bài" : "Just 1 sentence copying the prompt exactly",
-              isCorrect: false,
-              explanation: isVi ? "Chưa đúng. Từ ngữ sao chép y hệt đề bài sẽ bị giám khảo gạch bỏ và không tính điểm từ vựng." : "Incorrect. Copied words are discounted from your score.",
-            },
-          ],
-          points: 5,
+          hint: isVi ? "Câu hát nhấn mạnh tính trung thực (tell a lie)." : "Line emphasizes honesty.",
         },
       ],
     },
@@ -618,14 +334,14 @@ export function ClassVideoLibrary({
   const [activeLesson, setActiveLesson] = useState<VideoLesson>(effectiveLessons[0]);
   const [activeTab, setActiveTab] = useState<"milestones" | "transcript" | "syllabus" | "summary">("milestones");
 
-  // Player State
+  // Real YouTube Player State
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(effectiveLessons[0]?.totalSeconds || 659);
+  const [duration, setDuration] = useState<number>(213);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [showCaptions, setShowCaptions] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isApiReady, setIsApiReady] = useState<boolean>(false);
 
   // Interactive Milestones State (H5P features)
   const [activeMilestone, setActiveMilestone] = useState<VideoMilestone | null>(null);
@@ -642,9 +358,9 @@ export function ClassVideoLibrary({
 
   // Refs
   const playerContainerRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const timePollerRef = useRef<NodeJS.Timeout | null>(null);
+  const playerRef = useRef<any>(null);
   const triggeredMilestoneRef = useRef<Set<string>>(new Set());
+  const lastSecondRef = useRef<number>(-1);
 
   // Load saved progress from localStorage
   useEffect(() => {
@@ -658,44 +374,177 @@ export function ClassVideoLibrary({
     }
   }, []);
 
-  // Update duration when activeLesson changes
+  // Update activeLesson when defaultLessons or lessons prop changes
   useEffect(() => {
-    if (activeLesson) {
-      setDuration(activeLesson.totalSeconds);
-      setCurrentTime(0);
-      setIsPlaying(false);
-      setActiveMilestone(null);
-      setSelectedOptionId(null);
-      setIsAnswerSubmitted(false);
-      setIsAnswerCorrect(null);
-      triggeredMilestoneRef.current = new Set();
+    if (effectiveLessons.length > 0) {
+      setActiveLesson(effectiveLessons[0]);
     }
-  }, [activeLesson]);
+  }, [effectiveLessons]);
 
-  // Send command to YouTube iframe via postMessage
-  const postToPlayer = useCallback((func: string, args: any[] = []) => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({
-          event: "command",
-          func,
-          args,
-        }),
-        "*"
-      );
+  // INITIALIZE YOUTUBE IFRAME API
+  useEffect(() => {
+    let isMounted = true;
+
+    const setupPlayer = () => {
+      if (!window.YT || !window.YT.Player) return;
+
+      // Destroy existing player if any
+      try {
+        if (playerRef.current && typeof playerRef.current.destroy === "function") {
+          playerRef.current.destroy();
+          playerRef.current = null;
+        }
+      } catch (e) {}
+
+      const container = document.getElementById("pencily-yt-iframe-container");
+      if (!container) return;
+
+      playerRef.current = new window.YT.Player("pencily-yt-iframe-container", {
+        videoId: activeLesson.youtubeId,
+        width: "100%",
+        height: "100%",
+        playerVars: {
+          autoplay: 0,
+          controls: 1, // Keep native YouTube controls active so student has full native controls
+          rel: 0,
+          modestbranding: 1,
+          enablejsapi: 1,
+          origin: typeof window !== "undefined" ? window.location.origin : undefined,
+        },
+        events: {
+          onReady: (event: any) => {
+            if (!isMounted) return;
+            setIsApiReady(true);
+            const dur = event.target.getDuration();
+            if (dur && dur > 0) {
+              setDuration(Math.floor(dur));
+            }
+          },
+          onStateChange: (event: any) => {
+            if (!isMounted) return;
+            // YT.PlayerState:
+            // 1: PLAYING
+            // 2: PAUSED
+            // 0: ENDED
+            if (event.data === 1) {
+              setIsPlaying(true);
+            } else if (event.data === 2) {
+              setIsPlaying(false);
+            } else if (event.data === 0) {
+              setIsPlaying(false);
+              const dur = event.target.getDuration();
+              if (dur > 0) setCurrentTime(Math.floor(dur));
+              setActiveTab("summary"); // Show completion summary when video naturally ends
+            }
+          },
+        },
+      });
+    };
+
+    if (typeof window !== "undefined") {
+      if (!window.YT) {
+        const tag = document.createElement("script");
+        tag.id = "yt-iframe-api";
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+
+        window.onYouTubeIframeAPIReady = () => {
+          if (isMounted) setupPlayer();
+        };
+      } else {
+        setupPlayer();
+      }
     }
-  }, []);
+
+    return () => {
+      isMounted = false;
+      try {
+        if (playerRef.current && typeof playerRef.current.destroy === "function") {
+          playerRef.current.destroy();
+          playerRef.current = null;
+        }
+      } catch (e) {}
+    };
+  }, [activeLesson.id, activeLesson.youtubeId]);
+
+  // HIGH-PRECISION PLAYHEAD SYNC LOOP (Direct from YouTube engine, ZERO fake increments)
+  useEffect(() => {
+    let animId: number;
+
+    const checkPlayhead = () => {
+      const player = playerRef.current;
+      if (player && typeof player.getCurrentTime === "function") {
+        try {
+          const state = player.getPlayerState();
+          // State 1 is actively playing
+          if (state === 1) {
+            setIsPlaying(true);
+            const rawTime = player.getCurrentTime();
+            const rawDur = player.getDuration();
+            if (rawDur && rawDur > 0) {
+              setDuration(Math.floor(rawDur));
+            }
+
+            const currentSecond = Math.floor(rawTime);
+            setCurrentTime(currentSecond);
+
+            // Milestone Check (Only once per integer second):
+            if (currentSecond !== lastSecondRef.current) {
+              lastSecondRef.current = currentSecond;
+
+              // Check if any milestone falls on this exact second
+              const hitMilestone = activeLesson.milestones.find(
+                (m) =>
+                  m.seconds === currentSecond &&
+                  !triggeredMilestoneRef.current.has(m.id) &&
+                  !solvedMilestoneIds.includes(m.id)
+              );
+
+              if (hitMilestone) {
+                triggeredMilestoneRef.current.add(hitMilestone.id);
+                player.pauseVideo();
+                setIsPlaying(false);
+                setActiveMilestone(hitMilestone);
+                setSelectedOptionId(null);
+                setIsAnswerSubmitted(false);
+                setIsAnswerCorrect(null);
+                setShowHint(false);
+              }
+            }
+          } else if (state === 2) {
+            setIsPlaying(false);
+          } else if (state === 0) {
+            setIsPlaying(false);
+            const rawDur = player.getDuration();
+            if (rawDur > 0) setCurrentTime(Math.floor(rawDur));
+          }
+        } catch (err) {
+          // Player not yet initialized
+        }
+      }
+
+      animId = requestAnimationFrame(checkPlayhead);
+    };
+
+    animId = requestAnimationFrame(checkPlayhead);
+    return () => cancelAnimationFrame(animId);
+  }, [activeLesson, solvedMilestoneIds]);
 
   // Player controls
   const handlePlay = useCallback(() => {
-    postToPlayer("playVideo");
-    setIsPlaying(true);
-  }, [postToPlayer]);
+    if (playerRef.current && typeof playerRef.current.playVideo === "function") {
+      playerRef.current.playVideo();
+      setIsPlaying(true);
+    }
+  }, []);
 
   const handlePause = useCallback(() => {
-    postToPlayer("pauseVideo");
-    setIsPlaying(false);
-  }, [postToPlayer]);
+    if (playerRef.current && typeof playerRef.current.pauseVideo === "function") {
+      playerRef.current.pauseVideo();
+      setIsPlaying(false);
+    }
+  }, []);
 
   const handleTogglePlay = useCallback(() => {
     if (isPlaying) {
@@ -708,9 +557,13 @@ export function ClassVideoLibrary({
   const handleSeek = useCallback(
     (seconds: number) => {
       const target = Math.max(0, Math.min(seconds, duration));
-      postToPlayer("seekTo", [target, true]);
+      if (playerRef.current && typeof playerRef.current.seekTo === "function") {
+        playerRef.current.seekTo(target, true);
+      }
       setCurrentTime(target);
-      // If student sought backwards, allow upcoming milestones to re-trigger
+      lastSecondRef.current = Math.floor(target);
+
+      // If user sought backwards, allow future milestones to re-trigger
       triggeredMilestoneRef.current.forEach((id) => {
         const ms = activeLesson.milestones.find((m) => m.id === id);
         if (ms && ms.seconds > target + 2) {
@@ -718,7 +571,7 @@ export function ClassVideoLibrary({
         }
       });
     },
-    [duration, postToPlayer, activeLesson]
+    [duration, activeLesson]
   );
 
   const handleSkip = useCallback(
@@ -728,23 +581,24 @@ export function ClassVideoLibrary({
     [currentTime, handleSeek]
   );
 
-  const handleSetRate = useCallback(
-    (rate: number) => {
-      setPlaybackRate(rate);
-      postToPlayer("setPlaybackRate", [rate]);
-    },
-    [postToPlayer]
-  );
+  const handleSetRate = useCallback((rate: number) => {
+    setPlaybackRate(rate);
+    if (playerRef.current && typeof playerRef.current.setPlaybackRate === "function") {
+      playerRef.current.setPlaybackRate(rate);
+    }
+  }, []);
 
   const handleToggleMute = useCallback(() => {
-    if (isMuted) {
-      postToPlayer("unMute");
-      setIsMuted(false);
-    } else {
-      postToPlayer("mute");
-      setIsMuted(true);
+    if (playerRef.current) {
+      if (isMuted) {
+        if (typeof playerRef.current.unMute === "function") playerRef.current.unMute();
+        setIsMuted(false);
+      } else {
+        if (typeof playerRef.current.mute === "function") playerRef.current.mute();
+        setIsMuted(true);
+      }
     }
-  }, [isMuted, postToPlayer]);
+  }, [isMuted]);
 
   const handleToggleFullscreen = () => {
     if (!playerContainerRef.current) return;
@@ -756,71 +610,6 @@ export function ClassVideoLibrary({
       setIsFullscreen(false);
     }
   };
-
-  // Listen to postMessage responses from YouTube player
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (typeof event.data !== "string") return;
-      try {
-        const data = JSON.parse(event.data);
-        if (data.event === "infoDelivery" && data.info) {
-          if (typeof data.info.currentTime === "number") {
-            setCurrentTime(Math.floor(data.info.currentTime));
-          }
-          if (typeof data.info.playerState === "number") {
-            // 1 = playing, 2 = paused
-            setIsPlaying(data.info.playerState === 1);
-          }
-        }
-      } catch {
-        // ignore other messages
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, []);
-
-  // Interval timer to poll YouTube current time and trigger milestone pauses
-  useEffect(() => {
-    if (timePollerRef.current) clearInterval(timePollerRef.current);
-
-    timePollerRef.current = setInterval(() => {
-      // Send polling ping
-      postToPlayer("getCurrentTime");
-
-      // Fallback increment if playing
-      if (isPlaying && !activeMilestone) {
-        setCurrentTime((prev) => {
-          const next = prev + 1;
-
-          // Check if we hit any milestone in activeLesson
-          const hitMilestone = activeLesson.milestones.find(
-            (m) =>
-              Math.abs(m.seconds - next) <= 1 &&
-              !triggeredMilestoneRef.current.has(m.id) &&
-              !solvedMilestoneIds.includes(m.id)
-          );
-
-          if (hitMilestone) {
-            triggeredMilestoneRef.current.add(hitMilestone.id);
-            handlePause();
-            setActiveMilestone(hitMilestone);
-            setSelectedOptionId(null);
-            setIsAnswerSubmitted(false);
-            setIsAnswerCorrect(null);
-            setShowHint(false);
-          }
-
-          return next > duration ? duration : next;
-        });
-      }
-    }, 1000);
-
-    return () => {
-      if (timePollerRef.current) clearInterval(timePollerRef.current);
-    };
-  }, [isPlaying, activeMilestone, activeLesson, duration, solvedMilestoneIds, handlePause, postToPlayer]);
 
   // Click on a milestone marker on progress bar
   const handleOpenMilestone = (milestone: VideoMilestone) => {
@@ -901,18 +690,11 @@ export function ClassVideoLibrary({
 
   // Helper format seconds -> mm:ss
   const formatTime = (secs: number) => {
-    const m = Math.floor(secs / 60);
-    const s = Math.floor(secs % 60);
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
+    const s = Math.max(0, Math.floor(secs));
+    const m = Math.floor(s / 60);
+    const remainder = s % 60;
+    return `${m}:${remainder < 10 ? "0" : ""}${remainder}`;
   };
-
-  // Current synchronized caption from transcript
-  const currentCaption = useMemo(() => {
-    const item = [...activeLesson.transcript]
-      .reverse()
-      .find((t) => currentTime >= t.seconds);
-    return item ? item.text : "";
-  }, [activeLesson.transcript, currentTime]);
 
   const solvedCountInLesson = activeLesson.milestones.filter((m) =>
     solvedMilestoneIds.includes(m.id)
@@ -993,7 +775,7 @@ export function ClassVideoLibrary({
             ref={playerContainerRef}
             className="bg-slate-950 rounded-md border-2 border-slate-800 shadow-lg overflow-hidden flex flex-col relative"
           >
-            {/* LECTURE HEADER BANNER (Matching user screenshot: "Video Bài giảng: ...") */}
+            {/* LECTURE HEADER BANNER */}
             <div className="px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-white z-10">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span className="px-2 py-0.5 rounded-xs bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider shrink-0">
@@ -1013,23 +795,8 @@ export function ClassVideoLibrary({
 
             {/* VIDEO VIEWPORT & OVERLAYS */}
             <div className="relative w-full aspect-video bg-black overflow-hidden group">
-              {/* YOUTUBE IFRAME WITH EMBED API */}
-              <iframe
-                ref={iframeRef}
-                key={activeLesson.id}
-                src={`https://www.youtube-nocookie.com/embed/${activeLesson.youtubeId}?enablejsapi=1&autoplay=0&rel=0&controls=0&modestbranding=1&playsinline=1&origin=${typeof window !== "undefined" ? window.location.origin : ""}`}
-                title={activeLesson.title}
-                className="w-full h-full border-0 pointer-events-auto"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-
-              {/* CLOSED CAPTIONS OVERLAY (Subtitles banner like in user screenshot) */}
-              {showCaptions && currentCaption && !activeMilestone && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 max-w-[88%] px-4 py-1.5 rounded-xs bg-black/85 text-white text-xs sm:text-sm font-medium text-center shadow-lg pointer-events-none backdrop-blur-xs border border-white/10 animate-fadeIn">
-                  {currentCaption}
-                </div>
-              )}
+              {/* STABLE YOUTUBE API DOM CONTAINER */}
+              <div id="pencily-yt-iframe-container" className="w-full h-full" />
 
               {/* H5P INTERACTIVE QUESTION OVERLAY (POPS UP AT MILESTONE) */}
               {activeMilestone && (
@@ -1160,7 +927,7 @@ export function ClassVideoLibrary({
                           type="button"
                           onClick={handleReviewLesson}
                           className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#0F2747] font-semibold cursor-pointer"
-                          title={isVi ? "Tua lại 15 giây trước để nghe lại cô giảng" : "Rewind 15s to hear teacher"}
+                          title={isVi ? "Tua lại 15 giây trước để nghe lại" : "Rewind 15s to re-listen"}
                         >
                           <RotateCcw className="w-3.5 h-3.5" />
                           <span>{isVi ? "Xem lại 15s trước" : "Re-watch 15s"}</span>
@@ -1213,7 +980,7 @@ export function ClassVideoLibrary({
               )}
             </div>
 
-            {/* CUSTOM INTERACTIVE CONTROLS TOOLBAR (H5P STYLE) */}
+            {/* CUSTOM INTERACTIVE CONTROLS TOOLBAR (H5P STYLE - 100% IN SYNC) */}
             <div className="p-3 bg-slate-900 border-t border-slate-800 text-white space-y-2">
               {/* TIMELINE PROGRESS BAR WITH MILESTONE PINS */}
               <div className="space-y-1">
@@ -1222,19 +989,19 @@ export function ClassVideoLibrary({
                   onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const clickX = e.clientX - rect.left;
-                    const pct = clickX / rect.width;
+                    const pct = Math.max(0, Math.min(1, clickX / rect.width));
                     handleSeek(pct * duration);
                   }}
                 >
                   {/* Played Track */}
                   <div
                     className="absolute top-0 left-0 bottom-0 bg-amber-400 rounded-xs transition-all"
-                    style={{ width: `${(currentTime / duration) * 100}%` }}
+                    style={{ width: `${Math.min(100, Math.max(0, (currentTime / (duration || 213)) * 100))}%` }}
                   />
 
-                  {/* MILESTONE TICK MARKERS (NO "NỐT RUỒI" - SQUARISH TABS ONLY!) */}
+                  {/* MILESTONE TICK MARKERS (STRICT NO "NỐT RUỒI" - SQUARISH TABS ONLY!) */}
                   {activeLesson.milestones.map((m) => {
-                    const leftPct = (m.seconds / duration) * 100;
+                    const leftPct = (m.seconds / (duration || 213)) * 100;
                     const isSolved = solvedMilestoneIds.includes(m.id);
 
                     return (
@@ -1286,7 +1053,7 @@ export function ClassVideoLibrary({
                     type="button"
                     onClick={handleTogglePlay}
                     className="w-8 h-8 rounded-xs bg-amber-400 hover:bg-amber-500 text-slate-950 flex items-center justify-center transition active:scale-95 cursor-pointer shadow-xs border border-amber-600"
-                    title={isPlaying ? "Tạm dừng (Space)" : "Phát video (Space)"}
+                    title={isPlaying ? "Tạm dừng" : "Phát video"}
                   >
                     {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                   </button>
@@ -1318,28 +1085,14 @@ export function ClassVideoLibrary({
                     {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
                   </button>
 
-                  {/* Time counter matching user's image: 0:39 / 10:59 */}
+                  {/* Exact synchronized counter */}
                   <span className="font-mono text-xs text-slate-200 font-semibold px-2 py-0.5 rounded-xs bg-slate-800">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </span>
                 </div>
 
-                {/* Right: Captions, Speed, Fullscreen */}
+                {/* Right: Speed, Fullscreen */}
                 <div className="flex items-center gap-2">
-                  {/* Captions toggle button */}
-                  <button
-                    type="button"
-                    onClick={() => setShowCaptions(!showCaptions)}
-                    className={`px-2 py-1 rounded-xs font-bold text-[11px] transition cursor-pointer border ${
-                      showCaptions
-                        ? "bg-amber-400 text-slate-950 border-amber-500"
-                        : "bg-slate-800 text-slate-400 border-slate-700 hover:text-white"
-                    }`}
-                    title={isVi ? "Bật / tắt phụ đề bài giảng" : "Toggle captions"}
-                  >
-                    CC
-                  </button>
-
                   {/* Playback speed selector */}
                   <div className="flex items-center bg-slate-800 rounded-xs border border-slate-700 p-0.5">
                     {[1, 1.25, 1.5].map((rate) => (
@@ -1369,7 +1122,7 @@ export function ClassVideoLibrary({
               </div>
             </div>
 
-            {/* H5P FOOTER INFO BAR (Matching user screenshot: "Sử dụng lại", H5P icon) */}
+            {/* H5P FOOTER INFO BAR */}
             <div className="px-4 py-2 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
               <div className="flex items-center gap-3">
                 <button
@@ -1457,7 +1210,7 @@ export function ClassVideoLibrary({
           <div className="bg-white rounded-md border-2 border-slate-300 shadow-2xs overflow-hidden">
             <div className="flex items-center justify-between border-b-2 border-slate-200 bg-[#FFF9EF]/80 px-4 sm:px-6 overflow-x-auto">
               <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-                {/* TAB 1: MILESTONES (NEW) */}
+                {/* TAB 1: MILESTONES */}
                 <button
                   onClick={() => setActiveTab("milestones")}
                   className={`py-3 px-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition cursor-pointer -mb-[2px] ${
@@ -1532,7 +1285,7 @@ export function ClassVideoLibrary({
                 </div>
 
                 <div className="space-y-2.5">
-                  {activeLesson.milestones.map((m, idx) => {
+                  {activeLesson.milestones.map((m) => {
                     const isSolved = solvedMilestoneIds.includes(m.id);
 
                     return (
@@ -1728,89 +1481,50 @@ export function ClassVideoLibrary({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: PLAYLIST QUEUE & SELECTOR (4 COLS) */}
+        {/* RIGHT COLUMN: LESSON INFO & STUDY CALLOUT (4 COLS) */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-white rounded-md border-2 border-slate-300 shadow-2xs overflow-hidden">
-            <div className="p-4 bg-[#FFF9EF] border-b-2 border-slate-200 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <ListVideo className="w-4 h-4 text-[#F59E0B]" />
-                <h3 className="font-poppins font-bold text-sm text-[#0F2747]">
-                  {isVi ? `Danh sách bài giảng (${effectiveLessons.length})` : `Lectures (${effectiveLessons.length})`}
-                </h3>
-              </div>
-              <span className="text-[11px] text-slate-500 font-medium">
-                {isVi ? "Chọn bài để học" : "Select lecture"}
-              </span>
+          {/* ACTIVE LESSON DETAILS CARD */}
+          <div className="bg-white rounded-md border-2 border-slate-300 shadow-2xs overflow-hidden p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <ListVideo className="w-4 h-4 text-[#F59E0B]" />
+              <h3 className="font-poppins font-bold text-sm text-[#0F2747]">
+                {isVi ? "Bài học đang phát" : "Current Lesson"}
+              </h3>
             </div>
 
-            <div className="divide-y divide-slate-100 max-h-[750px] overflow-y-auto">
-              {effectiveLessons.map((lesson) => {
-                const isCurrent = lesson.id === activeLesson.id;
-                const isClaimed = claimedLessonIds.includes(lesson.id);
-                const solvedCount = lesson.milestones.filter((m) => solvedMilestoneIds.includes(m.id)).length;
+            <div className="relative w-full aspect-video rounded-sm overflow-hidden bg-slate-900 border-2 border-slate-200 shadow-2xs">
+              <img
+                src={`https://img.youtube.com/vi/${activeLesson.youtubeId}/mqdefault.jpg`}
+                alt={activeLesson.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-1.5 right-1.5 px-2 py-0.5 rounded-xs bg-black/80 text-white font-mono font-bold text-xs">
+                {formatTime(duration)}
+              </div>
+            </div>
 
-                return (
-                  <button
-                    key={lesson.id}
-                    onClick={() => {
-                      setActiveLesson(lesson);
-                      setTranscriptSearch("");
-                    }}
-                    className={`w-full text-left p-3.5 transition flex items-start gap-3 cursor-pointer group ${
-                      isCurrent
-                        ? "bg-amber-50/70 border-l-4 border-amber-500"
-                        : "hover:bg-slate-50"
-                    }`}
-                  >
-                    <div className="relative w-28 aspect-video rounded-sm overflow-hidden bg-slate-900 shrink-0 border-2 border-slate-200 shadow-2xs group-hover:shadow-xs transition">
-                      <img
-                        src={`https://img.youtube.com/vi/${lesson.youtubeId}/mqdefault.jpg`}
-                        alt={lesson.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                        loading="lazy"
-                      />
-                      <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-xs bg-black/80 text-white font-mono font-bold text-[10px]">
-                        {lesson.duration}
-                      </div>
+            <div className="space-y-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-sm bg-amber-100 text-amber-900 border border-amber-300 inline-block">
+                {activeLesson.subject}
+              </span>
+              <h4 className="font-poppins font-bold text-sm text-[#0F2747] leading-snug">
+                {activeLesson.title}
+              </h4>
+              <p className="text-xs text-slate-500">
+                {activeLesson.tutor.name} • {activeLesson.tutor.school}
+              </p>
+            </div>
 
-                      {isCurrent && (
-                        <div className="absolute inset-0 bg-[#0F2747]/40 flex items-center justify-center">
-                          <Play className="w-5 h-5 text-amber-400 fill-amber-400" />
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-sm bg-slate-100 text-slate-700 truncate">
-                          {lesson.subject}
-                        </span>
-                        {isClaimed && (
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-sm flex items-center gap-0.5 shrink-0">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                            <span>+5 PP</span>
-                          </span>
-                        )}
-                      </div>
-
-                      <h4
-                        className={`font-poppins font-bold text-xs leading-snug line-clamp-2 ${
-                          isCurrent ? "text-amber-900" : "text-[#0F2747] group-hover:text-amber-800"
-                        }`}
-                      >
-                        {lesson.title}
-                      </h4>
-
-                      <div className="flex items-center justify-between text-[11px] text-slate-500 pt-0.5">
-                        <span className="truncate max-w-[120px]">{lesson.tutor.name}</span>
-                        <span className="font-mono text-amber-700 font-semibold shrink-0">
-                          {solvedCount}/{lesson.milestones.length} {isVi ? "cột mốc" : "quiz"}
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-sm text-xs text-[#0F2747] space-y-1">
+              <div className="font-bold flex items-center gap-1.5 text-amber-900">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <span>{isVi ? "Cột mốc kiểm tra kiến thức:" : "Interactive Checkpoints:"}</span>
+              </div>
+              <p className="text-[11px] text-slate-600 leading-relaxed">
+                {isVi
+                  ? `Bài giảng có ${activeLesson.milestones.length} điểm dừng tại 0:43, 1:34 và 2:16. Trả lời đúng mỗi câu bạn sẽ được cộng +5 PP ngay lập tức!`
+                  : `This lecture features ${activeLesson.milestones.length} checkpoints at 0:43, 1:34, and 2:16. Earn +5 PP per correct answer!`}
+              </p>
             </div>
           </div>
 
@@ -1824,7 +1538,7 @@ export function ClassVideoLibrary({
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
               {isVi
-                ? "Ngoài thư viện video học liệu, bạn có thể tham gia trực tiếp các phòng học ảo (Study Rooms) có Peer Tutors kèm giải bài tập hoàn toàn miễn phí."
+                ? "Ngoài bài học tương tác, bạn có thể tham gia trực tiếp các phòng học ảo (Study Rooms) có Peer Tutors kèm giải bài tập hoàn toàn miễn phí."
                 : "Join active study pods with live student tutors and interactive whiteboards."}
             </p>
             {onGoToClasses && (
