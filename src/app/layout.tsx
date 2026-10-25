@@ -44,6 +44,7 @@ export const metadata: Metadata = {
 
 import { PencilyProvider } from "@/context/PencilyContext";
 import { PencilyMascotCompanion } from "@/components/PencilyMascotCompanion";
+import { SiteClosureNotice } from "@/components/SiteClosureNotice";
 
 export default function RootLayout({
   children,
@@ -57,6 +58,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#FAF7EE] text-[#0F2747]">
         <PencilyProvider>
+          <SiteClosureNotice />
           {children}
           <PencilyMascotCompanion />
         </PencilyProvider>
