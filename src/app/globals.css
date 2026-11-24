@@ -104,6 +104,53 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
   background-size: 196px 132px;
 }
 
+/* Subtle stationery drafting grid background (NO DOTS) */
+.bg-stationery-grid {
+  background-color: #FAF7EE;
+  background-image: 
+    linear-gradient(to right, rgba(15, 39, 71, 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 39, 71, 0.038) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Hero atmospheric drafting canvas */
+.pencily-hero-canvas {
+  background-color: #FAF7EE;
+  background-image:
+    radial-gradient(ellipse 75% 65% at 50% 0%, rgba(255, 200, 61, 0.16), transparent 72%),
+    linear-gradient(to right, rgba(15, 39, 71, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 39, 71, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Ruled notebook paper lines */
+.bg-ruled-paper {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    rgba(15, 39, 71, 0.04) 27px,
+    rgba(15, 39, 71, 0.04) 28px
+  );
+}
+
+/* Tactile 3D Button Shadows (Stationery Press) */
+.shadow-tactile-navy {
+  box-shadow: 0 4px 0 #0F2747;
+}
+.shadow-tactile-navy:active {
+  box-shadow: 0 0 0 #0F2747;
+  transform: translateY(4px);
+}
+
+.shadow-tactile-slate {
+  box-shadow: 0 3px 0 #CBD5E1;
+}
+.shadow-tactile-slate:active {
+  box-shadow: 0 0 0 #CBD5E1;
+  transform: translateY(3px);
+}
+
 /* ====================================================
    The Pencily Playful Scroll Keyframes & Sticky Reveal
    ==================================================== */

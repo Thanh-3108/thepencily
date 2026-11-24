@@ -15,6 +15,10 @@ interface ProgramItem {
   titleEn: string;
   badgeVi: string;
   badgeEn: string;
+  targetVi: string;
+  targetEn: string;
+  formatVi: string;
+  formatEn: string;
   taglineVi: string;
   taglineEn: string;
   descriptionVi: string;
@@ -38,6 +42,10 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     titleEn: "IELTS: Road to 6.5 / 7.0+",
     badgeVi: "Lớp Học IELTS",
     badgeEn: "IELTS Program",
+    targetVi: "Target: 6.5 – 7.5+",
+    targetEn: "Target: 6.5 – 7.5+",
+    formatVi: "Phòng 3–6 bạn • 60 phút • Discord Voice",
+    formatEn: "3–6 students • 60 mins • Discord Voice",
     taglineVi: "Chiến thuật bứt phá band điểm cùng Peer Tutors 7.5 – 8.5+",
     taglineEn: "Score breakthrough strategy with 7.5 – 8.5+ Peer Tutors",
     descriptionVi: "Lớp học tương tác nhóm nhỏ do các bạn học sinh đạt band cao trực tiếp chia sẻ mẹo làm bài, rèn phản xạ Speaking và chữa Writing sát thực tế.",
@@ -67,6 +75,10 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     titleEn: "SAT: Road to 1400 / 1500+",
     badgeVi: "Lớp Học SAT",
     badgeEn: "SAT Program",
+    targetVi: "Target: 1400 – 1550+",
+    targetEn: "Target: 1400 – 1550+",
+    formatVi: "Phòng 3–6 bạn • 60 phút • Desmos Lab",
+    formatEn: "3–6 students • 60 mins • Desmos Lab",
     taglineVi: "Chinh phục Digital SAT cùng Tutors 1450 – 1560+",
     taglineEn: "Master Digital SAT alongside 1450 – 1560+ Tutors",
     descriptionVi: "Đồng hành cùng học sinh có mục tiêu du học và xét tuyển đại học sớm, khai thác tối đa công cụ máy tính Desmos và bẻ khóa logic Reading & Writing.",
@@ -99,6 +111,10 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     titleEn: "Competency Assessment & National Exam Prep",
     badgeVi: "Luyện Đề Trọng Tâm",
     badgeEn: "Exam Mastery",
+    targetVi: "Target: 900+ ĐGNL / 27+ THPT",
+    targetEn: "Target: 900+ ĐGNL / 27+ National",
+    formatVi: "Phòng 4–8 bạn • 60 phút • Google Meet",
+    formatEn: "4–8 students • 60 mins • Google Meet",
     taglineVi: "Hệ thống hóa kiến thức các môn Toán, Vật lý, Hóa học, Sinh học",
     taglineEn: "Systematic core review for Mathematics, Physics, Chemistry, and Biology",
     descriptionVi: "Các chuyên đề tổng ôn kiến thức cốt lõi lớp 11-12, rèn luyện kỹ năng phân tích số liệu và mẹo giải nhanh trắc nghiệm nhiều phương án.",
@@ -126,6 +142,10 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     titleEn: "Peer Study Pods & Doubt-Clearing Mentorship",
     badgeVi: "Kèm Cặp Thân Mật",
     badgeEn: "Small Study Pods",
+    targetVi: "Target: Lấy Lại Gốc & Tự Tin",
+    targetEn: "Target: Core Mastery & Confidence",
+    formatVi: "Phòng 2–4 bạn • 60 phút • Web Whiteboard",
+    formatEn: "2–4 students • 60 mins • Web Whiteboard",
     taglineVi: "Không gian học tập cởi mở, chia sẻ bài khó không áp lực",
     taglineEn: "Open, welcoming study space to solve tough homework together",
     descriptionVi: "Học sinh có thể mang bài tập khó, kiến thức chưa hiểu rõ trên lớp đến để cùng thảo luận, nghe giảng lại từ các bạn học sinh giỏi phụ trách.",
@@ -163,7 +183,10 @@ export function HomePrograms() {
     const isIelts = prog.id === "flagship-ielts";
     const isSat = prog.id === "flagship-sat";
 
-    let cardContainerClasses = "bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs hover:border-[#0F2747] hover:shadow-md transition-all flex flex-col justify-between";
+    const target = isVi ? prog.targetVi : prog.targetEn;
+    const format = isVi ? prog.formatVi : prog.formatEn;
+
+    let cardContainerClasses = "bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs hover:border-[#0F2747] hover:shadow-md transition-all flex flex-col justify-between hover:-translate-y-1.5";
     let ribbonClasses = "";
     let badgeClasses = "text-[#0F2747] bg-slate-100 border-slate-300 font-bold";
     let taglineClasses = "text-[#4F7ECB]";
@@ -171,14 +194,14 @@ export function HomePrograms() {
 
     if (isIelts) {
       // IELTS Authentic Red Theme
-      cardContainerClasses = "bg-[#FFF5F5] rounded-md p-6 sm:p-7 border-2 border-red-300 shadow-xs hover:border-red-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden";
+      cardContainerClasses = "bg-[#FFF8F8] rounded-md p-6 sm:p-7 border-2 border-red-300 shadow-xs hover:border-red-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5";
       ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#E01A22] via-red-500 to-rose-600";
       badgeClasses = "text-red-950 bg-red-100 border-red-300 shadow-2xs font-black";
       taglineClasses = "text-red-700";
       ctaClasses = "text-[#0F2747] hover:text-red-700 font-bold";
     } else if (isSat) {
       // SAT Authentic Blue Theme
-      cardContainerClasses = "bg-[#F0F7FF] rounded-md p-6 sm:p-7 border-2 border-blue-300 shadow-xs hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden";
+      cardContainerClasses = "bg-[#F4F9FF] rounded-md p-6 sm:p-7 border-2 border-blue-300 shadow-xs hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5";
       ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#0077C8] via-blue-500 to-[#002D62]";
       badgeClasses = "text-blue-950 bg-blue-100 border-blue-300 shadow-2xs font-black";
       taglineClasses = "text-blue-700";
@@ -224,11 +247,21 @@ export function HomePrograms() {
           </div>
 
           {/* Title & Tagline */}
-          <h3 className="font-poppins font-bold text-xl text-[#0F2747] mb-1">
+          <h3 className="font-poppins font-black text-xl text-[#0F2747] mb-1">
             {title}
           </h3>
           <div className={`text-xs font-semibold mb-3 ${taglineClasses}`}>
             {tagline}
+          </div>
+
+          {/* Target Score & Cohort Format Badges */}
+          <div className="flex flex-wrap items-center gap-2 mb-3.5 pt-1">
+            <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#0F2747] text-white">
+              {target}
+            </span>
+            <span className="font-mono text-[10px] text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-xs">
+              {format}
+            </span>
           </div>
 
           {/* Description */}

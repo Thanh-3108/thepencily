@@ -121,7 +121,7 @@ export function HomeStudentStories() {
           </div>
         </PencilyScrollReveal>
 
-        {/* 1. FOUNDING BOARD: Clean & minimal - Just Avatar & Name */}
+        {/* 1. FOUNDING BOARD: Elevated Founder Badges */}
         <div className="flex items-center justify-center gap-12 sm:gap-24 mb-16">
           {/* Huỳnh Công Thành */}
           <PencilyScrollReveal animation="tilt-left" delay={100} rotate="-1.2deg">
@@ -139,6 +139,12 @@ export function HomeStudentStories() {
               <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
                 Huỳnh Công Thành
               </h3>
+              <span className="text-xs font-bold text-[#4F7ECB] uppercase tracking-wider mt-0.5">
+                {isVi ? "Chủ tịch & Sáng lập" : "President & Founder"}
+              </span>
+              <span className="text-[11px] text-slate-500 font-medium mt-0.5">
+                {isVi ? "Phổ Thông Năng Khiếu, ĐHQG-HCM" : "High School for Gifted, VNU-HCM"}
+              </span>
             </div>
           </PencilyScrollReveal>
 
@@ -157,6 +163,12 @@ export function HomeStudentStories() {
               <h3 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] mt-3 tracking-tight">
                 Dương Quang Minh Khoa
               </h3>
+              <span className="text-xs font-bold text-[#4F7ECB] uppercase tracking-wider mt-0.5">
+                {isVi ? "Cố vấn & Đồng sáng lập" : "Advisor & Co-Founder"}
+              </span>
+              <span className="text-[11px] text-slate-500 font-medium mt-0.5">
+                {isVi ? "Phổ Thông Năng Khiếu, ĐHQG-HCM" : "High School for Gifted, VNU-HCM"}
+              </span>
             </div>
           </PencilyScrollReveal>
         </div>

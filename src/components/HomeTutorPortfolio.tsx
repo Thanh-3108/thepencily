@@ -33,17 +33,22 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
                 </h2>
               </div>
 
-              {/* 3 Value Points */}
-              <div className="space-y-3.5 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-blue-50 text-[#4F7ECB] border-2 border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
-                    <Clock className="w-4 h-4" />
+              {/* 3 Value Points with Stationery Tag Accents */}
+              <div className="space-y-4 pt-2">
+                <div className="flex items-start gap-3.5 p-3 rounded-md bg-[#FAF7F2] border border-slate-200">
+                  <div className="w-9 h-9 rounded-sm bg-blue-50 text-[#4F7ECB] border-2 border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
+                    <Clock className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-[#0F2747]">
-                      {isVi ? "Minh chứng số giờ cống hiến thực tế" : "Verified Contribution Hours"}
-                    </h4>
-                    <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100/80 px-1.5 py-0.5 rounded-xs">
+                        {isVi ? "SỐ GIỜ THỰC TẾ" : "VERIFIED HOURS"}
+                      </span>
+                      <h4 className="font-poppins font-bold text-sm text-[#0F2747]">
+                        {isVi ? "Minh chứng số giờ cống hiến minh bạch" : "Verified Contribution Hours"}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-[#64748B] leading-relaxed">
                       {isVi
                         ? "Hệ thống tự động ghi nhận số giờ host lớp học, số bạn học đã tham gia và phản hồi thực tế sau mỗi buổi chia sẻ."
                         : "The system automatically tracks hosted hours, attending students, and authentic post-session feedback."}
@@ -51,15 +56,20 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-amber-50 text-amber-600 border-2 border-amber-200 flex items-center justify-center shrink-0 mt-0.5">
-                    <Award className="w-4 h-4" />
+                <div className="flex items-start gap-3.5 p-3 rounded-md bg-[#FAF7F2] border border-slate-200">
+                  <div className="w-9 h-9 rounded-sm bg-amber-50 text-amber-600 border-2 border-amber-200 flex items-center justify-center shrink-0 mt-0.5">
+                    <Award className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-[#0F2747]">
-                      {isVi ? "Chứng nhận hoạt động ngoại khóa phi lợi nhuận" : "Official Non-Profit Certification"}
-                    </h4>
-                    <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100/80 px-1.5 py-0.5 rounded-xs">
+                        {isVi ? "CHỨNG NHẬN DỰ ÁN" : "CERTIFIED"}
+                      </span>
+                      <h4 className="font-poppins font-bold text-sm text-[#0F2747]">
+                        {isVi ? "Chứng nhận ngoại khóa phi lợi nhuận" : "Official Non-Profit Certification"}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-[#64748B] leading-relaxed">
                       {isVi
                         ? "Giấy chứng nhận chính thức từ The Pencily, điểm sáng nổi bật trong bài luận và hồ sơ xét tuyển phương thức tài năng."
                         : "Official verified certificate from The Pencily, a standout asset for admissions essays and scholarship portfolios."}
@@ -67,15 +77,20 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-sm bg-emerald-50 text-emerald-600 border-2 border-emerald-200 flex items-center justify-center shrink-0 mt-0.5">
-                    <ShieldCheck className="w-4 h-4" />
+                <div className="flex items-start gap-3.5 p-3 rounded-md bg-[#FAF7F2] border border-slate-200">
+                  <div className="w-9 h-9 rounded-sm bg-emerald-50 text-emerald-600 border-2 border-emerald-200 flex items-center justify-center shrink-0 mt-0.5">
+                    <ShieldCheck className="w-4.5 h-4.5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-[#0F2747]">
-                      {isVi ? "Phương pháp tốt nhất để làm chủ kiến thức" : "The Best Way to Master Concepts"}
-                    </h4>
-                    <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded-xs">
+                        {isVi ? "TƯ DUY FEYNMAN" : "FEYNMAN"}
+                      </span>
+                      <h4 className="font-poppins font-bold text-sm text-[#0F2747]">
+                        {isVi ? "Phương pháp làm chủ kiến thức đỉnh cao" : "The Best Way to Master Concepts"}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-[#64748B] leading-relaxed">
                       {isVi
                         ? "Giảng giải được một vấn đề phức tạp cho người khác hiểu là đỉnh cao của sự thấu hiểu theo phương pháp Feynman."
                         : "Explaining complex concepts simply to fellow peers represents the pinnacle of mastery."}
@@ -84,12 +99,12 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Action Button with Tactile Shadow */}
               <div className="pt-3">
                 <button
                   type="button"
                   onClick={onOpenTutorModal}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-semibold text-sm shadow-2xs transition active:scale-98 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-sm shadow-tactile-slate transition active:scale-98 cursor-pointer"
                 >
                   <span>{isVi ? "Ứng tuyển Peer Tutor" : "Apply as Peer Tutor"}</span>
                   <ArrowUpRight className="w-4 h-4 text-[#4F7ECB]" />

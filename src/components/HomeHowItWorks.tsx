@@ -48,13 +48,34 @@ export function HomeHowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header: Pure Clean Typography, NO Background Island, NO Emoji */}
         <PencilyScrollReveal animation="bounce-up" delay={50}>
-          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
             <p className="text-xs font-bold uppercase tracking-widest text-[#4F7ECB] mb-2">
               Peer-tutoring model
             </p>
-            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight">
+            <h2 className="font-poppins font-black text-3xl sm:text-4xl text-[#0F2747] tracking-tight">
               {isVi ? "Cách The Pencily hoạt động" : "How The Pencily Works"}
             </h2>
+          </div>
+        </PencilyScrollReveal>
+
+        {/* 4-Step Process Journey Stepper (Strictly NO dots) */}
+        <PencilyScrollReveal animation="stamp" delay={75}>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12 max-w-4xl mx-auto">
+            <div className="px-3 py-1.5 rounded-xs bg-white border-2 border-slate-300 font-mono text-xs font-bold text-[#0F2747] shadow-2xs">
+              {isVi ? "01. Chọn Môn & Lịch Trình" : "01. Choose Subject & Schedule"}
+            </div>
+            <span className="text-slate-400 font-bold hidden sm:inline">→</span>
+            <div className="px-3 py-1.5 rounded-xs bg-white border-2 border-slate-300 font-mono text-xs font-bold text-[#0F2747] shadow-2xs">
+              {isVi ? "02. Buổi Học 60 Phút" : "02. 60-Minute Session"}
+            </div>
+            <span className="text-slate-400 font-bold hidden sm:inline">→</span>
+            <div className="px-3 py-1.5 rounded-xs bg-white border-2 border-slate-300 font-mono text-xs font-bold text-[#0F2747] shadow-2xs">
+              {isVi ? "03. Đồng Hành Cùng Peer Tutor" : "03. Learn with Peer Tutor"}
+            </div>
+            <span className="text-slate-400 font-bold hidden sm:inline">→</span>
+            <div className="px-3 py-1.5 rounded-xs bg-white border-2 border-slate-300 font-mono text-xs font-bold text-[#0F2747] shadow-2xs">
+              {isVi ? "04. Nhóm Nhỏ 3–8 Bạn" : "04. Cozy Pod of 3–8"}
+            </div>
           </div>
         </PencilyScrollReveal>
 
@@ -117,7 +138,7 @@ export function HomeHowItWorks() {
 
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs transition active:scale-98 shrink-0"
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-md bg-[#0F2747] hover:bg-[#1A3A63] text-white font-bold text-xs sm:text-sm border-2 border-[#0F2747] shadow-tactile-navy transition-all active:scale-98 shrink-0"
             >
               <span>{isVi ? "Xem lịch mở lớp" : "Browse Open Classes"}</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#FFC83D]" />
