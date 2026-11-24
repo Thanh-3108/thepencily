@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Lora } from "next/font/google";
 import "./globals.css";
 
-const poppins = Plus_Jakarta_Sans({
-  variable: "--font-poppins",
-  subsets: ["latin", "vietnamese"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin", "vietnamese"],
   display: "swap",
 });
@@ -51,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${poppins.variable} ${inter.variable} h-full antialiased`}
+      className={`${lora.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#FAF7EE] text-[#0F2747]">
         <PencilyProvider>

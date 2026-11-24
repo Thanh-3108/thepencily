@@ -6,13 +6,18 @@
   --cream: #FAF7EE;
   --blue: #4F7ECB;
   --gray: #687280;
+  --font-lora: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-poppins: var(--font-lora);
+  --font-inter: var(--font-lora);
 }
 
 @theme {
-  --font-heading: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  --font-poppins: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
-  --font-inter: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-heading: var(--font-lora), "Lora", Georgia, serif;
+  --font-sans: var(--font-lora), "Lora", Georgia, serif;
+  --font-serif: var(--font-lora), "Lora", Georgia, serif;
+  --font-lora: var(--font-lora), "Lora", Georgia, serif;
+  --font-poppins: var(--font-lora), "Lora", Georgia, serif;
+  --font-inter: var(--font-lora), "Lora", Georgia, serif;
 
   --color-navy: #0F2747;
   --color-navy-dark: #091A30;
@@ -26,29 +31,29 @@
 html {
   scroll-behavior: smooth;
   font-size: 17px;
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-family: var(--font-lora), "Lora", Georgia, serif;
   scrollbar-gutter: stable;
 }
 
 body {
   background-color: #FAF7EE;
   color: #0F2747;
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-family: var(--font-lora), "Lora", Georgia, serif;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings & Brand Titles: Poppins Geometric Sans */
-h1, h2, h3, h4, h5, h6, .font-heading, .font-poppins {
-  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
-  letter-spacing: -0.02em;
+/* Headings & Brand Titles: Lora Editorial Serif */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-poppins, .font-lora, .font-serif {
+  font-family: var(--font-lora), "Lora", Georgia, serif;
+  letter-spacing: -0.015em;
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
-/* Body Text, UI Elements, Inputs & Buttons: Inter Sans */
+/* Body Text, UI Elements, Inputs & Buttons: Lora Editorial Serif */
 p, span, li, button, input, textarea, select, .font-inter, .font-sans {
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-family: var(--font-lora), "Lora", Georgia, serif;
 }
 
 /* Minimalist scrollbar */
