@@ -40,17 +40,17 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     badgeEn: "IELTS Program",
     taglineVi: "Chiến thuật bứt phá band điểm cùng Peer Tutors 7.5 – 8.5+",
     taglineEn: "Score breakthrough strategy with 7.5 – 8.5+ Peer Tutors",
-    descriptionVi: "Lớp học của The Pencily được học sinh giảng dạy để hỗ trợ đạt được band IELTs",
-    descriptionEn: "The Pencily peer-led classes designed to help students achieve target IELTS bands",
+    descriptionVi: "Lớp học tương tác nhóm nhỏ do các bạn học sinh đạt band cao trực tiếp chia sẻ mẹo làm bài, rèn phản xạ Speaking và chữa Writing sát thực tế.",
+    descriptionEn: "Small interactive peer-led classes helping students master IELTS exam strategies, Speaking fluency, and Writing rubrics.",
     highlightsVi: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Luyện phản xạ Speaking 1-1 theo ngân hàng đề dự đoán quý",
+      "Chữa chi tiết bài Writing Task 1 & 2 theo tiêu chuẩn chấm thi",
+      "Chia sẻ chiến thuật tránh bẫy đề thi thật Listening & Reading",
     ],
     highlightsEn: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "1-on-1 Speaking practice based on seasonal cue-card forecasts",
+      "Detailed Writing Task 1 & 2 reviews matching official scoring rubrics",
+      "Insider strategies for eliminating traps in Listening & Reading tests",
     ],
     icon: Award,
     iconBg: "bg-red-50",
@@ -63,23 +63,23 @@ const ENGLISH_PROGRAMS: ProgramItem[] = [
     category: "english",
     categoryLabelVi: "Tiếng Anh",
     categoryLabelEn: "English",
-    titleVi: "SAT: Road to 1300 / 1400 / 1500+",
-    titleEn: "SAT: Road to 1300 / 1400 / 1500+",
+    titleVi: "SAT: Road to 1400 / 1500+",
+    titleEn: "SAT: Road to 1400 / 1500+",
     badgeVi: "Lớp Học SAT",
     badgeEn: "SAT Program",
     taglineVi: "Chinh phục Digital SAT cùng Tutors 1450 – 1560+",
     taglineEn: "Master Digital SAT alongside 1450 – 1560+ Tutors",
-    descriptionVi: "Lớp hỗ trợ học sinh có định hướng du học đạt điểm SAT",
-    descriptionEn: "Classes supporting study-abroad oriented students to achieve their target SAT scores",
+    descriptionVi: "Đồng hành cùng học sinh có mục tiêu du học và xét tuyển đại học sớm, khai thác tối đa công cụ máy tính Desmos và bẻ khóa logic Reading & Writing.",
+    descriptionEn: "Supporting study-abroad and early university admissions with Desmos calculator mastery and analytical Reading & Writing strategies.",
     highlightsVi: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Bí quyết tối ưu điểm số Math 800 với kỹ thuật bấm máy tính Desmos",
+      "Phương pháp phân tích ngữ cảnh, từ vựng học thuật và cấu trúc văn bản",
+      "Luyện đề mô phỏng chuẩn Digital SAT bám sát ngân hàng đề Bluebook",
     ],
     highlightsEn: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Tactics for scoring 800 Math leveraging advanced Desmos graphing tricks",
+      "Analytical reading frameworks for vocabulary in context and syntax",
+      "Realistic Digital SAT mock test walkthroughs aligned with Bluebook exams",
     ],
     icon: Award,
     iconBg: "bg-blue-50",
@@ -95,54 +95,54 @@ const VIETNAMESE_PROGRAMS: ProgramItem[] = [
     category: "vietnamese",
     categoryLabelVi: "Tiếng Việt",
     categoryLabelEn: "Vietnamese",
-    titleVi: "[placeholder]",
-    titleEn: "[placeholder]",
-    badgeVi: "[placeholder]",
-    badgeEn: "[placeholder]",
-    taglineVi: "[placeholder]",
-    taglineEn: "[placeholder]",
-    descriptionVi: "[placeholder]",
-    descriptionEn: "[placeholder]",
+    titleVi: "Chinh Phục Kỳ Thi ĐGNL & TN THPT",
+    titleEn: "Competency Assessment & National Exam Prep",
+    badgeVi: "Luyện Đề Trọng Tâm",
+    badgeEn: "Exam Mastery",
+    taglineVi: "Hệ thống hóa kiến thức các môn Toán, Vật lý, Hóa học, Sinh học",
+    taglineEn: "Systematic core review for Mathematics, Physics, Chemistry, and Biology",
+    descriptionVi: "Các chuyên đề tổng ôn kiến thức cốt lõi lớp 11-12, rèn luyện kỹ năng phân tích số liệu và mẹo giải nhanh trắc nghiệm nhiều phương án.",
+    descriptionEn: "Comprehensive review cohorts for high school grades 11-12, developing analytical data interpretation and exam time management.",
     highlightsVi: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Tổng hợp sổ tay công thức, dạng bài xuất hiện nhiều nhất trong đề thi",
+      "Rèn luyện kỹ năng xử lý câu hỏi logic và phân tích biểu đồ trong đề ĐGNL",
+      "Giải chi tiết các đề thi thử nghiệm trường chuyên với hướng dẫn từng bước",
     ],
     highlightsEn: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Curated formula handbooks and frequent high-yield exam patterns",
+      "Logical reasoning and graph analysis practice for Competency exams",
+      "Step-by-step walkthroughs of mock tests from top gifted high schools",
     ],
     icon: BookOpen,
-    iconBg: "bg-slate-100",
-    iconColor: "text-slate-500",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-600",
   },
   {
     id: "doubt-mentorship",
     category: "vietnamese",
     categoryLabelVi: "Tiếng Việt",
     categoryLabelEn: "Vietnamese",
-    titleVi: "[placeholder]",
-    titleEn: "[placeholder]",
-    badgeVi: "[placeholder]",
-    badgeEn: "[placeholder]",
-    taglineVi: "[placeholder]",
-    taglineEn: "[placeholder]",
-    descriptionVi: "[placeholder]",
-    descriptionEn: "[placeholder]",
+    titleVi: "Nhóm Học Kèm 1-3 & Giải Đáp Thắc Mắc",
+    titleEn: "Peer Study Pods & Doubt-Clearing Mentorship",
+    badgeVi: "Kèm Cặp Thân Mật",
+    badgeEn: "Small Study Pods",
+    taglineVi: "Không gian học tập cởi mở, chia sẻ bài khó không áp lực",
+    taglineEn: "Open, welcoming study space to solve tough homework together",
+    descriptionVi: "Học sinh có thể mang bài tập khó, kiến thức chưa hiểu rõ trên lớp đến để cùng thảo luận, nghe giảng lại từ các bạn học sinh giỏi phụ trách.",
+    descriptionEn: "Bring your challenging assignments or confusing textbook topics to friendly student tutors who explain concepts in plain language.",
     highlightsVi: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Quy mô nhóm nhỏ chỉ từ 3 đến 8 bạn mỗi phòng, tương tác thân mật",
+      "Giải đáp trực tiếp qua micro, bảng vẽ số và khung chat tức thì",
+      "Lịch học buổi tối thuận tiện, đăng ký tham gia chỉ với 1 click",
     ],
     highlightsEn: [
-      "[placeholder]",
-      "[placeholder]",
-      "[placeholder]",
+      "Intimate small-group pods with 3 to 8 students per room",
+      "Live explanations through microphone, virtual whiteboard, and chat",
+      "Convenient evening schedules with one-click instant registration",
     ],
     icon: HelpCircle,
-    iconBg: "bg-slate-100",
-    iconColor: "text-slate-500",
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-600",
   },
 ];
 
@@ -214,7 +214,7 @@ export function HomePrograms() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white/80 border border-slate-300 px-2 py-0.5 rounded-xs">
                 {categoryLabel}
               </span>
-              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses} ${badge === "[placeholder]" ? "text-slate-400 italic font-mono lowercase font-normal" : ""}`}>
+              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses}`}>
                 {(isIelts || isSat) && (
                   <Award className={`w-3.5 h-3.5 shrink-0 ${isIelts ? "text-red-600" : "text-blue-600"}`} />
                 )}
@@ -225,41 +225,23 @@ export function HomePrograms() {
 
           {/* Title & Tagline */}
           <h3 className="font-poppins font-bold text-xl text-[#0F2747] mb-1">
-            {title === "[placeholder]" ? (
-              <span className="text-slate-400 italic font-mono tracking-wider font-normal text-lg">
-                [placeholder]
-              </span>
-            ) : (
-              title
-            )}
+            {title}
           </h3>
           <div className={`text-xs font-semibold mb-3 ${taglineClasses}`}>
-            {tagline === "[placeholder]" ? (
-              <span className="text-slate-400 italic font-mono tracking-wider font-normal">
-                [placeholder]
-              </span>
-            ) : (
-              tagline
-            )}
+            {tagline}
           </div>
 
           {/* Description */}
           <p className="text-sm text-[#475569] leading-relaxed mb-5 min-h-[44px]">
-            {description === "[placeholder]" ? (
-              <span className="text-slate-400 italic font-mono tracking-wider">
-                [placeholder]
-              </span>
-            ) : (
-              description
-            )}
+            {description}
           </p>
 
           {/* Highlights */}
           <div className="space-y-2 pt-3 border-t-2 border-slate-200/70 mb-5">
             {highlights.map((h, i) => (
               <div key={i} className="flex items-start gap-2 text-xs text-[#0F2747]/90 leading-relaxed">
-                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : h === "[placeholder]" ? "text-slate-300" : "text-emerald-600"}`} />
-                <span className={h === "[placeholder]" ? "text-slate-400 italic font-mono tracking-wider" : ""}>
+                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : "text-emerald-600"}`} />
+                <span>
                   {h}
                 </span>
               </div>

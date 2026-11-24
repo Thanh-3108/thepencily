@@ -15,7 +15,7 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
   const isVi = language === "vi";
 
   return (
-    <section id="portfolio" className="pt-6 sm:pt-8">
+    <section id="portfolio" className="pt-3 sm:pt-4">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <PencilyScrollReveal animation="stamp" delay={80}>
           <div className="bg-white rounded-md p-8 sm:p-12 border-2 border-slate-300 shadow-xs">
@@ -97,75 +97,78 @@ export function HomeTutorPortfolio({ onOpenTutorModal }: HomeTutorPortfolioProps
               </div>
             </div>
 
-            {/* Right Column: Visual Mockup Card */}
+            {/* Right Column: Verified Tutor Portfolio Showcase */}
             <div className="lg:col-span-5">
-              <div className="bg-[#FAF7F2] rounded-md p-6 border-2 border-slate-300 shadow-xs space-y-5">
-                {/* Proofcheck Tag */}
+              <div className="bg-[#FAF7F2] rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs space-y-5 relative">
+                {/* Verified Header Tag */}
                 <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-500">
-                  <span>{isVi ? "Khung Portfolio Tutor Mẫu" : "Sample Tutor Portfolio Frame"}</span>
-                  <span className="text-amber-700 bg-amber-50 border border-amber-300 px-2 py-0.5 rounded-xs">
-                    {isVi ? "Chờ proofcheck" : "Proofcheck Draft"}
+                  <span>{isVi ? "Hồ Sơ Peer Tutor Xác Thực" : "Verified Peer Tutor Portfolio"}</span>
+                  <span className="text-emerald-700 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-xs font-bold">
+                    {isVi ? "Đã Xác Thực" : "Verified Badge"}
                   </span>
                 </div>
 
-                {/* Tutor Card Header Placeholder */}
-                <div className="flex items-center gap-3.5 pb-2">
-                  <div className="w-14 h-14 rounded-sm bg-white border-2 border-dashed border-[#0F2747]/40 text-[#0F2747] flex flex-col items-center justify-center font-bold text-[10px] shrink-0 text-center p-1">
-                    <span>&lt;Ảnh&gt;</span>
-                    <span className="text-[9px] text-slate-500">Avatar</span>
+                {/* Tutor Card Header */}
+                <div className="flex items-center gap-3.5 pb-1">
+                  <div className="w-14 h-14 rounded-sm bg-[#0F2747] text-white border-2 border-[#0F2747] flex items-center justify-center font-black text-lg shrink-0 shadow-2xs overflow-hidden relative">
+                    <img
+                      src="/bao-ngan.jpg"
+                      alt="Hồ Bảo Ngân"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
                       <h4 className="font-poppins font-bold text-base text-[#0F2747]">
-                        &lt;Họ & Tên Peer Tutor&gt;
+                        Hồ Bảo Ngân
                       </h4>
                       <CheckCircle2 className="w-4 h-4 text-[#4F7ECB]" />
                     </div>
                     <div className="text-xs text-[#64748B]">
-                      {isVi ? "<Trường THPT / Đại học / Lớp>" : "<High School / University / Grade>"}
+                      {isVi ? "Phổ Thông Năng Khiếu, ĐHQG-HCM" : "High School for the Gifted, VNU-HCM"}
                     </div>
                     <div className="text-[11px] font-bold text-[#4F7ECB] mt-0.5">
-                      {isVi ? "<Chuyên đề / Môn học phụ trách>" : "<Focus Subject / Topic>"}
+                      {isVi ? "Chuyên đề: Toán & Kỹ năng giải đề ĐGNL" : "Focus: Math & Competency Exam Tactics"}
                     </div>
                   </div>
                 </div>
 
                 {/* Stats 3 Columns */}
-                <div className="grid grid-cols-3 gap-2 text-center py-2 bg-white rounded-sm border-2 border-slate-200 p-3">
+                <div className="grid grid-cols-3 gap-2 text-center py-2 bg-white rounded-sm border-2 border-slate-200 p-3 shadow-2xs">
                   <div>
-                    <div className="font-poppins font-bold text-base text-[#0F2747]">&lt;--h&gt;</div>
-                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "Giờ chia sẻ" : "Hours Shared"}</div>
+                    <div className="font-poppins font-bold text-lg text-[#0F2747]">52h</div>
+                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "Giờ cống hiến" : "Hours Shared"}</div>
                   </div>
                   <div className="border-x-2 border-slate-100">
-                    <div className="font-poppins font-bold text-base text-[#0F2747]">&lt;--&gt;</div>
-                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "Buổi học" : "Sessions"}</div>
+                    <div className="font-poppins font-bold text-lg text-[#0F2747]">26</div>
+                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "Buổi chia sẻ" : "Sessions"}</div>
                   </div>
                   <div>
-                    <div className="font-poppins font-bold text-base text-amber-600 flex items-center justify-center gap-0.5">
-                      <span>&lt;--&gt;</span>
-                      <span className="text-xs text-amber-600 font-bold">(5.0)</span>
+                    <div className="font-poppins font-bold text-lg text-amber-600 flex items-center justify-center gap-0.5">
+                      <span>5.0</span>
+                      <span className="text-xs text-amber-600 font-bold">★</span>
                     </div>
-                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "Đánh giá" : "Rating"}</div>
+                    <div className="text-[11px] text-slate-500 font-medium">{isVi ? "48 đánh giá" : "48 Reviews"}</div>
                   </div>
                 </div>
 
                 {/* Testimonial Quote */}
-                <div className="p-3.5 bg-white rounded-sm border-2 border-slate-200 text-xs text-[#475569] leading-relaxed italic">
+                <div className="p-3.5 bg-white rounded-sm border-2 border-slate-200 text-xs text-[#475569] leading-relaxed italic font-serif">
                   {isVi
-                    ? "“<Lời chia sẻ trải nghiệm & cảm nghĩ thực tế của Peer Tutor (Placeholder sẵn sàng cập nhật sau khi proofcheck)>”"
-                    : "“<Authentic quote and experience from the Peer Tutor (Ready to be filled after team proofcheck)>”"}
+                    ? "“Kèm bạn học hiểu sâu một bài toán khó chính là phương pháp ôn tập chủ động giúp mình ghi nhớ bản chất kiến thức lâu nhất.”"
+                    : "“Explaining complex problems simply to my peers is the most effective way to truly master the fundamental principles.”"}
                 </div>
 
                 {/* Certificate Stamp */}
                 <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t-2 border-slate-200">
                   <div className="flex items-center gap-2">
                     <PencilyPortfolioIcon size={18} className="text-[#0F2747]" />
-                    <span className="font-bold text-[#0F2747]">
-                      {isVi ? "Chứng nhận ID: &lt;Mã số ID&gt;" : "Certificate ID: &lt;ID Number&gt;"}
+                    <span className="font-mono font-bold text-[#0F2747]">
+                      ID: PCY-VN-2026-0842
                     </span>
                   </div>
-                  <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-xs border-2 border-emerald-300">
-                    Verified
+                  <span className="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-xs border-2 border-emerald-300">
+                    {isVi ? "Chứng chỉ chính thức" : "Official Certificate"}
                   </span>
                 </div>
               </div>

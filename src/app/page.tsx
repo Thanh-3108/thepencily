@@ -11,7 +11,7 @@ import { HomeHowItWorks } from "@/components/HomeHowItWorks";
 import { HomeTutorPortfolio } from "@/components/HomeTutorPortfolio";
 import { HomeStudentStories } from "@/components/HomeStudentStories";
 
-import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight } from "lucide-react";
+import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilyScrollReveal, PencilyScrollProgressBar } from "@/components/PencilyScrollReveal";
@@ -98,8 +98,13 @@ export default function Home() {
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"
               >
                 <div>
-                  <div className="w-11 h-11 rounded-sm border-2 border-blue-200 bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:bg-[#0F2747] group-hover:text-white group-hover:border-[#0F2747] transition-colors">
-                    <Users className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-sm border-2 border-blue-200 bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-[#0F2747] group-hover:text-white group-hover:border-[#0F2747] transition-colors shadow-2xs">
+                      <Users className="w-5 h-5" />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-[#0F2747] transition-colors">
+                      01
+                    </span>
                   </div>
                   <h3 className="font-poppins font-bold text-[#0F2747] text-base mb-2 group-hover:text-[#4F7ECB] transition-colors flex items-center justify-between">
                     <span>{language === "vi" ? "Học tập Peer-to-Peer" : "Peer-to-Peer Learning"}</span>
@@ -126,8 +131,13 @@ export default function Home() {
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full w-full"
               >
                 <div>
-                  <div className="w-11 h-11 rounded-sm border-2 border-emerald-200 bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-colors">
-                    <GraduationCap className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-sm border-2 border-emerald-200 bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-colors shadow-2xs">
+                      <GraduationCap className="w-5 h-5" />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-emerald-700 transition-colors">
+                      02
+                    </span>
                   </div>
                   <h3 className="font-poppins font-bold text-[#0F2747] text-base mb-2 group-hover:text-emerald-700 transition-colors flex items-center justify-between">
                     <span>{language === "vi" ? "Trở thành Tutor" : "Become a Peer Tutor"}</span>
@@ -153,8 +163,13 @@ export default function Home() {
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"
               >
                 <div>
-                  <div className="w-11 h-11 rounded-sm border-2 border-amber-200 bg-amber-50 text-amber-600 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white group-hover:border-amber-600 transition-colors">
-                    <FileText className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-sm border-2 border-amber-200 bg-amber-50 text-amber-600 flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white group-hover:border-amber-600 transition-colors shadow-2xs">
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-amber-700 transition-colors">
+                      03
+                    </span>
                   </div>
                   <h3 className="font-poppins font-bold text-[#0F2747] text-base mb-2 group-hover:text-amber-700 transition-colors flex items-center justify-between">
                     <span>{language === "vi" ? "Chia sẻ tài liệu" : "Resource Sharing"}</span>
@@ -180,8 +195,13 @@ export default function Home() {
                 className="group bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer hover:-translate-y-1 active:translate-y-0 text-left h-full"
               >
                 <div>
-                  <div className="w-11 h-11 rounded-sm border-2 border-indigo-200 bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-colors">
-                    <Users className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-sm border-2 border-indigo-200 bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-colors shadow-2xs">
+                      <Sparkles className="w-5 h-5" />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-indigo-700 transition-colors">
+                      04
+                    </span>
                   </div>
                   <h3 className="font-poppins font-bold text-[#0F2747] text-base mb-2 group-hover:text-indigo-700 transition-colors flex items-center justify-between">
                     <span>{language === "vi" ? "Kết nối liên trường" : "Inter-school Network"}</span>
