@@ -21,7 +21,6 @@ import { DashboardShop } from "@/components/DashboardShop";
 import { PPExchangeShopModal } from "@/components/PPExchangeShopModal";
 import { OnboardingTourModal } from "@/components/OnboardingTourModal";
 import { DashboardSettings } from "@/components/DashboardSettings";
-import { DiscordCommunity } from "@/components/DiscordCommunity";
 import { TutorWorkspace } from "./TutorWorkspace";
 import { AcademicWorkspace } from "./AcademicWorkspace";
 import { isSupabaseConfigured } from "@/lib/supabaseClient";
@@ -35,7 +34,6 @@ import { Calendar, Volume2, Clock, Trophy, Award, CheckCircle2, ExternalLink, Bo
 
 import { usePencily } from "@/context/PencilyContext";
 import { Logo, PencilMascot, OwlMascot } from "@/components/Logo";
-import { DiscordLogo } from "@/components/BrandIcons";
 import { PencilyProfileIcon } from "./icons/PencilyIcons";
 import { SchoolhouseHeaderMenu } from "./SchoolhouseHeaderMenu";
 import { downloadPencilyCertificatePdf } from "@/lib/certificatePdf";
@@ -104,36 +102,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     }
   }, [queryTab]);
 
-  // Handle Discord OAuth2 callback notifications
-  useEffect(() => {
-    const authStatus = searchParams.get("auth");
-    const authError = searchParams.get("auth_error");
-
-    if (authStatus === "discord_success") {
-      setPostToast("🎉 Đăng nhập Discord OAuth2 thành công! Chào mừng bạn đến với The Pencily.");
-      setTimeout(() => setPostToast(null), 5000);
-      if (typeof window !== "undefined") {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("auth");
-        window.history.replaceState(null, "", url.toString());
-      }
-    } else if (authError) {
-      if (authError === "missing_discord_credentials" || authError === "missing_credentials") {
-        setPostToast("⚠️ Chưa cấu hình DISCORD_CLIENT_ID trong .env.local. Bạn có thể dùng chế độ Demo.");
-      } else if (authError === "cancelled") {
-        setPostToast("ℹ️ Đã hủy quá trình ủy quyền Discord.");
-      } else {
-        setPostToast("❌ Đăng nhập Discord không thành công. Vui lòng thử lại.");
-      }
-      setTimeout(() => setPostToast(null), 5000);
-      if (typeof window !== "undefined") {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("auth_error");
-        window.history.replaceState(null, "", url.toString());
-      }
-    }
-  }, [searchParams]);
-
   const [isApplyTutorOpen, setIsApplyTutorOpen] = useState(false);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
@@ -191,7 +159,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     }
 
     createPost(data);
-    setPostToast("Bài đăng đã được xuất bản (+5 PP) và thông báo lên Discord!");
+    setPostToast("Bài đăng đã được xuất bản (+5 PP)!");
     setTimeout(() => {
       setPostToast(null);
     }, 4000);
@@ -219,7 +187,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     classes: "Tìm lớp",
     videos: "Thư viện",
     leaderboard: "Xếp hạng",
-    discord: "Discord",
     shop: "Cửa hàng PP",
     profile: "Hồ sơ",
     "become-tutor": "Tutor",
@@ -232,7 +199,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
     classes: "Classes",
     videos: "Library",
     leaderboard: "Leaderboard",
-    discord: "Discord",
     shop: "PP Shop",
     profile: "Profile",
     "become-tutor": "Tutor",
@@ -618,7 +584,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                       {/* Direct Join Action & Delete Option */}
                       <div className="space-y-2 pt-2 border-t-2 border-slate-100">
                         <a
-                          href={item.meetUrl || "https://discord.gg/6hpEf4wC4z"}
+                          href={item.meetUrl || "/dashboard?tab=classes"}
                           target={item.meetUrl?.startsWith("/room/") ? "_self" : "_blank"}
                           onClick={(e) => {
                             if (item.meetUrl?.startsWith("/room/") && !backendAuthenticated) {
@@ -649,71 +615,6 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                   ))}
                 </div>
               )}
-            </div>
-          )}
-
-
-          {/* ============================================================== */}
-          {/* TAB 4: DISCORD SERVER (Giới thiệu máy chủ Discord) */}
-          {/* ============================================================== */}
-          {activeTab === "discord" && (
-            <div className="w-full space-y-6 animate-fadeIn">
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
-                <div>
-                  <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-                    {language === "vi" ? "Máy Chủ Discord The Pencily" : "The Pencily Discord Community"}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#475569] mt-1 font-medium">
-                    {language === "vi"
-                      ? "Không gian học tập thời gian thực, phòng học thoại và kết nối trực tiếp với Peer Tutors"
-                      : "Real-time study voice rooms, live channels, and direct peer tutor mentorship"}
-                  </p>
-                </div>
-                <a
-                  href="https://discord.gg/6hpEf4wC4z"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer shrink-0"
-                >
-                  <DiscordLogo className="w-4 h-4 fill-white" />
-                  <span>{language === "vi" ? "Tham gia Discord" : "Join Discord"}</span>
-                </a>
-              </div>
-
-              {/* Discord UI Mockup (Reconstructed from real server screenshot) */}
-              <DiscordCommunity />
-
-              {/* Quick Info Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-white rounded-sm p-5 border-2 border-slate-300 shadow-xs text-center">
-                  <Volume2 className="w-6 h-6 text-[#5865F2] mx-auto mb-2" />
-                  <div className="font-jakarta font-bold text-sm text-[#0F2747]">
-                    {language === "vi" ? "Voice 24/7" : "24/7 Voice Rooms"}
-                  </div>
-                  <p className="text-xs text-[#687280] mt-1">
-                    {language === "vi" ? "Phòng học mở tự do, bật mic hỏi bài bất kỳ lúc nào." : "Open study rooms, speak and ask questions anytime."}
-                  </p>
-                </div>
-                <div className="bg-white rounded-sm p-5 border-2 border-slate-300 shadow-xs text-center">
-                  <MessageSquare className="w-6 h-6 text-[#FFC83D] mx-auto mb-2" />
-                  <div className="font-jakarta font-bold text-sm text-[#0F2747]">
-                    {language === "vi" ? "Hỏi đáp theo môn" : "Subject Channels"}
-                  </div>
-                  <p className="text-xs text-[#687280] mt-1">
-                    {language === "vi" ? "Kênh text riêng cho Toán, Lý, Hóa, Anh, Tin,..." : "Dedicated channels for Math, Physics, English, Coding..."}
-                  </p>
-                </div>
-                <div className="bg-white rounded-sm p-5 border-2 border-slate-300 shadow-xs text-center">
-                  <Users className="w-6 h-6 text-[#22C55E] mx-auto mb-2" />
-                  <div className="font-jakarta font-bold text-sm text-[#0F2747]">
-                    {language === "vi" ? "Kết nối bạn bè" : "Peer Network"}
-                  </div>
-                  <p className="text-xs text-[#687280] mt-1">
-                    {language === "vi" ? "Gặp gỡ học sinh từ các trường khác cùng chí hướng." : "Connect with like-minded high schoolers across Vietnam."}
-                  </p>
-                </div>
-              </div>
             </div>
           )}
 
@@ -868,15 +769,11 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                     <p className="text-xs sm:text-sm text-[#687280] mt-1 font-medium">
                       {user.school} • {user.grade} • {user.role}
                     </p>
-                    <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#5865F2] mt-1.5">
-                      <DiscordLogo className="w-4 h-4" />
-                      <span>Discord: {user.discord || (language === "vi" ? "Chưa liên kết" : "Not connected")}</span>
-                      {user.isDiscordLinked && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-sm bg-[#5865F2]/15 text-[#5865F2] font-sans font-bold border border-[#5865F2]/30">
-                          OAuth2 Linked
-                        </span>
-                      )}
-                    </div>
+                    {user.email && (
+                      <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-slate-500 mt-1.5">
+                        <span>{user.email}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -1096,7 +993,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                         <div>
                           <span className="font-bold text-[#0F2747]">{language === "vi" ? "Dạy thử 15 phút" : "15-min Mock Session"}</span>
                           <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
-                            {language === "vi" ? "Buổi demo ngắn trên Discord Voice Pod." : "Short demo on Discord Voice Pod."}
+                            {language === "vi" ? "Buổi demo ngắn trên phòng học trực tuyến / Meet." : "Short demo on live pod / Meet."}
                           </p>
                         </div>
                       </div>
@@ -1115,7 +1012,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                     </div>
                   </div>
 
-                  {/* Card 3: Cam kết & Hỗ trợ Discord */}
+                  {/* Card 3: Cam kết & Hỗ trợ */}
                   <div className="p-4 rounded-md bg-[#FFFDF9] border-2 border-slate-300 shadow-2xs space-y-3">
                     <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-emerald-700" />
@@ -1129,12 +1026,10 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                         : "100% Non-profit: All sessions are free. Peer tutors pledge patience, kindness, and equity."}
                     </p>
                     <a
-                      href="https://discord.gg/6hpEf4wC4z"
-                      target="_blank"
-                      rel="noreferrer"
+                      href="mailto:contact@thepencily.com?subject=Ung%20Tuyen%20Peer%20Tutor"
                       className="w-full inline-flex items-center justify-center gap-2 py-2 px-3 rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs font-bold transition shadow-2xs cursor-pointer"
                     >
-                      <span>{language === "vi" ? "Kênh Hỏi Đáp Ứng Tuyển Trên Discord" : "Join Tutor Discord Channel"}</span>
+                      <span>{language === "vi" ? "Liên Hệ Ban Học Vụ & Tuyển Chọn" : "Contact Academic Team"}</span>
                       <ExternalLink className="w-3 h-3 text-[#FFC83D]" />
                     </a>
                   </div>

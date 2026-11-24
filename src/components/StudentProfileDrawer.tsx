@@ -76,11 +76,6 @@ export function StudentProfileDrawer({
                 <p className="text-xs text-[#687280] mt-0.5 truncate">
                   {user.school} • {user.grade}
                 </p>
-                {user.discord && (
-                  <div className="flex items-center gap-2 text-xs font-mono text-[#5865F2] mt-1">
-                    <span>Discord: {user.discord}</span>
-                  </div>
-                )}
               </div>
             </div>
 
@@ -117,7 +112,7 @@ export function StudentProfileDrawer({
           <div className="mt-6">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#0F2747]">
-                {language === "vi" ? "Lớp Học Của Tôi (Trên Discord)" : "My Classes (On Discord)"}
+                {language === "vi" ? "Lớp Học Của Tôi (Trực Tuyến)" : "My Classes (Online)"}
               </h4>
               <span className="text-xs text-[#4F7ECB] font-bold bg-[#4F7ECB]/10 border-2 border-[#4F7ECB]/30 px-2 py-0.5 rounded-xs">
                 {myRegisteredClasses.length} {language === "vi" ? "Lớp" : "Classes"}
@@ -165,17 +160,15 @@ export function StudentProfileDrawer({
 
                     <div className="mt-3.5 pt-3 border-t-2 border-slate-100 flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs text-[#687280] flex items-center gap-1.5 font-medium">
-                        <Volume2 className="w-3.5 h-3.5 text-[#5865F2] shrink-0" />
-                        <span>{cls.discordChannel}</span>
+                        <Volume2 className="w-3.5 h-3.5 text-[#4F7ECB] shrink-0" />
+                        <span>{language === "vi" ? "Phòng học trực tuyến" : "Online Room"}</span>
                       </span>
 
                       <a
-                        href="https://discord.gg/6hpEf4wC4z"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#5865F2] hover:bg-[#4752C4] px-3 py-1.5 rounded-sm border-2 border-[#5865F2] shadow-xs transition"
+                        href="/dashboard?tab=classes"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#0F2747] hover:bg-[#1A3A63] px-3 py-1.5 rounded-sm border-2 border-[#0F2747] shadow-xs transition"
                       >
-                        <span>{language === "vi" ? "Vào Voice" : "Join Voice"}</span>
+                        <span>{language === "vi" ? "Vào lớp" : "Enter Class"}</span>
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
@@ -225,8 +218,8 @@ export function StudentProfileDrawer({
         <div className="pt-5 border-t-2 border-slate-300 text-center">
           <div className="text-xs text-[#687280]">
             {language === "vi"
-              ? "Mọi thắc mắc và hỗ trợ tài khoản liên hệ qua Discord Ticket."
-              : "Support and inquiries handled via Discord Ticket."}
+              ? "Mọi thắc mắc và hỗ trợ tài khoản liên hệ qua contact@thepencily.com."
+              : "Support and inquiries handled via contact@thepencily.com."}
           </div>
         </div>
       </div>

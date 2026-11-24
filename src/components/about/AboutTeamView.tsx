@@ -18,7 +18,7 @@ import {
   GraduationCap,
   ExternalLink,
 } from "lucide-react";
-import { FacebookLogo, DiscordLogo } from "@/components/BrandIcons";
+import { FacebookLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
 
 interface AboutTeamViewProps {
@@ -50,7 +50,6 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
         label: "Cong Thanh",
         url: "https://www.facebook.com/UncleRoThanh/",
       },
-      discord: "hcongthanh",
       image: "/founder.png",
       initials: "CT",
     },
@@ -74,7 +73,6 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
         label: "Bảo Ngân",
         url: "https://www.facebook.com/bao.ngan.981769/",
       },
-      discord: "selene_1711",
       image: "/bao-ngan.jpg",
       initials: "BN",
     },
@@ -115,7 +113,6 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
         "Advises on strategic growth, academic quality standards, and high-level organizational decision-making.",
       badgeVi: "Cố Vấn",
       badgeEn: "Advisory",
-      discord: "god_daren",
       image: "/co-founder.png",
       initials: "MK",
     },
@@ -143,14 +140,14 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
         "Manages project progress, internal culture, documentation archives, and formal Tutor Certificate verification.",
     },
     {
-      code: "DISCORD",
-      titleVi: "Ban Quản trị Máy chủ",
-      titleEn: "Discord Server Administration",
+      code: "COMMUNITY",
+      titleVi: "Ban Phát Triển Cộng Đồng",
+      titleEn: "Community Growth & Student Engagement",
       icon: Users,
       descVi:
-        "Điều phối máy chủ học tập, thiết lập quyền hạn lớp học, trực giám sát trật tự và duy trì nhịp tương tác hàng ngày.",
+        "Điều phối mạng lưới học sinh, quản trị nhóm học tập trực tuyến, hỗ trợ kết nối peer-to-peer và duy trì nhịp tương tác hàng ngày.",
       descEn:
-        "Maintains study server operations, manages role permissions, moderates active voice pods, and organizes community events.",
+        "Coordinates student network, oversees online learning cohorts, facilitates peer-to-peer connections, and organizes community events.",
     },
     {
       code: "TECH",
@@ -326,13 +323,6 @@ export function AboutTeamView({ onOpenTutorModal }: AboutTeamViewProps) {
                     <span>{member.facebook.label}</span>
                     <ExternalLink className="w-3 h-3 opacity-60" />
                   </a>
-                )}
-
-                {member.discord && (
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#5865F2]/10 text-[#5865F2] border border-[#5865F2]/30 font-medium">
-                    <DiscordLogo className="w-3.5 h-3.5" />
-                    <span>@{member.discord}</span>
-                  </div>
                 )}
               </div>
             </div>

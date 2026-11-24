@@ -789,7 +789,7 @@ export function SchoolhouseDashboard({
                                 {event.title}
                               </h4>
                               <p className="text-xs text-slate-600">
-                                {event.tutorName} • {event.discordRoom}
+                                {event.tutorName} • {language === "vi" ? "Phòng học trực tuyến" : "Online Pod"}
                               </p>
                             </div>
 
@@ -902,11 +902,11 @@ export function SchoolhouseDashboard({
               </div>
 
               <div className="flex items-center gap-2 text-slate-700">
-                <Volume2 className="w-4 h-4 text-[#5865F2] shrink-0" />
+                <Volume2 className="w-4 h-4 text-[#4F7ECB] shrink-0" />
                 <span>
-                  Discord Voice:{" "}
-                  <strong className="text-[#5865F2]">
-                    {activeModalEvent.discordRoom}
+                  {language === "vi" ? "Hình thức học: " : "Room Platform: "}
+                  <strong className="text-[#0F2747]">
+                    {language === "vi" ? "Phòng học Trực tuyến / Google Meet" : "Online Room / Google Meet"}
                   </strong>
                 </span>
               </div>

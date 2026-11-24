@@ -25,8 +25,8 @@ export function ClassDirectory({ onSelectClassToRegister }: ClassDirectoryProps)
           </h2>
           <p className="font-inter text-sm sm:text-base text-[#4B5563] leading-relaxed">
             {language === "vi"
-              ? "Các lớp học và nhóm học tập peer-to-peer hoàn toàn miễn phí, được tổ chức trực tiếp qua máy chủ Discord."
-              : "Peer-to-peer study sessions and cohorts completely free of charge, hosted directly on Discord Voice."}
+              ? "Các lớp học và nhóm học tập peer-to-peer hoàn toàn miễn phí, được tổ chức trực tuyến qua phòng học The Pencily và Google Meet."
+              : "Peer-to-peer study sessions and cohorts completely free of charge, hosted directly on The Pencily Web and Google Meet."}
           </p>
 
           {/* Clean Filter Tabs */}

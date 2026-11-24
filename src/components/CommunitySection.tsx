@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { DiscordLogo } from "./BrandIcons";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export function CommunitySection() {
   return (
@@ -27,29 +28,27 @@ export function CommunitySection() {
             </div>
           </div>
 
-          {/* Right: Clean Discord Invite Box */}
+          {/* Right: Clean Invite Box */}
           <div className="lg:col-span-6">
             <div className="rounded-3xl bg-[#0F2747] text-white p-8 sm:p-10 shadow-lg relative overflow-hidden">
               <div className="text-xs font-bold uppercase tracking-widest text-[#FFC83D] mb-3">
-                Official Discord Server
+                Official Learning Platform
               </div>
               <h3 className="font-poppins font-extrabold text-2xl sm:text-3xl text-white mb-3">
                 Tham gia không gian học tập cùng The Pencily.
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-md">
-                Phòng Voice 24/7 học Pomodoro, kênh hỏi đáp theo từng môn học và link tham gia trực tiếp các buổi lớp học định kỳ.
+                Phòng học trực tuyến 24/7, thảo luận giải đề theo môn học và lớp học nhóm bổ trợ định kỳ cùng Peer Tutor.
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href="https://discord.gg/6hpEf4wC4z"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-95"
+                <Link
+                  href="/dashboard?tab=classes"
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-95"
                 >
-                  <DiscordLogo className="w-4 h-4" />
-                  Vào Discord The Pencily →
-                </a>
+                  <span>Khám phá lớp học ngay</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </div>

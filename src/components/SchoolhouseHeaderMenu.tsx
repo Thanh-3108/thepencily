@@ -60,13 +60,13 @@ export function SchoolhouseHeaderMenu({
       href: "/dashboard?tab=tutor",
     },
     {
-      id: "notif-discord",
-      title: language === "vi" ? "Phòng Discord Voice 24/7 Đã Sẵn Sàng" : "24/7 Discord Voice Pods Active",
+      id: "notif-classes-live",
+      title: language === "vi" ? "Phòng Học Trực Tuyến 24/7 Sẵn Sàng" : "24/7 Online Study Pods Ready",
       desc:
         language === "vi"
-          ? "Học nhóm yên lặng và thảo luận giải đề cùng đồng trang lứa."
-          : "Silent study pods and live peer problem-solving are online.",
-      href: "/dashboard?tab=discord",
+          ? "Học nhóm yên lặng và thảo luận giải đề cùng đồng trang lứa trực tiếp trên web."
+          : "Silent study pods and live peer problem-solving are online on web.",
+      href: "/dashboard?tab=classes",
     },
     {
       id: "notif-classes",
@@ -469,7 +469,7 @@ export function SchoolhouseHeaderMenu({
                       if (onOpenBugModal) {
                         onOpenBugModal();
                       } else {
-                        window.open("https://discord.gg/6hpEf4wC4z", "_blank");
+                        window.location.href = "mailto:contact@thepencily.com?subject=Bug%20Report";
                       }
                     }}
                     className="w-full text-left flex items-center gap-3 px-4 py-2 text-xs font-semibold hover:bg-slate-100 transition cursor-pointer"
@@ -497,15 +497,13 @@ export function SchoolhouseHeaderMenu({
                   </button>
 
                   <a
-                    href="https://discord.gg/6hpEf4wC4z"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="mailto:contact@thepencily.com?subject=Ho%20tro%20The%20Pencily"
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 px-4 py-2 text-xs font-semibold hover:bg-slate-100 transition"
                     role="menuitem"
                   >
                     <PencilySupportChatIcon size={16} strokeWidth={2.2} className="text-slate-600" />
-                    <span>{language === "vi" ? "Trò Chuyện Hỗ Trợ" : "Chat with Support"}</span>
+                    <span>{language === "vi" ? "Email Hỗ Trợ Kỹ Thuật" : "Email Technical Support"}</span>
                   </a>
 
                   <button
@@ -517,8 +515,8 @@ export function SchoolhouseHeaderMenu({
                       } else {
                         alert(
                           language === "vi"
-                            ? "The Pencily tuân thủ quy chuẩn an toàn và bình đẳng. Để báo cáo vi phạm, vui lòng gửi ticket trên kênh Discord hoặc liên hệ ban học vụ."
-                            : "The Pencily enforces a strict safety honor code. Please report violations via Discord tickets."
+                            ? "The Pencily tuân thủ quy chuẩn an toàn và bình đẳng. Để báo cáo vi phạm, vui lòng gửi phản hồi qua contact@thepencily.com hoặc liên hệ ban học vụ."
+                            : "The Pencily enforces a strict safety honor code. Please report violations via contact@thepencily.com."
                         );
                       }
                     }}
@@ -596,16 +594,14 @@ export function SchoolhouseHeaderMenu({
                     <span>{language === "vi" ? "Cửa Hàng Pencily Points (PP)" : "Pencily Points Shop"}</span>
                   </Link>
 
-                  <a
-                    href="https://discord.gg/6hpEf4wC4z"
-                    target="_blank"
-                    rel="noreferrer"
+                  <Link
+                    href="/dashboard?tab=classes"
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 px-4 py-2 text-xs font-semibold hover:bg-slate-100 transition"
                   >
                     <PencilySupportChatIcon size={16} strokeWidth={2.2} className="text-slate-600" />
-                    <span>{language === "vi" ? "Tham Gia Máy Chủ Discord" : "Join Discord Server"}</span>
-                  </a>
+                    <span>{language === "vi" ? "Lịch Mở Lớp Trực Tuyến" : "Open Online Classes"}</span>
+                  </Link>
                 </div>
 
                 <div className="pt-1">

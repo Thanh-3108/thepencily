@@ -96,19 +96,17 @@ export function NativeTutorApplication({ onSuccess, className = "" }: NativeTuto
           </h3>
           <p className="text-xs sm:text-sm text-[#475569] max-w-lg mx-auto leading-relaxed">
             {isVi
-              ? `Hồ sơ ứng tuyển môn ${formData.primarySubject} của bạn (${formData.fullName}) đã được ghi nhận vào hệ thống học thuật The Pencily Gen 1.0. Ban điều phối sẽ liên hệ qua Discord/Zalo trong 48h để hẹn lịch phỏng vấn và cấp quyền Tutor Studio.`
-              : `Your tutor application for ${formData.primarySubject} has been successfully recorded. The Academic Team will reach out via Discord/Email within 48 hours for onboarding.`}
+              ? `Hồ sơ ứng tuyển môn ${formData.primarySubject} của bạn (${formData.fullName}) đã được ghi nhận vào hệ thống học thuật The Pencily Gen 1.0. Ban điều phối sẽ liên hệ qua Email/Zalo trong 48h để hẹn lịch phỏng vấn và cấp quyền Tutor Studio.`
+              : `Your tutor application for ${formData.primarySubject} has been successfully recorded. The Academic Team will reach out via Email/Phone within 48 hours for onboarding.`}
           </p>
         </div>
 
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="https://discord.gg/6hpEf4wC4z"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs font-bold transition shadow-xs"
+            href="/dashboard?tab=classes"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#0F2747] hover:bg-[#1A3E6D] text-white text-xs font-bold transition shadow-xs"
           >
-            <span>{isVi ? "Vào kênh #nhan-role trên Discord" : "Join #role-assignment on Discord"}</span>
+            <span>{isVi ? "Xem phòng học trực tuyến" : "Explore Online Classes"}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
           <button
@@ -201,18 +199,18 @@ export function NativeTutorApplication({ onSuccess, className = "" }: NativeTuto
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider mb-1.5">
-                  {isVi ? "Tên tài khoản Discord *" : "Discord Username *"}
+                  {isVi ? "Email nhận lịch phỏng vấn *" : "Interview Email *"}
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   required
                   value={formData.discordTag}
                   onChange={(e) => setFormData({ ...formData, discordTag: e.target.value })}
-                  placeholder="username hoặc @tag"
+                  placeholder="name@example.com"
                   className="w-full px-3.5 py-2.5 rounded-sm bg-slate-50 border-2 border-slate-300 focus:border-[#0F2747] text-xs font-semibold focus:outline-none transition"
                 />
                 <span className="text-[10px] text-slate-500 mt-1 block">
-                  {isVi ? "Dùng để liên hệ phỏng vấn và gán role Tutor" : "Used for Discord interview and role setup"}
+                  {isVi ? "Dùng để gửi thư mời phỏng vấn và cấp tài khoản Tutor" : "Used to schedule interview and issue credentials"}
                 </span>
               </div>
 

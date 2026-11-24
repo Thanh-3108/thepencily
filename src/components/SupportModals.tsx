@@ -19,7 +19,6 @@ import {
   BookOpen,
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
-import { DiscordLogo } from "./BrandIcons";
 
 // =========================================================================
 // 1. REFER A FRIEND MODAL (Mời Bạn Học Cùng)
@@ -227,8 +226,8 @@ export function ReportBugModal({ isOpen, onClose, onSubmitSuccess }: ReportBugMo
             </h4>
             <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
               {isVi
-                ? "Cảm ơn bạn đã đóng góp! Đội ngũ kỹ thuật sẽ kiểm tra và khắc phục sớm nhất. Bạn có thể theo dõi qua kênh #bug-reports trên Discord."
-                : "Thank you! Our engineering team will review this shortly. You can track updates on Discord."}
+                ? "Cảm ơn bạn đã đóng góp! Đội ngũ kỹ thuật sẽ kiểm tra và khắc phục sớm nhất. Bạn có thể theo dõi qua email phản hồi của ban học vụ."
+                : "Thank you! Our engineering team will review this shortly. You will receive an update via your registered email."}
             </p>
             <button
               type="button"
@@ -292,12 +291,10 @@ export function ReportBugModal({ isOpen, onClose, onSubmitSuccess }: ReportBugMo
 
             <div className="flex items-center justify-between gap-3 pt-2">
               <a
-                href="https://discord.gg/6hpEf4wC4z"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:contact@thepencily.com?subject=Bao%20Cao%20Su%20Co"
                 className="text-xs text-[#4F7ECB] hover:underline font-bold inline-flex items-center gap-1"
               >
-                <span>{isVi ? "Hoặc báo qua Discord" : "Or report on Discord"}</span>
+                <span>{isVi ? "Hoặc gửi email kỹ thuật" : "Or email support"}</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
 
@@ -362,10 +359,10 @@ export function HelpCenterModal({ isOpen, onClose, onGoToDocs }: HelpCenterModal
       aEn: "Any high school student passionate about peer learning can apply via the 'Become a Peer Tutor' tab.",
     },
     {
-      qVi: "Nếu tôi gặp sự cố âm thanh hoặc không vào được phòng Meet?",
-      qEn: "What if I experience audio issues or cannot join Meet?",
-      aVi: "Hãy kiểm tra quyền micro trên trình duyệt của bạn hoặc tham gia phòng học qua máy chủ Discord backup 24/7 của The Pencily.",
-      aEn: "Check your browser microphone permissions or jump into our Discord backup voice pods.",
+      qVi: "Nếu tôi gặp sự cố âm thanh hoặc không vào được phòng học?",
+      qEn: "What if I experience audio issues or cannot join class?",
+      aVi: "Hãy kiểm tra quyền micro trên trình duyệt của bạn hoặc liên hệ ban học vụ qua contact@thepencily.com để được hỗ trợ đường truyền.",
+      aEn: "Check your browser microphone permissions or contact academic staff at contact@thepencily.com for connectivity support.",
     },
   ];
 
@@ -455,12 +452,10 @@ export function HelpCenterModal({ isOpen, onClose, onGoToDocs }: HelpCenterModal
             {isVi ? "Cần trợ giúp trực tiếp?" : "Need live support?"}
           </span>
           <a
-            href="https://discord.gg/6hpEf4wC4z"
-            target="_blank"
-            rel="noreferrer"
+            href="mailto:contact@thepencily.com?subject=Ho%20tro%20The%20Pencily"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-[#0F2747] text-white text-xs font-bold border border-[#0F2747] hover:bg-[#1A3E6D] transition shadow-2xs"
           >
-            <span>{isVi ? "Mở Ticket Trên Discord" : "Discord Support Ticket"}</span>
+            <span>{isVi ? "Gửi Email Hỗ Trợ" : "Email Support"}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>

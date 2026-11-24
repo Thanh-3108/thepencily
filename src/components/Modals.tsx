@@ -6,8 +6,6 @@ import { usePencily } from "@/context/PencilyContext";
 import SchoolSelectDropdown from "./SchoolSelectDropdown";
 import { PencilyProfileIcon, PencilyHelpDeskIcon, PencilySettingsIcon } from "./icons/PencilyIcons";
 
-export { DiscordAuthModal } from "./DiscordAuthModal";
-
 export function TutorApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { language } = usePencily();
   if (!isOpen) return null;
@@ -345,7 +343,7 @@ export function RequestClassModal({
           <div className="p-3 bg-[#FFF9EF] border-2 border-amber-300 rounded-sm text-xs text-[#0F2747]">
             💡 <b>{language === "vi" ? "Quy trình: " : "How it works: "}</b>
             {language === "vi"
-              ? "Đề xuất của bạn sẽ được hiển thị công khai để các bạn học sinh khác bấm vote. Khi đạt đủ quan tâm, Peer Tutor sẽ xếp lịch và mở phòng Discord."
+              ? "Đề xuất của bạn sẽ được hiển thị công khai để các bạn học sinh khác bấm vote. Khi đạt đủ quan tâm, Peer Tutor sẽ xếp lịch và mở phòng học trực tuyến."
               : "Your topic will be listed for peers to upvote. When interest is confirmed, a Peer Tutor will host a live session."}
           </div>
 
@@ -422,7 +420,7 @@ export function CreateClassModal({
     } else {
       let validUrl = meetUrl.trim();
       if (!validUrl) {
-        validUrl = "https://discord.gg/6hpEf4wC4z";
+        validUrl = "https://meet.google.com/new";
       } else if (!validUrl.startsWith("http://") && !validUrl.startsWith("https://")) {
         validUrl = `https://${validUrl}`;
       }
@@ -441,13 +439,13 @@ export function CreateClassModal({
       schedule: schedule.trim() || "Đang mở ngay bây giờ",
       timeSlot: "Trực tuyến",
       dayLabel: "Hôm nay",
-      discordChannel: "#voice-phong-hoc",
-      discordRoom: "#voice-phong-hoc",
+      discordChannel: "#phong-hoc-truc-tuyen",
+      discordRoom: "Phòng học trực tuyến",
       meetUrl: finalMeetUrl,
       maxSeats: 50,
       description: roomType === "web" 
         ? "Phòng học trực tiếp trên The Pencily: bật mic, cam, bảng ghi chú và chia sẻ màn hình ngay trên trình duyệt."
-        : "Phòng học qua Google Meet / Discord Voice.",
+        : "Phòng học qua Google Meet.",
     });
 
     setTitle("");
@@ -475,8 +473,8 @@ export function CreateClassModal({
           </h3>
           <p className="text-xs text-[#4B5563] mt-1">
             {language === "vi"
-              ? "Host phòng học trực tiếp trên web hoặc liên kết qua Google Meet / Discord."
-              : "Host live web rooms or connect via Google Meet / Discord."}
+              ? "Host phòng học trực tiếp trên web hoặc liên kết qua Google Meet."
+              : "Host live web rooms or connect via Google Meet."}
           </p>
         </div>
 
@@ -502,7 +500,7 @@ export function CreateClassModal({
                 : "border-transparent text-slate-500 hover:text-[#0F2747]"
             }`}
           >
-            <span>🔗 Meet / Discord</span>
+            <span>🔗 Google Meet</span>
           </button>
         </div>
 
@@ -536,7 +534,7 @@ export function CreateClassModal({
           ) : (
             <div>
               <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1">
-                Link phòng học (Meet / Discord Voice) *
+                Link phòng học (Google Meet) *
               </label>
               <input
                 type="text"
@@ -553,16 +551,8 @@ export function CreateClassModal({
                   rel="noreferrer"
                   className="text-[11px] font-semibold text-[#2563EB] hover:underline"
                 >
-                  + Google Meet ↗
+                  + Tạo phòng Google Meet mới ↗
                 </a>
-                <span className="text-[11px] text-slate-400">/</span>
-                <button
-                  type="button"
-                  onClick={() => setMeetUrl("https://discord.gg/6hpEf4wC4z")}
-                  className="text-[11px] font-semibold text-[#5865F2] hover:underline cursor-pointer"
-                >
-                  Discord Voice
-                </button>
               </div>
             </div>
           )}
@@ -706,11 +696,11 @@ export function EditProfileModal({
 
             <div>
               <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-1">
-                Discord Tag
+                {language === "vi" ? "Biệt danh / Handle" : "Nickname / Handle"}
               </label>
               <input
                 type="text"
-                placeholder="username#0000"
+                placeholder="@username"
                 value={discord}
                 onChange={(e) => setDiscord(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-sm border-2 border-slate-300 focus:border-[#0F2747] focus:outline-none bg-white text-xs"

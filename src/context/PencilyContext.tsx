@@ -456,8 +456,8 @@ export function PencilyProvider({ children }: { children: React.ReactNode }) {
   const createPost: PencilyContextType["createPost"] = (input) => {
     setPosts((previous) => [{ id: crypto.randomUUID(), ...input, categoryLabel: input.category, categoryBadge: "bg-blue-50 text-blue-700",
       author: { name: user.name, school: user.school, role: user.role, verified: user.verified, avatar: user.avatar },
-      timeAgo: "Vừa xong", likes: 0, commentsCount: 0, discordThreadUrl: "https://discord.gg/6hpEf4wC4z" }, ...previous]);
-    setApiNotice("Bài viết đã lưu trên trình duyệt để xem thử. Chưa xuất bản lên cộng đồng hoặc Discord.");
+      timeAgo: "Vừa xong", likes: 0, commentsCount: 0, discordThreadUrl: "/dashboard?tab=classes" }, ...previous]);
+    setApiNotice("Bài viết đã lưu trên trình duyệt để xem thử.");
   };
   const toggleLikePost = (id: string) => setPosts((previous) => previous.map((post) => post.id === id ? { ...post, hasLiked: !post.hasLiked, likes: Math.max(0, post.likes + (post.hasLiked ? -1 : 1)) } : post));
   const addCommentToPost = (id: string, value: string) => { if (!value.trim()) return; setPosts((previous) => previous.map((post) => post.id === id ? { ...post, commentsCount: post.commentsCount + 1, comments: [...(post.comments || []), { id: crypto.randomUUID(), text: value.trim(), authorName: user.name, createdAt: "Vừa xong" }] } : post)); };

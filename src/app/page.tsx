@@ -112,12 +112,12 @@ export default function Home() {
                   </h3>
                   <p className="text-sm text-[#475569] leading-relaxed mb-4">
                     {language === "vi"
-                      ? "Lớp học nhỏ trên Discord & Google Meet do chính các bạn học sinh dẫn dắt. Thảo luận tự nhiên, không áp lực điểm số."
-                      : "Small interactive study groups led by students on Discord & Google Meet. Natural discussions, zero grade pressure."}
+                      ? "Lớp học nhỏ trực tuyến trên Web & Google Meet do chính các bạn học sinh dẫn dắt. Thảo luận tự nhiên, không áp lực điểm số."
+                      : "Small interactive study groups led by students on Web & Google Meet. Natural discussions, zero grade pressure."}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     <span className="px-1.5 py-0.5 rounded-xs bg-slate-100 text-slate-700 text-[10px] font-mono font-bold">
-                      Discord Voice
+                      Web & Meet
                     </span>
                     <span className="px-1.5 py-0.5 rounded-xs bg-slate-100 text-slate-700 text-[10px] font-mono font-bold">
                       Không chấm điểm

@@ -3,8 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { X, Send, ExternalLink } from "lucide-react";
-import { DiscordLogo } from "./BrandIcons";
+import { X, Send, ExternalLink, Mail } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 
 interface ChatMessage {
@@ -23,7 +22,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     time: "Vừa xong",
     links: [
       { text: "Cửa hàng đổi đặc quyền PP", url: "/dashboard?tab=shop" },
-      { text: "Kênh hỗ trợ Discord", url: "https://discord.gg/6hpEf4wC4z", external: true },
+      { text: "Lịch phòng học mở", url: "/dashboard?tab=classes" },
     ],
   },
 ];
@@ -32,7 +31,7 @@ const QUICK_PROMPTS = [
   { label: "🎁 Đổi đặc quyền & dùng PP?", key: "pp" },
   { label: "🎓 Cách vào phòng học?", key: "class" },
   { label: "👨‍🏫 Đăng ký làm Tutor?", key: "tutor" },
-  { label: "💬 Liên hệ hỗ trợ Discord?", key: "discord" },
+  { label: "✉️ Email hỗ trợ kỹ thuật?", key: "support" },
 ];
 
 export function PencilyMascotCompanion() {
@@ -74,17 +73,17 @@ export function PencilyMascotCompanion() {
         botResponse = "Pencily Points (PP) được tích lũy khi bạn tham gia lớp học (+10 PP), đăng thảo luận (+5 PP) hoặc điểm danh bài học (+5 PP). Bạn có thể ghé ngay Cửa Hàng PP để đổi Mindmap 12 môn, kho đề chuyên hoặc vé kèm 1-1 với Top Tutor!";
         links = [{ text: "Đến Cửa Hàng PP", url: "/dashboard?tab=shop" }];
       } else if (promptKey === "class" || lower.includes("phòng") || lower.includes("lớp") || lower.includes("học")) {
-        botResponse = "Các phòng học trực tuyến mở tự do tại tab 'Tìm lớp học'. Khi lớp bắt đầu, bạn bấm 'Vào phòng học' để tham gia qua Web Room trực tiếp hoặc phòng Voice trên máy chủ Discord The Pencily hoàn toàn miễn phí!";
+        botResponse = "Các phòng học trực tuyến mở tự do tại tab 'Tìm lớp học'. Khi lớp bắt đầu, bạn bấm 'Vào lớp' để tham gia qua Web Room trực tiếp hoặc phòng Google Meet hoàn toàn miễn phí!";
         links = [{ text: "Khám phá phòng học", url: "/dashboard?tab=classes" }];
       } else if (promptKey === "tutor" || lower.includes("tutor") || lower.includes("gia sư") || lower.includes("dạy")) {
         botResponse = "The Pencily luôn chào đón các bạn học sinh giỏi, đam mê chia sẻ trở thành Peer Tutor! Bạn vào tab 'Trở thành Peer Tutor' trong Dashboard để hoàn thiện 3 bước xác thực và nhận Portfolio chứng nhận cống hiến.";
         links = [{ text: "Đăng ký làm Peer Tutor", url: "/dashboard?tab=become-tutor" }];
-      } else if (promptKey === "discord" || lower.includes("discord") || lower.includes("liên hệ") || lower.includes("admin") || lower.includes("hỗ trợ")) {
-        botResponse = "Để được hỗ trợ kỹ thuật hoặc giải đáp thắc mắc 1-1, bạn có thể tham gia máy chủ Discord The Pencily và tạo ticket tại kênh #ho-tro. Ban điều phối và đội ngũ Tutors trực 24/7 luôn sẵn sàng lắng nghe bạn!";
-        links = [{ text: "Mở máy chủ Discord The Pencily", url: "https://discord.gg/6hpEf4wC4z", external: true }];
+      } else if (promptKey === "support" || lower.includes("liên hệ") || lower.includes("admin") || lower.includes("hỗ trợ") || lower.includes("discord")) {
+        botResponse = "Để được hỗ trợ kỹ thuật hoặc giải đáp thắc mắc 1-1, bạn có thể gửi email trực tiếp đến ban điều phối qua contact@thepencily.com. Đội ngũ The Pencily luôn sẵn sàng đồng hành cùng bạn!";
+        links = [{ text: "Gửi email hỗ trợ kỹ thuật", url: "mailto:contact@thepencily.com", external: true }];
       } else {
-        botResponse = `Cảm ơn bạn đã nhắn tin: "${questionText}". Nếu bạn cần câu trả lời chi tiết hơn hoặc giải đáp riêng môn học, hãy ghé ngay kênh #hoi-dap trên Discord The Pencily để các bạn Peer Tutors và Admin hỗ trợ ngay nhé!`;
-        links = [{ text: "Nhắn tin trên Discord", url: "https://discord.gg/6hpEf4wC4z", external: true }];
+        botResponse = `Cảm ơn bạn đã nhắn tin: "${questionText}". Đội ngũ The Pencily luôn sẵn sàng giải đáp mọi thắc mắc học tập qua email contact@thepencily.com hoặc thảo luận tại mục Diễn đàn!`;
+        links = [{ text: "Xem lịch mở lớp", url: "/dashboard?tab=classes" }];
       }
 
       const botMsg: ChatMessage = {
@@ -176,9 +175,9 @@ export function PencilyMascotCompanion() {
                             href={link.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5865F2] hover:underline"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4F7ECB] hover:underline"
                           >
-                            <DiscordLogo className="w-3.5 h-3.5 fill-current" />
+                            <Mail className="w-3.5 h-3.5" />
                             <span>{link.text}</span>
                             <ExternalLink className="w-3 h-3" />
                           </a>
@@ -252,13 +251,11 @@ export function PencilyMascotCompanion() {
           <div className="pt-1 flex items-center justify-between text-xs text-slate-500">
             <span className="truncate">{language === "vi" ? "Cần hỗ trợ trực tiếp từ Admin?" : "Direct Admin Support?"}</span>
             <a
-              href="https://discord.gg/6hpEf4wC4z"
-              target="_blank"
-              rel="noreferrer"
-              className="font-bold text-[#5865F2] hover:underline flex items-center gap-1.5 shrink-0 ml-1"
+              href="mailto:contact@thepencily.com"
+              className="font-bold text-[#4F7ECB] hover:underline flex items-center gap-1.5 shrink-0 ml-1"
             >
-              <DiscordLogo className="w-3.5 h-3.5 fill-current" />
-              <span>{language === "vi" ? "Mở Ticket Discord" : "Open Discord Ticket"}</span>
+              <Mail className="w-3.5 h-3.5" />
+              <span>{language === "vi" ? "Gửi Email Ban Học Vụ" : "Email Academic Board"}</span>
             </a>
           </div>
         </div>

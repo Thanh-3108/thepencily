@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { usePencily } from "@/context/PencilyContext";
-import { DiscordLogo, FacebookLogo } from "@/components/BrandIcons";
+import { FacebookLogo } from "@/components/BrandIcons";
 import { ExternalLink, Heart, ShieldCheck, Mail } from "lucide-react";
 
 export function Footer() {
@@ -35,16 +35,6 @@ export function Footer() {
             </p>
 
             <div className="flex items-center gap-3 pt-1">
-              <a
-                href="https://discord.gg/6hpEf4wC4z"
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-xs bg-[#5865F2] hover:bg-[#4752c4] text-white flex items-center justify-center transition shadow-2xs active:scale-95 cursor-pointer"
-                title="Discord Community"
-              >
-                <DiscordLogo className="w-4 h-4 text-white" />
-              </a>
-
               <a
                 href="https://www.facebook.com/UncleRoThanh/"
                 target="_blank"

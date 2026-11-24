@@ -20,7 +20,6 @@ import {
 import { useEffect } from "react";
 import { api } from "@/lib/api";
 import { usePencily } from "@/context/PencilyContext";
-import { DiscordLogo } from "@/components/BrandIcons";
 import { DashboardTab } from "@/components/DashboardSidebar";
 
 export interface ShopItem {
@@ -36,7 +35,7 @@ export interface ShopItem {
   badgeTextVi: string;
   badgeTextEn: string;
   badgeStyle: "hot" | "flagship" | "limited" | "exclusive" | "standard";
-  fulfillmentType: "download" | "booking" | "discord" | "badge";
+  fulfillmentType: "download" | "booking" | "badge";
   fulfillmentTextVi: string;
   fulfillmentTextEn: string;
   previewNoteVi: string;
@@ -62,11 +61,11 @@ export const SHOP_ITEMS: ShopItem[] = [
     badgeTextEn: "TOP PRIVILEGE",
     badgeStyle: "exclusive",
     fulfillmentType: "booking",
-    fulfillmentTextVi: "Đặt lịch qua Discord",
-    fulfillmentTextEn: "Book via Discord",
+    fulfillmentTextVi: "Đặt lịch học trực tuyến",
+    fulfillmentTextEn: "Book online session",
     previewNoteVi: "Xếp lịch theo yêu cầu trong vòng 48h",
     previewNoteEn: "Scheduled on demand within 48h",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
+    actionUrl: "/dashboard?tab=classes",
     accentBg: "bg-blue-50",
     accentColor: "text-blue-600",
     isFeatured: true,
@@ -119,30 +118,30 @@ export const SHOP_ITEMS: ShopItem[] = [
   {
     id: "item-placeholder-discord-role",
     category: "profile",
-    categoryLabelVi: "Hồ sơ & Discord VIP",
-    categoryLabelEn: "Profile & Discord",
-    titleVi: "Huy Hiệu & Danh Hiệu VIP Contributor Trên Discord",
-    titleEn: "Discord VIP Contributor Badge & Exclusive Role",
+    categoryLabelVi: "Hồ sơ & Danh hiệu VIP",
+    categoryLabelEn: "Profile & Badges",
+    titleVi: "Huy Hiệu Học Bá VIP & Khung Hồ Sơ Đặc Biệt",
+    titleEn: "VIP Scholar Badge & Special Profile Recognition",
     cost: 25,
-    descriptionVi: "Kích hoạt danh hiệu VIP trên máy chủ Discord The Pencily, hiển thị màu tên nổi bật và mở khóa quyền truy cập các kênh thảo luận chuyên đề cùng gia sư.",
-    descriptionEn: "Unlocks the distinguished VIP role on The Pencily Discord community, custom name colors, and access to private study lounges.",
-    badgeTextVi: "ROLE DISCORD",
-    badgeTextEn: "DISCORD ROLE",
+    descriptionVi: "Kích hoạt danh hiệu VIP trên nền tảng The Pencily, mở khóa quyền ưu tiên tham vấn chuyên đề cùng gia sư và hiển thị nổi bật trên bảng xếp hạng.",
+    descriptionEn: "Unlocks the distinguished VIP badge on The Pencily platform, priority access to study lounges, and recognition on community leaderboards.",
+    badgeTextVi: "DANH HIỆU VIP",
+    badgeTextEn: "VIP BADGE",
     badgeStyle: "hot",
-    fulfillmentType: "discord",
-    fulfillmentTextVi: "Kích hoạt trên Discord",
-    fulfillmentTextEn: "Equip on Discord",
-    previewNoteVi: "Đồng bộ tự động theo Discord ID",
-    previewNoteEn: "Auto-synced via linked Discord ID",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
+    fulfillmentType: "badge",
+    fulfillmentTextVi: "Kích hoạt trên tài khoản",
+    fulfillmentTextEn: "Equip on Profile",
+    previewNoteVi: "Hiển thị vĩnh viễn trên hồ sơ The Pencily",
+    previewNoteEn: "Permanently linked to your account",
+    actionUrl: "/dashboard?tab=profile",
     accentBg: "bg-purple-50",
     accentColor: "text-purple-600",
   },
   {
     id: "item-placeholder-avatar-frame",
     category: "profile",
-    categoryLabelVi: "Hồ sơ & Discord VIP",
-    categoryLabelEn: "Profile & Discord",
+    categoryLabelVi: "Hồ sơ & Danh hiệu VIP",
+    categoryLabelEn: "Profile & Badges",
     titleVi: "Khung Avatar Danh Dự: Học Giả Tinh Hoa The Pencily",
     titleEn: "Elite Scholar Profile Frame & Honor Badge",
     cost: 20,
@@ -248,7 +247,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
     { id: "materials", labelVi: "Tài liệu & Mindmap", labelEn: "Study Materials", count: SHOP_ITEMS.filter((i) => i.category === "materials").length },
     { id: "privilege", labelVi: "Vé kèm 1-1 & Flagship", labelEn: "1-on-1 & Flagship", count: SHOP_ITEMS.filter((i) => i.category === "privilege").length },
     { id: "exams", labelVi: "Kho Đề Chuyên & Forecast", labelEn: "Exam Vault", count: SHOP_ITEMS.filter((i) => i.category === "exams").length },
-    { id: "profile", labelVi: "Hồ sơ & Discord VIP", labelEn: "Profile & Discord", count: SHOP_ITEMS.filter((i) => i.category === "profile").length },
+    { id: "profile", labelVi: "Hồ sơ & Danh hiệu VIP", labelEn: "Profile & Badges", count: SHOP_ITEMS.filter((i) => i.category === "profile").length },
   ];
 
   return (
@@ -351,7 +350,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
           </span>{" "}
           {isVi
             ? "PP là điểm thưởng vinh danh cống hiến học tập phi lợi nhuận. Tích lũy PP qua mỗi phút học tập hoặc host lớp kèm cặp để đổi các đặc quyền, sổ tay tài liệu và đề thi trường chuyên."
-            : "PP rewards authentic peer-learning contributions. Earn PP during verified session attendance or hosting classes to unlock curated study handbooks, mock exams, and Discord privileges."}
+            : "PP rewards authentic peer-learning contributions. Earn PP during verified session attendance or hosting classes to unlock curated study handbooks, mock exams, and community privileges."}
         </div>
       </div>
 
@@ -504,7 +503,6 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                   <div className="pt-2 border-t-2 border-slate-100 flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
                     {item.fulfillmentType === "download" && <Download className="w-3.5 h-3.5 text-blue-600 shrink-0" />}
                     {item.fulfillmentType === "booking" && <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />}
-                    {item.fulfillmentType === "discord" && <DiscordLogo className="w-3.5 h-3.5 fill-[#5865F2] shrink-0" />}
                     {item.fulfillmentType === "badge" && <Award className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
                     <span className="truncate">{isVi ? item.fulfillmentTextVi : item.fulfillmentTextEn}</span>
                   </div>

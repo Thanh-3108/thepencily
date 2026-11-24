@@ -67,8 +67,8 @@ export function AboutProgramsView({ onOpenTutorModal }: AboutProgramsViewProps) 
 
   const formats = [
     {
-      titleVi: "Phòng Voice Học Nhóm (Discord Pods)",
-      titleEn: "Discord Voice Pods",
+      titleVi: "Phòng Voice Học Nhóm (Voice Pods)",
+      titleEn: "Study Voice Pods",
       icon: Headphones,
       descVi:
         "Quy mô từ 3 đến 6 bạn học sinh. Không khí thảo luận cởi mở, bật mic trao đổi trực tiếp, giải đề theo nhóm mà không bị cảm giác e ngại hay phán xét.",

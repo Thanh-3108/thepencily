@@ -23,7 +23,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
-import { DiscordLogo } from "./BrandIcons";
 import { downloadPencilyCertificatePdf } from "@/lib/certificatePdf";
 
 interface DashboardSettingsProps {
@@ -230,54 +229,6 @@ export function DashboardSettings({
             <span>English</span>
             {language === "en" && <Check className="w-4 h-4 text-[#0F2747]" />}
           </button>
-        </div>
-      </section>
-
-      {/* SECTION 3: DISCORD INTEGRATION */}
-      <section className="bg-white rounded-md border-2 border-slate-300 p-6 shadow-xs space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-sm bg-indigo-50 border-2 border-indigo-300 flex items-center justify-center text-indigo-700">
-              <DiscordLogo className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-poppins font-bold text-base text-[#0F2747]">
-                {isVi ? "Liên Kết Máy Chủ Discord" : "Discord Community Link"}
-              </h3>
-              <p className="text-xs text-slate-500">
-                {isVi
-                  ? "Đồng bộ quyền hạn phòng học voice và vai trò học sinh trên máy chủ"
-                  : "Sync voice pod roles and student channels on Discord"}
-              </p>
-            </div>
-          </div>
-
-          <a
-            href="https://discord.gg/6hpEf4wC4z"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition border border-indigo-800 shadow-2xs"
-          >
-            <span>{isVi ? "Mở Server Discord" : "Open Server"}</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-
-        <div className="p-4 rounded-sm bg-[#FAF7F2] border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-0.5">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-              {isVi ? "Tài khoản Discord liên kết" : "Linked Discord Handle"}
-            </span>
-            <span className="text-sm font-black text-[#0F2747] font-mono">
-              {user.discord || "Chưa kết nối"}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-xs bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] font-bold">
-              {isVi ? "Sẵn Sàng Đồng Bộ" : "Ready to Sync"}
-            </span>
-          </div>
         </div>
       </section>
 

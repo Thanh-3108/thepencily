@@ -84,8 +84,8 @@ export function CreatePostModal({
           </div>
           <p className="text-sm sm:text-base text-[#4B5563] mt-1.5 leading-relaxed">
             {language === "vi"
-              ? "Chia sẻ tài liệu học tập hoặc đặt câu hỏi để peer tutors và cộng đồng hỗ trợ trên Discord."
-              : "Share study notes or ask questions for peer tutors and community support on Discord."}
+              ? "Chia sẻ tài liệu học tập hoặc đặt câu hỏi để peer tutors và cộng đồng cùng hỗ trợ."
+              : "Share study notes or ask questions for peer tutors and community support."}
           </p>
         </div>
 
@@ -240,12 +240,12 @@ export function CreatePostModal({
             />
           </div>
 
-          {/* Discord integration notice */}
-          <div className="bg-[#5865F2]/10 border-2 border-[#5865F2]/30 rounded-sm p-4 text-xs sm:text-sm text-[#29328a] flex items-center justify-between">
+          {/* Topic category tag notice */}
+          <div className="bg-[#4F7ECB]/10 border-2 border-[#4F7ECB]/30 rounded-sm p-4 text-xs sm:text-sm text-[#0F2747] flex items-center justify-between">
             <div>
-              <span className="font-bold">{language === "vi" ? "Đồng bộ Discord:" : "Discord Sync:"}</span>{" "}
-              {language === "vi" ? "Bài viết sẽ tạo một thread tại kênh" : "Post creates a thread in channel"}{" "}
-              <span className="font-mono font-bold text-[#0F2747]">{discordChannel}</span>.
+              <span className="font-bold">{language === "vi" ? "Chủ đề thảo luận:" : "Topic Tag:"}</span>{" "}
+              {language === "vi" ? "Bài viết sẽ hiển thị trong luồng thảo luận" : "Post will appear in topic thread"}{" "}
+              <span className="font-mono font-bold text-[#4F7ECB]">{discordChannel}</span>.
             </div>
           </div>
 

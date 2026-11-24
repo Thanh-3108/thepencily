@@ -69,8 +69,8 @@ const TOUR_STEPS: TourStepConfig[] = [
     cardTitleEn: "Live Classrooms",
     badgeVi: "Phòng Học",
     badgeEn: "Live Pods",
-    dialogueVi: "Các phòng học nhóm 100% miễn phí cùng Peer Tutor trên Discord & Meet.",
-    dialogueEn: "100% free peer-led study rooms on Discord Voice & Google Meet.",
+    dialogueVi: "Các phòng học nhóm 100% miễn phí cùng Peer Tutor trực tuyến trên Web & Google Meet.",
+    dialogueEn: "100% free peer-led study rooms directly on Web & Google Meet.",
     preferredPlacement: "bottom",
   },
   {

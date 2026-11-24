@@ -13,7 +13,7 @@ export function RoadmapTimeline() {
       tasks: [
         "Hoàn thiện Project Brief và ký cam kết nguyên tắc hoạt động Core Team",
         "Thiết lập Website phiên bản 1.0 (Landing page, Sứ mệnh, Danh mục lớp học & Form đăng ký)",
-        "Tái cấu trúc máy chủ Discord: thiết lập phân quyền role tự động, bot ghi âm lớp học",
+        "Tối ưu hóa nền tảng học tập: xây dựng tính năng studio lớp học và hệ thống phòng học trực tuyến",
         "Xây dựng quy chế tuyển chọn và đào tạo phương pháp giảng dạy căn bản cho Tutor",
         "Biên soạn bộ tài liệu chuẩn bị cho các lớp học Flagship đầu tiên",
       ],
@@ -29,7 +29,7 @@ export function RoadmapTimeline() {
         "Mở đợt tuyển sinh Tutor trên Fanpage Facebook; tiến hành phỏng vấn & dự giờ Mock Teaching",
         "Khai trương Website chính thức và công bố thời khóa biểu lớp học",
         "Tổ chức sự kiện Kick-off Webinar: 'Học tập bình đẳng: Tự tin làm chủ tri thức'",
-        "Mở cổng ghi danh học viên và phân quyền vào máy chủ Discord",
+        "Mở cổng ghi danh học viên và phân chia phòng học trực tuyến",
       ],
     },
     {
@@ -40,7 +40,7 @@ export function RoadmapTimeline() {
       status: "Kế hoạch",
       statusBadge: "bg-gray-100 text-[#6B7280] border-gray-200",
       tasks: [
-        "Vận hành các chuỗi lớp học ngắn hạn (3–4 tuần) trên Discord Voice chuyên biệt",
+        "Vận hành các chuỗi lớp học ngắn hạn (3–4 tuần) trên phòng học The Pencily và Google Meet",
         "Thu thập feedback form sau mỗi buổi học để Tutor liên tục nâng cấp chất lượng",
         "Đưa các ghi chú học tập, bài giải hay đạt chuẩn lên chuyên mục Resource Library",
         "Tổ chức các buổi Study Group & Q&A giải bài tập hàng tuần",

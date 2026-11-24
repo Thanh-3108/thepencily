@@ -47,7 +47,7 @@ export function LearningFormats({ onSelectFormat }: { onSelectFormat?: (format: 
       tagline: "Hội thảo kỹ năng & Truyền cảm hứng",
       size: "Quy mô lớn (50 – 100+ bạn)",
       duration: "1 – 2 buổi chuyên đề (90 - 120 phút)",
-      platform: "Discord Stage / Zoom",
+      platform: "Webinar / Google Meet",
       desc: "Những buổi chia sẻ mở rộng tầm nhìn về phương pháp tự học đỉnh cao, quản lý thời gian, định hướng ngành nghề, chuẩn bị du học và bí quyết săn học bổng.",
       highlights: [
         "Khách mời diễn giả & cựu học sinh xuất sắc",

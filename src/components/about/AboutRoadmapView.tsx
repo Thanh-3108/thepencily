@@ -29,14 +29,14 @@ export function AboutRoadmapView() {
       tasksVi: [
         "Hoàn thiện Project Brief và ký cam kết nguyên tắc hoạt động Core Team",
         "Thiết lập Website The Pencily với danh mục lớp học, giao diện phòng học tương tác và cơ chế tích điểm",
-        "Tái cấu trúc máy chủ Discord: thiết lập phân quyền vai trò tự động, bot ghi âm lớp học",
+        "Tối ưu hóa nền tảng học tập: xây dựng tính năng quản lý lớp học và hệ thống phòng học trực tuyến",
         "Xây dựng quy chế tuyển chọn và đào tạo phương pháp giảng dạy căn bản cho Tutor",
         "Biên soạn bộ tài liệu chuẩn bị cho các lớp học Flagship đầu tiên",
       ],
       tasksEn: [
         "Finalized Project Brief and Core Team Charter commitments",
         "Launched The Pencily platform with classroom studio, interactive rooms, and points system",
-        "Restructured Discord server: automated role dispatch and voice pod organization",
+        "Optimized learning platform: integrated classroom studio and direct online study rooms",
         "Authored tutor vetting rubrics and 15-minute mock teaching criteria",
         "Compiled foundational syllabus notes for first flagship tracks",
       ],
@@ -60,7 +60,7 @@ export function AboutRoadmapView() {
         "Open high school tutor recruiting campaigns, candidate interviews, and mock teaching reviews",
         "Public launch of classroom schedules and direct enrollment links",
         "Host community kick-off webinar on peer-to-peer learning empowerment",
-        "Distribute learner roles and onboard students into dedicated Discord pods",
+        "Distribute learner roles and onboard students into dedicated online study pods",
       ],
     },
     {

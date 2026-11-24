@@ -10,7 +10,7 @@ import {
   GraduationCap,
   ExternalLink,
 } from "lucide-react";
-import { FacebookLogo, DiscordLogo } from "@/components/BrandIcons";
+import { FacebookLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
@@ -37,7 +37,6 @@ export function HomeStudentStories() {
         label: "Cong Thanh",
         url: "https://www.facebook.com/UncleRoThanh/",
       },
-      discord: "hcongthanh",
       image: "/founder.png",
       initials: "CT",
       rotation: "sm:-rotate-[0.75deg]",
@@ -60,7 +59,6 @@ export function HomeStudentStories() {
         label: "Bảo Ngân",
         url: "https://www.facebook.com/bao.ngan.981769/",
       },
-      discord: "selene_1711",
       image: "/bao-ngan.jpg",
       initials: "BN",
       rotation: "sm:rotate-[0.75deg]",
@@ -99,7 +97,6 @@ export function HomeStudentStories() {
       quoteEn: "“Working motto: no chatting, no face reveal”",
       washiTape: "/brand/elements/washi-tape-blue.jpg",
       hasClip: true,
-      discord: "god_daren",
       image: "/co-founder.png",
       initials: "MK",
       rotation: "sm:rotate-[0.5deg]",
@@ -320,13 +317,6 @@ export function HomeStudentStories() {
                       <ExternalLink className="w-3 h-3 opacity-60" />
                     </a>
                   )}
-
-                  {member.discord && (
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#5865F2]/10 text-[#5865F2] border border-[#5865F2]/30 font-medium">
-                      <DiscordLogo className="w-3.5 h-3.5" />
-                      <span>@{member.discord}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             </PencilyScrollReveal>
@@ -358,8 +348,8 @@ export function HomeStudentStories() {
               roleEn: "<THPT Prep Student>",
               badgeVi: "Placeholder Member",
               badgeEn: "Member Placeholder",
-              defaultTextVi: "\"[Placeholder] Trải nghiệm học nhóm nhỏ lúc 21h trên Discord: Sự cởi mở, không sợ bị chê cười khi hỏi bài tập khó và nguồn tài liệu tóm tắt miễn phí...\"",
-              defaultTextEn: "\"[Placeholder] Experience joining small nightly study pods on Discord: Welcoming peers, zero fear of asking tough homework questions, and free study notes...\"",
+              defaultTextVi: "\"[Placeholder] Trải nghiệm học nhóm nhỏ lúc 21h trực tuyến: Sự cởi mở, không sợ bị chê cười khi hỏi bài tập khó và nguồn tài liệu tóm tắt miễn phí...\"",
+              defaultTextEn: "\"[Placeholder] Experience joining small nightly study pods online: Welcoming peers, zero fear of asking tough homework questions, and free study notes...\"",
             },
           ].map((item, idx) => (
             <PencilyScrollReveal

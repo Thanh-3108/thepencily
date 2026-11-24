@@ -21,7 +21,6 @@ import {
 import { isReviewer } from "@/lib/platform";
 import { usePencily } from "@/context/PencilyContext";
 import { Logo } from "./Logo";
-import { DiscordLogo } from "./BrandIcons";
 import { PencilyStoreIcon } from "./icons/PencilyIcons";
 
 export type DashboardTab =
@@ -29,7 +28,6 @@ export type DashboardTab =
   | "classes"
   | "videos"
   | "leaderboard"
-  | "discord"
   | "shop"
   | "profile"
   | "become-tutor"
@@ -92,7 +90,7 @@ export function DashboardSidebar({
     href?: string;
   }
 
-  // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Dạy kèm, Discord, Cửa hàng PP, Hồ sơ)
+  // KHU VỰC 2: CÁC KHU VỰC CÒN LẠI (Dạy kèm, Cửa hàng PP, Hồ sơ)
   const secondaryItems: SecondaryItem[] = [
     ...(user.platformRole === "admin" ||
     user.role === "admin" ||
@@ -116,13 +114,6 @@ export function DashboardSidebar({
       labelVi: "Trở thành Peer Tutor",
       labelEn: "My Tutoring",
       icon: GraduationCap,
-      isTab: true,
-    },
-    {
-      id: "discord" as const,
-      labelVi: "Máy chủ Discord",
-      labelEn: "Discord Server",
-      icon: DiscordLogo,
       isTab: true,
     },
     {
@@ -273,7 +264,7 @@ export function DashboardSidebar({
         )}
 
         {/* ============================================================== */}
-        {/* KHU VỰC 2: KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Discord, Shop, Hồ sơ) */}
+        {/* KHU VỰC 2: KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Shop, Hồ sơ) */}
         {/* ============================================================== */}
         {isCollapsed ? (
           /* COLLAPSED POD 2: Floating Vertical Capsule */

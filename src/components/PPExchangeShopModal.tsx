@@ -5,7 +5,6 @@ import { X, BookOpen, Award, Download, CheckCircle2, Lock, ExternalLink, Gift, H
 import { useEffect } from "react";
 import { api } from "@/lib/api";
 import { usePencily } from "@/context/PencilyContext";
-import { DiscordLogo } from "./BrandIcons";
 
 export interface ShopItem {
   id: string;
@@ -17,7 +16,7 @@ export interface ShopItem {
   descriptionEn: string;
   badgeText: string;
   badgeTextEn: string;
-  rewardType: "download" | "discord" | "booking" | "badge";
+  rewardType: "download" | "booking" | "badge";
   actionText: string;
   actionTextEn: string;
   actionUrl?: string;
@@ -37,9 +36,9 @@ export const SHOP_ITEMS: ShopItem[] = [
     badgeText: "ĐẶC QUYỀN HOT",
     badgeTextEn: "TOP PRIVILEGE",
     rewardType: "booking",
-    actionText: "Đặt lịch qua Discord",
-    actionTextEn: "Book via Discord",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
+    actionText: "Đặt lịch học trực tuyến",
+    actionTextEn: "Book online session",
+    actionUrl: "/classes",
     previewNote: "Xếp lịch theo yêu cầu trong vòng 48h",
     previewNoteEn: "Scheduled on demand within 48h",
   },
@@ -80,19 +79,19 @@ export const SHOP_ITEMS: ShopItem[] = [
   {
     id: "item-placeholder-discord-role",
     category: "privilege",
-    title: "Huy Hiệu & Danh Hiệu VIP Contributor Trên Discord",
-    titleEn: "Discord VIP Contributor Badge & Exclusive Role",
+    title: "Huy Hiệu Học Bá VIP & Khung Hồ Sơ Đặc Biệt",
+    titleEn: "VIP Scholar Badge & Special Profile Recognition",
     cost: 25,
-    description: "Kích hoạt danh hiệu VIP trên máy chủ Discord The Pencily, hiển thị màu tên nổi bật và mở khóa quyền truy cập các kênh thảo luận chuyên đề cùng gia sư.",
-    descriptionEn: "Unlocks the distinguished VIP role on The Pencily Discord community, custom name colors, and access to private study lounges.",
-    badgeText: "ROLE DISCORD",
-    badgeTextEn: "DISCORD ROLE",
-    rewardType: "discord",
-    actionText: "Kích hoạt trên Discord",
-    actionTextEn: "Equip on Discord",
-    actionUrl: "https://discord.gg/6hpEf4wC4z",
-    previewNote: "Đồng bộ tự động theo Discord ID",
-    previewNoteEn: "Auto-synced via linked Discord ID",
+    description: "Kích hoạt danh hiệu VIP trên nền tảng The Pencily, mở khóa quyền ưu tiên tham vấn chuyên đề cùng gia sư và hiển thị nổi bật trên bảng xếp hạng.",
+    descriptionEn: "Unlocks the distinguished VIP badge on The Pencily platform, priority access to study lounges, and recognition on community leaderboards.",
+    badgeText: "DANH HIỆU VIP",
+    badgeTextEn: "VIP BADGE",
+    rewardType: "badge",
+    actionText: "Xem trên hồ sơ",
+    actionTextEn: "View on Profile",
+    actionUrl: "/dashboard?tab=profile",
+    previewNote: "Hiển thị vĩnh viễn trên hồ sơ The Pencily",
+    previewNoteEn: "Permanently linked to your account",
   },
   {
     id: "item-placeholder-avatar-frame",
@@ -105,8 +104,8 @@ export const SHOP_ITEMS: ShopItem[] = [
     badgeText: "KHUNG HỒ SƠ",
     badgeTextEn: "PROFILE FRAME",
     rewardType: "badge",
-    actionText: "Kích hoạt trên hồ sơ web",
-    actionTextEn: "Equip on Web Profile",
+    actionText: "Kích hoạt trên hồ sơ",
+    actionTextEn: "Equip on Profile",
     previewNote: "Hiển thị vĩnh viễn trên tài khoản",
     previewNoteEn: "Permanently linked to your account",
   },
@@ -218,8 +217,8 @@ export function PPExchangeShopModal({
           <span>
             <b>{language === "vi" ? "Đặc Quyền Cống Hiến:" : "Community Rewards:"}</b>{" "}
             {language === "vi"
-              ? "Điểm Pencily Points (PP) được tích lũy từ các buổi học tương tác hoặc host lớp kèm cặp để đổi lấy tài liệu tuyển chọn và các đặc quyền Discord."
-              : "Pencily Points (PP) are earned through active session attendance and peer tutoring, redeemable for handbooks, exam banks, and Discord roles."}
+              ? "Điểm Pencily Points (PP) được tích lũy từ các buổi học tương tác hoặc host lớp kèm cặp để đổi lấy tài liệu tuyển chọn và các đặc quyền thành viên."
+              : "Pencily Points (PP) are earned through active session attendance and peer tutoring, redeemable for handbooks, exam banks, and community privileges."}
           </span>
         </div>
 
@@ -255,7 +254,7 @@ export function PPExchangeShopModal({
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>{language === "vi" ? "Đặc quyền Kèm 1-1 & Discord" : "1-on-1 Mentoring & Discord"}</span>
+            <span>{language === "vi" ? "Đặc quyền Kèm 1-1 & Danh hiệu" : "1-on-1 Mentoring & Badges"}</span>
           </button>
           <button
             onClick={() => setActiveCategory("profile")}
@@ -378,16 +377,6 @@ export function PPExchangeShopModal({
                 : "All resources and perks are voluntarily contributed by The Pencily peer tutors non-profit."}
             </span>
           </div>
-
-          <a
-            href="https://discord.gg/6hpEf4wC4z"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5865F2] hover:underline shrink-0"
-          >
-            <DiscordLogo className="w-3.5 h-3.5 fill-current" />
-            <span>{language === "vi" ? "Góp ý phần thưởng trên Discord" : "Suggest Rewards on Discord"}</span>
-          </a>
         </div>
       </div>
 
@@ -426,25 +415,21 @@ export function PPExchangeShopModal({
 
             <div className="bg-[#FFF9EF] p-4 rounded-sm border-2 border-amber-300 space-y-2 text-xs">
               <div className="font-bold text-[#0F2747]">
-                {language === "vi" ? "Hướng dẫn sử dụng quyền lợi mẫu:" : "How to access reward sample:"}
+                {language === "vi" ? "Hướng dẫn sử dụng quyền lợi:" : "How to access reward:"}
               </div>
               <p className="text-slate-700 leading-relaxed">
                 {selectedReward.rewardType === "download" &&
                   (language === "vi"
                     ? "Nhấp vào nút bên dưới để mở liên kết tải trực tiếp tài liệu từ Google Drive của The Pencily."
                     : "Click the button below to download materials from The Pencily Google Drive.")}
-                {selectedReward.rewardType === "discord" &&
-                  (language === "vi"
-                    ? "Truy cập máy chủ Discord của The Pencily để nhận vai trò VIP hoặc mở phòng học Voice nhóm."
-                    : "Join The Pencily Discord server to claim your VIP role or launch group voice rooms.")}
                 {selectedReward.rewardType === "booking" &&
                   (language === "vi"
-                    ? "Liên hệ ban điều phối hoặc kênh #ho-tro-tutor trên Discord để xếp lịch kèm 1-1 với Peer Tutor."
-                    : "Contact support or #tutor-support on Discord to schedule your 1-on-1 session.")}
+                    ? "Liên hệ ban điều phối qua mục Đăng ký Lớp học hoặc email để xếp lịch kèm 1-1 với Peer Tutor."
+                    : "Contact support or register via Classes to schedule your 1-on-1 session.")}
                 {selectedReward.rewardType === "badge" &&
                   (language === "vi"
-                    ? "Khung avatar mẫu đã được kích hoạt thử nghiệm trên hồ sơ của bạn!"
-                    : "Avatar frame trial has been activated on your profile!")}
+                    ? "Danh hiệu và khung avatar đã được kích hoạt trên hồ sơ của bạn!"
+                    : "Badge and avatar frame have been activated on your profile!")}
               </p>
             </div>
 

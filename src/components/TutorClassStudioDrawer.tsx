@@ -234,7 +234,6 @@ function StudioForm({ onClose, tutorName, initial, onSubmitCreate }: Props) {
             >
               <option value="web">Web Pencily P2P (Bật cam, mic, bảng vẽ)</option>
               <option value="meet">Google Meet</option>
-              <option value="discord">Discord Voice</option>
             </select>
           </label>
           <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider">
@@ -253,11 +252,11 @@ function StudioForm({ onClose, tutorName, initial, onSubmitCreate }: Props) {
 
         {draft.platform !== "web" && (
           <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider">
-            Link phòng {draft.platform === "meet" ? "Google Meet" : "Discord"} *
+            Link phòng Google Meet *
             <input
               type="text"
               required
-              placeholder={draft.platform === "meet" ? "https://meet.google.com/abc-defg-hij" : "https://discord.gg/..."}
+              placeholder="https://meet.google.com/abc-defg-hij"
               className={field}
               value={draft.meetUrl}
               onChange={(e) => change("meetUrl", e.target.value)}

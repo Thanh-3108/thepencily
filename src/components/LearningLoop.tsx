@@ -7,7 +7,7 @@ export function LearningLoop() {
       step: "01",
       name: "Find",
       title: "Tìm kiếm cơ hội",
-      desc: "Khám phá các lớp học bổ trợ, study group hoặc kho tài liệu phù hợp mục tiêu của bạn trên Website và Discord The Pencily.",
+      desc: "Khám phá các lớp học bổ trợ, study group hoặc kho tài liệu phù hợp mục tiêu của bạn trên nền tảng The Pencily.",
       icon: Search,
       badgeColor: "bg-[#4F7ECB] text-white",
     },

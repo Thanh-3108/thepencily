@@ -44,7 +44,7 @@ export function HomeHowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="pt-20 sm:pt-28 pb-3 sm:pb-4 relative">
+    <section id="how-it-works" className="pt-16 sm:pt-20 pb-2 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header: Pure Clean Typography, NO Background Island, NO Emoji */}
         <PencilyScrollReveal animation="bounce-up" delay={50}>
@@ -60,7 +60,7 @@ export function HomeHowItWorks() {
 
         {/* 4-Step Process Journey Stepper (Strictly NO dots) */}
         <PencilyScrollReveal animation="stamp" delay={75}>
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12 max-w-4xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 max-w-4xl mx-auto">
             <div className="px-3 py-1.5 rounded-xs bg-white border-2 border-slate-300 font-mono text-xs font-bold text-[#0F2747] shadow-2xs">
               {isVi ? "01. Chọn Môn & Lịch Trình" : "01. Choose Subject & Schedule"}
             </div>
@@ -121,7 +121,7 @@ export function HomeHowItWorks() {
         </div>
 
         {/* Clean, Straight Action Card */}
-        <PencilyScrollReveal animation="bounce-up" delay={200} className="mt-10 sm:mt-12">
+        <PencilyScrollReveal animation="bounce-up" delay={200} className="mt-8 sm:mt-10">
           <div className="bg-white rounded-md border-2 border-slate-300 p-6 sm:p-7 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 max-w-3xl mx-auto">
             <div className="space-y-1 text-center sm:text-left">
               <h4 className="font-poppins font-bold text-base sm:text-lg text-[#0F2747]">
@@ -131,8 +131,8 @@ export function HomeHowItWorks() {
               </h4>
               <p className="text-xs text-slate-500">
                 {isVi
-                  ? "Đăng ký chỉ với 1 click, vào học trực tiếp trên Discord hoặc Web."
-                  : "One-click registration, jump straight into study pods on Discord or Web."}
+                  ? "Đăng ký chỉ với 1 click, vào học trực tiếp trên Web hoặc Google Meet."
+                  : "One-click registration, jump straight into study pods on Web or Google Meet."}
               </p>
             </div>
 
