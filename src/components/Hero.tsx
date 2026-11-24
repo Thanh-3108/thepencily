@@ -17,26 +17,16 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Punchy, Tactile Typography */}
           <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-left z-10">
-            {/* Top Pill Accent */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xs bg-white/95 border-2 border-[#0F2747]/15 text-[#0F2747] text-xs font-mono font-bold uppercase tracking-wider shadow-2xs">
-              <span className="text-amber-500 font-black">✦</span>
-              <span>
-                {isVi
-                  ? "Cộng đồng học tập đồng đẳng • 100% Phi lợi nhuận"
-                  : "Peer-Learning Community • 100% Non-Profit"}
-              </span>
-            </div>
-
             <h1 className="font-poppins font-black text-4xl sm:text-5xl lg:text-[62px] text-[#0F2747] tracking-tight leading-[1.08]">
               The Pencily.
               <br />
-              <span className="relative inline-block text-[#0F2747]">
-                {isVi ? "Do Học Sinh Khởi Xướng," : "Built by Students,"}
+              <span className="relative inline-block text-[#0F2747] whitespace-nowrap">
+                {isVi ? "Do Học Sinh," : "Built by Students,"}
                 <span className="absolute bottom-1 left-0 right-0 h-3.5 sm:h-4 bg-[#FFC83D]/45 -z-10 -rotate-[0.8deg] rounded-xs pointer-events-none" />
               </span>
               <br />
-              <span className="text-[#4F7ECB]">
-                {isVi ? "Vì Học Sinh Đồng Hành." : "For Students."}
+              <span className="text-[#4F7ECB] whitespace-nowrap">
+                {isVi ? "Vì Học Sinh." : "For Students."}
               </span>
             </h1>
 
