@@ -17,7 +17,6 @@ import {
   GraduationCap,
   Eye,
   EyeOff,
-  Sparkles,
   ArrowRight,
 } from "lucide-react";
 
@@ -221,7 +220,6 @@ function SignInContent() {
           {/* Header titles */}
           <div className="text-center space-y-1.5">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FFF6DC] text-amber-800 text-[11px] font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               <span>{isVi ? "Cổng Học Sinh The Pencily" : "The Pencily Portal"}</span>
             </div>
             <h1 className="text-2xl sm:text-[26px] font-bold text-[#0F2747] tracking-tight">

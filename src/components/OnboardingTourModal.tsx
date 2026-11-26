@@ -710,7 +710,6 @@ export function OnboardingTourModal({
                 disabled={isFinishing}
                 className="w-full py-3 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs sm:text-sm border-2 border-[#0F2747] shadow-xs active:scale-98 transition flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-[#FFC83D]" />
                 <span>
                   {isFinishing
                     ? isVi

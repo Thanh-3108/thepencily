@@ -11,7 +11,7 @@ import { HomeHowItWorks } from "@/components/HomeHowItWorks";
 import { HomeTutorPortfolio } from "@/components/HomeTutorPortfolio";
 import { HomeStudentStories } from "@/components/HomeStudentStories";
 
-import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight, Sparkles } from "lucide-react";
+import { Users, GraduationCap, FileText, ShieldCheck, Heart, Award, ArrowRight, Globe } from "lucide-react";
 import Link from "next/link";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilyScrollReveal, PencilyScrollProgressBar } from "@/components/PencilyScrollReveal";
@@ -72,7 +72,6 @@ export default function Home() {
           <PencilyScrollReveal animation="bounce-up" delay={50}>
             <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
               <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#EEF5FF] text-[#3B6FD8] text-xs font-semibold mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
                 <span>{language === "vi" ? "Về The Pencily" : "About The Pencily"}</span>
               </div>
               <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-[42px] text-[#0F2747] tracking-tight leading-tight text-balance">
@@ -185,7 +184,7 @@ export default function Home() {
               >
                 <div>
                   <div className="w-13 h-13 rounded-2xl bg-[#F0EDFF] text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-2xs">
-                    <Sparkles className="w-6 h-6" />
+                    <Globe className="w-6 h-6" />
                   </div>
                   <h3 className="font-poppins font-bold text-[#0F2747] text-lg mb-2.5 group-hover:text-indigo-700 transition-colors">
                     {language === "vi" ? "Kết nối liên trường" : "Inter-school Network"}

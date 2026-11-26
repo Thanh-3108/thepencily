@@ -524,7 +524,6 @@ export function DashboardSettings({
               onClick={onOpenReferModal}
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-sm bg-blue-50 hover:bg-blue-100 text-[#0F2747] border-2 border-blue-300 text-xs font-bold transition cursor-pointer active:scale-95 shadow-2xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#4F7ECB]" />
               <span>{isVi ? "Mời Bạn Học (+10 PP)" : "Refer a Friend (+10 PP)"}</span>
             </button>
           )}

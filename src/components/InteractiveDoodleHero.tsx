@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { RotateCcw, Sparkles } from "lucide-react";
+import { RotateCcw, Pencil } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 
 export function InteractiveDoodleHero() {
@@ -421,18 +421,6 @@ export function InteractiveDoodleHero() {
               transform: `rotate(${-renderState.rotationAngle * 0.7}deg)`,
             }}
           />
-
-          {/* 4-point Star Sparkles (Stationery charm, NO circle dots) */}
-          <path
-            d="M 118 82 L 122 92 L 132 96 L 122 100 L 118 110 L 114 100 L 104 96 L 114 92 Z"
-            fill="#FFC83D"
-            fillOpacity="0.85"
-          />
-          <path
-            d="M 444 275 L 447 282 L 454 285 L 447 288 L 444 295 L 441 288 L 434 285 L 441 282 Z"
-            fill="#4F7ECB"
-            fillOpacity="0.7"
-          />
         </g>
 
         {/* Outer Right Blue Dashed Arc */}
@@ -511,7 +499,7 @@ export function InteractiveDoodleHero() {
 
         {!hasDrawn && (
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF6DC]/95 border border-[#F5D67B] text-[#7A5400] text-[11px] font-medium shadow-2xs pointer-events-none">
-            <Sparkles className="w-3 h-3 text-amber-600 shrink-0" />
+            <Pencil className="w-3 h-3 text-amber-600 shrink-0" />
             <span>{isVi ? "Nhấn giữ chuột để vẽ thử!" : "Drag to draw!"}</span>
           </div>
         )}

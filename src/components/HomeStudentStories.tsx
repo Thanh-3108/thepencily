@@ -9,7 +9,6 @@ import {
   GraduationCap,
   ExternalLink,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 import { FacebookLogo } from "@/components/BrandIcons";
 import { usePencily } from "@/context/PencilyContext";
@@ -230,7 +229,6 @@ export function HomeStudentStories() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
                 <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 border border-[#E6DEC8] text-[#0F2747] text-xs font-semibold">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>{isVi ? "Cùng bắt đầu nhé!" : "Ready to start?"}</span>
                 </div>
                 <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-[#0F2747] tracking-tight text-balance">

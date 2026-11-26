@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { InteractiveDoodleHero } from "./InteractiveDoodleHero";
-import { ArrowRight, Users, HeartHandshake, Sparkles } from "lucide-react";
+import { ArrowRight, Users, HeartHandshake, GraduationCap } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 
 export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
@@ -85,7 +85,7 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
 
               <div className="flex items-center gap-2.5">
                 <span className="w-8 h-8 rounded-xl bg-sky-100/80 text-[#4F7ECB] flex items-center justify-center shrink-0">
-                  <Sparkles className="w-4 h-4" />
+                  <GraduationCap className="w-4 h-4" />
                 </span>
                 <span className="font-medium text-[#0F2747]">
                   {isVi ? "Peer Tutors tận tâm" : "Friendly Peer Tutors"}

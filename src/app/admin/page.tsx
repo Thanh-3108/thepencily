@@ -680,7 +680,6 @@ export default function AdminPage() {
               onClick={() => handleKeyLogin("pencily_founder_admin_2026")}
               className="text-[#4F7ECB] hover:text-[#0F2747] font-bold hover:underline cursor-pointer flex items-center gap-1"
             >
-              <Sparkles className="w-3.5 h-3.5" />
               <span>{isVi ? "Xác thực nhanh: Huỳnh Công Thành (Founder)" : "Quick Auth: Founder"}</span>
             </button>
 

@@ -826,7 +826,7 @@ export function SchoolhouseDashboard({
         {enrolledSessionsCount === 0 && (
           <div className="p-2 sm:p-2.5 bg-[#FAF7EE] border-t-2 border-slate-300 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 shrink-0">
             <div className="flex items-center gap-2 text-xs text-[#0F2747]">
-              <Sparkles className="w-4 h-4 text-[#EAB308] shrink-0" />
+              <CalendarDays className="w-4 h-4 text-[#EAB308] shrink-0" />
               <span className="font-medium">
                 {language === "vi"
                   ? "Bạn chưa giữ chỗ buổi học nào trong tuần này."

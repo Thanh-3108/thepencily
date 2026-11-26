@@ -57,7 +57,7 @@ export function ReferFriendModal({ isOpen, onClose }: ReferFriendModalProps) {
         <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-sm bg-amber-100 border-2 border-amber-500 text-amber-800 flex items-center justify-center font-black">
-              <Sparkles className="w-5 h-5 text-amber-600" />
+              <MessageSquare className="w-5 h-5 text-amber-600" />
             </div>
             <div>
               <h3 className="font-poppins font-black text-lg text-[#0F2747]">
