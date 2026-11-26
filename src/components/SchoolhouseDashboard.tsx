@@ -19,7 +19,6 @@ import {
   Users,
   Compass,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 
 interface SchoolhouseDashboardProps {

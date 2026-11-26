@@ -149,10 +149,10 @@ export function SchoolhouseHeaderMenu({
             setDropdownOpen(false);
             setCalendarOpen(false);
           }}
-          className={`relative h-9 w-9 flex items-center justify-center rounded-md transition-all border-2 cursor-pointer shadow-2xs ${
+          className={`relative h-9 w-9 flex items-center justify-center rounded-full transition-all border cursor-pointer shadow-pencily-soft ${
             bellOpen
-              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-              : "bg-white hover:bg-slate-50 text-[#0F2747] border-slate-300 hover:border-[#0F2747]"
+              ? "bg-[#0F2747] text-white border-[#0F2747] shadow-sm"
+              : "bg-white hover:bg-[#FAF6EC] text-[#0F2747] border-[#E6DEC8] hover:border-[#0F2747]/40"
           }`}
           title={language === "vi" ? "Thông báo hệ thống" : "Notifications"}
           aria-expanded={bellOpen}
@@ -166,7 +166,7 @@ export function SchoolhouseHeaderMenu({
         </button>
 
         {bellOpen && (
-          <div className="absolute right-0 mt-2 w-72 sm:w-84 bg-white rounded-md border-2 border-[#0F2747] shadow-xl z-50 py-3 px-4 animate-fadeIn text-[#0F2747]">
+          <div className="absolute right-0 mt-2 w-72 sm:w-84 bg-white rounded-2xl border border-[#E6DEC8] shadow-pencily-soft z-50 py-3 px-4 animate-fade-quick text-[#0F2747]">
             {/* Popover Header */}
             <div className="flex items-center justify-between pb-2 border-b-2 border-slate-100 mb-2.5">
               <div className="flex items-center gap-1.5">

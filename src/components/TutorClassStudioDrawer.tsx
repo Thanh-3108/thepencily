@@ -101,7 +101,7 @@ function StudioForm({ onClose, tutorName, initial, onSubmitCreate }: Props) {
     }
   }
 
-  const field = "mt-1 block w-full border-2 border-slate-300 rounded-sm p-2.5 bg-white text-sm focus:border-[#0F2747] outline-none transition";
+  const field = "mt-1.5 block w-full border border-[#E6DEC8] rounded-2xl px-3.5 py-2.5 bg-white text-sm text-[#0F2747] focus:border-[#0F2747] focus:ring-2 focus:ring-[#0F2747]/10 outline-none transition";
 
   return (
     <aside
@@ -110,9 +110,9 @@ function StudioForm({ onClose, tutorName, initial, onSubmitCreate }: Props) {
       role="dialog"
       aria-modal="false"
       aria-label="Soạn giáo án và mở lớp học"
-      className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-[#FFFDF9] text-[#0F2747] border-l-2 border-slate-300 shadow-2xl overflow-y-auto animate-drawer"
+      className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-[#FFFDF9] text-[#0F2747] border-l border-[#E6DEC8] shadow-2xl overflow-y-auto animate-drawer rounded-l-3xl"
     >
-      <header className="sticky top-0 bg-white border-b-2 border-slate-200 p-5 flex items-center justify-between z-10">
+      <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#E6DEC8] p-5 flex items-center justify-between z-10">
         <div>
           <h2 className="text-xl font-bold font-poppins text-[#0F2747]">Tutor Studio</h2>
           <p className="text-xs text-slate-500 mt-0.5">{tutorName} · Soạn đề cương & Mở phòng học</p>
@@ -138,20 +138,63 @@ function StudioForm({ onClose, tutorName, initial, onSubmitCreate }: Props) {
           </div>
         )}
 
-        <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider">
-          Chương trình
-          <select
-            className={field}
-            value={draft.programType}
-            onChange={(e) => change("programType", e.target.value as ProgramType)}
-          >
-            {Object.entries(PROGRAM_LABELS).map(([key, label]) => (
-              <option key={key} value={key}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="rounded-2xl border border-[#E6DEC8] bg-white p-4 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-bold text-[#0F2747] uppercase tracking-wider">Danh mục lớp học</span>
+            <span className="text-[11px] font-semibold text-[#64748B]">Chọn mô hình giảng dạy</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => change("programType", "flagship")}
+              className="rounded-2xl border border-[#0F2747] bg-[#0F2747] text-white shadow-sm px-3.5 py-2.5 text-left transition"
+            >
+              <div className="text-xs font-bold uppercase tracking-wider">Flagship</div>
+              <div className="text-[11px] mt-0.5 text-white/80">
+                SAT &amp; IELTS chuyên sâu
+              </div>
+            </button>
+            <button
+              type="button"
+              disabled
+              className="rounded-2xl border border-[#E6DEC8] bg-[#FAF6EC] px-3.5 py-2.5 text-left text-[#64748B] opacity-75 cursor-not-allowed"
+            >
+              <div className="text-xs font-bold uppercase tracking-wider">Peer</div>
+              <div className="text-[11px] mt-0.5">Chỉnh sửa sau</div>
+            </button>
+          </div>
+          <div className="pt-1">
+            <span className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider mb-2">Loại lớp Flagship</span>
+            <div className="grid grid-cols-2 gap-2.5">
+              {(
+                [
+                  { id: "sat", label: "Lớp SAT", desc: "Digital SAT Reading, Writing & Math" },
+                  { id: "ielts", label: "Lớp IELTS", desc: "Academic 4 kỹ năng & Speaking" },
+                ] as const
+              ).map((item) => {
+                const active = draft.category === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      change("programType", "flagship");
+                      change("category", item.id);
+                    }}
+                    className={`rounded-2xl border px-3.5 py-2.5 text-left transition ${
+                      active
+                        ? "border-[#D97706] bg-[#FFFBEB] text-[#0F2747] ring-2 ring-[#F59E0B]/25"
+                        : "border-[#E6DEC8] bg-white text-[#0F2747] hover:bg-[#FFFDF8]"
+                    }`}
+                  >
+                    <div className="text-sm font-bold">{item.label}</div>
+                    <div className="text-[11px] text-[#64748B] mt-0.5">{item.desc}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
         <label className="block text-xs font-bold text-[#0F2747] uppercase tracking-wider">
           Tên lớp / Chuyên đề *

@@ -50,7 +50,7 @@ export function DashboardLeaderboard({ onGoToClasses, onGoToVideos }: DashboardL
   return (
     <div className="w-full space-y-6 animate-fadeIn select-none">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E6DEC8]">
         <div>
           <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
             {language === "vi" ? "Bảng Xếp Hạng Học Tập" : "Academic Leaderboard"}
@@ -63,7 +63,7 @@ export function DashboardLeaderboard({ onGoToClasses, onGoToVideos }: DashboardL
         </div>
 
         {/* Timeframe Filter Buttons */}
-        <div className="flex items-center gap-1.5 p-1 rounded-sm bg-white border-2 border-slate-300 shadow-2xs self-start md:self-auto">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-white border border-[#E6DEC8] shadow-pencily-soft self-start md:self-auto">
           <button
             onClick={() => setTimeframe("week")}
             className={`px-3 py-1.5 rounded-xs text-xs font-bold transition cursor-pointer ${
