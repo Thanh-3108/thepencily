@@ -36,27 +36,66 @@ export function PencilyScrollReveal({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // If user prefers reduced motion, show immediately
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsVisible(true);
+    const el = ref.current;
+    if (!el || typeof window === "undefined") return;
+
+    // If user prefers reduced motion, or page has a URL hash, or element is near/above viewport, show cleanly
+    const reveal = () => setIsVisible(true);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      reveal();
       return;
     }
 
+    const checkPosition = () => {
+      const rect = el.getBoundingClientRect();
+      // Reveal if within or already scrolled past the viewport
+      if (rect.top <= window.innerHeight * 1.15) {
+        reveal();
+        return true;
+      }
+      return false;
+    };
+
+    if (checkPosition()) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting || entry.boundingClientRect.top <= window.innerHeight) {
+          reveal();
+          observer.unobserve(el);
+        }
       },
       {
-        threshold,
-        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.01,
+        rootMargin: "120px 0px 120px 0px",
       }
     );
 
-    const el = ref.current;
-    if (el) observer.observe(el);
+    observer.observe(el);
+
+    const handleScrollOrHash = () => {
+      if (checkPosition()) {
+        observer.unobserve(el);
+        window.removeEventListener("scroll", handleScrollOrHash);
+        window.removeEventListener("hashchange", handleHashJump);
+      }
+    };
+
+    // When user clicks an anchor link (like #stories or #about), re-check after smooth scroll frames
+    const handleHashJump = () => {
+      [50, 250, 600, 1000].forEach((ms) => {
+        window.setTimeout(handleScrollOrHash, ms);
+      });
+    };
+
+    window.addEventListener("scroll", handleScrollOrHash, { passive: true });
+    window.addEventListener("hashchange", handleHashJump);
 
     return () => {
-      if (el) observer.unobserve(el);
+      observer.unobserve(el);
+      window.removeEventListener("scroll", handleScrollOrHash);
+      window.removeEventListener("hashchange", handleHashJump);
     };
   }, [threshold]);
 
@@ -89,14 +128,13 @@ export function PencilyScrollReveal({
         animationDelay: `${delay}ms`,
         animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
         animationFillMode: "both",
-        // Pass custom target rotation via CSS custom property
         ...(rotate ? ({ "--pencily-rotate": rotate, "--stamp-rotate": rotate } as any) : {}),
       }
     : {
         ...style,
-        opacity: 0,
-        pointerEvents: "none",
-        visibility: "hidden",
+        opacity: 0.02,
+        transform: "translateY(12px)",
+        transition: "opacity 0.25s ease-out, transform 0.25s ease-out",
       };
 
   return (

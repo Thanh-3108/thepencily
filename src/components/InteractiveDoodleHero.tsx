@@ -2,12 +2,16 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Sparkles } from "lucide-react";
+import { usePencily } from "@/context/PencilyContext";
 
 export function InteractiveDoodleHero() {
+  const { language } = usePencily();
+  const isVi = language === "vi";
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasDrawn, setHasDrawn] = useState(false);
 
   // Physics states stored in refs for animation loop (immune to refresh rate variations)
   const physicsRef = useRef({
@@ -297,6 +301,7 @@ export function InteractiveDoodleHero() {
 
     const p = physicsRef.current;
     p.isDrawing = true;
+    setHasDrawn(true);
     p.dashAccumulator = 0;
     p.lastMoveTime = performance.now();
     p.targetX = x;
@@ -338,6 +343,7 @@ export function InteractiveDoodleHero() {
     p.dashAccumulator = 0;
     p.lastMoveTime = 0;
     p.isDrawing = false;
+    setHasDrawn(false);
   };
 
   return (
@@ -357,7 +363,13 @@ export function InteractiveDoodleHero() {
       }}
       className="relative w-full max-w-[540px] aspect-[540/380] select-none cursor-crosshair group touch-none mx-auto"
     >
-      {/* 1. FLAWLESS, ELEGANT ARCHITECTURAL OUTLINE SHAPES (No distortion, pure geometry) */}
+      {/* Ambient Sunlit Paper Glow Halo behind Artwork */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-6 rounded-full bg-gradient-to-tr from-[#FFC83D]/18 via-[#FFFDF8]/60 to-[#4F7ECB]/15 blur-2xl pointer-events-none -z-10"
+      />
+
+      {/* 1. FLAWLESS, ELEGANT ARCHITECTURAL OUTLINE SHAPES & SPARKLES */}
       <svg
         viewBox="0 0 540 380"
         fill="none"
@@ -371,13 +383,22 @@ export function InteractiveDoodleHero() {
             transition: "transform 0.1s ease-out",
           }}
         >
+          {/* Warm pastel circle fill highlight */}
+          <circle
+            cx="285"
+            cy="195"
+            r="125"
+            fill="#FFFDF8"
+            fillOpacity="0.65"
+          />
+
           {/* Main Sun Circle (Clean, perfectly circular dashed outline with steady slow rotation) */}
           <circle
             cx="285"
             cy="195"
             r="125"
             stroke="#DEB841"
-            strokeWidth="1.5"
+            strokeWidth="1.6"
             strokeDasharray="6 6"
             style={{
               transformOrigin: "285px 195px",
@@ -399,6 +420,18 @@ export function InteractiveDoodleHero() {
               transformOrigin: "285px 195px",
               transform: `rotate(${-renderState.rotationAngle * 0.7}deg)`,
             }}
+          />
+
+          {/* 4-point Star Sparkles (Stationery charm, NO circle dots) */}
+          <path
+            d="M 118 82 L 122 92 L 132 96 L 122 100 L 118 110 L 114 100 L 104 96 L 114 92 Z"
+            fill="#FFC83D"
+            fillOpacity="0.85"
+          />
+          <path
+            d="M 444 275 L 447 282 L 454 285 L 447 288 L 444 295 L 441 288 L 434 285 L 441 282 Z"
+            fill="#4F7ECB"
+            fillOpacity="0.7"
           />
         </g>
 
@@ -461,19 +494,27 @@ export function InteractiveDoodleHero() {
         />
       </div>
 
-      {/* 5. MINIMAL ICON-ONLY RESET BUTTON */}
-      <div className="absolute bottom-2 left-3 z-30">
+      {/* 5. FRIENDLY DISCOVERABILITY & RESET PILL */}
+      <div className="absolute bottom-2 left-3 z-30 flex items-center gap-2">
         <button
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             handleResetCanvas();
           }}
-          title="Vẽ lại nét chữ ký"
-          className="w-7 h-7 flex items-center justify-center bg-white/80 hover:bg-white text-[#0F2747] rounded-sm border border-slate-300 hover:border-[#0F2747] shadow-2xs transition active:scale-95 cursor-pointer"
+          title={isVi ? "Vẽ lại nét chữ ký" : "Reset canvas"}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/90 hover:bg-white text-[#0F2747] rounded-full border border-[#E5DEC9] hover:border-[#0F2747]/30 shadow-xs transition active:scale-95 cursor-pointer text-[11px] font-semibold"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3 h-3 text-[#4F7ECB]" />
+          <span>{isVi ? "Làm mới nét vẽ" : "Reset sketch"}</span>
         </button>
+
+        {!hasDrawn && (
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF6DC]/95 border border-[#F5D67B] text-[#7A5400] text-[11px] font-medium shadow-2xs pointer-events-none">
+            <Sparkles className="w-3 h-3 text-amber-600 shrink-0" />
+            <span>{isVi ? "Nhấn giữ chuột để vẽ thử!" : "Drag to draw!"}</span>
+          </div>
+        )}
       </div>
     </div>
   );

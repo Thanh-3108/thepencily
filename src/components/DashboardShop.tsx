@@ -253,59 +253,54 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
   return (
     <div className="w-full space-y-6 animate-fadeIn">
       {/* Standard Tab Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E6DEC8]">
         <div>
-          <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-            {isVi ? "Cửa Hàng Pencily Points" : "Pencily Points Shop"}
+          <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
+            {isVi ? "Cửa hàng Pencily Points" : "Pencily Points Shop"}
           </h2>
-          <p className="text-xs sm:text-sm text-[#475569] mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#526277] mt-1">
             {isVi
-              ? "Đổi điểm tích lũy học tập thành đặc quyền học thuật, tài liệu và vé kèm 1-1"
-              : "Redeem study points for academic perks, verified vaults, and 1-on-1 passes"}
+              ? "Đổi điểm tích lũy học tập thành tài liệu chuyên sâu, đề thi và buổi kèm 1-1"
+              : "Redeem study points for curated handbooks, mock exams, and 1-on-1 passes"}
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="px-3.5 py-1.5 rounded-sm bg-white border-2 border-slate-300 text-xs font-bold text-[#0F2747] flex items-center gap-2 shadow-2xs">
-            <span className="text-slate-500">{isVi ? "Số dư:" : "Balance:"}</span>
-            <span className="font-mono font-black text-amber-600">{user.points} PP</span>
+          <div className="px-4 py-2 rounded-full bg-white border border-[#E6DEC8] text-xs font-semibold text-[#0F2747] flex items-center gap-2 shadow-2xs">
+            <span className="text-[#6B7A90]">{isVi ? "Số dư:" : "Balance:"}</span>
+            <span className="font-bold text-amber-600">{user.points} PP</span>
           </div>
         </div>
       </div>
 
-      {/* 1. HERO BANNER */}
-      <div className="relative bg-[#0F2747] text-white rounded-md border-2 border-[#0F2747] p-5 sm:p-7 overflow-hidden shadow-sm">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#FFF9EF_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFC83D]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO BANNER (Clean, Warm Navy & Sunlit Glow — NO Proofcheck Slop) */}
+      <div className="relative bg-[#0F2747] text-white rounded-3xl p-6 sm:p-8 overflow-hidden shadow-pencily-soft">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFC83D]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-[#4F7ECB]/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#0F2747] bg-[#FFC83D] px-2 py-0.5 rounded-xs">
-                {isVi ? "CỬA HÀNG PP" : "PP SHOP"}
-              </span>
-              <span className="text-[10px] font-bold text-amber-200 bg-amber-950/40 px-2 py-0.5 rounded-xs border border-amber-400/30">
-                {isVi ? "BẢN MẪU PROOFCHECK" : "PROOFCHECK TEMPLATE"}
-              </span>
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#FFC83D] text-[#0F2747] text-[11px] font-bold">
+              {isVi ? "Đặc quyền học thuật" : "Academic Rewards"}
             </div>
 
-            <h2 className="font-poppins font-black text-xl sm:text-2xl lg:text-3xl text-white tracking-tight leading-tight">
-              {isVi ? "Cửa Hàng Pencily Points" : "The Pencily Points Shop"}
-              <span className="block text-[#FFC83D] text-lg sm:text-xl lg:text-2xl mt-0.5 font-bold">
+            <h2 className="font-poppins font-bold text-xl sm:text-2xl lg:text-3xl text-white tracking-tight leading-tight">
+              {isVi ? "Cửa hàng Pencily Points" : "The Pencily Points Shop"}
+              <span className="block text-[#FFC83D] text-base sm:text-lg lg:text-xl mt-1 font-medium">
                 {isVi ? "Đổi nỗ lực học tập thành đặc quyền học thuật" : "Turn study effort into academic rewards"}
               </span>
             </h2>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               {isVi
-                ? "Tích lũy điểm PP qua các buổi học, chia sẻ ghi chú và tương tác cộng đồng để mở khóa tài liệu học thuật độc quyền, kho đề thi chuyên và các suất kèm 1-1 cùng Peer Tutor."
-                : "Earn PP by joining study pods, sharing notes, and engaging with peers to unlock exclusive academic study vaults, mock exams, and 1-on-1 tutoring passes."}
+                ? "Tích lũy điểm PP qua các buổi học, chia sẻ ghi chú và tương tác cộng đồng để mở khóa sổ tay học tập, bộ đề trường chuyên và buổi kèm 1-1."
+                : "Earn PP by joining study pods, sharing notes, and mentoring peers to unlock curated handbooks, exams, and 1-on-1 passes."}
             </p>
 
             <div className="flex flex-wrap items-center gap-2.5 pt-1">
               <button
                 type="button"
                 onClick={() => setIsHowToEarnOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-white/10 hover:bg-white/20 text-white border-2 border-white/20 font-bold text-xs transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5 text-[#FFC83D]" />
                 <span>{isVi ? "Cách kiếm thêm PP" : "How to Earn PP"}</span>
@@ -314,7 +309,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
               <button
                 type="button"
                 onClick={() => setIsRedeemedHistoryOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#FFC83D] hover:bg-[#f3bd30] text-[#0F2747] font-bold text-xs transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFC83D] hover:bg-[#f3bd30] text-[#0F2747] font-semibold text-xs transition cursor-pointer"
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
                 <span>{isVi ? `Đã đổi (${redeemedIds.length})` : `Redeemed (${redeemedIds.length})`}</span>
@@ -323,18 +318,18 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
           </div>
 
           {/* Right: Balance Card */}
-          <div className="w-full lg:w-auto shrink-0 bg-white/95 text-[#0F2747] rounded-sm border-2 border-[#FFC83D] p-4 shadow-md min-w-[240px]">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-              {isVi ? "Số dư khả dụng của bạn" : "Your Available Balance"}
+          <div className="w-full lg:w-auto shrink-0 bg-white text-[#0F2747] rounded-2xl border border-[#F5D67B] p-5 shadow-md min-w-[235px]">
+            <div className="text-xs font-medium text-[#6B7A90] mb-1">
+              {isVi ? "Số dư khả dụng" : "Your Available Balance"}
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="font-poppins font-black text-3xl text-[#0F2747]">
+              <span className="font-poppins font-bold text-3xl text-[#0F2747]">
                 {user.points.toLocaleString(isVi ? "vi-VN" : "en-US")}
               </span>
-              <span className="font-bold text-sm text-amber-700">PP</span>
+              <span className="font-bold text-sm text-amber-600">PP</span>
             </div>
-            <div className="mt-3 pt-3 border-t-2 border-slate-200 flex items-center justify-between text-xs">
-              <span className="text-slate-500 font-semibold">{isVi ? "Vật phẩm đã đổi:" : "Items Redeemed:"}</span>
+            <div className="mt-3 pt-3 border-t border-[#ECE4CE] flex items-center justify-between text-xs">
+              <span className="text-[#6B7A90]">{isVi ? "Vật phẩm đã đổi:" : "Items Redeemed:"}</span>
               <span className="font-bold text-[#0F2747]">{redeemedIds.length}</span>
             </div>
           </div>
@@ -342,36 +337,36 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
       </div>
 
       {/* 2. PP COMMUNITY VALUE BANNER */}
-      <div className="p-3 bg-amber-50/80 border-2 border-amber-300 rounded-sm text-xs text-amber-950 flex items-start gap-2.5 shadow-2xs">
-        <Award className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+      <div className="p-4 bg-[#FFF6DC]/80 border border-[#F5D67B]/80 rounded-2xl text-xs sm:text-sm text-amber-950 flex items-start gap-3">
+        <Award className="w-4.5 h-4.5 text-amber-600 shrink-0 mt-0.5" />
         <div className="leading-relaxed">
-          <span className="font-bold">
-            {isVi ? "Cơ chế đổi điểm Pencily Points (PP):" : "Pencily Points (PP) Rewards System:"}
+          <span className="font-semibold">
+            {isVi ? "Cơ chế Pencily Points (PP):" : "Pencily Points (PP) System:"}
           </span>{" "}
           {isVi
-            ? "PP là điểm thưởng vinh danh cống hiến học tập phi lợi nhuận. Tích lũy PP qua mỗi phút học tập hoặc host lớp kèm cặp để đổi các đặc quyền, sổ tay tài liệu và đề thi trường chuyên."
-            : "PP rewards authentic peer-learning contributions. Earn PP during verified session attendance or hosting classes to unlock curated study handbooks, mock exams, and community privileges."}
+            ? "PP ghi nhận đóng góp học tập phi lợi nhuận của bạn qua mỗi buổi tham gia hoặc giảng dạy để đổi đặc quyền, tài liệu và đề thi chọn lọc."
+            : "PP recognizes your active learning and tutoring contributions to unlock curated handbooks and academic privileges."}
         </div>
       </div>
 
       {/* 3. CONTROL & SEARCH BAR */}
-      <div className="bg-white rounded-sm border-2 border-slate-300 p-3 sm:p-4 shadow-2xs space-y-3">
+      <div className="bg-white rounded-2xl border border-[#E6DEC8] p-4 shadow-2xs space-y-3">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           {/* Search Box */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isVi ? "Tìm tài liệu, đề thi, vé kèm 1-1..." : "Search materials, exams, passes..."}
-              className="w-full pl-9 pr-8 py-2 bg-slate-50 border-2 border-slate-200 focus:border-[#0F2747] focus:bg-white rounded-sm text-xs text-[#0F2747] placeholder:text-slate-400 focus:outline-none transition"
+              className="w-full pl-10 pr-8 py-2.5 bg-[#FAF7EE] border border-[#E6DEC8] focus:border-[#4F7ECB] focus:bg-white rounded-full text-xs text-[#0F2747] placeholder:text-slate-400 focus:outline-none transition"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -380,39 +375,37 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
 
           {/* Quick Filters */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Affordable Toggle */}
             <button
               type="button"
               onClick={() => setOnlyAffordable(!onlyAffordable)}
-              className={`px-3 py-2 rounded-sm border-2 text-xs font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
+              className={`px-4 py-2 rounded-full border text-xs font-semibold transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
                 onlyAffordable
                   ? "bg-[#0F2747] text-white border-[#0F2747]"
-                  : "bg-white text-slate-700 border-slate-300 hover:border-[#0F2747]"
+                  : "bg-white text-[#526277] border-[#E6DEC8] hover:border-[#0F2747]/40"
               }`}
             >
               <Check className="w-3.5 h-3.5" />
               <span>{isVi ? "Đủ điểm đổi" : "Affordable"}</span>
             </button>
 
-            {/* Sort Dropdown */}
             <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                className="appearance-none pl-3 pr-7 py-2 bg-white border-2 border-slate-300 focus:border-[#0F2747] rounded-sm text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+                className="appearance-none pl-4 pr-8 py-2 bg-white border border-[#E6DEC8] focus:border-[#4F7ECB] rounded-full text-xs font-semibold text-[#0F2747] focus:outline-none cursor-pointer"
               >
                 <option value="featured">{isVi ? "Nổi bật" : "Featured"}</option>
                 <option value="price-asc">{isVi ? "PP: Thấp → Cao" : "PP: Low to High"}</option>
                 <option value="price-desc">{isVi ? "PP: Cao → Thấp" : "PP: High to Low"}</option>
                 <option value="title">{isVi ? "Tên A-Z" : "Name A-Z"}</option>
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
         </div>
 
         {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 scrollbar-none">
+        <div className="flex flex-wrap items-center gap-2 pt-1 pb-0.5">
           {categories.map((cat) => {
             const isSelected = activeCategory === cat.id;
             return (
@@ -420,16 +413,16 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap transition cursor-pointer border-2 ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer ${
                   isSelected
-                    ? "bg-[#0F2747] text-white border-[#0F2747]"
-                    : "bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-400"
+                    ? "bg-[#0F2747] text-white shadow-2xs"
+                    : "bg-[#FAF7EE] text-[#526277] hover:bg-[#FFF6DC] hover:text-[#0F2747]"
                 }`}
               >
                 <span>{isVi ? cat.labelVi : cat.labelEn}</span>
                 <span
-                  className={`ml-1.5 text-[10px] px-1.5 py-0.2 rounded-xs ${
-                    isSelected ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                  className={`ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full ${
+                    isSelected ? "bg-white/20 text-white" : "bg-white text-[#526277]"
                   }`}
                 >
                   {cat.count}
@@ -442,14 +435,14 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
 
       {/* 4. ITEMS GRID */}
       {filteredItems.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-sm border-2 border-slate-300 p-6 space-y-3">
-          <div className="w-12 h-12 mx-auto rounded-sm bg-slate-100 border-2 border-slate-300 text-slate-400 flex items-center justify-center font-bold text-base">
+        <div className="text-center py-16 bg-white rounded-3xl border border-[#E6DEC8] p-6 space-y-3 shadow-2xs">
+          <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF6DC] text-amber-700 flex items-center justify-center font-bold text-base">
             PP
           </div>
-          <h3 className="font-poppins font-black text-base text-[#0F2747]">
+          <h3 className="font-poppins font-bold text-base text-[#0F2747]">
             {isVi ? "Không tìm thấy vật phẩm phù hợp" : "No Matching Items Found"}
           </h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          <p className="text-xs text-[#6B7A90] max-w-sm mx-auto">
             {isVi
               ? "Hãy thử thay đổi từ khóa tìm kiếm hoặc chọn danh mục khác để xem thêm vật phẩm."
               : "Try adjusting your search query or selecting a different category."}
@@ -461,13 +454,13 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
               setSearchQuery("");
               setOnlyAffordable(false);
             }}
-            className="px-4 py-2 rounded-sm bg-[#0F2747] text-white font-bold text-xs transition cursor-pointer"
+            className="px-5 py-2 rounded-full bg-[#0F2747] text-white font-semibold text-xs transition cursor-pointer"
           >
             {isVi ? "Đặt lại bộ lọc" : "Reset Filters"}
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredItems.map((item) => {
             const isRedeemed = redeemedIds.includes(item.id);
             const canAfford = user.points >= item.cost;
@@ -476,32 +469,32 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-sm border-2 border-slate-300 hover:border-[#0F2747] transition flex flex-col justify-between shadow-2xs group"
+                className="bg-white rounded-3xl border border-[#E6DEC8] hover:border-[#4F7ECB]/40 shadow-pencily-soft shadow-pencily-hover transition-all flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
               >
-                <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col">
+                <div className="p-5 sm:p-6 space-y-3 flex-1 flex flex-col">
                   {/* Card Top: Category & Badge */}
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-bold text-[#4F7ECB]">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-semibold text-[#3B6FD8] whitespace-nowrap">
                       {isVi ? item.categoryLabelVi : item.categoryLabelEn}
                     </span>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-xs">
+                    <span className="text-[11px] font-semibold text-amber-800 bg-[#FFF6DC] px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0">
                       {isVi ? item.badgeTextVi : item.badgeTextEn}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-poppins font-bold text-sm sm:text-base text-[#0F2747] leading-snug line-clamp-2">
+                  <h3 className="font-poppins font-bold text-base text-[#0F2747] leading-snug line-clamp-2">
                     {isVi ? item.titleVi : item.titleEn}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-[#475569] leading-relaxed line-clamp-3 flex-1">
+                  <p className="text-xs text-[#526277] leading-relaxed line-clamp-3 flex-1">
                     {isVi ? item.descriptionVi : item.descriptionEn}
                   </p>
 
                   {/* Fulfillment Type */}
-                  <div className="pt-2 border-t-2 border-slate-100 flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
-                    {item.fulfillmentType === "download" && <Download className="w-3.5 h-3.5 text-blue-600 shrink-0" />}
+                  <div className="pt-2.5 border-t border-[#F0EAE0] flex items-center gap-1.5 text-xs font-medium text-[#6B7A90]">
+                    {item.fulfillmentType === "download" && <Download className="w-3.5 h-3.5 text-[#3B6FD8] shrink-0" />}
                     {item.fulfillmentType === "booking" && <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />}
                     {item.fulfillmentType === "badge" && <Award className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
                     <span className="truncate">{isVi ? item.fulfillmentTextVi : item.fulfillmentTextEn}</span>
@@ -509,12 +502,12 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                 </div>
 
                 {/* Card Footer: Cost & Action */}
-                <div className="p-3.5 bg-[#FAF7F2] border-t-2 border-slate-200 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-6 h-6 rounded-xs bg-amber-100 border border-amber-300 text-amber-900 font-black text-[10px] flex items-center justify-center">
+                <div className="px-5 py-4 bg-[#FAF7EE] border-t border-[#ECE4CE] flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#FFC83D] text-[#0F2747] font-bold text-[10px] flex items-center justify-center">
                       PP
                     </span>
-                    <span className="font-poppins font-black text-base text-[#0F2747]">
+                    <span className="font-poppins font-bold text-base text-[#0F2747]">
                       {item.cost}
                     </span>
                   </div>
@@ -526,7 +519,7 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                         setSelectedReward(item);
                         setIsSuccessModalOpen(true);
                       }}
-                      className="px-3.5 py-1.5 rounded-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-2xs transition active:scale-98 flex items-center gap-1 cursor-pointer"
+                      className="px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>{isVi ? "Đã đổi (Mở)" : "Redeemed"}</span>
@@ -535,13 +528,13 @@ export function DashboardShop({ onSelectTab }: DashboardShopProps) {
                     <button
                       type="button"
                       onClick={() => handleRedeem(item)}
-                      className="px-3.5 py-1.5 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs transition active:scale-98 cursor-pointer"
+                      className="px-4 py-2 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white font-semibold text-xs shadow-2xs transition cursor-pointer"
                     >
                       {isVi ? "Đổi ngay" : "Redeem"}
                     </button>
                   ) : (
                     <div
-                      className="px-3 py-1.5 rounded-sm bg-slate-100 text-slate-400 font-bold text-[11px] border border-slate-200 flex items-center gap-1 cursor-not-allowed"
+                      className="px-3.5 py-1.5 rounded-full bg-white text-slate-400 font-medium text-[11px] border border-[#E6DEC8] flex items-center gap-1 cursor-not-allowed"
                       title={isVi ? `Bạn còn thiếu ${diff} PP` : `Need ${diff} more PP`}
                     >
                       <Lock className="w-3 h-3" />

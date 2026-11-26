@@ -142,14 +142,14 @@ export function DashboardSidebar({
   return (
     <aside
       id="tour-sidebar"
-      className={`h-[100dvh] max-h-[100dvh] sticky top-0 flex flex-col justify-between bg-white/95 backdrop-blur-md text-[#0F2747] border-r-2 border-slate-300 transition-[width] duration-300 ease-in-out z-40 select-none shrink-0 shadow-xs overflow-hidden ${
-        isCollapsed ? "w-[68px]" : "w-64 lg:w-72"
+      className={`h-[100dvh] max-h-[100dvh] sticky top-0 flex flex-col justify-between bg-[#FFFDF9]/95 backdrop-blur-md text-[#0F2747] border-r border-[#E6DEC8] transition-[width] duration-300 ease-in-out z-40 select-none shrink-0 shadow-pencily-soft overflow-hidden ${
+        isCollapsed ? "w-[72px]" : "w-64 lg:w-72"
       }`}
     >
-      {/* TOP SECTION: Header & 2 Distinct Navigation Areas */}
-      <div className={`flex flex-col p-2 space-y-2 flex-1 overflow-y-auto overflow-x-hidden scrollbar-none transition-all ${isCollapsed ? "w-[68px] items-center" : "w-64 lg:w-72"}`}>
-        {/* Brand Header with Instant Top Retract / Collapse Button */}
-        <div className={`h-10 sm:h-11 flex items-center px-1 shrink-0 ${isCollapsed ? "w-full justify-center" : "w-full justify-between"}`}>
+      {/* TOP SECTION: Header & 2 Warm Grouped Navigation Areas */}
+      <div className={`flex flex-col p-3 space-y-4 flex-1 overflow-y-auto overflow-x-hidden scrollbar-none transition-all ${isCollapsed ? "w-[72px] items-center" : "w-64 lg:w-72"}`}>
+        {/* Brand Header */}
+        <div className={`h-11 flex items-center px-1 shrink-0 ${isCollapsed ? "w-full justify-center" : "w-full justify-between"}`}>
           {!isCollapsed ? (
             <>
               <Link
@@ -160,11 +160,10 @@ export function DashboardSidebar({
                 <Logo variant="nav" size="sm" priority />
               </Link>
 
-              {/* Top Quick Actions: Home & Collapse Toggle */}
               <div className="flex items-center gap-1 shrink-0">
                 <Link
                   href="/"
-                  className="text-[#0F2747]/60 hover:text-[#0F2747] p-1.5 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-[#FFF9EF] transition cursor-pointer"
+                  className="text-[#0F2747]/65 hover:text-[#0F2747] p-2 rounded-full hover:bg-[#FFF6DC]/70 transition cursor-pointer"
                   title={language === "vi" ? "Về trang chủ" : "Home"}
                 >
                   <Home className="w-4 h-4" />
@@ -174,7 +173,7 @@ export function DashboardSidebar({
                   type="button"
                   onClick={onToggleCollapse}
                   title={language === "vi" ? "Thu gọn menu" : "Collapse menu"}
-                  className="p-1.5 rounded-sm text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] border-2 border-transparent hover:border-slate-300 transition cursor-pointer flex items-center justify-center"
+                  className="p-2 rounded-full text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF6DC]/70 transition cursor-pointer flex items-center justify-center"
                   aria-label="Collapse sidebar"
                 >
                   <PanelLeftClose className="w-4.5 h-4.5 text-[#0F2747]" />
@@ -182,13 +181,12 @@ export function DashboardSidebar({
               </div>
             </>
           ) : (
-            /* COLLAPSED HEADER: Single centered expand button with pencil branding */
             <div className="w-full flex items-center justify-center">
               <button
                 type="button"
                 onClick={onToggleCollapse}
                 title={language === "vi" ? "Mở rộng menu" : "Expand menu"}
-                className="w-10 h-10 rounded-sm flex items-center justify-center text-[#0F2747] hover:bg-[#FFF9EF] border-2 border-transparent hover:border-slate-300 transition cursor-pointer group"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#0F2747] hover:bg-[#FFF6DC]/70 transition cursor-pointer group"
                 aria-label="Expand sidebar"
               >
                 <PanelLeftOpen className="w-5 h-5 text-[#0F2747] group-hover:scale-110 transition-transform" />
@@ -197,13 +195,10 @@ export function DashboardSidebar({
           )}
         </div>
 
-        {/* ============================================================== */}
-        {/* KHU VỰC 1: HỌC TẬP (Tìm lớp học, Lớp của tôi, Thư viện, Xếp hạng) */}
-        {/* ============================================================== */}
+        {/* KHU VỰC 1: HỌC TẬP */}
         {isCollapsed ? (
-          /* COLLAPSED POD 1: Floating Vertical Capsule */
-          <div className="flex justify-center w-[50px]">
-            <div className="w-11 py-1.5 flex flex-col items-center gap-1.5 rounded-md border-2 border-slate-300 bg-white shadow-2xs">
+          <div className="flex justify-center w-[52px]">
+            <div className="w-12 py-2 flex flex-col items-center gap-1.5 rounded-2xl bg-[#FAF7EE] border border-[#E6DEC8]">
               {learningItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -213,10 +208,10 @@ export function DashboardSidebar({
                     key={item.id}
                     onClick={() => onSelectTab(item.id)}
                     title={label}
-                    className={`w-8 h-8 flex items-center justify-center rounded-sm transition-all duration-150 cursor-pointer ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-150 cursor-pointer ${
                       isActive
-                        ? "bg-[#FFC83D]/35 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
-                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] border-2 border-transparent hover:border-slate-300"
+                        ? "bg-[#FFC83D]/40 text-[#0F2747] shadow-2xs"
+                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-white"
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
@@ -226,12 +221,11 @@ export function DashboardSidebar({
             </div>
           </div>
         ) : (
-          /* EXPANDED SECTION 1: Enclosed Architectural Card */
-          <div className="rounded-md border-2 border-slate-300 bg-white p-1.5 shadow-2xs">
-            <div className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-500 border-b border-slate-100 mb-1">
-              {language === "vi" ? "Học Tập & Lớp Học" : "Learning & Classes"}
+          <div className="space-y-1">
+            <div className="px-3 py-1 text-[11px] font-semibold text-[#6B7A90]">
+              {language === "vi" ? "Học tập & Lớp học" : "Learning & Classes"}
             </div>
-            <nav className="space-y-0.5">
+            <nav className="space-y-1">
               {learningItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -240,20 +234,18 @@ export function DashboardSidebar({
                   <button
                     key={item.id}
                     onClick={() => onSelectTab(item.id)}
-                    className={`w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 ${
+                    className={`w-full min-h-[40px] py-2 flex items-center rounded-xl transition-all duration-150 cursor-pointer px-3 gap-3 ${
                       isActive
-                        ? "bg-[#FFC83D]/30 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
-                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
+                        ? "bg-[#FFF6DC] text-[#0F2747] font-semibold border border-[#F5D67B]/70 shadow-2xs"
+                        : "text-[#0F2747]/75 hover:text-[#0F2747] hover:bg-[#FAF7EE] font-medium"
                     }`}
                   >
-                    <div className="w-4.5 h-4.5 flex items-center justify-center shrink-0">
-                      <Icon
-                        className={`w-4 h-4 transition-transform ${
-                          isActive ? "text-[#0F2747]" : "text-[#0F2747]/60"
-                        }`}
-                      />
-                    </div>
-                    <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 ${
+                        isActive ? "text-[#0F2747]" : "text-[#0F2747]/55"
+                      }`}
+                    />
+                    <span className="text-xs sm:text-[13px] whitespace-nowrap truncate">
                       {label}
                     </span>
                   </button>
@@ -263,13 +255,10 @@ export function DashboardSidebar({
           </div>
         )}
 
-        {/* ============================================================== */}
-        {/* KHU VỰC 2: KHU VỰC CÒN LẠI (Diễn đàn, Dạy kèm, Shop, Hồ sơ) */}
-        {/* ============================================================== */}
+        {/* KHU VỰC 2: PHÁT TRIỂN & CỘNG ĐỒNG */}
         {isCollapsed ? (
-          /* COLLAPSED POD 2: Floating Vertical Capsule */
-          <div className="flex justify-center w-[50px]">
-            <div className="w-11 py-1.5 flex flex-col items-center gap-1.5 rounded-md border-2 border-slate-300 bg-white shadow-2xs">
+          <div className="flex justify-center w-[52px]">
+            <div className="w-12 py-2 flex flex-col items-center gap-1.5 rounded-2xl bg-[#FAF7EE] border border-[#E6DEC8]">
               {secondaryItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.isTab && activeTab === item.id;
@@ -281,7 +270,7 @@ export function DashboardSidebar({
                       key={item.id}
                       href={item.href}
                       title={label}
-                      className="w-8 h-8 flex items-center justify-center rounded-sm transition-all duration-150 cursor-pointer text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] border-2 border-transparent hover:border-slate-300"
+                      className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-150 cursor-pointer text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-white"
                     >
                       <Icon className="w-4 h-4 shrink-0" />
                     </Link>
@@ -295,10 +284,10 @@ export function DashboardSidebar({
                       if (item.isTab) onSelectTab(item.id as DashboardTab);
                     }}
                     title={label}
-                    className={`w-8 h-8 flex items-center justify-center rounded-sm transition-all duration-150 cursor-pointer ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-150 cursor-pointer ${
                       isActive
-                        ? "bg-[#FFC83D]/35 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
-                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] border-2 border-transparent hover:border-slate-300"
+                        ? "bg-[#FFC83D]/40 text-[#0F2747] shadow-2xs"
+                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-white"
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
@@ -308,12 +297,11 @@ export function DashboardSidebar({
             </div>
           </div>
         ) : (
-          /* EXPANDED SECTION 2: Enclosed Architectural Card */
-          <div className="rounded-md border-2 border-slate-300 bg-white p-1.5 shadow-2xs">
-            <div className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-500 border-b border-slate-100 mb-1">
-              {language === "vi" ? "Phát Triển & Cộng Đồng" : "Tutoring & Community"}
+          <div className="space-y-1">
+            <div className="px-3 py-1 text-[11px] font-semibold text-[#6B7A90]">
+              {language === "vi" ? "Phát triển & Đặc quyền" : "Tutoring & Perks"}
             </div>
-            <nav className="space-y-0.5">
+            <nav className="space-y-1">
               {secondaryItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.isTab && activeTab === item.id;
@@ -324,12 +312,10 @@ export function DashboardSidebar({
                     <Link
                       key={item.id}
                       href={item.href}
-                      className="w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
+                      className="w-full min-h-[40px] py-2 flex items-center rounded-xl transition-all duration-150 cursor-pointer px-3 gap-3 text-[#0F2747]/75 hover:text-[#0F2747] hover:bg-[#FAF7EE] font-medium"
                     >
-                      <div className="w-4.5 h-4.5 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4 text-[#0F2747]/60" />
-                      </div>
-                      <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
+                      <Icon className="w-4 h-4 shrink-0 text-[#0F2747]/55" />
+                      <span className="text-xs sm:text-[13px] whitespace-nowrap truncate">
                         {label}
                       </span>
                     </Link>
@@ -342,20 +328,18 @@ export function DashboardSidebar({
                     onClick={() => {
                       if (item.isTab) onSelectTab(item.id as DashboardTab);
                     }}
-                    className={`w-full min-h-[36px] py-1.5 flex items-center rounded-sm transition-colors duration-150 cursor-pointer px-2.5 gap-2.5 ${
+                    className={`w-full min-h-[40px] py-2 flex items-center rounded-xl transition-all duration-150 cursor-pointer px-3 gap-3 ${
                       isActive
-                        ? "bg-[#FFC83D]/30 text-[#0F2747] font-bold border-2 border-[#0F2747] shadow-2xs"
-                        : "text-[#0F2747]/70 hover:text-[#0F2747] hover:bg-[#FFF9EF] font-medium border-2 border-transparent hover:border-slate-200"
+                        ? "bg-[#FFF6DC] text-[#0F2747] font-semibold border border-[#F5D67B]/70 shadow-2xs"
+                        : "text-[#0F2747]/75 hover:text-[#0F2747] hover:bg-[#FAF7EE] font-medium"
                     }`}
                   >
-                    <div className="w-4.5 h-4.5 flex items-center justify-center shrink-0">
-                      <Icon
-                        className={`w-4 h-4 transition-transform ${
-                          isActive ? "text-[#0F2747]" : "text-[#0F2747]/60"
-                        }`}
-                      />
-                    </div>
-                    <span className="text-xs whitespace-nowrap truncate leading-normal py-0.5">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 ${
+                        isActive ? "text-[#0F2747]" : "text-[#0F2747]/55"
+                      }`}
+                    />
+                    <span className="text-xs sm:text-[13px] whitespace-nowrap truncate">
                       {label}
                     </span>
                   </button>
@@ -366,24 +350,23 @@ export function DashboardSidebar({
         )}
       </div>
 
-      {/* BOTTOM SECTION: User Card & Tour Trigger (Equalized pb-3 on both states) */}
-      <div className={`border-t-2 border-slate-300 p-2 pb-3 shrink-0 bg-white/50 transition-all ${isCollapsed ? "w-[68px] flex flex-col items-center gap-1.5" : "w-64 lg:w-72 space-y-1.5"}`}>
-        {/* Onboarding Tour Walkthrough Button */}
+      {/* BOTTOM SECTION: User Card & Tour Trigger */}
+      <div className={`border-t border-[#E6DEC8] p-3 shrink-0 bg-[#FAF7EE]/60 transition-all ${isCollapsed ? "w-[72px] flex flex-col items-center gap-2" : "w-64 lg:w-72 space-y-2"}`}>
         {onStartTour && (
           <button
             type="button"
             onClick={onStartTour}
             title={language === "vi" ? "Hướng dẫn nhập môn" : "Academy Walkthrough"}
-            className={`rounded-sm flex items-center transition cursor-pointer ${
+            className={`rounded-full flex items-center transition cursor-pointer ${
               isCollapsed
-                ? "w-9 h-9 justify-center p-0 bg-white hover:bg-slate-50 border-2 border-slate-300 text-[#0F2747] shadow-2xs"
-                : "w-full min-h-[36px] py-1 px-2.5 gap-2 bg-amber-50 hover:bg-amber-100/80 border-2 border-amber-300 text-amber-950 font-bold text-xs shadow-2xs"
+                ? "w-10 h-10 justify-center p-0 bg-white hover:bg-[#FFF6DC] border border-[#E6DEC8] text-[#0F2747]"
+                : "w-full min-h-[38px] py-1.5 px-3.5 gap-2 bg-[#FFF6DC] hover:bg-[#FDEBA8] border border-[#F5D67B]/80 text-[#7A5400] font-semibold text-xs"
             }`}
           >
-            <Compass className="w-4 h-4 text-amber-700 shrink-0" />
+            <Compass className="w-4 h-4 text-amber-600 shrink-0" />
             {!isCollapsed && (
-              <span className="truncate leading-normal py-0.5">
-                {language === "vi" ? "Hướng Dẫn Nhập Môn" : "Academy Tour"}
+              <span className="truncate">
+                {language === "vi" ? "Hướng dẫn làm quen" : "Academy Tour"}
               </span>
             )}
           </button>
@@ -393,14 +376,13 @@ export function DashboardSidebar({
         <button
           onClick={() => onSelectTab("profile")}
           title={isCollapsed ? user.name : language === "vi" ? "Hồ sơ học sinh" : "Student Profile"}
-          className={`rounded-sm flex items-center transition-colors duration-150 cursor-pointer overflow-hidden ${
+          className={`rounded-2xl flex items-center transition-all duration-150 cursor-pointer overflow-hidden ${
             isCollapsed
-              ? "w-9 h-9 justify-center p-0 bg-[#FFF9EF] hover:bg-[#FFF4DC] border-2 border-slate-300 shadow-xs"
-              : `w-full h-11 p-1.5 gap-2 ${activeTab === "profile" ? "bg-[#FFC83D]/30 border-2 border-[#0F2747] shadow-2xs" : "bg-[#FFF9EF] hover:bg-[#FFF4DC] border-2 border-slate-300 shadow-xs"}`
+              ? "w-10 h-10 justify-center p-0 bg-white hover:bg-[#FFF6DC] border border-[#E6DEC8]"
+              : `w-full p-2 gap-2.5 ${activeTab === "profile" ? "bg-[#FFF6DC] border border-[#F5D67B]" : "bg-white hover:bg-[#FFFDF8] border border-[#E6DEC8]"}`
           }`}
         >
-          {/* Avatar */}
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-[#FFC83D] text-[#0F2747] font-black text-xs flex items-center justify-center shadow-2xs shrink-0 border-2 border-slate-300 overflow-hidden">
+          <div className="w-8 h-8 rounded-xl bg-[#FFC83D] text-[#0F2747] font-bold text-xs flex items-center justify-center shrink-0 overflow-hidden">
             {user.avatar?.startsWith("http") ? (
               <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
             ) : (
@@ -408,7 +390,6 @@ export function DashboardSidebar({
             )}
           </div>
 
-          {/* User details */}
           <div
             className={`flex flex-col text-left leading-tight overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out ${
               isCollapsed
@@ -416,11 +397,11 @@ export function DashboardSidebar({
                 : "opacity-100 max-w-[170px] translate-x-0"
             }`}
           >
-            <span className="font-bold text-xs text-[#0F2747] truncate">
+            <span className="font-semibold text-xs text-[#0F2747] truncate">
               {user.name}
             </span>
-            <span className="text-[10px] text-[#0F2747]/70 truncate font-medium">
-              <span className="text-[#D97706] font-bold">{user.points} PP</span> • {user.school || "The Pencily"}
+            <span className="text-[11px] text-[#6B7A90] truncate">
+              <span className="text-amber-700 font-semibold">{user.points} PP</span> {user.school ? `— ${user.school}` : ""}
             </span>
           </div>
         </button>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { BookOpen, HelpCircle, ArrowRight, Check, Award } from "lucide-react";
+import { BookOpen, HelpCircle, ArrowRight, Check, Award, Clock, Target } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 import { PencilyScrollReveal } from "@/components/PencilyScrollReveal";
 
@@ -186,113 +186,122 @@ export function HomePrograms() {
     const target = isVi ? prog.targetVi : prog.targetEn;
     const format = isVi ? prog.formatVi : prog.formatEn;
 
-    let cardContainerClasses = "bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs hover:border-[#0F2747] hover:shadow-md transition-all flex flex-col justify-between hover:-translate-y-1.5";
-    let ribbonClasses = "";
-    let badgeClasses = "text-[#0F2747] bg-slate-100 border-slate-300 font-bold";
-    let taglineClasses = "text-[#4F7ECB]";
-    let ctaClasses = "text-[#0F2747] hover:text-[#4F7ECB]";
+    let cardContainerClasses = "bg-white rounded-3xl p-7 sm:p-8 border border-[#E6DEC8] shadow-pencily-soft shadow-pencily-hover transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 h-full";
+    let accentBarClasses = "";
+    let badgeClasses = "text-emerald-800 bg-emerald-100/80";
+    let taglineClasses = "text-emerald-700";
+    let checkBgClasses = "bg-emerald-100 text-emerald-700";
+    let ctaClasses = "text-[#0F2747] hover:text-emerald-700";
 
     if (isIelts) {
-      // IELTS Authentic Red Theme
-      cardContainerClasses = "bg-[#FFF8F8] rounded-md p-6 sm:p-7 border-2 border-red-300 shadow-xs hover:border-red-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5";
-      ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#E01A22] via-red-500 to-rose-600";
-      badgeClasses = "text-red-950 bg-red-100 border-red-300 shadow-2xs font-black";
-      taglineClasses = "text-red-700";
-      ctaClasses = "text-[#0F2747] hover:text-red-700 font-bold";
+      cardContainerClasses = "bg-gradient-to-b from-[#FFF7F7] to-white rounded-3xl p-7 sm:p-8 border border-rose-200/80 shadow-pencily-soft shadow-pencily-hover transition-all duration-300 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5 h-full";
+      accentBarClasses = "absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#E01A22] via-rose-400 to-amber-300";
+      badgeClasses = "text-rose-800 bg-rose-100/80";
+      taglineClasses = "text-rose-700";
+      checkBgClasses = "bg-rose-100 text-rose-600";
+      ctaClasses = "text-[#0F2747] hover:text-rose-700";
     } else if (isSat) {
-      // SAT Authentic Blue Theme
-      cardContainerClasses = "bg-[#F4F9FF] rounded-md p-6 sm:p-7 border-2 border-blue-300 shadow-xs hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5";
-      ribbonClasses = "absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-[#0077C8] via-blue-500 to-[#002D62]";
-      badgeClasses = "text-blue-950 bg-blue-100 border-blue-300 shadow-2xs font-black";
-      taglineClasses = "text-blue-700";
-      ctaClasses = "text-[#0F2747] hover:text-blue-700 font-bold";
+      cardContainerClasses = "bg-gradient-to-b from-[#F3F8FF] to-white rounded-3xl p-7 sm:p-8 border border-sky-200/80 shadow-pencily-soft shadow-pencily-hover transition-all duration-300 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5 h-full";
+      accentBarClasses = "absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#0077C8] via-sky-400 to-[#FFC83D]";
+      badgeClasses = "text-sky-800 bg-sky-100/80";
+      taglineClasses = "text-[#2563EB]";
+      checkBgClasses = "bg-sky-100 text-[#2563EB]";
+      ctaClasses = "text-[#0F2747] hover:text-[#2563EB]";
+    } else if (prog.id === "doubt-mentorship") {
+      cardContainerClasses = "bg-gradient-to-b from-[#FFFBF0] to-white rounded-3xl p-7 sm:p-8 border border-amber-200/80 shadow-pencily-soft shadow-pencily-hover transition-all duration-300 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1.5 h-full";
+      accentBarClasses = "absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-400 via-[#FFC83D] to-orange-300";
+      badgeClasses = "text-amber-800 bg-amber-100/80";
+      taglineClasses = "text-amber-700";
+      checkBgClasses = "bg-amber-100 text-amber-700";
+      ctaClasses = "text-[#0F2747] hover:text-amber-700";
+    } else {
+      accentBarClasses = "absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-300";
     }
 
     return (
       <PencilyScrollReveal key={prog.id} animation="bounce-up" delay={120} className="h-full">
         <div className={cardContainerClasses}>
-          {ribbonClasses && <div className={ribbonClasses} />}
+          {accentBarClasses && <div className={accentBarClasses} />}
 
-        <div>
-          {/* Top Lockup */}
-          <div className="flex items-start justify-between gap-4 mb-4">
-            {prog.logoUrl ? (
-              <div className="flex items-center shrink-0">
-                <img
-                  src={prog.logoUrl}
-                  alt={prog.titleVi}
-                  className={`object-contain ${
-                    prog.id === "flagship-ielts"
-                      ? "h-10 sm:h-11 w-auto"
-                      : "h-9 sm:h-10 w-auto rounded-xs"
-                  }`}
-                />
-              </div>
-            ) : (
-              <div className={`w-12 h-12 rounded-xl ${prog.iconBg} ${prog.iconColor} border-2 border-slate-200 flex items-center justify-center shrink-0`}>
-                <Icon className="w-6 h-6" />
-              </div>
-            )}
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white/80 border border-slate-300 px-2 py-0.5 rounded-xs">
-                {categoryLabel}
+          <div>
+            {/* Top Lockup */}
+            <div className="flex items-center justify-between gap-4 mb-5">
+              {prog.logoUrl ? (
+                <div className={`inline-flex items-center shrink-0 ${prog.id === "flagship-sat" ? "rounded-xl overflow-hidden shadow-2xs border border-slate-200" : "bg-white px-2.5 py-1.5 rounded-xl border border-rose-100 shadow-2xs"}`}>
+                  <img
+                    src={prog.logoUrl}
+                    alt={prog.titleVi}
+                    className={`object-contain ${
+                      prog.id === "flagship-ielts"
+                        ? "h-8 sm:h-9 w-auto"
+                        : "h-8 sm:h-9 w-auto"
+                    }`}
+                  />
+                </div>
+              ) : (
+                <div className={`w-12 h-12 rounded-2xl ${prog.iconBg} ${prog.iconColor} flex items-center justify-center shrink-0 shadow-2xs`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+              )}
+
+              <span className={`text-xs font-semibold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 ${badgeClasses}`}>
+                <Award className="w-3.5 h-3.5 shrink-0" />
+                <span>{badge}</span>
               </span>
-              <span className={`text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-sm flex items-center gap-1.5 border-2 ${badgeClasses}`}>
-                {(isIelts || isSat) && (
-                  <Award className={`w-3.5 h-3.5 shrink-0 ${isIelts ? "text-red-600" : "text-blue-600"}`} />
-                )}
-                {badge}
+            </div>
+
+            {/* Title & Tagline */}
+            <h3 className="font-poppins font-bold text-xl sm:text-2xl text-[#0F2747] mb-1.5">
+              {title}
+            </h3>
+            <div className={`text-sm font-medium mb-4 ${taglineClasses}`}>
+              {tagline}
+            </div>
+
+            {/* Clean Warm Info Strip (No dangling separators when wrapping) */}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-5 gap-y-1.5 mb-4 py-2.5 px-4 rounded-2xl bg-[#FAF7EE]/90 border border-[#ECE4CE] text-xs font-medium text-[#0F2747]">
+              <span className="inline-flex items-center gap-1.5 shrink-0">
+                <Target className="w-3.5 h-3.5 text-[#4F7ECB] shrink-0" />
+                <span>{target}</span>
               </span>
+              <span className="inline-flex items-center gap-1.5 text-[#526277]">
+                <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span>{format.replace(/ • /g, ", ")}</span>
+              </span>
+            </div>
+
+            {/* Description */}
+            <p className="text-sm text-[#4A5B72] leading-relaxed mb-5">
+              {description}
+            </p>
+
+            {/* Highlights */}
+            <div className="space-y-2.5 pt-4 border-t border-[#ECE4CE]/70 mb-6">
+              {highlights.map((h, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#0F2747]/90 leading-relaxed">
+                  <span className={`w-5 h-5 rounded-full ${checkBgClasses} flex items-center justify-center shrink-0 mt-0.5`}>
+                    <Check className="w-3 h-3" />
+                  </span>
+                  <span>{h}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Title & Tagline */}
-          <h3 className="font-poppins font-black text-xl text-[#0F2747] mb-1">
-            {title}
-          </h3>
-          <div className={`text-xs font-semibold mb-3 ${taglineClasses}`}>
-            {tagline}
-          </div>
-
-          {/* Target Score & Cohort Format Badges */}
-          <div className="flex flex-wrap items-center gap-2 mb-3.5 pt-1">
-            <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#0F2747] text-white">
-              {target}
+          {/* Footer CTA */}
+          <div className="pt-4 border-t border-[#ECE4CE]/70 flex items-center justify-between">
+            <span className="text-xs text-[#6B7A90] font-medium">
+              {categoryLabel}
             </span>
-            <span className="font-mono text-[10px] text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-xs">
-              {format}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm text-[#475569] leading-relaxed mb-5 min-h-[44px]">
-            {description}
-          </p>
-
-          {/* Highlights */}
-          <div className="space-y-2 pt-3 border-t-2 border-slate-200/70 mb-5">
-            {highlights.map((h, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-[#0F2747]/90 leading-relaxed">
-                <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isIelts ? "text-red-600" : isSat ? "text-blue-600" : "text-emerald-600"}`} />
-                <span>
-                  {h}
-                </span>
-              </div>
-            ))}
+            <Link
+              href="/classes"
+              className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E5DEC9] hover:border-[#0F2747]/30 text-xs sm:text-sm font-semibold shadow-2xs transition-all ${ctaClasses}`}
+            >
+              <span>{isVi ? "Xem các phòng học" : "Explore Rooms"}</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
         </div>
-
-        {/* Footer CTA */}
-        <div className="pt-4 border-t-2 border-slate-200/70 flex items-center justify-end">
-          <Link
-            href="/classes"
-            className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors ${ctaClasses}`}
-          >
-            <span>{isVi ? "Xem các phòng" : "Explore Rooms"}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </div>
       </PencilyScrollReveal>
     );
   };
@@ -303,84 +312,58 @@ export function HomePrograms() {
         {/* Section Header */}
         <PencilyScrollReveal animation="bounce-up" delay={50}>
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="text-xs font-bold uppercase tracking-wider text-[#4F7ECB] mb-2">
-              {language === "vi" ? "Mô hình đồng hành: The Pencily" : "Companion Model: The Pencily"}
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FFF6DC] text-amber-800 text-xs font-semibold mb-3">
+              <span>{language === "vi" ? "Chương trình học đồng hành" : "Companion Study Tracks"}</span>
             </div>
-            <h2 className="font-poppins font-bold text-3xl sm:text-4xl text-[#0F2747] tracking-tight text-balance">
+            <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-[42px] text-[#0F2747] tracking-tight text-balance">
               {language === "vi" ? "Các chương trình học tập bình đẳng" : "Equal Learning Programs"}
             </h2>
           </div>
         </PencilyScrollReveal>
 
-        {/* Segmented Filter Tabs: Tiếng Anh / Tiếng Việt */}
+        {/* Smooth Capsule Segmented Pill Switcher */}
         <PencilyScrollReveal animation="stamp" delay={100}>
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-            <button
-              type="button"
-              onClick={() => setActiveTab("english")}
-              className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
-                activeTab === "english"
-                  ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                  : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
-              }`}
-            >
-              <Award className={`w-4 h-4 ${activeTab === "english" ? "text-white" : "text-[#4F7ECB]"}`} />
-              <span>{language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("vietnamese")}
-              className={`px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold border-2 transition-all cursor-pointer flex items-center gap-2 ${
-                activeTab === "vietnamese"
-                  ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                  : "bg-white text-slate-700 hover:text-[#0F2747] border-slate-300 hover:bg-slate-50"
-              }`}
-            >
-              <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-emerald-300" : "text-emerald-600"}`} />
-              <span>{language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}</span>
-            </button>
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex flex-wrap items-center justify-center p-1.5 rounded-full bg-white border border-[#E6DEC8] shadow-pencily-soft gap-1.5">
+              <button
+                type="button"
+                onClick={() => setActiveTab("english")}
+                className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+                  activeTab === "english"
+                    ? "bg-[#0F2747] text-white shadow-sm"
+                    : "text-[#526277] hover:text-[#0F2747] hover:bg-[#FAF7EE]"
+                }`}
+              >
+                <Award className={`w-4 h-4 ${activeTab === "english" ? "text-[#FFC83D]" : "text-[#4F7ECB]"}`} />
+                <span>{language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("vietnamese")}
+                className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+                  activeTab === "vietnamese"
+                    ? "bg-[#0F2747] text-white shadow-sm"
+                    : "text-[#526277] hover:text-[#0F2747] hover:bg-[#FAF7EE]"
+                }`}
+              >
+                <BookOpen className={`w-4 h-4 ${activeTab === "vietnamese" ? "text-[#FFC83D]" : "text-emerald-600"}`} />
+                <span>{language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}</span>
+              </button>
+            </div>
           </div>
         </PencilyScrollReveal>
 
-        {/* Content Divided into Two Tracks */}
+        {/* Content Divided into Two Tracks (No redundant subheader bar) */}
         <div>
-          {/* Track 1: Tiếng Anh (IELTS & SAT) */}
           {activeTab === "english" && (
-            <div className="animate-fadeIn">
-              <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
-                <div className="w-8 h-8 rounded-sm bg-blue-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
-                  EN
-                </div>
-                <div>
-                  <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                    {language === "vi" ? "Chương trình Tiếng Anh" : "English Programs"}
-                  </h3>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {ENGLISH_PROGRAMS.map(renderCard)}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7 animate-fade-quick">
+              {ENGLISH_PROGRAMS.map(renderCard)}
             </div>
           )}
 
-          {/* Track 2: Tiếng Việt (THPT & ĐGNL) */}
           {activeTab === "vietnamese" && (
-            <div className="animate-fadeIn">
-              <div className="flex items-center gap-3 mb-6 pb-2.5 border-b-2 border-slate-200">
-                <div className="w-8 h-8 rounded-sm bg-emerald-100 text-[#0F2747] border-2 border-slate-300 flex items-center justify-center font-black text-xs shrink-0">
-                  VN
-                </div>
-                <div>
-                  <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747] leading-tight">
-                    {language === "vi" ? "Chương trình Tiếng Việt" : "Vietnamese Programs"}
-                  </h3>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {VIETNAMESE_PROGRAMS.map(renderCard)}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7 animate-fade-quick">
+              {VIETNAMESE_PROGRAMS.map(renderCard)}
             </div>
           )}
         </div>

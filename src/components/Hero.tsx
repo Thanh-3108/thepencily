@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { InteractiveDoodleHero } from "./InteractiveDoodleHero";
-import { ArrowRight, Sparkles, BookOpen, Users, ShieldCheck, Heart } from "lucide-react";
+import { ArrowRight, Users, HeartHandshake, Sparkles } from "lucide-react";
 import { usePencily } from "@/context/PencilyContext";
 
 export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
@@ -11,18 +11,33 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
   const isVi = language === "vi";
 
   return (
-    <div className="relative w-full overflow-hidden flex flex-col justify-center py-2 sm:py-6">
+    <div className="relative w-full overflow-hidden flex flex-col justify-center py-4 sm:py-8">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full">
         {/* Main 2-Column Hero */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left: Punchy, Tactile Typography */}
-          <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-left z-10">
-            <h1 className="font-poppins font-black text-4xl sm:text-5xl lg:text-[62px] text-[#0F2747] tracking-tight leading-[1.08]">
+          {/* Left: Warm, Inviting Typography & Story */}
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left z-10">
+            <h1 className="font-poppins font-bold text-4xl sm:text-5xl lg:text-[60px] text-[#0F2747] tracking-tight leading-[1.12]">
               The Pencily.
               <br />
               <span className="relative inline-block text-[#0F2747] whitespace-nowrap">
                 {isVi ? "Do Học Sinh," : "Built by Students,"}
-                <span className="absolute bottom-1 left-0 right-0 h-3.5 sm:h-4 bg-[#FFC83D]/45 -z-10 -rotate-[0.8deg] rounded-xs pointer-events-none" />
+                {/* Hand-drawn warm highlighter sweep SVG */}
+                <svg
+                  viewBox="0 0 280 18"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                  className="absolute -bottom-0.5 left-0 w-full h-4 -z-10 pointer-events-none"
+                >
+                  <path
+                    d="M 3 12 Q 70 6, 145 11 T 277 9"
+                    fill="none"
+                    stroke="#FFC83D"
+                    strokeOpacity="0.58"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </span>
               <br />
               <span className="text-[#4F7ECB] whitespace-nowrap">
@@ -30,60 +45,65 @@ export function Hero({ onExploreClick }: { onExploreClick?: () => void }) {
               </span>
             </h1>
 
-            <p className="font-inter text-base sm:text-lg text-[#3B4C63] max-w-xl leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-[#384A61] max-w-xl leading-relaxed font-normal">
               {isVi
-                ? "Nền tảng học nhóm & gia sư đồng đẳng phi thương mại. Mỗi buổi học 60 phút cô đọng, quy mô nhỏ 3–8 bạn thân mật, giải đáp cởi mở và hoàn toàn miễn phí."
-                : "A non-profit peer-tutoring ecosystem. Intimate 60-minute study pods of 3–8 students, open discussions, and zero grade pressure."}
+                ? "Không gian học nhóm & kèm cặp đồng đẳng phi lợi nhuận. Mỗi buổi học 60 phút thân mật từ 3–8 bạn, thoải mái hỏi bài khó và cùng nhau tiến bộ mỗi ngày."
+                : "A joyful non-profit peer-tutoring space. Intimate 60-minute study pods of 3–8 peers where asking questions feels safe, natural, and completely free."}
             </p>
 
-            {/* Action Buttons: Tham gia ngay & Khám phá lớp */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            {/* Playful Pill Action Buttons */}
+            <div className="pt-1 flex flex-wrap items-center gap-3.5">
               <Link
                 href="/signin?mode=register"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#0F2747] hover:bg-[#1A3A63] text-white font-bold text-sm sm:text-base border-2 border-[#0F2747] shadow-tactile-navy transition-all cursor-pointer"
+                className="group inline-flex items-center gap-3 pl-7 pr-5 py-3.5 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white font-semibold text-sm sm:text-base shadow-tactile-navy transition-all cursor-pointer"
               >
-                <span>{isVi ? "Tham gia học ngay" : "Join Now"}</span>
-                <ArrowRight className="w-4 h-4 text-[#FFC83D]" />
+                <span>{isVi ? "Tham gia học ngay" : "Join for Free"}</span>
+                <span className="w-7 h-7 rounded-full bg-[#FFC83D] text-[#0F2747] flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </Link>
 
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-sm sm:text-base shadow-tactile-slate transition-all cursor-pointer"
+                onClick={() => onExploreClick && undefined}
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/95 hover:bg-white text-[#0F2747] border border-[#E5DEC9] hover:border-[#4F7ECB]/40 font-semibold text-sm sm:text-base shadow-tactile-slate transition-all cursor-pointer"
               >
-                <span>{isVi ? "Khám phá mô hình" : "Learn More"}</span>
+                <span>{isVi ? "Khám phá mô hình" : "How It Works"}</span>
               </a>
             </div>
 
-            {/* Micro Trust Indicators (Strictly NO dots - square/rounded-xs badges only) */}
-            <div className="pt-4 border-t-2 border-slate-200/80 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-xs font-semibold text-[#0F2747]">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-xs bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono text-[10px] font-bold">
-                  100% FREE
+            {/* Warm, Airy Friendliness Strip (NO boxed monospace micro-tags, NO dots) */}
+            <div className="pt-5 border-t border-[#0F2747]/10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm text-[#384A61]">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center shrink-0">
+                  <HeartHandshake className="w-4 h-4" />
                 </span>
-                <span className="text-slate-600 font-medium">
-                  {isVi ? "Không thu học phí trọn đời" : "Always 100% Free"}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-xs bg-blue-100 text-blue-900 border border-blue-300 font-mono text-[10px] font-bold">
-                  P2P TUTORS
-                </span>
-                <span className="text-slate-600 font-medium">
-                  {isVi ? "Học sinh trường chuyên & thủ khoa" : "Gifted Peer Mentors"}
+                <span className="font-medium text-[#0F2747]">
+                  {isVi ? "Miễn phí 100%" : "Always 100% Free"}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-xs bg-amber-100 text-amber-900 border border-amber-300 font-mono text-[10px] font-bold">
-                  PODS 3–8
+
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-sky-100/80 text-[#4F7ECB] flex items-center justify-center shrink-0">
+                  <Sparkles className="w-4 h-4" />
                 </span>
-                <span className="text-slate-600 font-medium">
-                  {isVi ? "Nhóm nhỏ không áp lực" : "Small Cozy Groups"}
+                <span className="font-medium text-[#0F2747]">
+                  {isVi ? "Peer Tutors tận tâm" : "Friendly Peer Tutors"}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-amber-100/80 text-amber-700 flex items-center justify-center shrink-0">
+                  <Users className="w-4 h-4" />
+                </span>
+                <span className="font-medium text-[#0F2747]">
+                  {isVi ? "Nhóm nhỏ 3–8 bạn" : "Cozy Pods of 3–8"}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Right: The Interactive Animated Doodle Artwork */}
+          {/* Right: Interactive Animated Doodle Desk Stage */}
           <div className="lg:col-span-6 flex justify-center lg:justify-end">
             <InteractiveDoodleHero />
           </div>

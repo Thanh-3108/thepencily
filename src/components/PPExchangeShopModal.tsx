@@ -168,43 +168,38 @@ export function PPExchangeShopModal({
         aria-hidden="true"
       />
 
-      {/* Modal Dialog (Squarish micro-corners, thick border-2) */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-md border-2 border-[#0F2747] shadow-2xl flex flex-col overflow-hidden z-10">
+      {/* Modal Dialog */}
+      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl border border-[#E6DEC8] shadow-2xl flex flex-col overflow-hidden z-10">
         {/* Header */}
-        <div className="p-5 sm:p-6 bg-white border-b-2 border-slate-300 flex items-center justify-between gap-4">
+        <div className="p-5 sm:p-6 bg-white border-b border-[#E6DEC8] flex items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-sm bg-gradient-to-br from-[#F59E0B] to-[#D97706] border-2 border-[#B45309] flex items-center justify-center text-slate-950 font-black text-xl shadow-xs shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-[#FFC83D] flex items-center justify-center text-[#0F2747] font-bold text-xl shadow-2xs shrink-0">
               P
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-poppins font-black text-lg sm:text-xl text-[#0F2747]">
-                  {language === "vi" ? "Cửa Hàng Đổi Đặc Quyền Pencily" : "Pencily Rewards Exchange"}
-                </h3>
-                <span className="text-[11px] font-bold bg-amber-100 text-amber-900 border-2 border-amber-300 px-2 py-0.5 rounded-xs">
-                  {language === "vi" ? "Bản Mẫu Proofcheck" : "Proofcheck Draft"}
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <h3 className="font-poppins font-bold text-lg sm:text-xl text-[#0F2747]">
+                {language === "vi" ? "Cửa hàng đổi đặc quyền Pencily" : "Pencily Rewards Exchange"}
+              </h3>
+              <p className="text-xs text-[#526277] mt-0.5">
                 {language === "vi"
-                  ? "Khung đổi đặc quyền mẫu chuẩn bị cho team cập nhật quyền lợi và tài liệu học tập thực tế."
-                  : "Draft reward framework ready for the team to input real study rewards and perks."}
+                  ? "Sử dụng điểm học tập PP để mở khóa tài liệu, bộ đề thi và buổi kèm 1-1."
+                  : "Redeem Pencily Points for curated materials, exam banks, and 1-on-1 passes."}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             {/* Live Balance Chip */}
-            <div className="px-3.5 py-1.5 rounded-sm bg-[#FFF9EF] border-2 border-amber-400 flex items-center gap-2 shadow-xs">
-              <span className="text-xs text-amber-800 font-bold">{language === "vi" ? "Số dư:" : "Balance:"}</span>
-              <span className="text-sm sm:text-base font-black text-[#0F2747]">
+            <div className="px-4 py-1.5 rounded-full bg-[#FFF6DC] border border-[#F5D67B] flex items-center gap-2">
+              <span className="text-xs text-amber-800 font-semibold">{language === "vi" ? "Số dư:" : "Balance:"}</span>
+              <span className="text-sm font-bold text-[#0F2747]">
                 {user.points.toLocaleString(language === "vi" ? "vi-VN" : "en-US")} PP
               </span>
             </div>
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition cursor-pointer"
+              className="w-9 h-9 rounded-full hover:bg-[#FAF7EE] flex items-center justify-center text-slate-500 hover:text-[#0F2747] transition cursor-pointer"
               aria-label={language === "vi" ? "Đóng" : "Close"}
             >
               <X className="w-5 h-5" />
@@ -213,59 +208,59 @@ export function PPExchangeShopModal({
         </div>
 
         {/* Value Explanation Banner */}
-        <div className="px-5 py-2.5 bg-amber-50/90 border-b-2 border-amber-300 text-xs text-amber-950 flex items-center justify-between">
+        <div className="px-6 py-3 bg-[#FFFDF8] border-b border-[#ECE4CE] text-xs text-amber-950 flex items-center justify-between">
           <span>
-            <b>{language === "vi" ? "Đặc Quyền Cống Hiến:" : "Community Rewards:"}</b>{" "}
+            <b>{language === "vi" ? "Đặc quyền cống hiến:" : "Community Rewards:"}</b>{" "}
             {language === "vi"
-              ? "Điểm Pencily Points (PP) được tích lũy từ các buổi học tương tác hoặc host lớp kèm cặp để đổi lấy tài liệu tuyển chọn và các đặc quyền thành viên."
+              ? "Điểm Pencily Points (PP) được tích lũy từ các buổi học tương tác hoặc host lớp kèm cặp để đổi tài liệu và đặc quyền thành viên."
               : "Pencily Points (PP) are earned through active session attendance and peer tutoring, redeemable for handbooks, exam banks, and community privileges."}
           </span>
         </div>
 
         {/* Category Filters */}
-        <div className="px-6 py-3 bg-slate-50 border-b-2 border-slate-300 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="px-6 py-3 bg-[#FAF7EE] border-b border-[#ECE4CE] flex items-center gap-2 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap border-2 ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap ${
               activeCategory === "all"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
+                ? "bg-[#0F2747] text-white shadow-2xs"
+                : "bg-white text-[#526277] hover:bg-[#FFF6DC] border border-[#E6DEC8]"
             }`}
           >
             {language === "vi" ? `Tất cả (${SHOP_ITEMS.length})` : `All Items (${SHOP_ITEMS.length})`}
           </button>
           <button
             onClick={() => setActiveCategory("materials")}
-            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               activeCategory === "materials"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
+                ? "bg-[#0F2747] text-white shadow-2xs"
+                : "bg-white text-[#526277] hover:bg-[#FFF6DC] border border-[#E6DEC8]"
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>{language === "vi" ? "Tài liệu & Đề thi mẫu" : "Study Guides & Tests"}</span>
+            <span>{language === "vi" ? "Tài liệu & Đề thi" : "Study Guides & Tests"}</span>
           </button>
           <button
             onClick={() => setActiveCategory("privilege")}
-            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               activeCategory === "privilege"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
+                ? "bg-[#0F2747] text-white shadow-2xs"
+                : "bg-white text-[#526277] hover:bg-[#FFF6DC] border border-[#E6DEC8]"
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>{language === "vi" ? "Đặc quyền Kèm 1-1 & Danh hiệu" : "1-on-1 Mentoring & Badges"}</span>
+            <span>{language === "vi" ? "Kèm 1-1 & Danh hiệu" : "1-on-1 Mentoring & Badges"}</span>
           </button>
           <button
             onClick={() => setActiveCategory("profile")}
-            className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 border-2 ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               activeCategory === "profile"
-                ? "bg-[#0F2747] text-white border-[#0F2747] shadow-xs"
-                : "bg-white text-slate-600 hover:bg-slate-100 border-slate-300"
+                ? "bg-[#0F2747] text-white shadow-2xs"
+                : "bg-white text-[#526277] hover:bg-[#FFF6DC] border border-[#E6DEC8]"
             }`}
           >
             <Award className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>{language === "vi" ? "Khung hồ sơ & Danh hiệu" : "Profile Frames & Badges"}</span>
+            <span>{language === "vi" ? "Khung hồ sơ" : "Profile Frames"}</span>
           </button>
         </div>
 

@@ -109,17 +109,17 @@ export function PencilyMascotCompanion() {
         aria-hidden="true"
       />
 
-      {/* 2. SLIDE-OUT SIDE DRAWER / TAB (Full height animated slide from right) */}
+      {/* 2. SLIDE-OUT SIDE DRAWER */}
       <aside
-        className={`fixed inset-y-0 right-0 z-50 w-full sm:w-96 md:w-[420px] max-w-full bg-white border-l border-slate-200 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out select-none ${
+        className={`fixed inset-y-0 right-0 z-50 w-full sm:w-96 md:w-[420px] max-w-full bg-[#FFFDF9] border-l border-[#E6DEC8] shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out select-none ${
           isOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
         aria-label="Cửa sổ trợ lý Cú Pencily"
       >
-        {/* Header: Clean pure white, NO blue gradients */}
-        <div className="p-4 sm:p-5 bg-white border-b-2 border-slate-200 flex items-center justify-between gap-3 shrink-0">
+        {/* Header */}
+        <div className="p-4 sm:p-5 bg-white border-b border-[#E6DEC8] flex items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-sm bg-amber-50 border-2 border-amber-200 p-1 flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-11 h-11 rounded-2xl bg-[#FFF6DC] p-1 flex items-center justify-center shrink-0 shadow-2xs">
               <Image
                 src="/brand/mascot-owl.png"
                 alt="Cú Pencily"
@@ -129,18 +129,18 @@ export function PencilyMascotCompanion() {
               />
             </div>
             <div>
-              <h4 className="font-poppins font-black text-sm sm:text-base text-[#0F2747] leading-tight">
-                Cú Pencily Assistant
+              <h4 className="font-poppins font-bold text-sm sm:text-base text-[#0F2747] leading-tight">
+                Cú Pencily
               </h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium leading-tight mt-0.5">
-                {language === "vi" ? "Trợ lý học tập & Hỗ trợ The Pencily" : "Study Assistant & Support"}
+              <p className="text-xs text-[#6B7A90] leading-tight mt-0.5">
+                {language === "vi" ? "Người bạn đồng hành học tập" : "Friendly Study Companion"}
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setIsOpen(false)}
-            className="w-8 h-8 rounded-sm border-2 border-transparent hover:border-slate-300 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-700 transition cursor-pointer"
+            className="w-9 h-9 rounded-full hover:bg-[#FAF7EE] flex items-center justify-center text-slate-400 hover:text-[#0F2747] transition cursor-pointer"
             aria-label="Đóng trợ lý"
           >
             <X className="w-5 h-5" />
@@ -148,7 +148,7 @@ export function PencilyMascotCompanion() {
         </div>
 
         {/* Scrollable Messages Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5 bg-[#FFFDF9] text-xs">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5 bg-[#FAF7EE]/60 text-xs">
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -157,17 +157,17 @@ export function PencilyMascotCompanion() {
               }`}
             >
               <div
-                className={`max-w-[85%] p-3.5 rounded-md leading-relaxed ${
+                className={`max-w-[85%] p-3.5 rounded-2xl leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-[#0F2747] text-white border-2 border-[#0F2747] shadow-2xs"
-                    : "bg-white border-2 border-slate-200 text-[#0F2747] shadow-xs"
+                    ? "bg-[#0F2747] text-white shadow-xs rounded-br-sm"
+                    : "bg-white border border-[#E6DEC8] text-[#0F2747] shadow-2xs rounded-bl-sm"
                 }`}
               >
                 <p className="whitespace-pre-line text-xs sm:text-[13px]">{msg.text}</p>
 
                 {/* Links attached to response */}
                 {msg.links && msg.links.length > 0 && (
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 space-y-2">
+                  <div className="mt-3 pt-2.5 border-t border-[#F0EAE0] space-y-2">
                     {msg.links.map((link, idx) => (
                       <div key={idx}>
                         {link.external ? (
@@ -175,7 +175,7 @@ export function PencilyMascotCompanion() {
                             href={link.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4F7ECB] hover:underline"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3B6FD8] hover:underline"
                           >
                             <Mail className="w-3.5 h-3.5" />
                             <span>{link.text}</span>
@@ -185,7 +185,7 @@ export function PencilyMascotCompanion() {
                           <Link
                             href={link.url}
                             onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-900 hover:text-amber-950 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-sm border-2 border-amber-300 transition"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-900 hover:text-amber-950 bg-[#FFF6DC] hover:bg-[#FDEBA8] px-3.5 py-1.5 rounded-full transition"
                           >
                             <span>{link.text} →</span>
                           </Link>
@@ -209,12 +209,12 @@ export function PencilyMascotCompanion() {
         </div>
 
         {/* Quick Prompts */}
-        <div className="px-4 py-2.5 bg-white border-t-2 border-slate-200 flex items-center gap-1.5 overflow-x-auto scrollbar-none shrink-0">
+        <div className="px-4 py-3 bg-white border-t border-[#ECE4CE] flex items-center gap-2 overflow-x-auto scrollbar-none shrink-0">
           {QUICK_PROMPTS.map((p) => (
             <button
               key={p.key}
               onClick={() => handleSendQuestion(p.label, p.key)}
-              className="px-3 py-1.5 rounded-sm bg-slate-50 hover:bg-amber-50 border-2 border-slate-200 hover:border-amber-400 text-[#0F2747] text-[11px] font-semibold transition whitespace-nowrap cursor-pointer shrink-0 shadow-2xs"
+              className="px-3.5 py-1.5 rounded-full bg-[#FAF7EE] hover:bg-[#FFF6DC] border border-[#E6DEC8] hover:border-[#F5D67B] text-[#0F2747] text-[11px] font-medium transition whitespace-nowrap cursor-pointer shrink-0"
             >
               {p.label}
             </button>
@@ -222,7 +222,7 @@ export function PencilyMascotCompanion() {
         </div>
 
         {/* Input & Direct Contact Footer */}
-        <div className="p-4 bg-white border-t-2 border-slate-200 space-y-2.5 shrink-0">
+        <div className="p-4 bg-white border-t border-[#ECE4CE] space-y-2.5 shrink-0">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -235,38 +235,38 @@ export function PencilyMascotCompanion() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={language === "vi" ? "Nhắn tin hỏi Cú Pencily..." : "Message Pencily Owl..."}
-              className="flex-1 px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-sm text-xs text-[#0F2747] placeholder:text-slate-400 focus:outline-none focus:border-[#0F2747] focus:bg-white transition"
+              className="flex-1 px-4 py-2.5 bg-[#FAF7EE] border border-[#E6DEC8] rounded-full text-xs text-[#0F2747] placeholder:text-slate-400 focus:outline-none focus:border-[#4F7ECB] focus:bg-white transition"
             />
             <button
               type="submit"
               disabled={!inputValue.trim()}
-              className="w-9 h-9 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white flex items-center justify-center transition disabled:opacity-30 cursor-pointer shrink-0 shadow-2xs"
+              className="w-10 h-10 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white flex items-center justify-center transition disabled:opacity-30 cursor-pointer shrink-0 shadow-xs"
               title="Gửi"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-4 h-4" />
             </button>
           </form>
 
           {/* Direct Contact Banner */}
-          <div className="pt-1 flex items-center justify-between text-xs text-slate-500">
-            <span className="truncate">{language === "vi" ? "Cần hỗ trợ trực tiếp từ Admin?" : "Direct Admin Support?"}</span>
+          <div className="pt-1 flex items-center justify-between text-xs text-[#6B7A90]">
+            <span className="truncate">{language === "vi" ? "Cần hỗ trợ từ ban học vụ?" : "Need staff support?"}</span>
             <a
               href="mailto:contact@thepencily.com"
-              className="font-bold text-[#4F7ECB] hover:underline flex items-center gap-1.5 shrink-0 ml-1"
+              className="font-semibold text-[#3B6FD8] hover:underline flex items-center gap-1.5 shrink-0 ml-1"
             >
               <Mail className="w-3.5 h-3.5" />
-              <span>{language === "vi" ? "Gửi Email Ban Học Vụ" : "Email Academic Board"}</span>
+              <span>{language === "vi" ? "Gửi Email Hỗ Trợ" : "Email Support"}</span>
             </a>
           </div>
         </div>
       </aside>
 
-      {/* 3. COMPACT FLOATING TRIGGER BUTTON (Circular mascot with speech bubble sliding vertically upwards on hover) */}
+      {/* 3. FRIENDLY FLOATING MASCOT TRIGGER */}
       <div className="fixed bottom-5 right-5 z-40 select-none">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className={`group relative flex items-center justify-center p-1.5 sm:p-2 bg-white/95 hover:bg-white rounded-md border-2 border-slate-300 hover:border-[#0F2747] shadow-md hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer backdrop-blur-xs ${
+          className={`group relative flex items-center justify-center p-2 bg-[#FFFDF9]/95 hover:bg-white rounded-2xl border border-[#E6DEC8] hover:border-[#FFC83D] shadow-pencily-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-95 cursor-pointer backdrop-blur-xs ${
             isOpen ? "opacity-0 pointer-events-none scale-90" : "opacity-100 scale-100"
           }`}
           aria-label="Cú Pencily trợ giúp"
@@ -275,20 +275,19 @@ export function PencilyMascotCompanion() {
           <div
             className="absolute bottom-[calc(100%+10px)] right-0 opacity-0 translate-y-2 scale-95 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out"
           >
-            <div className="relative bg-white border-2 border-slate-300 shadow-xl shadow-slate-900/10 rounded-md px-3.5 py-2 whitespace-nowrap text-center">
-              <span className="block text-[11px] font-black text-[#0F2747] leading-tight">
-                {language === "vi" ? "Cú Pencily" : "Pencily Owl"}
+            <div className="relative bg-white border border-[#E6DEC8] shadow-pencily-soft rounded-2xl px-4 py-2 whitespace-nowrap text-center">
+              <span className="block text-xs font-bold text-[#0F2747] leading-tight">
+                {language === "vi" ? "Chào bạn! Mình là Cú Pencily" : "Hi! I'm Pencily Owl"}
               </span>
-              <span className="block text-[10px] text-amber-700 font-bold mt-0.5 leading-tight">
-                {language === "vi" ? "Cần hỗ trợ?" : "Need help?"}
+              <span className="block text-[11px] text-amber-700 font-semibold mt-0.5 leading-tight">
+                {language === "vi" ? "Bấm để trò chuyện cùng mình nhé" : "Click to chat with me"}
               </span>
-              {/* Bubble beak pointing down towards the mascot */}
-              <div className="absolute -bottom-1.5 right-4 sm:right-5 w-2.5 h-2.5 bg-white border-b-2 border-r-2 border-slate-300 rotate-45" />
+              <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-b border-r border-[#E6DEC8] rotate-45" />
             </div>
           </div>
 
           {/* Mascot Box */}
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0 group-hover:scale-105 transition-transform duration-200">
+          <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform duration-200">
             <Image
               src="/brand/mascot-owl.png"
               alt="The Pencily Mascot"

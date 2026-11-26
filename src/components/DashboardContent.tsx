@@ -221,30 +221,30 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
       {/* 2. UNIFIED MAIN WORKSPACE */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-scroll overflow-x-hidden [scrollbar-gutter:stable] bg-pencil-pattern">
-        {/* Clean, Logical Workspace Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-md h-14 sm:h-16 border-b-2 bg-[#FAF7EE]/90 border-slate-300 text-[#0F2747] shrink-0">
+        {/* Clean, Warm Workspace Header */}
+        <header className="sticky top-0 z-30 backdrop-blur-md h-15 sm:h-16 border-b bg-[#FAF7EE]/90 border-[#E6DEC8] text-[#0F2747] shrink-0">
           <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-10 h-full flex items-center justify-between gap-4">
-            {/* Left: Clean Breadcrumb title (No duplicate Logo since Sidebar already has it) */}
+            {/* Left: Clean Breadcrumb title */}
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider font-extrabold text-[#4F7ECB]">
+              <span className="text-xs font-semibold text-[#3B6FD8]">
                 Dashboard
               </span>
-              <span className="text-slate-400 font-bold">/</span>
-              <h1 className="font-poppins font-black text-base sm:text-lg text-[#0F2747] tracking-tight">
+              <span className="text-[#C7BEAA]">/</span>
+              <h1 className="font-poppins font-bold text-base sm:text-lg text-[#0F2747] tracking-tight">
                 {currentTabTitle}
               </h1>
             </div>
 
-            {/* Right: Unified, logical action group */}
+            {/* Right: Unified action group */}
             <div className="flex items-center gap-2 sm:gap-2.5">
               {/* Language Switcher Pill */}
               <button
                 type="button"
                 onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-                className="h-9 flex items-center gap-1.5 px-3 rounded-md bg-white hover:bg-slate-50 text-xs font-bold text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] cursor-pointer transition shadow-2xs shrink-0"
+                className="h-9 flex items-center gap-1.5 px-3.5 rounded-full bg-white hover:bg-[#FFF6DC] text-xs font-semibold text-[#0F2747] border border-[#E6DEC8] cursor-pointer transition shadow-2xs shrink-0"
                 title="Đổi ngôn ngữ / Change language"
               >
-                <Languages className="w-3.5 h-3.5 text-[#4F7ECB]" />
+                <Languages className="w-3.5 h-3.5 text-[#3B6FD8]" />
                 <span>{language === "vi" ? "EN" : "VI"}</span>
               </button>
 
@@ -253,21 +253,21 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                 <button
                   type="button"
                   onClick={() => setIsPointsMenuOpen(!isPointsMenuOpen)}
-                  className={`h-9 flex items-center gap-2 px-3 rounded-md border-2 transition cursor-pointer text-xs font-bold active:scale-95 shadow-2xs ${
+                  className={`h-9 flex items-center gap-2 px-3.5 rounded-full border transition cursor-pointer text-xs font-semibold shadow-2xs ${
                     isPointsMenuOpen
-                      ? "bg-[#FFF9EF] border-[#F59E0B] text-[#0F2747] ring-2 ring-[#F59E0B]/20"
-                      : "bg-white border-slate-300 hover:border-amber-400 hover:bg-[#FFF9EF]/50 text-[#0F2747]"
+                      ? "bg-[#FFF6DC] border-[#F5D67B] text-[#0F2747] ring-2 ring-[#FFC83D]/25"
+                      : "bg-white border-[#E6DEC8] hover:border-[#F5D67B] hover:bg-[#FFF6DC]/60 text-[#0F2747]"
                   }`}
                   aria-expanded={isPointsMenuOpen}
                   aria-label="Xem quy chế và số dư Pencily Points"
                 >
-                  <div className="w-4.5 h-4.5 rounded-xs bg-[#F59E0B] text-slate-900 border border-amber-600 flex items-center justify-center text-[10px] font-black shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#FFC83D] text-[#0F2747] flex items-center justify-center text-[10px] font-bold shrink-0">
                     P
                   </div>
-                  <span className="font-mono">{user.points} PP</span>
+                  <span>{user.points} PP</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-200 ${
-                      isPointsMenuOpen ? "rotate-180 text-[#F59E0B]" : ""
+                    className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
+                      isPointsMenuOpen ? "rotate-180 text-amber-600" : ""
                     }`}
                   />
                 </button>
@@ -484,14 +484,14 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB: PHÒNG HỌC TRỰC TUYẾN (Clean MVP Room Hub) */}
           {/* ============================================================== */}
           {activeTab === "classes" && (
-            <div className="w-full space-y-6 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fade-quick">
               {/* Header & Main Create Button */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E6DEC8]">
                 <div>
-                  <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-                    {language === "vi" ? "Phòng Học Trực Tuyến" : "Live Study Rooms"}
+                  <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
+                    {language === "vi" ? "Phòng học trực tuyến" : "Live Study Rooms"}
                   </h2>
-                  <p className="text-xs sm:text-sm text-[#475569] mt-1 font-medium">
+                  <p className="text-xs sm:text-sm text-[#526277] mt-1">
                     {language === "vi"
                       ? "Danh sách các buổi học kèm nhóm và phòng tự học tương tác"
                       : "Live study pods, peer mentoring sessions, and open study rooms"}
@@ -500,22 +500,22 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
                 <button
                   onClick={() => setIsCreateClassOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer shrink-0"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white text-xs sm:text-sm font-semibold shadow-tactile-navy transition cursor-pointer shrink-0"
                 >
-                  <Plus className="w-4 h-4 text-[#4F7ECB]" />
-                  <span>{language === "vi" ? "Soạn & Mở phòng học" : "Create Study Room"}</span>
+                  <Plus className="w-4 h-4 text-[#FFC83D]" />
+                  <span>{language === "vi" ? "Mở phòng học mới" : "Create Study Room"}</span>
                 </button>
               </div>
 
               {/* Rooms Grid or Clean Minimalist Empty State */}
               {classes.length === 0 ? (
-                <div className="bg-white rounded-md p-10 sm:p-14 border-2 border-slate-300 text-center space-y-5 shadow-xs">
+                <div className="bg-white rounded-3xl p-10 sm:p-14 border border-[#E6DEC8] text-center space-y-5 shadow-pencily-soft">
                   <OwlMascot size="lg" className="mx-auto" />
                   <div className="max-w-2xl mx-auto space-y-2">
                     <h3 className="font-poppins font-bold text-xl sm:text-2xl text-[#0F2747]">
                       {language === "vi" ? "Cú Pencily chưa thấy phòng học nào đang mở" : "No live study rooms available right now"}
                     </h3>
-                    <p className="text-sm text-[#4B5563] leading-relaxed max-w-lg mx-auto">
+                    <p className="text-sm text-[#526277] leading-relaxed max-w-lg mx-auto">
                       {language === "vi"
                         ? "Hãy tạo phòng học đầu tiên để cùng bạn bè trao đổi bài tập và học tập trực tuyến ngay!"
                         : "Be the first to open a study room and collaborate with peers online!"}
@@ -524,24 +524,24 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                   <div className="pt-2">
                     <button
                       onClick={() => setIsCreateClassOpen(true)}
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-slate-400 text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white text-xs sm:text-sm font-semibold shadow-tactile-navy transition cursor-pointer"
                     >
-                      <Plus className="w-4 h-4 text-[#4F7ECB]" />
-                      <span>{language === "vi" ? "Soạn & Mở phòng học" : "Create Study Room"}</span>
+                      <Plus className="w-4 h-4 text-[#FFC83D]" />
+                      <span>{language === "vi" ? "Mở phòng học ngay" : "Create Study Room"}</span>
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {classes.map((item) => (
                     <div
                       key={item.id}
-                      className="bg-white rounded-md p-6 border-2 border-slate-300 hover:border-[#0F2747] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                      className="bg-white rounded-3xl p-6 border border-[#E6DEC8] hover:border-[#4F7ECB]/40 shadow-pencily-soft shadow-pencily-hover transition-all flex flex-col justify-between hover:-translate-y-1"
                     >
                       <div>
                         {/* Status bar */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-sm text-xs font-semibold bg-emerald-50 text-emerald-800 border-2 border-emerald-300 shrink-0">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100/80 text-emerald-800 shrink-0">
                             <span>
                               {item.meetUrl?.startsWith("/room/")
                                 ? language === "vi" ? "Phòng Web trực tiếp" : "Web Live Room"
@@ -549,8 +549,8 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                             </span>
                           </span>
 
-                          <span className="text-xs text-[#687280] font-medium whitespace-normal flex items-center gap-1.5 ml-auto text-right">
-                            <Clock className="w-3.5 h-3.5 text-[#687280] shrink-0" />
+                          <span className="text-xs text-[#6B7A90] font-medium whitespace-normal flex items-center gap-1.5 ml-auto text-right">
+                            <Clock className="w-3.5 h-3.5 text-[#6B7A90] shrink-0" />
                             <span>{item.schedule}</span>
                           </span>
                         </div>
@@ -561,20 +561,20 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                         </h3>
 
                         {/* Description */}
-                        <p className="text-xs text-[#4B5563] line-clamp-2 leading-relaxed mb-4">
+                        <p className="text-xs text-[#526277] line-clamp-2 leading-relaxed mb-4">
                           {item.description || (language === "vi" ? "Phòng học trao đổi kiến thức trực tiếp." : "Peer learning live room.")}
                         </p>
 
                         {/* Host profile preview */}
-                        <div className="p-3 bg-[#FAF8F5] rounded-sm border-2 border-slate-200 mb-5 flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-sm bg-[#0F2747] text-[#FFC83D] font-bold text-xs flex items-center justify-center shrink-0 border border-slate-300">
+                        <div className="p-3 bg-[#FAF7EE] rounded-2xl border border-[#ECE4CE] mb-5 flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-[#0F2747] text-[#FFC83D] font-bold text-xs flex items-center justify-center shrink-0">
                             {item.tutorName?.charAt(0) || "P"}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <div className="font-bold text-xs text-[#0F2747] break-words">
+                            <div className="font-semibold text-xs text-[#0F2747] break-words">
                               {item.tutorName}
                             </div>
-                            <div className="text-[11px] text-[#687280]">
+                            <div className="text-[11px] text-[#6B7A90]">
                               {language === "vi" ? "Host phòng học" : "Room Host"}
                             </div>
                           </div>
@@ -582,7 +582,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                       </div>
 
                       {/* Direct Join Action & Delete Option */}
-                      <div className="space-y-2 pt-2 border-t-2 border-slate-100">
+                      <div className="space-y-2 pt-3 border-t border-[#F0EAE0]">
                         <a
                           href={item.meetUrl || "/dashboard?tab=classes"}
                           target={item.meetUrl?.startsWith("/room/") ? "_self" : "_blank"}
@@ -593,10 +593,10 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                             }
                           }}
                           rel="noreferrer"
-                          className="w-full py-2.5 px-4 rounded-sm text-xs font-bold text-[#0F2747] bg-white hover:bg-slate-50 border-2 border-slate-300 hover:border-slate-400 flex items-center justify-center gap-2 shadow-2xs transition active:scale-98 cursor-pointer group"
+                          className="w-full py-2.5 px-4 rounded-full text-xs font-semibold text-white bg-[#0F2747] hover:bg-[#193B6B] flex items-center justify-center gap-2 shadow-xs transition cursor-pointer group"
                         >
                           <span>{language === "vi" ? "Vào phòng học ngay" : "Join Room Now"}</span>
-                          <ArrowRight className="w-4 h-4 text-[#4F7ECB] group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-4 h-4 text-[#FFC83D] group-hover:translate-x-0.5 transition-transform" />
                         </a>
 
                         <button
@@ -606,7 +606,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                               deleteClass(item.id);
                             }
                           }}
-                          className="w-full py-1 text-xs text-slate-400 hover:text-red-600 transition text-center cursor-pointer"
+                          className="w-full py-1 text-xs text-slate-400 hover:text-rose-600 transition text-center cursor-pointer"
                         >
                           {language === "vi" ? "Xóa phòng này" : "Delete room"}
                         </button>
@@ -622,14 +622,14 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
           {/* TAB 5: PROFILE (Hồ sơ học sinh & Lộ trình Peer Tutor) */}
           {/* ============================================================== */}
           {activeTab === "profile" && (
-            <div className="w-full space-y-6 animate-fadeIn">
+            <div className="w-full space-y-6 animate-fade-quick">
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-300">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E6DEC8]">
                 <div>
-                  <h2 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
-                    {language === "vi" ? "Hồ Sơ Học Sinh & Chứng Nhận" : "Student Profile & Credentials"}
+                  <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-[#0F2747] tracking-tight">
+                    {language === "vi" ? "Hồ sơ học sinh & Chứng nhận" : "Student Profile & Credentials"}
                   </h2>
-                  <p className="text-xs sm:text-sm text-[#475569] mt-1 font-medium">
+                  <p className="text-xs sm:text-sm text-[#526277] mt-1">
                     {language === "vi"
                       ? "Thông tin tài khoản, danh hiệu cống hiến và chứng chỉ hoạt động ngoại khóa"
                       : "Student profile, community credentials, and verified extracurricular certificate"}
@@ -644,114 +644,110 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                     }
                     setIsEditProfileOpen(true);
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs font-bold shadow-2xs active:scale-95 transition cursor-pointer shrink-0 self-start sm:self-auto"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-[#FFF6DC] text-[#0F2747] border border-[#E6DEC8] text-xs font-semibold shadow-2xs transition cursor-pointer shrink-0 self-start sm:self-auto"
                 >
-                  <Edit3 className="w-3.5 h-3.5 text-[#4F7ECB]" />
+                  <Edit3 className="w-3.5 h-3.5 text-[#3B6FD8]" />
                   <span>{language === "vi" ? "Chỉnh sửa hồ sơ" : "Edit Profile"}</span>
                 </button>
               </div>
 
               {!backendAuthenticated && (
-                <div className="bg-amber-50/90 border-2 border-amber-300 rounded-md p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="bg-[#FFF6DC]/80 border border-[#F5D67B] rounded-3xl p-5 sm:p-6 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-1">
-                    <div className="text-xs font-bold uppercase tracking-wider text-amber-800">
-                      {language === "vi" ? "Chế độ Khách (Guest Preview)" : "Guest Preview Mode"}
+                    <div className="text-xs font-semibold text-amber-800">
+                      {language === "vi" ? "Chế độ khám phá" : "Guest Preview"}
                     </div>
-                    <p className="text-xs sm:text-sm text-[#0F2747] font-medium leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#0F2747] leading-relaxed">
                       {language === "vi"
-                        ? "Bạn đang khám phá The Pencily ở chế độ Khách. Hãy tạo tài khoản hoặc đăng nhập để sở hữu Hồ sơ cá nhân, nhận điểm PP và cấp chứng nhận hoạt động."
-                        : "You are exploring in Guest Preview mode. Sign in or register to claim your personal student profile, earn PP points, and receive verified certificates."}
+                        ? "Hãy tạo tài khoản hoặc đăng nhập để lưu hồ sơ cá nhân, tích điểm PP và tải chứng nhận hoạt động."
+                        : "Sign in or register to claim your personal student profile, earn PP points, and download certificates."}
                     </p>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <div className="flex flex-wrap items-center gap-2.5 shrink-0">
                     <Link
                       href="/signin?mode=signin"
-                      className="px-3.5 py-2 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition"
+                      className="px-4 py-2 rounded-full bg-white hover:bg-[#FAF7EE] text-[#0F2747] border border-[#E6DEC8] font-semibold text-xs shadow-2xs whitespace-nowrap transition"
                     >
-                      {language === "vi" ? "Đăng Nhập" : "Sign In"}
+                      {language === "vi" ? "Đăng nhập" : "Sign In"}
                     </Link>
                     <Link
                       href="/signin?mode=register"
-                      className="px-4 py-2 rounded-sm bg-[#0F2747] hover:bg-slate-800 text-white font-bold text-xs shadow-2xs whitespace-nowrap active:scale-95 transition"
+                      className="px-4 py-2 rounded-full bg-[#0F2747] hover:bg-[#193B6B] text-white font-semibold text-xs shadow-2xs whitespace-nowrap transition"
                     >
-                      {language === "vi" ? "Tạo Tài Khoản Học Sinh" : "Create Account"}
+                      {language === "vi" ? "Tạo tài khoản" : "Create Account"}
                     </Link>
                   </div>
                 </div>
               )}
 
-              {/* 1. OFFICIAL CERTIFICATION PORTFOLIO BANNER (Schoolhouse.world Style) */}
-              <div className="bg-gradient-to-r from-emerald-50/80 via-teal-50/40 to-white rounded-md border-2 border-emerald-600/50 p-6 sm:p-8 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative overflow-hidden">
+              {/* 1. OFFICIAL CERTIFICATION PORTFOLIO BANNER */}
+              <div className="bg-gradient-to-r from-[#E8F8F0] via-[#F2FBF7] to-white rounded-3xl border border-emerald-200 p-6 sm:p-8 shadow-pencily-soft flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative overflow-hidden">
                 <div className="flex items-center gap-5 sm:gap-6 z-10">
-                  {/* Certification Ribbon Badge */}
-                  <div className="relative shrink-0">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-md bg-emerald-800 text-white flex flex-col items-center justify-center font-black border-2 border-emerald-950 shadow-sm">
-                      <Award className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-200" />
-                    </div>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Award className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-100" />
                   </div>
 
                   <div>
-                    <div className="text-[11px] uppercase tracking-wider font-extrabold text-emerald-800 flex items-center gap-1.5">
-                      <span>{language === "vi" ? "HỒ SƠ CHỨNG NHẬN HOẠT ĐỘNG" : "CERTIFICATION PORTFOLIO"}</span>
+                    <div className="text-xs font-semibold text-emerald-700">
+                      {language === "vi" ? "Hồ sơ chứng nhận hoạt động" : "Certification Portfolio"}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
-                      <h3 className="font-poppins font-black text-2xl sm:text-3xl text-[#0F2747]">
+                      <h3 className="font-poppins font-bold text-2xl sm:text-3xl text-[#0F2747]">
                         {user.realName || user.name}
                       </h3>
                       <button
                         onClick={() => setIsEditProfileOpen(true)}
-                        className="p-1 hover:bg-slate-200/50 rounded-xs text-slate-500 hover:text-[#0F2747] transition cursor-pointer"
+                        className="p-1.5 hover:bg-emerald-100/70 rounded-full text-slate-500 hover:text-[#0F2747] transition cursor-pointer"
                         title={language === "vi" ? "Chỉnh sửa họ tên hiển thị" : "Edit display name"}
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                     </div>
-                    <p className="text-xs text-slate-600 mt-1 font-medium">
+                    <p className="text-xs sm:text-sm text-[#526277] mt-1">
                       {language === "vi"
-                        ? "Thành viên The Pencily • Tham gia từ tháng 04/2026"
-                        : "Member since April 2026 • The Pencily"}
+                        ? "Thành viên The Pencily từ tháng 04/2026"
+                        : "Member since April 2026 — The Pencily"}
                     </p>
                   </div>
                 </div>
 
-                {/* Right Actions: Direct Download Certificate & Edit Profile */}
+                {/* Right Actions */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 z-10">
-                  {/* DOWNLOAD CERTIFICATE BUTTON (Downloads PDF directly to disk) */}
                   <button
                     onClick={() => downloadPencilyCertificatePdf(user, language)}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm border-2 border-emerald-900 shadow-2xs transition active:scale-95 cursor-pointer shrink-0"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs sm:text-sm shadow-sm transition cursor-pointer shrink-0"
                   >
                     <Download className="w-4 h-4 text-emerald-100" />
-                    <span>{language === "vi" ? "Download Certificate (PDF)" : "Download Certificate (PDF)"}</span>
+                    <span>{language === "vi" ? "Tải chứng nhận (PDF)" : "Download Certificate (PDF)"}</span>
                   </button>
 
                   <button
                     onClick={() => setIsEditProfileOpen(true)}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-[#0F2747] border-2 border-slate-300 hover:border-[#0F2747] text-xs font-semibold shadow-2xs transition active:scale-95 cursor-pointer shrink-0"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full bg-white hover:bg-[#FAF7EE] text-[#0F2747] border border-[#E6DEC8] text-xs font-semibold shadow-2xs transition cursor-pointer shrink-0"
                   >
-                    <span>{language === "vi" ? "Sửa Thông Tin" : "Edit Profile"}</span>
+                    <span>{language === "vi" ? "Sửa thông tin" : "Edit Profile"}</span>
                   </button>
                 </div>
               </div>
 
-              {/* Sub-bar: Certified By & Issue Date */}
-              <div className="px-4 py-2.5 bg-white rounded-sm border-2 border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-600 -mt-2">
-                <div className="flex items-center gap-2 font-mono">
-                  <span className="text-slate-400 font-bold uppercase">{language === "vi" ? "Chứng thực bởi:" : "Certified by:"}</span>
-                  <span className="font-bold text-[#0F2747]">Academic Board • The Pencily</span>
+              {/* Sub-bar */}
+              <div className="px-5 py-3 bg-white rounded-2xl border border-[#E6DEC8] flex flex-wrap items-center justify-between text-xs text-[#526277] -mt-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#6B7A90] font-medium">{language === "vi" ? "Chứng thực bởi:" : "Certified by:"}</span>
+                  <span className="font-semibold text-[#0F2747]">Academic Board, The Pencily</span>
                 </div>
-                <div className="flex items-center gap-2 font-mono">
-                  <span className="text-slate-400 font-bold uppercase">{language === "vi" ? "Ngày cấp:" : "Issue Date:"}</span>
-                  <span className="font-bold text-[#0F2747]">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#6B7A90] font-medium">{language === "vi" ? "Ngày cấp:" : "Issue Date:"}</span>
+                  <span className="font-semibold text-[#0F2747]">
                     {new Date().toLocaleDateString("en-US")}
                   </span>
                 </div>
               </div>
 
               {/* 2. Top Identity Card */}
-              <div className="bg-white rounded-md p-6 sm:p-7 border-2 border-slate-300 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E6DEC8] shadow-pencily-soft flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex items-center gap-5">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-sm bg-[#0F2747] text-[#FFC83D] font-black text-2xl flex items-center justify-center shadow-md shrink-0 overflow-hidden border-2 border-slate-300">
+                  <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-[#0F2747] text-[#FFC83D] font-bold text-2xl flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
                     {user.avatar?.startsWith("http") ? (
                       <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                     ) : (
@@ -761,16 +757,16 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                   <div>
                     <div className="flex items-center gap-2.5">
                       <h3 className="font-bold text-lg sm:text-xl text-[#0F2747]">{user.name}</h3>
-                      <span className="text-xs font-bold bg-[#22C55E]/15 text-[#16A34A] px-2.5 py-0.5 rounded-sm border border-emerald-300 flex items-center gap-1">
+                      <span className="text-xs font-semibold bg-emerald-100/80 text-emerald-700 px-3 py-0.5 rounded-full flex items-center gap-1">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         Verified
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-[#687280] mt-1 font-medium">
-                      {user.school} • {user.grade} • {user.role}
+                    <p className="text-xs sm:text-sm text-[#526277] mt-1">
+                      {[user.school, user.grade, user.role].filter(Boolean).join(" — ")}
                     </p>
                     {user.email && (
-                      <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-slate-500 mt-1.5">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-[#6B7A90] mt-1">
                         <span>{user.email}</span>
                       </div>
                     )}
@@ -780,7 +776,7 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
                 <div className="flex items-center gap-3 flex-wrap">
                   <button
                     onClick={() => handleSelectTab("become-tutor")}
-                    className="px-4 py-2.5 rounded-sm bg-[#FFC83D] hover:bg-[#EAB308] text-[#0F2747] text-xs sm:text-sm font-bold shadow-xs transition active:scale-95 cursor-pointer border-2 border-amber-500"
+                    className="px-5 py-2.5 rounded-full bg-[#FFC83D] hover:bg-[#f2bb2e] text-[#0F2747] text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer"
                   >
                     {language === "vi" ? "Trở thành Peer Tutor" : "Become Peer Tutor"}
                   </button>
@@ -789,57 +785,57 @@ export function DashboardContent({ defaultTab = "classes" }: { defaultTab?: Dash
 
               {/* 4 Stats Cards */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="bg-white p-5 sm:p-6 rounded-sm border-2 border-slate-300 shadow-2xs">
-                  <div className="text-xs text-[#687280] flex items-center justify-between font-bold uppercase tracking-wider">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E6DEC8] shadow-2xs">
+                  <div className="text-xs text-[#6B7A90] flex items-center justify-between font-semibold">
                     <span>{language === "vi" ? "Điểm tích lũy" : "Points"}</span>
-                    <Trophy className="w-4 h-4 text-[#EAB308]" />
+                    <Trophy className="w-4 h-4 text-amber-500" />
                   </div>
-                  <div className="font-black text-2xl sm:text-3xl text-[#0F2747] mt-2">
+                  <div className="font-bold text-2xl sm:text-3xl text-[#0F2747] mt-2">
                     {user.points} PP
                   </div>
                 </div>
 
-                <div className="bg-white p-5 sm:p-6 rounded-sm border-2 border-slate-300 shadow-2xs">
-                  <div className="text-xs text-[#687280] flex items-center justify-between font-bold uppercase tracking-wider">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E6DEC8] shadow-2xs">
+                  <div className="text-xs text-[#6B7A90] flex items-center justify-between font-semibold">
                     <span>{language === "vi" ? "Thời gian học" : "Study Time"}</span>
-                    <Clock className="w-4 h-4 text-[#4F7ECB]" />
+                    <Clock className="w-4 h-4 text-[#3B6FD8]" />
                   </div>
-                  <div className="font-black text-2xl sm:text-3xl text-[#0F2747] mt-2">
+                  <div className="font-bold text-2xl sm:text-3xl text-[#0F2747] mt-2">
                     {user.learningMinutes}m
                   </div>
                 </div>
 
-                <div className="bg-white p-5 sm:p-6 rounded-sm border-2 border-slate-300 shadow-2xs">
-                  <div className="text-xs text-[#687280] flex items-center justify-between font-bold uppercase tracking-wider">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E6DEC8] shadow-2xs">
+                  <div className="text-xs text-[#6B7A90] flex items-center justify-between font-semibold">
                     <span>{language === "vi" ? "Buổi đã học" : "Sessions"}</span>
-                    <BookOpen className="w-4 h-4 text-[#16A34A]" />
+                    <BookOpen className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <div className="font-black text-2xl sm:text-3xl text-[#0F2747] mt-2">
+                  <div className="font-bold text-2xl sm:text-3xl text-[#0F2747] mt-2">
                     {user.sessionsAttended}
                   </div>
                 </div>
 
-                <div className="bg-white p-5 sm:p-6 rounded-sm border-2 border-slate-300 shadow-2xs">
-                  <div className="text-xs text-[#687280] flex items-center justify-between font-bold uppercase tracking-wider">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E6DEC8] shadow-2xs">
+                  <div className="text-xs text-[#6B7A90] flex items-center justify-between font-semibold">
                     <span>{language === "vi" ? "Xếp hạng tuần" : "Weekly Rank"}</span>
-                    <Award className="w-4 h-4 text-[#EF4444]" />
+                    <Award className="w-4 h-4 text-rose-500" />
                   </div>
-                  <div className="font-black text-2xl sm:text-3xl text-[#0F2747] mt-2">
+                  <div className="font-bold text-2xl sm:text-3xl text-[#0F2747] mt-2">
                     #{user.rank}
                   </div>
                 </div>
               </div>
 
               {/* Badges Grid */}
-              <div className="bg-white p-6 sm:p-7 rounded-md border-2 border-slate-300 shadow-2xs space-y-4">
-                <h4 className="font-bold text-xs text-[#0F2747] uppercase tracking-wider">
-                  {language === "vi" ? "Bộ Sưu Tập Huy Hiệu" : "Badges Collection"}
+              <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E6DEC8] shadow-2xs space-y-4">
+                <h4 className="font-bold text-sm text-[#0F2747]">
+                  {language === "vi" ? "Bộ sưu tập huy hiệu" : "Badges Collection"}
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {user.badges.map((b, idx) => (
                     <div
                       key={idx}
-                      className={`p-3.5 rounded-sm border-2 text-center text-xs font-bold ${b.color}`}
+                      className={`p-3.5 rounded-2xl border text-center text-xs font-semibold ${b.color}`}
                     >
                       🏅 {b.name}
                     </div>

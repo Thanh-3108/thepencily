@@ -118,14 +118,15 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
   background-size: 32px 32px;
 }
 
-/* Hero atmospheric drafting canvas */
+/* Hero atmospheric drafting canvas: warm sunlit study desk glow + soft paper grid */
 .pencily-hero-canvas {
   background-color: #FAF7EE;
   background-image:
-    radial-gradient(ellipse 75% 65% at 50% 0%, rgba(255, 200, 61, 0.16), transparent 72%),
-    linear-gradient(to right, rgba(15, 39, 71, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 39, 71, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 36px 36px, 36px 36px;
+    radial-gradient(ellipse 80% 60% at 75% 18%, rgba(255, 200, 61, 0.20), transparent 65%),
+    radial-gradient(ellipse 65% 55% at 15% 85%, rgba(79, 126, 203, 0.10), transparent 65%),
+    linear-gradient(to right, rgba(15, 39, 71, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 39, 71, 0.028) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 38px 38px, 38px 38px;
 }
 
 /* Ruled notebook paper lines */
@@ -139,21 +140,37 @@ p, span, li, button, input, textarea, select, .font-inter, .font-sans {
   );
 }
 
-/* Tactile 3D Button Shadows (Stationery Press) */
+/* Warm Soft Organic Shadows & Tactile Interactive Pills */
+.shadow-pencily-soft {
+  box-shadow: 0 10px 32px -10px rgba(15, 39, 71, 0.08), 0 2px 8px -2px rgba(15, 39, 71, 0.04);
+}
+.shadow-pencily-hover:hover {
+  box-shadow: 0 18px 42px -12px rgba(15, 39, 71, 0.13), 0 6px 14px -4px rgba(255, 200, 61, 0.22);
+}
+
+/* Tactile Pill Shadows (Friendly bounce without brutalist outlines) */
 .shadow-tactile-navy {
-  box-shadow: 0 4px 0 #0F2747;
+  box-shadow: 0 6px 18px -4px rgba(15, 39, 71, 0.28);
+}
+.shadow-tactile-navy:hover {
+  box-shadow: 0 10px 24px -4px rgba(15, 39, 71, 0.34);
+  transform: translateY(-2px);
 }
 .shadow-tactile-navy:active {
-  box-shadow: 0 0 0 #0F2747;
-  transform: translateY(4px);
+  box-shadow: 0 2px 6px -2px rgba(15, 39, 71, 0.24);
+  transform: translateY(1px);
 }
 
 .shadow-tactile-slate {
-  box-shadow: 0 3px 0 #CBD5E1;
+  box-shadow: 0 4px 14px -4px rgba(15, 39, 71, 0.09);
+}
+.shadow-tactile-slate:hover {
+  box-shadow: 0 8px 20px -4px rgba(15, 39, 71, 0.14);
+  transform: translateY(-2px);
 }
 .shadow-tactile-slate:active {
-  box-shadow: 0 0 0 #CBD5E1;
-  transform: translateY(3px);
+  box-shadow: 0 1px 4px -1px rgba(15, 39, 71, 0.08);
+  transform: translateY(1px);
 }
 
 /* ====================================================
